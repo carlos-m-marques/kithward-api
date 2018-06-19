@@ -20,6 +20,9 @@
 #  fk_rails_...  (keyword_group_id => keyword_groups.id)
 #
 
-class Keyword < ApplicationRecord
+class KeywordSerializer
+  include FastJsonapi::ObjectSerializer
+
+  attributes :name, :label
   belongs_to :keyword_group
 end

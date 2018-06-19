@@ -3,7 +3,7 @@ class CreateKeywords < ActiveRecord::Migration[5.2]
     create_table :keyword_groups do |t|
       t.string :name,     limit: 64
       t.string :label,    limit: 128
-
+      
       t.timestamps
 
       t.index :name
