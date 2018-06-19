@@ -8,3 +8,10 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionDispatch::IntegrationTest
+  def json_response
+    @json_cache ||= {}
+    @json_cache[@response] ||= ActiveSupport::JSON.decode @response.body
+  end
+end
