@@ -1,5 +1,5 @@
 
-class Api::FacilitiesController < Api::ApiController
+class FacilitiesController < Api::ApiController
   def index
     @facilities = Facility.all
 

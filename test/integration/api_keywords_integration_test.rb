@@ -14,7 +14,7 @@ class ApiKeywordsIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "retrieve all" do
-    get "/api/keywords"
+    get "/api/v1/keywords"
     assert_response :success
 
     assert_equal ['red', 'blue', 'green'], json_response['data'].collect {|kw| kw['attributes']['name']}

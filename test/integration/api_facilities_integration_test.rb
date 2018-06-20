@@ -8,14 +8,14 @@ class ApiFacilitiesIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "retrieve all" do
-    get "/api/facilities"
+    get "/api/v1/facilities"
     assert_response :success
 
     assert_equal @test_facility.id.to_s, json_response['data'][0]['id']
   end
 
   test "retrieve one" do
-    get "/api/facilities/#{@test_facility.id}"
+    get "/api/v1/facilities/#{@test_facility.id}"
     assert_response :success
 
     assert_equal @test_facility.id.to_s, json_response['data']['id']

@@ -1,4 +1,4 @@
-class Api::KeywordsController < Api::ApiController
+class KeywordsController < Api::ApiController
   def index
     @keywords = Keyword.all
 
