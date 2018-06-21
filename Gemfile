@@ -12,11 +12,13 @@ gem 'rack-cors', '~> 1.0'
 
 #== UTILITIES ==============================
 gem 'fast_jsonapi', '~> 1.2'
+gem 'jwt'
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem "factory_bot_rails", "~> 4.0"
+  gem "mocha"
 end
 
 group :development do
