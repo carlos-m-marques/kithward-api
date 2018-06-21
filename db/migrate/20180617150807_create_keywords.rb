@@ -3,7 +3,7 @@ class CreateKeywords < ActiveRecord::Migration[5.2]
     create_table :keyword_groups do |t|
       t.string :name,     limit: 64
       t.string :label,    limit: 128
-      
+
       t.timestamps
 
       t.index :name
@@ -23,7 +23,7 @@ class CreateKeywords < ActiveRecord::Migration[5.2]
     add_reference :keywords, :keyword_group
     add_foreign_key :keywords, :keyword_groups
 
-    create_join_table :facility, :keyword do |t|
+    create_join_table :facilities, :keywords do |t|
       t.index :facility_id
     end
   end

@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2018_06_17_150807) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "facility_keyword", id: false, force: :cascade do |t|
+  create_table "facilities_keywords", id: false, force: :cascade do |t|
     t.bigint "facility_id", null: false
     t.bigint "keyword_id", null: false
-    t.index ["facility_id"], name: "index_facility_keyword_on_facility_id"
+    t.index ["facility_id"], name: "index_facilities_keywords_on_facility_id"
   end
 
   create_table "keyword_groups", force: :cascade do |t|
