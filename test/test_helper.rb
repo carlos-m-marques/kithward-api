@@ -7,15 +7,6 @@ require 'json_web_token'
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
-
-  def mock_authentication(token, user = nil)
-    unless @default_auth_stubbed
-      JsonWebToken.stubs(:verify).raises(JWT::VerificationError)
-      @default_auth_stubbed = true
-    end
-
-    JsonWebToken.stubs(:verify).with(token).returns(true)
-  end
 end
 
 class ActionDispatch::IntegrationTest

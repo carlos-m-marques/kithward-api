@@ -13,6 +13,7 @@ gem 'rack-cors', '~> 1.0'
 #== UTILITIES ==============================
 gem 'fast_jsonapi', '~> 1.2'
 gem 'jwt'
+gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do

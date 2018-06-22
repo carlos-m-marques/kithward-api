@@ -8,8 +8,11 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     @f2 = create(:facility)
     @f3 = create(:facility)
 
-    @auth = "test-auth"
-    mock_authentication(@auth)
+    @account = create(:account)
+    @admin_account = create(:account, is_admin: true)
+
+    @token = JsonWebToken.access_token_for_account(@account)
+    @admin_token = JsonWebToken.access_token_for_account(@admin_account)
   end
 
   test "retrieve all" do
@@ -48,8 +51,13 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_response 401 # unathorized
   end
 
-  test "authenticated users can update facilities" do
-    put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility", jwt: @auth}
+  test "authenticated users cannot update facilities" do
+    put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility", access_token: @token}
+    assert_response 401 # unathorized
+  end
+
+  test "admin users can update facilities" do
+    put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility", access_token: @admin_token}
     assert_response :success
 
     assert_equal @f1.id.to_s, json_response['data']['id']
