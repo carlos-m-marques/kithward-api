@@ -1,6 +1,6 @@
 
 class FacilitiesController < ApplicationController
-  before_action :authenticate_request!, except: [:index, :show]
+  before_action :admin_account_required!, except: [:index, :show]
 
   def index
     @facilities = Facility.all

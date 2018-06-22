@@ -48,16 +48,22 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
 
   test "anonymous users cannot update facilities" do
     put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility"}
-    assert_response 401 # unathorized
+    assert_response 401 # unauthorized
   end
 
   test "authenticated users cannot update facilities" do
     put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility", access_token: @token}
-    assert_response 401 # unathorized
+    assert_response 401 # unauthorized
   end
 
   test "admin users can update facilities" do
     put "/api/v1/facilities/#{@f1.id}", params: {name: "Updated Facility", access_token: @admin_token}
+    assert_response :success
+
+    assert_equal @f1.id.to_s, json_response['data']['id']
+    assert_equal "Updated Facility", json_response['data']['attributes']['name']
+
+    get "/api/v1/facilities/#{@f1.id}"
     assert_response :success
 
     assert_equal @f1.id.to_s, json_response['data']['id']

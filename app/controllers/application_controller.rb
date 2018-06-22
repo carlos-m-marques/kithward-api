@@ -1,22 +1,30 @@
 require 'json_web_token'
 
 class ApplicationController < ActionController::API
-  def authenticate_request!
-    @jwt_payload = JsonWebToken.decode(authorization_token)
+  def access_token_payload
+    @access_token_payload ||= begin
+      access_token = nil
+      if request.headers['Authorization'].present?
+        access_token = request.headers['Authorization'].split(' ').last
+      elsif params[:access_token]
+        access_token = params[:access_token]
+      end
 
-    unless @jwt_payload && @jwt_payload[:account_id]
-      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+      JsonWebToken.decode(access_token) || {}
+    rescue JWT::VerificationError, JWT::DecodeError
+      {}
     end
-
-  rescue JWT::VerificationError, JWT::DecodeError
-    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end
 
-  def authorization_token
-    if request.headers['Authorization'].present?
-      request.headers['Authorization'].split(' ').last
-    elsif params[:access_token]
-      params[:access_token]
+  def authentication_required!
+    unless access_token_payload[:account_id]
+      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    end
+  end
+
+  def admin_account_required!
+    unless access_token_payload[:account_id] && access_token_payload[:is_admin]
+      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end
 end
