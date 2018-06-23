@@ -42,7 +42,7 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "authenticated users can get all facilities" do
-    get "/api/v1/facilities", params: {jwt: @auth}
+    get "/api/v1/facilities", params: {access_token: @auth}
     assert_response :success
   end
 
