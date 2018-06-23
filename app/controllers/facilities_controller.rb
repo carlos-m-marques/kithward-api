@@ -24,6 +24,10 @@ class FacilitiesController < ApplicationController
       :lat, :lon, :website, :phone, :fax, :email
     ))
 
-    render json: FacilitySerializer.new(@facility)
+    if @facility.errors.any?
+      render json: { errors: @facility.errors}, status: :unprocessable_entity
+    else
+      render json: FacilitySerializer.new(@facility)
+    end
   end
 end
