@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
     resources :accounts
 
-    resource :session
+    scope 'auth' do
+      match 'login', to: 'auth#login', via: [:post]
+      match 'token', to: 'auth#token', via: [:post]
+    end
   end
 end

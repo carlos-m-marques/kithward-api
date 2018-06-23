@@ -11,11 +11,24 @@ class JsonWebToken
     nil
   end
 
-  def self.access_token_for_account(account)
+  def self.access_token_for_account(account, refresh_token = nil)
     encode(
-      account_id: account.id,
-      account_name: account.name,
-      is_admin: account.is_admin
+      {
+        account_id: account.id,
+        account_name: account.name,
+        is_admin: account.is_admin,
+      },
+      24.hours.from_now
+    )
+  end
+
+  def self.refresh_token_for_account(account, digest)
+    encode(
+      {
+        account_id: account.id,
+        digest: digest,
+      },
+      2.years.from_now
     )
   end
 end

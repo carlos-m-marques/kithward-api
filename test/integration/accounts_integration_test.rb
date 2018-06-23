@@ -73,7 +73,7 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "test@example.com", json_response['data']['attributes']['email']
     id = json_response['data']['id']
 
-    post "/api/v1/session", params: {email: "test@example.com", password: "123"}
+    post "/api/v1/auth/login", params: {email: "test@example.com", password: "123"}
     assert_response :success
     assert_equal "test@example.com", json_response['data']['attributes']['email']
     token = json_response['meta']['access_token']
@@ -81,5 +81,28 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     get "/api/v1/accounts/#{id}", params: {access_token: token}
     assert_response :success
     assert_equal "test@example.com", json_response['data']['attributes']['email']
+  end
+
+  test "passwords can be changed" do
+    post "/api/v1/accounts", params: {email: "test@example.com", password: "123"}
+    assert_response :success
+
+    assert_equal "test@example.com", json_response['data']['attributes']['email']
+    id = json_response['data']['id']
+
+    post "/api/v1/auth/login", params: {email: "test@example.com", password: "123"}
+    assert_response :success
+    assert_equal id, json_response['data']['id']
+    assert_equal "test@example.com", json_response['data']['attributes']['email']
+    token = json_response['meta']['access_token']
+
+    put "/api/v1/accounts/#{id}", params: {password: "456", password_confirmation: "456", access_token: token}
+    assert_response :success
+
+    post "/api/v1/auth/login", params: {email: "test@example.com", password: "123"}
+    assert_response 401
+
+    post "/api/v1/auth/login", params: {email: "test@example.com", password: "456"}
+    assert_response :success
   end
 end
