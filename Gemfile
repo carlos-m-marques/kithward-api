@@ -6,9 +6,12 @@ ruby '2.3.7'
 #== CORE RAILS =============================
 gem 'rails', '~> 5.2.0'
 gem 'puma', '~> 3.11'
-gem 'pg', '>= 0.18', '< 2.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors', '~> 1.0'
+
+#== DATA ACCESS ============================
+gem 'pg', '>= 0.18', '< 2.0'
+gem 'searchkick', '~> 3.1'
 
 #== UTILITIES ==============================
 gem 'fast_jsonapi', '~> 1.2'

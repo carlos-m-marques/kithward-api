@@ -5,6 +5,10 @@ require 'mocha/minitest'
 
 require 'json_web_token'
 
+#-- Search Kick --------
+Facility.reindex
+Searchkick.disable_callbacks
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 end

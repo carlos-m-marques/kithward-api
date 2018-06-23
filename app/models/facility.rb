@@ -29,4 +29,24 @@
 
 class Facility < ApplicationRecord
   has_and_belongs_to_many :keywords
+
+  searchkick
+
+  def search_data
+    {
+      name: name,
+      description: description,
+      is_independent: is_independent,
+      is_assisted: is_assisted,
+      is_nursing: is_nursing,
+      is_memory: is_memory,
+      is_ccrc: is_ccrc,
+      address: address,
+      address_more: address_more,
+      city: city,
+      state: state,
+      postal: postal,
+      country: country,
+    }
+  end
 end

@@ -3,7 +3,13 @@ class FacilitiesController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index
-    @facilities = Facility.all
+    search_options = {
+    }
+
+    search_options[:limit] = params[:limit] || 20
+    search_options[:offset] = params[:offset] || 0
+
+    @facilities = Facility.search(params[:q], search_options)
 
     render json: FacilitySerializer.new(@facilities)
   end

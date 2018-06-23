@@ -1,24 +1,21 @@
-# README
+# DEVELOPER SETUP
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby 2.3
+* Postgres 10
+* Elasticsearch
 
-Things you may want to cover:
 
-* Ruby version
 
-* System dependencies
+## ElasticSearch notes
 
-* Configuration
+Local development server, os x with brew:
 
-* Database creation
+Data:    `/usr/local/var/lib/elasticsearch/elasticsearch_{username}/`
+Logs:    `/usr/local/var/log/elasticsearch/elasticsearch_{username}.log`
+Plugins: `/usr/local/var/elasticsearch/plugins/`
+Config:  `/usr/local/etc/elasticsearch/`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To have launchd start elasticsearch now and restart at login:
+  `brew services start elasticsearch`
+Or, if you don't want/need a background service you can just run:
+  `elasticsearch`

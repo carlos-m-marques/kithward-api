@@ -4,9 +4,11 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
     Facility.delete_all
 
-    @f1 = create(:facility)
-    @f2 = create(:facility)
-    @f3 = create(:facility)
+    @f1 = create(:facility, name: 'Golden Pond', description: 'Excelent Care')
+    @f2 = create(:facility, name: 'Silver Lining', description: 'Incredible Care')
+    @f3 = create(:facility, name: 'Gray Peaks', description: 'Incredible Service')
+
+    Facility.reindex
 
     @account = create(:account)
     @admin_account = create(:account, is_admin: true)
@@ -15,17 +17,23 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     @admin_token = JsonWebToken.access_token_for_account(@admin_account)
   end
 
-  test "retrieve all" do
-    get "/api/v1/facilities"
+  test "search facilities" do
+    Facility.reindex
+
+    get "/api/v1/facilities", params: {q: 'Care'}
     assert_response :success
+    assert_equal [@f1.id.to_s, @f2.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@f1.name, @f2.name], json_response['data'].collect {|result| result['attributes']['name']}
 
-    assert_equal @f1.id.to_s, json_response['data'][0]['id']
-    assert_equal @f2.id.to_s, json_response['data'][1]['id']
-    assert_equal @f3.id.to_s, json_response['data'][2]['id']
+    get "/api/v1/facilities", params: {q: 'Incredible'}
+    assert_response :success
+    assert_equal [@f2.id.to_s, @f3.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@f2.name, @f3.name], json_response['data'].collect {|result| result['attributes']['name']}
 
-    assert_equal @f1.name, json_response['data'][0]['attributes']['name']
-    assert_equal @f2.name, json_response['data'][1]['attributes']['name']
-    assert_equal @f3.name, json_response['data'][2]['attributes']['name']
+    get "/api/v1/facilities", params: {q: 'Service'}
+    assert_response :success
+    assert_equal [@f3.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@f3.name], json_response['data'].collect {|result| result['attributes']['name']}
   end
 
   test "retrieve one" do
