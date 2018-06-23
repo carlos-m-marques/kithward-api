@@ -15,7 +15,7 @@
 #  index_accounts_on_email  (email)
 #
 
-class FacilitySerializer
+class AccountSerializer
   include FastJsonapi::ObjectSerializer
 
   attributes :name, :email, :is_admin

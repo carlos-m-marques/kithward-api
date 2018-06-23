@@ -1,6 +1,6 @@
 require 'json_web_token'
 
-class SessionController < ApplicationController
+class SessionsController < ApplicationController
   def create
     @account = Account.find_by_email(params[:email])
     if @account && @account.authenticate(params[:password])

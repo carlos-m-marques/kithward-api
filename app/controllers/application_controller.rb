@@ -16,14 +16,22 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def accessing_account
+    @accessing_account ||= begin
+      if access_token_payload[:account_id]
+        Account.find(access_token_payload[:account_id])
+      end
+    end
+  end
+
   def authentication_required!
-    unless access_token_payload[:account_id]
+    unless accessing_account
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end
 
   def admin_account_required!
-    unless access_token_payload[:account_id] && access_token_payload[:is_admin]
+    unless accessing_account && accessing_account.is_admin?
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end

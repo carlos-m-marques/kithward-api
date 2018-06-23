@@ -5,5 +5,9 @@ Rails.application.routes.draw do
     resources :facilities
 
     resources :keywords
+
+    resources :accounts
+
+    resource :session
   end
 end
