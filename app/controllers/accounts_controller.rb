@@ -19,7 +19,11 @@ class AccountsController < ApplicationController
       :email, :name, :password, :password_confirmation
     ))
 
-    render json: AccountSerializer.new(@account)
+    if @account.errors.any?
+      render json: { errors: @account.errors}, status: :unprocessable_entity
+    else
+      render json: AccountSerializer.new(@account)
+    end
   end
 
   def update
@@ -29,7 +33,11 @@ class AccountsController < ApplicationController
         :name, :password, :password_confirmation
       ))
 
-      render json: AccountSerializer.new(@account)
+      if @account.errors.any?
+        render json: { errors: @account.errors}, status: :unprocessable_entity
+      else
+        render json: AccountSerializer.new(@account)
+      end
     else
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end

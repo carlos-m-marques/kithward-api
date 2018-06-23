@@ -12,7 +12,7 @@
 #
 # Indexes
 #
-#  index_accounts_on_email  (email)
+#  index_accounts_on_email  (email) UNIQUE
 #
 
 class AccountSerializer

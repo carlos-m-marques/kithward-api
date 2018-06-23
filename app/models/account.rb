@@ -12,9 +12,10 @@
 #
 # Indexes
 #
-#  index_accounts_on_email  (email)
+#  index_accounts_on_email  (email) UNIQUE
 #
 
 class Account < ApplicationRecord
   has_secure_password
+  validates :email, presence: true, uniqueness: true
 end

@@ -105,4 +105,17 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     post "/api/v1/auth/login", params: {email: "test@example.com", password: "456"}
     assert_response :success
   end
+
+  test "email cannot be changed" do
+    put "/api/v1/accounts/#{@account_a.id}", params: {email: "another@example.com", access_token: @token_a}
+    assert_response :success
+    assert_equal @account_a.id.to_s, json_response['data']['id']
+    assert_not_equal "another@example.com", json_response['data']['attributes']['email']
+  end
+
+  test "cannot signup with an email used in another account" do
+    post "/api/v1/accounts", params: {email: @account_a.email, password: "123"}
+    assert_response :unprocessable_entity
+    assert_equal({"email" => ["has already been taken"]}, json_response['errors'])
+  end
 end

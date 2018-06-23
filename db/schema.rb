@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2018_06_21_220018) do
     t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_accounts_on_email"
+    t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
   create_table "facilities", force: :cascade do |t|
