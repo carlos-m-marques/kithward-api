@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   scope 'v1', defaults: {format: 'json'} do
     resources :facilities
 
-    resources :keywords
-
     resources :accounts
 
     scope 'auth' do

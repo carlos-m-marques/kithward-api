@@ -36,6 +36,4 @@ class FacilitySerializer
     :lat, :lon,
     :website, :phone, :fax, :email,
     :updated_at
-
-  has_many :keywords
 end

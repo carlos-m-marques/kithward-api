@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_21_220018) do
+ActiveRecord::Schema.define(version: 2018_07_07_130748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,31 +50,4 @@ ActiveRecord::Schema.define(version: 2018_06_21_220018) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "facilities_keywords", id: false, force: :cascade do |t|
-    t.bigint "facility_id", null: false
-    t.bigint "keyword_id", null: false
-    t.index ["facility_id"], name: "index_facilities_keywords_on_facility_id"
-  end
-
-  create_table "keyword_groups", force: :cascade do |t|
-    t.string "name", limit: 64
-    t.string "label", limit: 128
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["label"], name: "index_keyword_groups_on_label"
-    t.index ["name"], name: "index_keyword_groups_on_name"
-  end
-
-  create_table "keywords", force: :cascade do |t|
-    t.string "name", limit: 64
-    t.string "label", limit: 128
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "keyword_group_id"
-    t.index ["keyword_group_id"], name: "index_keywords_on_keyword_group_id"
-    t.index ["label"], name: "index_keywords_on_label"
-    t.index ["name"], name: "index_keywords_on_name"
-  end
-
-  add_foreign_key "keywords", "keyword_groups"
 end
