@@ -29,7 +29,9 @@
 
 class Facility < ApplicationRecord
 
-  searchkick
+  searchkick  match: :word_start,
+              word_start:  ['name', 'description'],
+              default_fields: ['name', 'description']
 
   def search_data
     {

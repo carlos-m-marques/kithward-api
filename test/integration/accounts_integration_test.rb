@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
+class AccountsIntegrationTest < ActionDispatch::IntegrationTest
   setup do
     Account.delete_all
 

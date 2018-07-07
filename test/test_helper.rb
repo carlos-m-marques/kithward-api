@@ -6,8 +6,10 @@ require 'mocha/minitest'
 require 'json_web_token'
 
 #-- Search Kick --------
-Facility.reindex
 Searchkick.disable_callbacks
+Facility.search_index.clean_indices
+Facility.search_index.delete rescue nil
+Facility.reindex(import: false)
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

@@ -2,19 +2,22 @@ require 'test_helper'
 
 class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
+    Searchkick.enable_callbacks
     Facility.delete_all
 
     @f1 = create(:facility, name: 'Golden Pond', description: 'Excelent Care')
     @f2 = create(:facility, name: 'Silver Lining', description: 'Incredible Care')
     @f3 = create(:facility, name: 'Gray Peaks', description: 'Incredible Service')
 
-    Facility.reindex
-
     @account = create(:account)
     @admin_account = create(:account, is_admin: true)
 
     @token = JsonWebToken.access_token_for_account(@account)
     @admin_token = JsonWebToken.access_token_for_account(@admin_account)
+  end
+
+  teardown do
+    Searchkick.disable_callbacks
   end
 
   test "search facilities" do

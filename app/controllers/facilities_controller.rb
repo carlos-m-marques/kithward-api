@@ -4,6 +4,8 @@ class FacilitiesController < ApplicationController
 
   def index
     search_options = {
+      fields: ['name', 'description'],
+      match: :word_start,
     }
 
     search_options[:limit] = params[:limit] || 20
