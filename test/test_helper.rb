@@ -7,9 +7,9 @@ require 'json_web_token'
 
 #-- Search Kick --------
 Searchkick.disable_callbacks
-Facility.search_index.clean_indices
-Facility.search_index.delete rescue nil
-Facility.reindex(import: false)
+Community.search_index.clean_indices
+Community.search_index.delete rescue nil
+Community.reindex(import: false)
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: facilities
+# Table name: communities
 #
 #  id             :bigint(8)        not null, primary key
 #  name           :string(1024)
@@ -27,13 +27,10 @@
 #  updated_at     :datetime         not null
 #
 
-class FacilitySerializer
-  include FastJsonapi::ObjectSerializer
+require 'test_helper'
 
-  attributes :name, :description,
-    :is_independent, :is_assisted, :is_nursing, :is_memory, :is_ccrc,
-    :address, :address_more, :city, :state, :postal, :country,
-    :lat, :lon,
-    :website, :phone, :fax, :email,
-    :updated_at
+class CommunityTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

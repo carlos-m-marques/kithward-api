@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_07_130748) do
+ActiveRecord::Schema.define(version: 2018_07_07_152242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_07_07_130748) do
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
-  create_table "facilities", force: :cascade do |t|
+  create_table "communities", force: :cascade do |t|
     t.string "name", limit: 1024
     t.text "description"
     t.boolean "is_independent", default: false

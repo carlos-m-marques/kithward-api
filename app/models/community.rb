@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: facilities
+# Table name: communities
 #
 #  id             :bigint(8)        not null, primary key
 #  name           :string(1024)
@@ -27,10 +27,27 @@
 #  updated_at     :datetime         not null
 #
 
-require 'test_helper'
+class Community < ApplicationRecord
 
-class FacilityTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  searchkick  match: :word_start,
+              word_start:  ['name', 'description'],
+              default_fields: ['name', 'description']
+
+  def search_data
+    {
+      name: name,
+      description: description,
+      is_independent: is_independent,
+      is_assisted: is_assisted,
+      is_nursing: is_nursing,
+      is_memory: is_memory,
+      is_ccrc: is_ccrc,
+      address: address,
+      address_more: address_more,
+      city: city,
+      state: state,
+      postal: postal,
+      country: country,
+    }
+  end
 end
