@@ -1,6 +1,6 @@
 
 class FacilitiesController < ApplicationController
-  before_action :admin_account_required!, except: [:index, :show]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary]
 
   def index
     search_options = {
@@ -38,4 +38,9 @@ class FacilitiesController < ApplicationController
       render json: FacilitySerializer.new(@facility)
     end
   end
+
+  def dictionary
+    render json: DataDictionary::Community.to_h
+  end
+
 end

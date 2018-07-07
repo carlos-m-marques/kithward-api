@@ -20,6 +20,13 @@ class FacilitiesIntegrationTest < ActionDispatch::IntegrationTest
     Searchkick.disable_callbacks
   end
 
+  test "data dictionary" do
+    get "/v1/facilities/dictionary"
+    assert_response :success
+
+    assert_not_nil json_response[0]['section']
+  end
+
   test "search facilities" do
     Facility.reindex
 
