@@ -20,6 +20,8 @@
 #
 
 class Community < ApplicationRecord
+  has_paper_trail
+  
   TYPE_UNKNOWN     = '?'
   TYPE_INDEPENDENT = 'I'
   TYPE_ASSISTED    = 'A'

@@ -77,11 +77,11 @@ module FollowUpHealthImporter
     'email' => {},
     'fax' => {},
     'facility_url' => {as: 'web'},
-    'licensed_beds' => {},
-    'entrance_fee' => {},
-    'years_private_pay_required' => {as: 'months_pay_required', transform: ->(x) { x / 12}},
-    'base_starting_price' => {as: 'rent_starting_price'},
-    'care_starting_price' => {},
+    'licensed_beds' => {transform: ->(x) { x.to_i }},
+    'entrance_fee' => {transform: ->(x) { x.to_i }},
+    'years_private_pay_required' => {as: 'months_pay_required', transform: ->(x) { x.to_i / 12}},
+    'base_starting_price' => {as: 'rent_starting_price', transform: ->(x) { x.to_i }},
+    'care_starting_price' => {transform: ->(x) { x.to_i }},
     'base_cost_includes_care' => {as: 'rent_includes_care'},
     'facility_quality_id' => {as: 'service_category', transform: ->(x) { FACILITY_QUALITY_VALUES[x] }}
   }

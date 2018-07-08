@@ -35,4 +35,15 @@ class ApplicationController < ActionController::API
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end
+
+  begin # paper trail
+    before_action :set_paper_trail_whodunnit
+    def user_for_paper_trail
+      if accessing_account
+        "#{accessing_account.id}:#{accessing_account.email}"
+      else
+        "anonymous"
+      end
+    end
+  end
 end

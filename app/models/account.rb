@@ -17,5 +17,7 @@
 
 class Account < ApplicationRecord
   has_secure_password
+  has_paper_trail
+  
   validates :email, presence: true, uniqueness: true
 end

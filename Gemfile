@@ -12,6 +12,7 @@ gem 'rack-cors', '~> 1.0'
 #== DATA ACCESS ============================
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'searchkick', '~> 3.1'
+gem 'paper_trail', '~> 9.0'
 
 #== UTILITIES ==============================
 gem 'fast_jsonapi', '~> 1.2'
