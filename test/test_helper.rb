@@ -11,6 +11,9 @@ Community.search_index.clean_indices
 Community.search_index.delete rescue nil
 Community.reindex(import: false)
 
+#-- Geocoder -----------
+Geocoder.configure(lookup: :test)
+
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
 end

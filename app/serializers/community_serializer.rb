@@ -24,7 +24,7 @@ class CommunitySerializer
 
   attributes :name, :description,
     :care_type,
-    :address, :address_more, :city, :state, :postal, :country,
+    :street, :street_more, :city, :state, :postal, :country,
     :lat, :lon,
     :updated_at
 end

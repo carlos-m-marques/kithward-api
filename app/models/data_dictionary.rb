@@ -43,7 +43,7 @@ class DataDictionary
   end
 
   def attributes
-    spec.collect {|section| section[:attrs]}.flatten
+    @attributes ||= spec.collect {|section| section[:attrs]}.flatten
   end
 
   # DATA TYPES:
@@ -66,14 +66,14 @@ class DataDictionary
   Community = self.new([
     { section: "Community",
       attrs: [
-        { name:   { label: "Community name", data: 'string' }},
-        { type:   { label: "Community type", data: 'select',
-                    values: [
-                      {'A' => "Assisted living"},
-                      {'I' => "Independent Living"},
-                      {'M' => "Memory care"},
-                      {'N' => "Skilled nursing"},
-                    ]}},
+        { name:   { label: "Community name", data: 'string', direct_model_attribute: true }},
+        { care_type:  { label: "Community type", data: 'select', direct_model_attribute: true,
+                        values: [
+                          {'A' => "Assisted living"},
+                          {'I' => "Independent Living"},
+                          {'S' => "Skilled nursing"},
+                          {'M' => "Memory care"},
+                        ]}},
         { ccrc:   { label: "Continuing care community", data: 'flag' }},
         { parent_company:       { label: "Parent company", data: 'string' }},
         { related_communities:  { label: "Related communities", data: 'list_of_ids'}},
@@ -83,14 +83,19 @@ class DataDictionary
         { fax:   { label: "Fax", data: 'fax' }},
         { web:   { label: "Web site", data: 'url' }},
 
-        { address: { label: "Address", data: 'address' }},
+        { address: { label: "Address", data: 'string', direct_model_attribute: true }},
+        { address_more: { label: "", data: 'string', direct_model_attribute: true }},
+        { city: { label: "City", data: 'string', direct_model_attribute: true }},
+        { state: { label: "State", data: 'string', direct_model_attribute: true }},
+        { postal: { label: "ZIP", data: 'string', direct_model_attribute: true }},
+        { country: { label: "Country", data: 'string', direct_model_attribute: true }},
       ],
     },
 
     { section: "Attributes",
       attrs: [
         { star_rating:            { label: "Rating", data: 'rating' }},
-        { description:            { label: "Description", data: 'text' }},
+        { description:            { label: "Description", data: 'text', direct_model_attribute: true }},
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
                                       {'B' => "Budhist"},
