@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_07_152242) do
+ActiveRecord::Schema.define(version: 2018_07_07_153209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,26 +28,18 @@ ActiveRecord::Schema.define(version: 2018_07_07_152242) do
   create_table "communities", force: :cascade do |t|
     t.string "name", limit: 1024
     t.text "description"
-    t.boolean "is_independent", default: false
-    t.boolean "is_assisted", default: false
-    t.boolean "is_nursing", default: false
-    t.boolean "is_memory", default: false
-    t.boolean "is_ccrc", default: false
-    t.string "address", limit: 1024
-    t.string "address_more", limit: 1024
+    t.string "street", limit: 1024
+    t.string "street_more", limit: 1024
     t.string "city", limit: 256
     t.string "state", limit: 128
     t.string "postal", limit: 32
     t.string "country", limit: 64
     t.float "lat"
     t.float "lon"
-    t.string "website", limit: 1024
-    t.string "phone", limit: 64
-    t.string "fax", limit: 64
-    t.string "email", limit: 256
     t.jsonb "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "care_type", limit: 1, default: "?"
   end
 
 end

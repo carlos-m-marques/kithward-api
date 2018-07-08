@@ -18,6 +18,9 @@ gem 'fast_jsonapi', '~> 1.2'
 gem 'jwt'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 
+#== APIS ===================================
+gem 'geocoder', '~> 1.4.0'
+
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
