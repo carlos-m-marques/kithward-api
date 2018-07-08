@@ -26,6 +26,10 @@ class Community < ApplicationRecord
   TYPE_NURSING     = 'N'
   TYPE_MEMORY      = 'M'
 
+  begin # attributes
+    serialize :data, Hash
+  end
+
   begin # Elasticsearch / Searchkick
     searchkick  match: :word_start,
                 word_start:  ['name', 'description'],
