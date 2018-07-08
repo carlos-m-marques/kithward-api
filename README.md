@@ -1,10 +1,12 @@
 # DEVELOPER SETUP
 
-* Ruby 2.3
-* Postgres 10
-* Elasticsearch
+* Ruby 2.3 (suggested: `brew install rbenv && rbenv install 2.3`)
+* Postgres 10 (suggested: https://postgresapp.com/)
+* Elasticsearch (suggested: `brew install elasticsearch`)
 
-
+```
+$ bundle install --path .gems
+```
 
 ## ElasticSearch notes
 
@@ -30,7 +32,7 @@ cluster.routing.allocation.disk.threshold_enabled: false
 #### Getting "high disk watermark exceeded on one or more nodes" in elasticsearch logs?
 
 ElasticSearch likes to have at least 10% free space on disk. *If you see this
-in production, it might be time to get more servers*. 
+in production, it might be time to get more servers*.
 But on development machines it is ok to disable this option.
 
 Edit `/usr/local/etc/elasticsearch/elasticsearch.yml` and add
