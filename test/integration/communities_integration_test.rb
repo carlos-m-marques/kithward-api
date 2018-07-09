@@ -87,4 +87,18 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal @f1.id.to_s, json_response['data']['id']
     assert_equal "Updated Community", json_response['data']['attributes']['name']
   end
+
+  test "admin users can add images to communities" do
+    put "/v1/communities/#{@f1.id}", params: {name: "Updated Community", access_token: @admin_token}
+    assert_response :success
+
+    assert_equal @f1.id.to_s, json_response['data']['id']
+    assert_equal "Updated Community", json_response['data']['attributes']['name']
+
+    get "/v1/communities/#{@f1.id}"
+    assert_response :success
+
+    assert_equal @f1.id.to_s, json_response['data']['id']
+    assert_equal "Updated Community", json_response['data']['attributes']['name']
+  end
 end

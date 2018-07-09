@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   scope 'v1', defaults: {format: 'json'} do
     resources :communities do
       get 'dictionary', on: :collection
+
+      resources :images, controller: 'community_images'
     end
 
     resources :accounts
