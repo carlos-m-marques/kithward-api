@@ -1,4 +1,3 @@
-
 class CommunityImagesController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show]
 
@@ -40,3 +39,8 @@ class CommunityImagesController < ApplicationController
     end
   end
 end
+
+# NOTES:
+#
+# This page might come handy when implementing clients to this API
+#   https://github.com/rails/rails/issues/32208

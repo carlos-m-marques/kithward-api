@@ -1,4 +1,5 @@
 require 'pg'
+require 'open-uri'
 
 module FollowUpHealthImporter
   def self.import
@@ -55,6 +56,20 @@ module FollowUpHealthImporter
       end
 
       community.save
+
+      unless community.community_images.any?
+        images = pg.exec("SELECT * FROM images i INNER JOIN facility_images fi ON i.image_id = fi.image_id WHERE fi.facility_id = '#{row['fuh_id']}'")
+        images.each do |image|
+          begin
+            ci = community.community_images.create(tags: 'fuh')
+            ci.image.attach(io: open(image['image_url']), filename: 'image.jpg')
+            ci.save
+          rescue StandardError
+            STDERR.puts "Error fetchcing #{image['image_id']} #{image['image_url']}"
+            ci.destroy
+          end
+        end
+      end
     end
   end
 

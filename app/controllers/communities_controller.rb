@@ -19,7 +19,7 @@ class CommunitiesController < ApplicationController
   def show
     @community = Community.find(params[:id])
 
-    render json: CommunitySerializer.new(@community)
+    render json: CommunitySerializer.new(@community, include: [:community_images])
   end
 
   def update

@@ -44,6 +44,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  # ActiveStorage needs some kind of ActiveJob support, so we fake it for now
+  config.active_job.queue_adapter = :inline
+
   # Disable PaperTrail while testing
   config.after_initialize do
     PaperTrail.enabled = false

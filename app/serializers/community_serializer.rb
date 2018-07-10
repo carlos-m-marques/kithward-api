@@ -26,5 +26,8 @@ class CommunitySerializer
     :care_type,
     :street, :street_more, :city, :state, :postal, :country,
     :lat, :lon,
+    :data,
     :updated_at
+
+  has_many :community_images
 end
