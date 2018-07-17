@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_08_202734) do
+ActiveRecord::Schema.define(version: 2018_07_12_194010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2018_07_08_202734) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["community_id"], name: "index_community_images_on_community_id"
+  end
+
+  create_table "geo_places", force: :cascade do |t|
+    t.string "reference", limit: 128
+    t.string "geo_type", limit: 10
+    t.string "name", limit: 255
+    t.string "full_name", limit: 255
+    t.string "state", limit: 128
+    t.float "lat"
+    t.float "lon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "versions", force: :cascade do |t|
