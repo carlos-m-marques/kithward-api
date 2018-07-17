@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
     resources :accounts
 
+    resources :geo_places
+
     scope 'auth' do
       match 'login', to: 'auth#login', via: [:post]
       match 'token', to: 'auth#token', via: [:post]
