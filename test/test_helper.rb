@@ -11,6 +11,10 @@ Community.search_index.clean_indices
 Community.search_index.delete rescue nil
 Community.reindex(import: false)
 
+GeoPlace.search_index.clean_indices
+GeoPlace.search_index.delete rescue nil
+GeoPlace.reindex(import: false)
+
 #-- Geocoder -----------
 Geocoder.configure(lookup: :test)
 
