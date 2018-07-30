@@ -13,4 +13,10 @@ class GeoPlacesController < ApplicationController
 
     render json: GeoPlaceSerializer.new(@places)
   end
+
+  def show
+    @place = GeoPlace.find(params[:id])
+
+    render json: GeoPlaceSerializer.new(@place)
+  end
 end
