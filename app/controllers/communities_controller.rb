@@ -8,10 +8,22 @@ class CommunitiesController < ApplicationController
       match: :word_start,
     }
 
+    if params[:geo]
+      geo = GeoPlace.find_by_id(params[:geo])
+      if geo
+        search_options[:where] = {location: {near: {lat: geo.lat, lon: geo.lon}}}
+        if params[:distance]
+          search_options[:where][:location][:within] = params[:distance]
+        else
+          search_options[:where][:location][:within] = "20mi"
+        end
+      end
+    end
+
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 
-    @communities = Community.search(params[:q], search_options)
+    @communities = Community.search(params[:q] || "*", search_options)
 
     render json: CommunitySerializer.new(@communities)
   end

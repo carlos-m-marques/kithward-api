@@ -98,4 +98,24 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal @c1.id.to_s, json_response['data']['id']
     assert_equal "Updated Community", json_response['data']['attributes']['name']
   end
+
+  test "search communities by geo place" do
+    @soho = GeoPlace.create(name: "SoHo", lat: 40.72, lon: -73.99)
+    @jersey = GeoPlace.create(name: "Jersey Shore", lat: 40.21, lon: -74.00)
+
+    @nyc1 = create(:community, name: 'NYC Houses', lat: 40.75, lon: -73.97)
+    @nyc2 = create(:community, name: 'SoHo Care', lat: 40.72, lon: -74.00)
+    @nj1 = create(:community, name: 'Jersey Shore', lat: 40.20, lon: -74.01)
+
+    Community.reindex
+
+    get "/v1/communities", params: {geo: @soho.id}
+    assert_response :success
+    assert_equal [@nyc1.id.to_s, @nyc2.id.to_s].sort, json_response['data'].collect {|result| result['id']}.sort
+
+    get "/v1/communities", params: {geo: @jersey.id}
+    assert_response :success
+    assert_equal [@nj1.id.to_s].sort, json_response['data'].collect {|result| result['id']}.sort
+
+  end
 end
