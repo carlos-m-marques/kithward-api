@@ -2,9 +2,6 @@ require 'test_helper'
 
 class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
-    Searchkick.enable_callbacks
-    Community.delete_all
-
     @f1 = create(:community, name: 'Golden Pond', description: 'Excelent Care')
     @f2 = create(:community, name: 'Silver Lining', description: 'Incredible Care')
     @f3 = create(:community, name: 'Gray Peaks', description: 'Incredible Service')
@@ -14,10 +11,6 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
 
     @token = JsonWebToken.access_token_for_account(@account)
     @admin_token = JsonWebToken.access_token_for_account(@admin_account)
-  end
-
-  teardown do
-    Searchkick.disable_callbacks
   end
 
   test "data dictionary" do
@@ -55,11 +48,15 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "anonymous users can get all communities" do
+    Community.reindex
+
     get "/v1/communities"
     assert_response :success
   end
 
   test "authenticated users can get all communities" do
+    Community.reindex
+
     get "/v1/communities", params: {access_token: @auth}
     assert_response :success
   end
