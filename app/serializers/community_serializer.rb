@@ -13,17 +13,19 @@
 #  country     :string(64)
 #  lat         :float
 #  lon         :float
-#  data        :jsonb
+#  old_data    :jsonb
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  care_type   :string(1)        default("?")
 #  status      :string(1)        default("?")
+#  data        :jsonb
 #
 
 class CommunitySerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :name, :description,
+  attributes :status,
+    :name, :description,
     :care_type,
     :street, :street_more, :city, :state, :postal, :country,
     :lat, :lon,

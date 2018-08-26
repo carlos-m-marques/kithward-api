@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_14_113824) do
+ActiveRecord::Schema.define(version: 2018_08_26_143334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,11 +57,12 @@ ActiveRecord::Schema.define(version: 2018_08_14_113824) do
     t.string "country", limit: 64
     t.float "lat"
     t.float "lon"
-    t.jsonb "data"
+    t.jsonb "old_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "care_type", limit: 1, default: "?"
     t.string "status", limit: 1, default: "?"
+    t.jsonb "data"
   end
 
   create_table "community_images", force: :cascade do |t|
