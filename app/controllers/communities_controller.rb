@@ -44,12 +44,20 @@ class CommunitiesController < ApplicationController
   def update
     @community = Community.find(params[:id])
 
-    @community.update_attributes(params.permit(
+    @community.attributes = params.permit(
       :care_type, :status,
       :name, :description,
       :address, :address_more, :city, :state, :postal, :country,
       :lat, :lon, :website, :phone, :fax, :email
-    ))
+    )
+
+    if params[:data]
+      params[:data].permit!
+      @community.data = @community.data.merge(params[:data])
+    end
+
+    @community.save
+
 
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity

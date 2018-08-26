@@ -117,6 +117,32 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     get "/v1/communities", params: {geo: @jersey.id}
     assert_response :success
     assert_equal [@nj1.id.to_s].sort, json_response['data'].collect {|result| result['id']}.sort
+  end
 
+  test "update community data" do
+    community = create(:community, name: "SoHo Care", description: "Incredible Service", data: {phone: "212 555 1234", web: "http://soho.nyc/"})
+
+    get "/v1/communities/#{community.id}", params: {access_token: @admin_token}
+    assert_response :success
+    assert_equal "SoHo Care", json_response['data']['attributes']['name']
+    assert_equal "Incredible Service", json_response['data']['attributes']['description']
+    assert_equal "212 555 1234", json_response['data']['attributes']['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
+
+    put "/v1/communities/#{community.id}", params: {name: "SoHo Cares", description: "Good Service", data: {phone: "212 555 9876", email: "info@soho.nyc"}, access_token: @admin_token}
+    assert_response :success
+    assert_equal "SoHo Cares", json_response['data']['attributes']['name']
+    assert_equal "Good Service", json_response['data']['attributes']['description']
+    assert_equal "212 555 9876", json_response['data']['attributes']['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
+    assert_equal "info@soho.nyc", json_response['data']['attributes']['data']['email']
+
+    get "/v1/communities/#{community.id}", params: {access_token: @admin_token}
+    assert_response :success
+    assert_equal "SoHo Cares", json_response['data']['attributes']['name']
+    assert_equal "Good Service", json_response['data']['attributes']['description']
+    assert_equal "212 555 9876", json_response['data']['attributes']['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
+    assert_equal "info@soho.nyc", json_response['data']['attributes']['data']['email']
   end
 end
