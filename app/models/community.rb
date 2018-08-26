@@ -17,12 +17,17 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  care_type   :string(1)        default("?")
+#  status      :string(1)        default("?")
 #
 
 class Community < ApplicationRecord
   has_paper_trail
 
   has_many :community_images
+
+  STATUS_ACTIVE    = 'A'
+  STATUS_DRAFT     = '?'
+  STATUS_DELETED   = 'X'
 
   TYPE_UNKNOWN     = '?'
   TYPE_INDEPENDENT = 'I'
@@ -44,6 +49,7 @@ class Community < ApplicationRecord
       {
         name: name,
         description: description,
+        status: status,
         city: city,
         state: state,
         postal: postal,
@@ -68,5 +74,21 @@ class Community < ApplicationRecord
     def address_complete?
       street.present? and ((city.present? and state.present?) or postal.present?)
     end
+  end
+
+  def is_active?
+    status == STATUS_ACTIVE
+  end
+
+  def is_draft?
+    status == STATUS_DRAFT
+  end
+
+  def is_deleted?
+    status == STATUS_DELETED
+  end
+
+  def not_active?
+    status != STATUS_ACTIVE
   end
 end

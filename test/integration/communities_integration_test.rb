@@ -5,6 +5,7 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     @c1 = create(:community, name: 'Golden Pond', description: 'Excelent Care')
     @c2 = create(:community, name: 'Silver Lining', description: 'Incredible Care')
     @c3 = create(:community, name: 'Gray Peaks', description: 'Incredible Service')
+    @c4 = create(:community, name: 'Deleted Community', description: 'Useless Service', status: Community::STATUS_DELETED)
 
     @account = create(:account)
     @admin_account = create(:account, is_admin: true)

@@ -17,6 +17,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  care_type   :string(1)        default("?")
+#  status      :string(1)        default("?")
 #
 
 class CommunitySerializer

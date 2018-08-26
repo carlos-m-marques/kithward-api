@@ -6,12 +6,15 @@ class CommunitiesController < ApplicationController
     search_options = {
       fields: ['name', 'description'],
       match: :word_start,
+      where: {
+        status: Community::STATUS_ACTIVE,
+      }
     }
 
     if params[:geo]
       geo = GeoPlace.find_by_id(params[:geo])
       if geo
-        search_options[:where] = {location: {near: {lat: geo.lat, lon: geo.lon}}}
+        search_options[:where][:location] = {near: {lat: geo.lat, lon: geo.lon}}
         if params[:distance]
           search_options[:where][:location][:within] = params[:distance]
         else
@@ -31,15 +34,19 @@ class CommunitiesController < ApplicationController
   def show
     @community = Community.find(params[:id])
 
-    render json: CommunitySerializer.new(@community)
+    if @community.is_active? or (accessing_account and accessing_account.is_admin?)
+      render json: CommunitySerializer.new(@community)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def update
     @community = Community.find(params[:id])
 
     @community.update_attributes(params.permit(
+      :care_type, :status,
       :name, :description,
-      :is_independent, :is_assisted, :is_nursing, :is_memory, :is_ccrc,
       :address, :address_more, :city, :state, :postal, :country,
       :lat, :lon, :website, :phone, :fax, :email
     ))
