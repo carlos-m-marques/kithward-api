@@ -377,7 +377,7 @@ class DataDictionary
       ],
     },
 
-    { section: "Activities",
+    { section: "Amenitites",
       attrs: [
         { amenity_crafts_room:         { label: "Arts & Crafts Room", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_bank:                { label: "Bank", data: 'amenity', group_as: "Indoor amenities" }},
