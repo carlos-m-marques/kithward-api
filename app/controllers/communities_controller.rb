@@ -25,13 +25,13 @@ class CommunitiesController < ApplicationController
 
     if params[:care_type]
       case params[:care_type].downcase
-      when 'i', 'independent',
+      when 'i', 'independent'
         search_options[:where][:care_type] = Community::TYPE_INDEPENDENT
-      when 'a', 'assisted',
+      when 'a', 'assisted'
         search_options[:where][:care_type] = Community::TYPE_ASSISTED
-      when 'n', 'nursing',
+      when 'n', 'nursing'
         search_options[:where][:care_type] = Community::TYPE_NURSING
-      when 'm', 'memory',
+      when 'm', 'memory'
         search_options[:where][:care_type] = Community::TYPE_MEMORY
       end
     end

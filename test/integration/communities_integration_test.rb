@@ -2,9 +2,9 @@ require 'test_helper'
 
 class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
-    @c1 = create(:community, name: 'Golden Pond', description: 'Excelent Care')
-    @c2 = create(:community, name: 'Silver Lining', description: 'Incredible Care')
-    @c3 = create(:community, name: 'Gray Peaks', description: 'Incredible Service')
+    @c1 = create(:community, name: 'Golden Pond', description: 'Excelent Care', care_type: 'A')
+    @c2 = create(:community, name: 'Silver Lining', description: 'Incredible Care', care_type: 'I')
+    @c3 = create(:community, name: 'Gray Peaks', description: 'Incredible Service', care_type: 'A')
     @c4 = create(:community, name: 'Deleted Community', description: 'Useless Service', status: Community::STATUS_DELETED)
 
     @account = create(:account)
@@ -38,6 +38,18 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal [@c3.id.to_s], json_response['data'].collect {|result| result['id']}
     assert_equal [@c3.name], json_response['data'].collect {|result| result['attributes']['name']}
+
+    get "/v1/communities", params: {q: 'Incredible', care_type: 'assisted'}
+    assert_response :success
+    assert_equal [@c3.id.to_s], json_response['data'].collect {|result| result['id']}
+
+    get "/v1/communities", params: {care_type: 'assisted'}
+    assert_response :success
+    assert_equal [@c1.id.to_s, @c3.id.to_s], json_response['data'].collect {|result| result['id']}
+
+    get "/v1/communities", params: {care_type: 'i'}
+    assert_response :success
+    assert_equal [@c2.id.to_s], json_response['data'].collect {|result| result['id']}
   end
 
   test "retrieve one" do
