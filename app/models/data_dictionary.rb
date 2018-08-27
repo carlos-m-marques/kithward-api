@@ -13,6 +13,9 @@ class DataDictionary
       or raise "Sections need a name and attributes"
     }
 
+    repeated_names = sections.collect {|s| s[:section]}.group_by(&:itself).select {|k, v| v.size > 1}
+    repeated_names.length == 0 or raise "Sections need unique names (#{repeated_names.collect {|k, v| k}.join(", ")})"
+
     all_attrs = attributes
 
     all_attrs.each {|attr| attr.keys.size == 1 \
