@@ -23,6 +23,19 @@ class CommunitiesController < ApplicationController
       end
     end
 
+    if params[:type] || params[:care_type]
+      case (params[:type] || params[:care_type]).downcase
+      when 'i', /independent/,
+        search_options[:where][:care_type] = Community::TYPE_INDEPENDENT
+      when 'a', /assisted/,
+        search_options[:where][:care_type] = Community::TYPE_ASSISTED
+      when 'n', /nursing/,
+        search_options[:where][:care_type] = Community::TYPE_NURSING
+      when 'm', /memory/,
+        search_options[:where][:care_type] = Community::TYPE_MEMORY
+      end
+    end
+
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 

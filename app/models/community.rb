@@ -50,6 +50,7 @@ class Community < ApplicationRecord
       {
         name: name,
         description: description,
+        care_type: care_type,
         status: status,
         city: city,
         state: state,
