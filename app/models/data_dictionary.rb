@@ -104,6 +104,7 @@ class DataDictionary
         { description:            { label: "Description", data: 'text', direct_model_attribute: true }},
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
+                                      {'-' => 'None'},
                                       {'B' => "Budhist"},
                                       {'C' => "Catholic"},
                                       {'X' => "Christian"},
