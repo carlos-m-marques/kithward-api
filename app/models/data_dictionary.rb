@@ -418,7 +418,7 @@ class DataDictionary
         { amenity_game_room:           { label: "Game/Card Room", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_hair_salon:          { label: "Hair Salon/Barber", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_library:             { label: "Library", data: 'amenity', group_as: "Indoor amenities" }},
-        { amenity_lounge:              { label: "Lounge/Community Rice", data: 'amenity', group_as: "Indoor amenities" }},
+        { amenity_lounge:              { label: "Lounge/Community Room", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_media_room:          { label: "Media/Film Room", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_theater:             { label: "Movie Theater", data: 'amenity', group_as: "Indoor amenities" }},
         { amenity_nail_salon:          { label: "Nail Salon", data: 'amenity', group_as: "Indoor amenities" }},
