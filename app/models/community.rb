@@ -35,6 +35,8 @@ class Community < ApplicationRecord
   TYPE_ASSISTED    = 'A'
   TYPE_NURSING     = 'N'
   TYPE_MEMORY      = 'M'
+  TYPE_HOSPICE     = 'H'
+  TYPE_RESPITE     = 'R'
 
   begin # attributes
     serialize :old_data, Hash
