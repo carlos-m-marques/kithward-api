@@ -79,6 +79,7 @@ class DataDictionary
                         ]}},
 
         { ccrc:   { label: "Continuing care community", data: 'flag' }},
+        { aip:    { label: "Aging in place", data: 'flag' }},
 
         { parent_company:       { label: "Parent company", data: 'string', admin_only: true }},
         { related_communities:  { label: "Related communities", data: 'list_of_ids', admin_only: true }},
@@ -212,7 +213,7 @@ class DataDictionary
         { security_staff_background_checks:    { label: "Staff background checks", data: 'flag', group_as: 'Security' }},
         { security_video_surveillance: { label: "Video surveillance", data: 'flag', group_as: 'Security' }},
         { security_visitor_checkins:      { label: "Visitor check-in", data: 'flag', group_as: 'Security' }},
-        
+
         { assistance_bathing:     { label: "Bathing",   data: 'amenity', group_as: 'Personal Assistance' }},
         { assistance_dressing:    { label: "Dressing",  data: 'amenity', group_as: 'Personal Assistance' }},
         { assistance_errands:     { label: "Errands/escort",   data: 'amenity', group_as: 'Personal Assistance' }},
@@ -285,7 +286,7 @@ class DataDictionary
         { activity_sharing:           { label: "Sharing/Storytelling", data: 'amenity', group_as: "Social & entertainment" }},
         { activity_tea_time:          { label: "Tea/Coffee Time", data: 'amenity', group_as: "Social & entertainment" }},
         { activity_wine_tasting:      { label: "Wine Tasting", data: 'amenity', group_as: "Social & entertainment" }},
-        
+
         { activity_casino_trips:      { label: "Casino Trips", data: 'amenity', group_as: "Trips" }},
         { activity_city_trips:        { label: "City Trips", data: 'amenity', group_as: "Trips" }},
         { activity_dining_out:        { label: "Dining Out", data: 'amenity', group_as: "Trips" }},
