@@ -69,6 +69,21 @@ class CommunitiesController < ApplicationController
       @community.data = @community.data.merge(params[:data])
     end
 
+    if params[:images]
+      for data in params[:images]
+        if data && data[:id] && data[:id] > 0
+          image = @community.community_images.find_by_id(data[:id])
+          if data[:deleted] == 'deleted'
+            image.destroy
+          else
+            image && image.update_attributes(data.permit(:caption, :tags))
+          end
+        elsif data && data[:data]
+          @community.community_images.create(caption: data[:caption], tags: data[:tags], image: data[:data])
+        end
+      end
+    end
+
     @community.save
 
 
