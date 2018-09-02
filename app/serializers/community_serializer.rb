@@ -35,6 +35,7 @@ class CommunitySerializer
   attribute :images do |object|
     object.community_images.collect do |image|
       {
+        id: image.id,
         url: "/v1/communities/#{object.id}/images/#{image.id}",
         caption: image.caption,
         tags: image.tags,
