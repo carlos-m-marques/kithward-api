@@ -1,3 +1,4 @@
+require 'tempfile'
 
 class CommunitiesController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show, :dictionary]
@@ -78,8 +79,21 @@ class CommunitiesController < ApplicationController
           else
             image && image.update_attributes(data.permit(:caption, :tags))
           end
-        elsif data && data[:data]
-          @community.community_images.create(caption: data[:caption], tags: data[:tags], image: data[:data])
+        elsif data && data[:data] && data[:data] =~ /^data:(.*)/
+          content_type = data[:data][/(image\/[a-z]{3,4})|(application\/[a-z]{3,4})/]
+          content_type = content_type[/\b(?!.*\/).*/]
+
+          encoded_data = data[:data].gsub(/data:((image|application)\/.{3,}),/, '')
+          decoded_data = Base64.decode64(encoded_data).force_encoding("ASCII-8BIT")
+
+          filename = 'image_' + Time.now.to_s + '.' + content_type
+          tempfile = Tempfile.new(filename, encoding: "ASCII-8BIT")
+          tempfile.write(decoded_data)
+          tempfile.rewind
+          image = @community.community_images.create(caption: data[:caption], tags: data[:tags])
+          image.image.attach(io: tempfile, filename: filename)
+          tempfile.close
+          tempfile.unlink
         end
       end
     end
