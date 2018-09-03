@@ -23,4 +23,8 @@ class CommunityImageSerializer
   attribute :url do |object|
     "/v1/communities/#{object.community_id}/images/#{object.id}"
   end
+
+  attribute :content_type do |object|
+    object.image.content_type
+  end
 end
