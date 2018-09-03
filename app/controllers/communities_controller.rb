@@ -9,7 +9,8 @@ class CommunitiesController < ApplicationController
       match: :word_start,
       where: {
         status: Community::STATUS_ACTIVE,
-      }
+      },
+      includes: [{community_images: :images}]
     }
 
     if params[:geo]
