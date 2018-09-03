@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_26_143334) do
+ActiveRecord::Schema.define(version: 2018_09_02_235634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2018_08_26_143334) do
     t.string "tags", limit: 1024
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sort_order", default: 9999
     t.index ["community_id"], name: "index_community_images_on_community_id"
   end
 

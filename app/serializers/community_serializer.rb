@@ -33,12 +33,13 @@ class CommunitySerializer
     :updated_at
 
   attribute :images do |object|
-    object.community_images.collect do |image|
+    object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
       {
         id: image.id,
         url: "/v1/communities/#{object.id}/images/#{image.id}",
         caption: image.caption,
         tags: image.tags,
+        sort_order: image.sort_order
       }
     end
   end

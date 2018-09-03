@@ -17,7 +17,7 @@ class CommunityImagesController < ApplicationController
 
   def create
     @community = Community.find(params[:community_id])
-    @image = @community.community_images.create(params.permit(:caption, :tags, :image))
+    @image = @community.community_images.create(params.permit(:caption, :tags, :sort_order, :image))
 
     if @image.errors.any?
       render json: { errors: @image.errors}, status: :unprocessable_entity
@@ -30,7 +30,7 @@ class CommunityImagesController < ApplicationController
     @community = Community.find(params[:community_id])
     @image = @community.community_images.find_by_id(params[:id])
 
-    @image.update_attributes(params.permit(:caption, :tags, :image))
+    @image.update_attributes(params.permit(:caption, :tags, :sort_order, :image))
 
     if @image.errors.any?
       render json: { errors: @image.errors}, status: :unprocessable_entity

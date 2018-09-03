@@ -8,6 +8,7 @@
 #  tags         :string(1024)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  sort_order   :integer          default(9999)
 #
 # Indexes
 #
@@ -17,7 +18,7 @@
 class CommunityImageSerializer
   include FastJsonapi::ObjectSerializer
 
-  attributes :caption, :tags
+  attributes :caption, :tags, :sort_order
 
   attribute :url do |object|
     "/v1/communities/#{object.community_id}/images/#{object.id}"

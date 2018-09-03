@@ -77,7 +77,7 @@ class CommunitiesController < ApplicationController
           if data[:deleted] == 'deleted'
             image.destroy
           else
-            image && image.update_attributes(data.permit(:caption, :tags))
+            image && image.update_attributes(data.permit(:caption, :tags, :sort_order))
           end
         elsif data && data[:data] && data[:data] =~ /^data:(.*)/
           content_type = data[:data][/(image\/[a-z]{3,4})|(application\/[a-z]{3,4})/]
@@ -90,7 +90,7 @@ class CommunitiesController < ApplicationController
           tempfile = Tempfile.new(filename, encoding: "ASCII-8BIT")
           tempfile.write(decoded_data)
           tempfile.rewind
-          image = @community.community_images.create(caption: data[:caption], tags: data[:tags])
+          image = @community.community_images.create(data.permit(:caption, :tags, :sort_order))
           image.image.attach(io: tempfile, filename: filename)
           tempfile.close
           tempfile.unlink

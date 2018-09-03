@@ -8,6 +8,7 @@
 #  tags         :string(1024)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  sort_order   :integer          default(9999)
 #
 # Indexes
 #
