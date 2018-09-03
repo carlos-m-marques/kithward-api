@@ -39,7 +39,8 @@ class CommunitySerializer
         url: "/v1/communities/#{object.id}/images/#{image.id}",
         caption: image.caption,
         tags: image.tags,
-        sort_order: image.sort_order
+        sort_order: image.sort_order,
+        content_type: image.image.content_type,
       }
     end
   end
