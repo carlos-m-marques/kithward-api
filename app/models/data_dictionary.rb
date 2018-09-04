@@ -140,9 +140,9 @@ class DataDictionary
         { ownership_nonprofit_religious:   { label: "Religious Non-Profit", data: 'flag', group_as: 'Ownership' }},
         { ownership_nonprofit_secular:     { label: "Secular Non-Profit", data: 'flag', group_as: 'Ownership' }},
         { ownership_private:               { label: "Privately Held", data: 'flag', group_as: 'Ownership' }},
-        { care_oncall_private_equity:      { label: "Private Equity Backed", data: 'flag', group_as: 'Ownership' }},
-        { care_onsite_reit:                { label: "REIT", data: 'flag', group_as: 'Ownership' }},
-        { care_onsite_public_company:      { label: "Public Company", data: 'flag', group_as: 'Ownership' }},
+        { ownership_private_equity:        { label: "Private Equity Backed", data: 'flag', group_as: 'Ownership' }},
+        { ownership_reit:                  { label: "REIT", data: 'flag', group_as: 'Ownership' }},
+        { ownership_public_company:        { label: "Public Company", data: 'flag', group_as: 'Ownership' }},
         
         { resident_council_finances:       { label: "Influences budgeting & financial decisions", data: 'flag', group_as: 'Resident Council' }},
         { resident_council_programming:    { label: "Chooses programming", data: 'flag', group_as: 'Resident Council' }},
@@ -163,7 +163,7 @@ class DataDictionary
         { resident_profile_interests:      { label: "Interests & Hobbies", data: 'text' }},       
         { resident_profile_cultures:       { label: "Cultural Backgrounds", data: 'text' }},      
         { resident_profile_religions:      { label: "Religions Represented", data: 'text' }},        
-        { resident_profile_politics:       { label: "Religious affiliation", data: 'select',
+        { resident_profile_politics:       { label: "Political Leaning ", data: 'select',
                                              values: [
                                                {'-' => 'None specified'},
                                                {'C' => "Conservative"},
