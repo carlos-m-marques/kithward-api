@@ -10,7 +10,7 @@ class CommunitiesController < ApplicationController
       where: {
         status: Community::STATUS_ACTIVE,
       },
-      includes: [{community_images: :images}]
+      includes: [:community_images]
     }
 
     if params[:geo]
