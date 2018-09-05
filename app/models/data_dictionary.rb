@@ -112,6 +112,12 @@ class DataDictionary
         { staff_total:            { label: "Total staff", data: 'count' }},
         { staff_full_time:        { label: "Full-time staff", data: 'count' }},
         { staff_ratio:            { label: "Staff to resident ratio", data: 'number'}},   
+        { setting:                { label: "Setting", data: 'select',
+                                    values: [
+                                      {'U' => "Urban"},
+                                      {'S' => "Suburban"},
+                                      {'R' => "Rural"},
+                                    ]}},
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
                                       {'-' => 'None'},
@@ -131,16 +137,17 @@ class DataDictionary
       ]
     },
 
-    { section: "Community Setting",
+    { section: "Community Accessibility",
       attrs: [
-        { setting:                { label: "Setting", data: 'select',
-                                    values: [
-                                      {'U' => "Urban"},
-                                      {'S' => "Suburban"},
-                                      {'R' => "Rural"},
-                                    ]}},
         { access_to_city:         { label: "Access to the city", data: 'flag' }},
         { access_to_outdoors:     { label: "Access to the outdoors", data: 'flag' }},
+        
+        { drive_time_city:        { label: "Drive time to city", data: 'count' }},        
+        { train_time_city:        { label: "Train time to city", data: 'count' }},           
+        { drive_time_train:       { label: "Drive time to train", data: 'count' }},        
+        { walk_time_town:         { label: "Walking time to town services", data: 'count' }},        
+        { walk_time_bus:          { label: "Walking time to public transportation", data: 'count' }},         
+        
       ]
     },
     
@@ -179,8 +186,9 @@ class DataDictionary
 
         { entrance_fee_min:       { label: "Minimum entrance fee", data: 'price' }},
         { entrance_fee_max:       { label: "Maximum entrance fee", data: 'price' }},
-
-        { months_pay_required:    { label: "Months of private pay required", data: 'number' }},
+        
+        { medicaid_backup:        { label: "Accepts Medicaid if private pay runs out", data: 'flag' }},        
+        { fee_emergency_pendant:  { label: "One-time fee for emergency alert pendant", data: 'flag' }},
 
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
       ]
@@ -261,19 +269,20 @@ class DataDictionary
 
     { section: "Available Services",
       attrs: [
-        { services_chaplain: { label: "Chaplain/Priest", data: 'amenity', group_as: "Services" }},
-        { services_concierge: { label: "Dry-cleaning Services", data: 'amenity', group_as: "Services" }},
-        { services_drycleaning: { label: "Concierge", data: 'amenity', group_as: "Services" }},
-        { services_hairdresser: { label: "Hairdresser/Barber", data: 'amenity', group_as: "Services" }},
+        { services_chaplain:     { label: "Chaplain/Priest", data: 'amenity', group_as: "Services" }},
+        { services_concierge:    { label: "Dry-cleaning Services", data: 'amenity', group_as: "Services" }},
+        { services_drycleaning:  { label: "Concierge", data: 'amenity', group_as: "Services" }},
+        { services_hairdresser:  { label: "Hairdresser/Barber", data: 'amenity', group_as: "Services" }},
         { services_housekeeping: { label: "Housekeeping", data: 'amenity', group_as: "Services" }},
-        { services_laundry: { label: "Laundry Service", data: 'amenity', group_as: "Services" }},
-        { services_linen: { label: "Linen Service", data: 'amenity', group_as: "Services" }},
-        { services_manicurist: { label: "Manicurist", data: 'amenity', group_as: "Services" }},
-        { services_massage: { label: "Massage Therapist", data: 'amenity', group_as: "Services" }},
-        { services_newspaper: { label: "Newspaper Delivery", data: 'amenity', group_as: "Services" }},
-        { services_pharmacy: { label: "Pharmacy Services", data: 'amenity', group_as: "Services" }},
-        { services_catering: { label: "Private Event Catering", data: 'amenity', group_as: "Services" }}, 
-        { services_rabbi: { label: "Rabbi", data: 'amenity', group_as: "Services" }},
+        { services_laundry:      { label: "Laundry Service", data: 'amenity', group_as: "Services" }},
+        { services_linen:        { label: "Linen Service", data: 'amenity', group_as: "Services" }},
+        { services_manicurist:   { label: "Manicurist", data: 'amenity', group_as: "Services" }},
+        { services_massage:      { label: "Massage Therapist", data: 'amenity', group_as: "Services" }},
+        { services_newspaper:    { label: "Newspaper Delivery", data: 'amenity', group_as: "Services" }},
+        { services_volunteers:   { label: "Outside Volunteers", data: 'amenity', group_as: "Services" }},
+        { services_pharmacy:     { label: "Pharmacy Services", data: 'amenity', group_as: "Services" }},
+        { services_catering:     { label: "Private Event Catering", data: 'amenity', group_as: "Services" }}, 
+        { services_rabbi:        { label: "Rabbi", data: 'amenity', group_as: "Services" }},
         
         { services_shuttle_service: { label: "Car/Shuttle Service", data: 'amenity', group_as: "Transportation & Parking" }},        
         { services_parking: { label: "Parking", data: 'amenity', group_as: "Transportation & Parking" }},
@@ -291,17 +300,18 @@ class DataDictionary
     
     { section: "Security",
       attrs: [
-        { security_electronic_key:    { label: "Electronic key entry system", data: 'flag', group_as: 'Security' }},
-        { security_emergency_call:    { label: "Emergency call system", data: 'flag', group_as: 'Security' }},
-        { security_ft_security:    { label: "Full-Time security", data: 'flag', group_as: 'Security' }},
-        { security_inroom_monitoring: { label: "In-room monitoring", data: 'flag', group_as: 'Security' }},
-        { security_night_checks:      { label: "Night checks", data: 'flag', group_as: 'Security' }},
-        { security_safety_checks:    { label: "Regular safety checks", data: 'flag', group_as: 'Security' }},
-        { security_secure_memory: { label: "Secure memory unit", data: 'flag', group_as: 'Security' }},
-        { security_security_system:      { label: "Security system", data: 'flag', group_as: 'Security' }},
+        { security_electronic_key:             { label: "Electronic key entry system", data: 'flag', group_as: 'Security' }},
+        { security_emergency_pendant:          { label: "Emergency alert pendants", data: 'flag', group_as: 'Security' }},
+        { security_ft_security:                { label: "Full-Time security", data: 'flag', group_as: 'Security' }},
+        { security_emergency_call:             { label: "In-room emergency call system", data: 'flag', group_as: 'Security' }},
+        { security_inroom_monitoring:          { label: "In-room monitoring", data: 'flag', group_as: 'Security' }},
+        { security_night_checks:               { label: "Night checks", data: 'flag', group_as: 'Security' }},
+        { security_safety_checks:              { label: "Regular safety checks", data: 'flag', group_as: 'Security' }},
+        { security_secure_memory:              { label: "Secure memory unit", data: 'flag', group_as: 'Security' }},
+        { security_security_system:            { label: "Security system", data: 'flag', group_as: 'Security' }},
         { security_staff_background_checks:    { label: "Staff background checks", data: 'flag', group_as: 'Security' }},
-        { security_video_surveillance: { label: "Video surveillance", data: 'flag', group_as: 'Security' }},
-        { security_visitor_checkins:      { label: "Visitor check-in", data: 'flag', group_as: 'Security' }}, 
+        { security_video_surveillance:         { label: "Video surveillance", data: 'flag', group_as: 'Security' }},
+        { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: 'Security' }}, 
         
         ],
     },
@@ -539,7 +549,7 @@ class DataDictionary
         { ownership_reit:                  { label: "REIT", data: 'flag', group_as: 'Ownership' }},
         { ownership_public_company:        { label: "Public Company", data: 'flag', group_as: 'Ownership' }},
         
-        { resident_council_finances:       { label: "Influences budget & financial decisions", data: 'flag', group_as: 'Resident Council' }},
+        { resident_council_finances:       { label: "Influences budget/financial decisions", data: 'flag', group_as: 'Resident Council' }},
         { resident_council_programming:    { label: "Chooses programming", data: 'flag', group_as: 'Resident Council' }},
         { resident_council_advice:         { label: "Provides advice to management", data: 'flag', group_as: 'Resident Council' }},
         
@@ -557,6 +567,13 @@ class DataDictionary
       ],
     },    
     
+    { section: "Awards & Certifications",
+      attrs: [   
+        { community_awards:                { label: "Community Values", data: 'text' }},
+        
+      ],
+    },    
+        
     { section: "Contract Options",
       attrs: [   
         { contract_type_extensive:     { label: "Extensive (Life Care)", data: 'flag', group_as: "Contract Types" }},
@@ -582,15 +599,15 @@ class DataDictionary
         { requires_medical_qual:      { label: "Requires medical qualification", data: 'flag' }},
         { medical_qual_requirements:  { label: "Medical qualification requirements", data: 'string' }},
         { requires_insurance:         { label: "Requires insurance", data: 'flag' }},
-        { insurance_requirements:     { label: "Requires insurance", data: 'string' }},
         { accepts_medicare:           { label: "Accepts Medicare", data: 'flag' }},
         { accepts_medicare_supl:      { label: "Accepts Medicare supplement", data: 'flag' }},
         { accepts_private_ins:        { label: "Accepts private plan insurance", data: 'flag' }},
         { accepts_long_term_ins:      { label: "Accepts long-term care insurance", data: 'flag' }},
+        { insurance_requirements:     { label: "Insurance requirements", data: 'string' }},
         { requires_income_qual:       { label: "Requires income qualification", data: 'flag' }},
-        { income_qual_requirements:   { label: "Requires income qualification", data: 'string' }},
+        { income_qual_requirements:   { label: "Income qualification requirements", data: 'string' }},
         { requires_asset_qual:        { label: "Requires asset qualification", data: 'flag' }},
-        { asset_qual_requirements:    { label: "Requires asset qualification", data: 'string' }},
+        { asset_qual_requirements:    { label: "Asset qualification requirements", data: 'string' }},
       ]
     },
     
