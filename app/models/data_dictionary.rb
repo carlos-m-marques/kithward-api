@@ -109,6 +109,8 @@ class DataDictionary
                                        {'L' => 'Large'},
                                     ]}},
         { bed_count:              { label: "Beds", data: 'count'}},
+        { staff_total:            { label: "Total staff", data: 'count' }},
+        { staff_full_time:        { label: "Full-time staff", data: 'count' }},
         { staff_ratio:            { label: "Staff to resident ratio", data: 'number'}},   
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
@@ -208,15 +210,12 @@ class DataDictionary
 
     { section: "Healthcare & Assistance",
       attrs: [
-        { staff_total:            { label: "Total staff", data: 'count' }},
-        { staff_full_time:        { label: "Full-time staff", data: 'count' }},
         { staff_doctors:          { label: "Doctors", data: 'count' }},
         { staff_doctors_ft:       { label: "Full-time doctors", data: 'count' }},
         { staff_nurses:           { label: "Licensed nurses", data: 'count' }},
         { staff_nurses_ft:        { label: "Full-time licensed nurses", data: 'count' }},
         { staff_socworkers:       { label: "Licensed social workers", data: 'count' }},
         { staff_socworkers_ft:    { label: "Full-time licensed social workers", data: 'count' }},
-        { staff_other:            { label: "Other staff", data: 'count' }},
 
         { care_ft_doctor:             { label: "Full-Time In House Doctor", data: 'flag', group_as: 'Healthcare Staff' }},
         { care_ft_nurse:              { label: "Full-Time In House Nurse", data: 'flag', group_as: 'Healthcare Staff' }},
@@ -560,21 +559,18 @@ class DataDictionary
     
     { section: "Contract Options",
       attrs: [   
-        { contract_type:               { label: "Political Leanings", data: 'select',
-                                             values: [
-                                               {'-' => 'None specified'},
-                                               {'E' => "Extensive (Life Care)"},
-                                               {'M' => "Modified"},
-                                               {'F' => "Fee for Service"},
-                                               {'R' => "Rental"},
-                                               {'E' => "Equity"},                                               
-                                    ]}},
-        { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag' }},
-        { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag' }},          
-        { refund_option_min:           { label: "Minimum Refund Offered", data: 'count' }},    
-        { refund_option_max:           { label: "Maximum Refund Offered", data: 'count' }},    
-        { refund_conditions:           { label: "Conditions for Refund", data: 'string' }},     
-        { entrance_fee_amort:          { label: "Amortization Details", data: 'text' }},   
+        { contract_type_extensive:     { label: "Extensive (Life Care)", data: 'flag', group_as: "Contract Types" }},
+        { contract_type_modified:      { label: "Modified", data: 'flag', group_as: "Contract Types" }},
+        { contract_type_fee:           { label: "Fee for Service", data: 'flag', group_as: "Contract Types" }},
+        { contract_type_rental:        { label: "Rental", data: 'flag', group_as: "Contract Types" }},
+        { contract_type_equity:        { label: "Equity", data: 'flag', group_as: "Contract Types" }},        
+        
+        { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group_as: "Entrance Fee & Refund" }},
+        { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag', group_as: "Entrance Fee & Refund" }},          
+        { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},    
+        { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},    
+        { refund_conditions:           { label: "Conditions for Refund", data: 'string', group_as: "Entrance Fee & Refund" }},     
+        { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group_as: "Entrance Fee & Refund" }},   
         
         ],
     },    
