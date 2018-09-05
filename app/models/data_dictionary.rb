@@ -569,7 +569,7 @@ class DataDictionary
     
     { section: "Awards & Certifications",
       attrs: [   
-        { community_awards:                { label: "Community Values", data: 'text' }},
+        { community_awards:                { label: "Awards & Certifications", data: 'text' }},
         
       ],
     },    
