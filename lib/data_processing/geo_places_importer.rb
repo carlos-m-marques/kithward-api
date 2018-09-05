@@ -16,9 +16,11 @@ module GeoPlacesImporter
       col_sep: "\t", quote_char: "‽" # use a random quote char to prevent problems with quotes in TSV files
     ) do |row|
 
-      next unless row[6] == 'P' # Populated place
+      next unless row[7] == 'PPL' # Populated place
 
       next unless ['NY', 'NJ', 'CT'].include?(row[10])
+
+      next unless row[14].to_i >= 100
 
       place = GeoPlace.find_or_create_by(reference: "geoname-us:#{row[0]}")
       place.geo_type = GeoPlace::TYPE_GEONAME
