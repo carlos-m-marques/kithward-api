@@ -56,5 +56,7 @@ module GeoPlacesImporter
     end
 
     `rm -rf tmp/geonames-zips-us tmp/geonames-zips-us.zip`
+
+    GeoPlace.reindex
   end
 end
