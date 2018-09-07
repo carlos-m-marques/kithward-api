@@ -4,6 +4,7 @@ class GeoPlacesController < ApplicationController
     search_options = {
       fields: ['name'],
       match: :word_start,
+      order: {weight: :desc},
     }
 
     search_options[:limit] = params[:limit] || 20

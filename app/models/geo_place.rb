@@ -12,6 +12,7 @@
 #  lon        :float
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  weight     :integer          default(0)
 #
 
 class GeoPlace < ApplicationRecord
@@ -28,6 +29,7 @@ class GeoPlace < ApplicationRecord
       {
         name: name,
         location: {lat: lat, lon: lon},
+        weight: weight,
       }
     end
   end

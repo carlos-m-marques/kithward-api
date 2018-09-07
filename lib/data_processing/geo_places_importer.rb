@@ -16,7 +16,7 @@ module GeoPlacesImporter
       col_sep: "\t", quote_char: "‽" # use a random quote char to prevent problems with quotes in TSV files
     ) do |row|
 
-      next unless row[7] == 'PPL' # Populated place
+      next unless row[7][0..2] == 'PPL' # Populated place
 
       next unless ['NY', 'NJ', 'CT'].include?(row[10])
 
@@ -29,6 +29,7 @@ module GeoPlacesImporter
       place.full_name = "#{place.name}, #{place.state}"
       place.lat = row[4].to_f
       place.lon = row[5].to_f
+      place.weight = row[14].to_i
       place.save
     end
 
