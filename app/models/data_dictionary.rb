@@ -94,12 +94,12 @@ class DataDictionary
         { state: { label: "State", data: 'string', direct_model_attribute: true }},
         { postal: { label: "ZIP", data: 'string', direct_model_attribute: true }},
         { country: { label: "Country", data: 'string', direct_model_attribute: true }},
-        
+
         { description:            { label: "Description", data: 'text', direct_model_attribute: true }},
         { admin_notes: { label: "Admin Notes", data: 'text', admin_only: true }},
-        
+
         { star_rating:            { label: "Rating", data: 'rating' }},
-        
+
         { community_size:         { label: "Community size", data: 'select',
                                      values: [
                                        {'S' => 'Small'},
@@ -109,15 +109,15 @@ class DataDictionary
         { bed_count:              { label: "Beds", data: 'count'}},
         { staff_total:            { label: "Total staff", data: 'count' }},
         { staff_full_time:        { label: "Full-time staff", data: 'count' }},
-        { staff_ratio:            { label: "Staff to resident ratio", data: 'number'}},  
-        
+        { staff_ratio:            { label: "Staff to resident ratio", data: 'number'}},
+
         { setting:                { label: "Setting", data: 'select',
                                     values: [
                                       {'U' => "Urban"},
                                       {'S' => "Suburban"},
                                       {'R' => "Rural"},
                                     ]}},
-        
+
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
                                       {'-' => 'None'},
@@ -130,28 +130,28 @@ class DataDictionary
                                       {'O' => "Other"},
                                     ]}},
         { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag' }},
-        
+
         { access_to_city:         { label: "Access to the city", data: 'flag' }},
         { access_to_outdoors:     { label: "Access to the outdoors", data: 'flag' }},
-        
+
         { smoking:                { label: "Smoking", data: 'flag' }},
         { non_smoking:            { label: "Non-smoking", data: 'flag' }},
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
-       
+
       ]
     },
 
     { section: "Kithward Color",
       attrs: [
-        { kithward_color:         { label: "Kithward Color", data: 'text' }},        
-        { kithward_color_y:       { label: "Display Kithward Color", data: 'flag' }},                 
-        
-      ]
+        { kithward_color:         { label: "Kithward Color", data: 'text' }},
+        { kithward_color_y:       { label: "Display Kithward Color", data: 'flag' }},
+      ],
     },
 
     { section: "Accomodations",
-      desc: "Here are the various accomodations available to choose from, subject to availability. There may be more options than what are shown. Contact us to find out more.",
+      desc: "Here are the various accomodations available to choose from, subject to availability. " \
+            "There may be more options than what are shown. Contact us to find out more.",
       attrs: [
         { room_shared:            { label: "Shared Room", data: 'amenity', group_as: "Room Types" }},
         { room_private:           { label: "Private Room", data: 'amenity', group_as: "Room Types" }},
@@ -170,19 +170,20 @@ class DataDictionary
         { room_feat_pvt_outdoor:  { label: "Private Outdoor Space", data: 'amenity', group_as: "Room Features" }},
         { room_feat_walkin:       { label: "Walk-In Closets", data: 'amenity', group_as: "Room Features" }},
         { room_feat_washer:       { label: "Washer/Dryer", data: 'amenity', group_as: "Room Features" }},
-        
+
       ],
     },
-    
+
     { section: "Pricing Summary",
-      desc: "Pricing can vary greatly depending on the accomodations you are looking for and the level of assistance you require, if any. Contact us to find out more.",
+      desc: "Pricing can vary greatly depending on the accomodations you are looking for and the " \
+            "level of assistance you require, if any. Contact us to find out more.",
       attrs: [
         { price_rating:           { label: "Price rating", data: 'rating', admin_break_after: 'yes' }},
-        
+
         { rent_starting_price:    { label: "Base rent starting price", data: 'price' }},
         { rent_maximum_price:     { label: "Base rent maximum price", data: 'price' }},
         { rent_includes_care:     { label: "Base rent includes care price", data: 'flag', admin_break_after: 'yes' }},
-        
+
         { care_starting_price:    { label: "Care cost starting price", data: 'price' }},
         { care_maximum_price:     { label: "Care cost maximum price", data: 'price', admin_break_after: 'yes' }},
 
@@ -191,12 +192,13 @@ class DataDictionary
 
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
-        
+
       ]
     },
-    
+
     { section: "Care & Assistance",
-      desc: "Here are the types of healthcare and assistance offered at this community, some of which may come at an additional cost.",
+      desc: "Here are the types of healthcare and assistance offered at this community, some of which " \
+            "may come at an additional cost.",
       attrs: [
         { staff_doctors:              { label: "Doctors", data: 'count' }},
         { staff_doctors_ft:           { label: "Full-time doctors", data: 'count' }},
@@ -211,7 +213,7 @@ class DataDictionary
         { care_RN:                    { label: "Registered Nurse(s)", data: 'flag', group_as: 'Healthcare Staff' }},
         { care_LPN:                   { label: "Licensed Practical Nurse(s)", data: 'flag', group_as: 'Healthcare Staff' }},
         { care_social_worker:         { label: "Social Worker(s)", data: 'flag', group_as: 'Healthcare Staff' }},
-        
+
         { care_onsite_doctor_visits:  { label: "Doctor Visits", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_nurse_visits:   { label: "Nurse Visits", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_audiologist:    { label: "Audiologist", data: 'flag', group_as: 'Onsite Healthcare' }},
@@ -220,10 +222,10 @@ class DataDictionary
         { care_onsite_dermatologist:  { label: "Dermatologist", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_dietician:      { label: "Dietician", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_opthamologist:  { label: "Opthamologist", data: 'flag', group_as: 'Onsite Healthcare' }},
-        { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group_as: 'Onsite Healthcare' }},        
+        { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_podiatrist:     { label: "Podiatrist", data: 'flag', group_as: 'Onsite Healthcare' }},
         { care_onsite_psychologist:   { label: "Psychologist", data: 'flag', group_as: 'Onsite Healthcare' }},
-        { care_onsite_psychiatrist:   { label: "Psychiatrist", data: 'flag', group_as: 'Onsite Healthcare' }},      
+        { care_onsite_psychiatrist:   { label: "Psychiatrist", data: 'flag', group_as: 'Onsite Healthcare' }},
 
 
         { assistance_bathing:     { label: "Bathing",   data: 'amenity', group_as: 'Personal Assistance' }},
@@ -248,9 +250,10 @@ class DataDictionary
         { care_wellness:          { label: "Wellness program", data: 'amenity', group_as: 'Special Care' }},
       ],
     },
-    
+
     { section: "Dining & Diet",
-      desc: "Here you will find the style of dining in the community, as well as the types of diets they can accomodate. If you have special restrictions, contact us to find out more.",
+      desc: "Here you will find the style of dining in the community, as well as the types of diets " \
+            "they can accomodate. If you have special restrictions, contact us to find out more.",
       attrs: [
         { food_24h_snacks: { label: "Snacks Available All Day", data: 'amenity', group_as: "Dining Style" }},
         { food_3_meals: { label: "3 Meals Daily", data: 'amenity', group_as: "Dining Style" }},
@@ -268,9 +271,10 @@ class DataDictionary
         { diet_vegetarian: { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
       ],
     },
-        
+
     { section: "Available Services",
-      desc: "Here are the services offered in the community, though some may come with an additional cost or be subject to availability.",
+      desc: "Here are the services offered in the community, though some may come with an additional " \
+            "cost or be subject to availability.",
       attrs: [
         { services_banking:      { label: "Banking Services", data: 'amenity', group_as: "Services" }},
         { services_chaplain:     { label: "Chaplain/Priest", data: 'amenity', group_as: "Services" }},
@@ -285,25 +289,27 @@ class DataDictionary
         { services_newspaper:    { label: "Newspaper Delivery", data: 'amenity', group_as: "Services" }},
         { services_volunteers:   { label: "Outside Volunteers", data: 'amenity', group_as: "Services" }},
         { services_pharmacy:     { label: "Pharmacy Services", data: 'amenity', group_as: "Services" }},
-        { services_catering:     { label: "Private Event Catering", data: 'amenity', group_as: "Services" }}, 
+        { services_catering:     { label: "Private Event Catering", data: 'amenity', group_as: "Services" }},
         { services_rabbi:        { label: "Rabbi", data: 'amenity', group_as: "Services" }},
-        
-        { services_shuttle_service: { label: "Car/Shuttle Service", data: 'amenity', group_as: "Transportation & Parking" }},        
+
+        { services_shuttle_service: { label: "Car/Shuttle Service", data: 'amenity', group_as: "Transportation & Parking" }},
         { services_parking: { label: "Parking", data: 'amenity', group_as: "Transportation & Parking" }},
         { services_scheduled_transport: { label: "Scheduled Transportation", data: 'amenity', group_as: "Transportation & Parking" }},
         { services_transportation: { label: "Transportation Arrangement", data: 'amenity', group_as: "Transportation & Parking" }},
         { services_valet_parking: { label: "Valet Parking", data: 'amenity', group_as: "Transportation & Parking" }},
-        
+
         { services_cable: { label: "Cable Included", data: 'amenity', group_as: "Included Utilities" }},
         { services_domestic_phone: { label: "Domestic Phone Included", data: 'amenity', group_as: "Included Utilities" }},
         { services_wifi: { label: "WiFi Included", data: 'amenity', group_as: "Included Utilities" }},
         { services_wifi_common: { label: "WiFi In Common Areas", data: 'amenity', group_as: "Included Utilities" }},
-        
+
       ],
     },
 
     { section: "Activities",
-      desc: "Activity calendars speak volumes about the culture of a community. Here you'll learn what opportunities there are to socialize, stay fit, be creative, stay engages, grow spiritually, and more.",
+      desc: "Activity calendars speak volumes about the culture of a community. Here you'll learn " \
+            "what opportunities there are to socialize, stay fit, be creative, stay engages, grow " \
+            "spiritually, and more.",
       attrs: [
         { activity_acting:            { label: "Acting/Drama", data: 'amenity', group_as: "Creative & Artistic" }},
         { activity_arts:              { label: "Arts & Crafts", data: 'amenity', group_as: "Creative & Artistic" }},
@@ -349,7 +355,7 @@ class DataDictionary
         { activity_shopping:          { label: "Shopping/Errands", data: 'amenity', group_as: "Trips & Outings" }},
         { activity_sporting_events:   { label: "Sporting Events", data: 'amenity', group_as: "Trips & Outings" }},
         { activity_theater:           { label: "Theater/Performing Arts", data: 'amenity', group_as: "Trips & Outings" }},
-        { activity_wineries:          { label: "Wineries", data: 'amenity', group_as: "Trips & Outings" }},        
+        { activity_wineries:          { label: "Wineries", data: 'amenity', group_as: "Trips & Outings" }},
 
         { activity_art_classes:        { label: "Art Classes", data: 'amenity', group_as: "Lifelong Learning" }},
         { activity_book_club:          { label: "Book Club/Reading Group", data: 'amenity', group_as: "Lifelong Learning" }},
@@ -405,7 +411,7 @@ class DataDictionary
         { activity_walking_club:      { label: "Walking Club", data: 'amenity', group_as: "Fitness & Exercise" }},
         { activity_yoga:              { label: "Yoga", data: 'amenity', group_as: "Fitness & Exercise" }},
         { activity_zumba:             { label: "Zumba", data: 'amenity', group_as: "Fitness & Exercise" }},
-        
+
         { activity_billiards:   { label: "Billiards/Pool", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_bingo:       { label: "Bingo", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_board_games: { label: "Board Games", data: 'amenity', group_as: "Games & Trivia" }},
@@ -425,7 +431,8 @@ class DataDictionary
     },
 
     { section: "Amenities",
-      desc: "These are the amenities that represent the 'bones' of the community: the rooms, facilities, features and infrastructure meant to enhance and enrich the lives of the residents.", 
+      desc: "These are the amenities that represent the 'bones' of the community: the rooms, " \
+            "facilities, features and infrastructure meant to enhance and enrich the lives of the residents.", 
       attrs: [
         { amenity_ATM:                 { label: "ATM", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_crafts_room:         { label: "Arts & Crafts Room", data: 'amenity', group_as: "Indoor Amenities" }},
@@ -472,7 +479,7 @@ class DataDictionary
         { amenity_fountain:                { label: "Fountain/Water Feature", data: 'amenity', group_as: "Outdoor Amenities" }},
         { amenity_garden:                  { label: "Garden", data: 'amenity', group_as: "Outdoor Amenities" }},
         { amenity_gazebo:                  { label: "Gazebo", data: 'amenity', group_as: "Outdoor Amenities" }},
-        { amenity_greenhouse:              { label: "Greenhouse", data: 'amenity', group_as: "Outdoor Amenities" }},        
+        { amenity_greenhouse:              { label: "Greenhouse", data: 'amenity', group_as: "Outdoor Amenities" }},
         { amenity_landscaped:              { label: "Landscaped Grounds", data: 'amenity', group_as: "Outdoor Amenities" }},
         { amenity_lawn:                    { label: "Lawn", data: 'amenity', group_as: "Outdoor Amenities" }},
         { amenity_grill:                   { label: "Outdoor Grill", data: 'amenity', group_as: "Outdoor Amenities" }},
@@ -514,7 +521,7 @@ class DataDictionary
         { amenity_shuffleboard_court:    { label: "Shuffleboard Court", data: 'amenity', group_as: "Other Sports" }},
       ],
     },
-    
+
     { section: "Security",
       desc: "Here are the things this community has put in place to ensure its residents are safe and secure.",
       attrs: [
@@ -528,89 +535,89 @@ class DataDictionary
         { security_security_system:            { label: "Security system", data: 'flag', group_as: 'Security' }},
         { security_staff_background_checks:    { label: "Staff background checks", data: 'flag', group_as: 'Security' }},
         { security_video_surveillance:         { label: "Video surveillance", data: 'flag', group_as: 'Security' }},
-        { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: 'Security' }}, 
-        
+        { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: 'Security' }},
+
         ],
     },
-    
+
     { section: "Community Governance",
       attrs: [
         { parent_company:                  { label: "Operator", data: 'string', admin_only: true }},
-        
+
         { ownership_nonprofit_religious:   { label: "Religious Non-Profit", data: 'flag', group_as: 'Ownership' }},
         { ownership_nonprofit_secular:     { label: "Secular Non-Profit", data: 'flag', group_as: 'Ownership' }},
         { ownership_private:               { label: "Privately Held", data: 'flag', group_as: 'Ownership' }},
         { ownership_private_equity:        { label: "Private Equity Backed", data: 'flag', group_as: 'Ownership' }},
         { ownership_reit:                  { label: "REIT", data: 'flag', group_as: 'Ownership' }},
         { ownership_public_company:        { label: "Public Company", data: 'flag', group_as: 'Ownership' }},
-        
+
         { resident_council_finances:       { label: "Influences budget/financial decisions", data: 'flag', group_as: 'Resident Council' }},
         { resident_council_programming:    { label: "Chooses programming", data: 'flag', group_as: 'Resident Council' }},
         { resident_council_advice:         { label: "Provides advice to management", data: 'flag', group_as: 'Resident Council' }},
-        
-        { admin_care_decision_notes:       { label: "Admin Care Decision Notes", data: 'string', admin_only: true }},  
-        
-        { admin_governance_notes:          { label: "Admin Governance Notes", data: 'text', admin_only: true }},     
-        
+
+        { admin_care_decision_notes:       { label: "Admin Care Decision Notes", data: 'string', admin_only: true }},
+
+        { admin_governance_notes:          { label: "Admin Governance Notes", data: 'text', admin_only: true }},
+
       ],
-    },    
-    
+    },
+
     { section: "Community Values",
-      attrs: [   
+      attrs: [
         { community_values:                { label: "Community Values", data: 'text' }},
-        
+
       ],
-    },    
-    
+    },
+
     { section: "Awards & Certifications",
-      attrs: [   
+      attrs: [
         { community_awards:                { label: "Awards & Certifications", data: 'text' }},
-        
+
       ],
-    },   
-    
+    },
+
     { section: "Community Makeup",
-      attrs: [      
-        { resident_profile_professions:    { label: "Former Professions", data: 'string' }},         
-        { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},       
-        { resident_profile_cultures:       { label: "Cultural Backgrounds", data: 'string' }},      
-        { resident_profile_religions:      { label: "Religions Represented", data: 'string' }},        
+      attrs: [
+        { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
+        { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},
+        { resident_profile_cultures:       { label: "Cultural Backgrounds", data: 'string' }},
+        { resident_profile_religions:      { label: "Religions Represented", data: 'string' }},
         { resident_profile_politics:       { label: "Political Leanings", data: 'select',
                                              values: [
                                                {'-' => 'None specified'},
                                                {'C' => "Conservative"},
                                                {'M' => "Moderate"},
                                                {'P' => "Progressive"},
-                                    ]}},                                               
+                                    ]}},
         { resident_profile_education:      { label: "Education Level", data: 'select',
                                              values: [
                                                {'-' => 'None specified'},
                                                {'C' => "Most have graduate degrees"},
                                                {'M' => "Most have college degrees"},
                                                {'P' => "Most are high school graduates"},
-                                     ]}},                                              
-                                               
+                                     ]}},
+
       ],
-    },     
-    
+    },
+
     { section: "Contract Options",
-      attrs: [   
+      attrs: [
         { contract_type_extensive:     { label: "Extensive (Life Care)", data: 'flag', group_as: "Contract Types" }},
         { contract_type_modified:      { label: "Modified", data: 'flag', group_as: "Contract Types" }},
         { contract_type_fee:           { label: "Fee for Service", data: 'flag', group_as: "Contract Types" }},
         { contract_type_rental:        { label: "Rental", data: 'flag', group_as: "Contract Types" }},
-        { contract_type_equity:        { label: "Equity", data: 'flag', group_as: "Contract Types" }},        
-        
+        { contract_type_equity:        { label: "Equity", data: 'flag', group_as: "Contract Types" }},
+
         { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group_as: "Entrance Fee & Refund" }},
-        { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag', group_as: "Entrance Fee & Refund" }},          
-        { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},    
-        { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},    
-        { refund_conditions:           { label: "Conditions for Refund", data: 'string', group_as: "Entrance Fee & Refund" }},     
-        { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group_as: "Entrance Fee & Refund" }},   
-        
+        { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag', group_as: "Entrance Fee & Refund" }},
+        { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
+        { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
+        { refund_conditions:           { label: "Conditions for Refund", data: 'string', group_as: "Entrance Fee & Refund" }},
+        { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group_as: "Entrance Fee & Refund" }},
+
         ],
-    },    
-    
+    },
+
     { section: "Entrance Requirements",
       attrs: [
         { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
@@ -625,9 +632,9 @@ class DataDictionary
         { insurance_requirements:     { label: "Insurance requirements", data: 'string' }},
         { requires_income_qual:       { label: "Requires financial qualification", data: 'flag' }},
         { income_qual_requirements:   { label: "Financial qualification requirements", data: 'string' }},
-        
+
       ]
     },
-    
+
   ])
 end
