@@ -171,6 +171,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-In Closets", data: 'amenity', group_as: "Room Features" }},
         { room_feat_washer:       { label: "Washer/Dryer", data: 'amenity', group_as: "Room Features" }},
 
+        { room_floorplans:        { label: "Floorplans", special: 'thumbnails', tagged_as: 'floorplan'}},
       ],
     },
 
@@ -255,20 +256,22 @@ class DataDictionary
       desc: "Here you will find the style of dining in the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
       attrs: [
-        { food_24h_snacks: { label: "Snacks Available All Day", data: 'amenity', group_as: "Dining Style" }},
-        { food_3_meals: { label: "3 Meals Daily", data: 'amenity', group_as: "Dining Style" }},
-        { food_all_day: { label: "Dining Available All Day", data: 'amenity', group_as: "Dining Style" }},
-        { food_restaurant_style: { label: "Restaurant Style Dining", data: 'amenity', group_as: "Dining Style" }},
-        { food_room_service: { label: "Room Service", data: 'amenity', group_as: "Dining Style" }},
-        { food_meal_vouchers: { label: "Meal Plans/Vouchers", data: 'amenity', group_as: "Dining Style" }},
-        { food_guest_meals: { label: "Guest Meals", data: 'amenity', group_as: "Dining Style" }},
+        { food_24h_snacks:        { label: "Snacks Available All Day", data: 'amenity', group_as: "Dining Style" }},
+        { food_3_meals:           { label: "3 Meals Daily", data: 'amenity', group_as: "Dining Style" }},
+        { food_all_day:           { label: "Dining Available All Day", data: 'amenity', group_as: "Dining Style" }},
+        { food_restaurant_style:  { label: "Restaurant Style Dining", data: 'amenity', group_as: "Dining Style" }},
+        { food_room_service:      { label: "Room Service", data: 'amenity', group_as: "Dining Style" }},
+        { food_meal_vouchers:     { label: "Meal Plans/Vouchers", data: 'amenity', group_as: "Dining Style" }},
+        { food_guest_meals:       { label: "Guest Meals", data: 'amenity', group_as: "Dining Style" }},
 
-        { diet_foodie_friendly: { label: "Chef-Prepared", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_restricted: { label: "Restricted Diets", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_gluten_free: { label: "Gluten-Free", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_kosher_meals: { label: "Kosher Meals", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_vegan: { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_vegetarian: { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_foodie_friendly:   { label: "Chef-Prepared", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_restricted:        { label: "Restricted Diets", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_gluten_free:       { label: "Gluten-Free", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_kosher_meals:      { label: "Kosher Meals", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_vegan:             { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
+
+        { food_menus:             { label: "Sample Menus", special: 'thumbnails', tagged_as: 'menu'}},
       ],
     },
 
@@ -427,12 +430,14 @@ class DataDictionary
         { activity_trivia:      { label: "Trivia/Brain Games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_video_games: { label: "Video Games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_word_games:  { label: "Word Games", data: 'amenity', group_as: "Games & Trivia" }},
+
+        { activity_calendars:   { label: "Sample Calendars", special: 'thumbnails', tagged_as: 'calendar'}},
       ],
     },
 
     { section: "Amenities",
       desc: "These are the amenities that represent the 'bones' of the community: the rooms, " \
-            "facilities, features and infrastructure meant to enhance and enrich the lives of the residents.", 
+            "facilities, features and infrastructure meant to enhance and enrich the lives of the residents.",
       attrs: [
         { amenity_ATM:                 { label: "ATM", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_crafts_room:         { label: "Arts & Crafts Room", data: 'amenity', group_as: "Indoor Amenities" }},
