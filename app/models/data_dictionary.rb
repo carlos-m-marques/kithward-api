@@ -171,7 +171,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-In Closets", data: 'amenity', group_as: "Room Features" }},
         { room_feat_washer:       { label: "Washer/Dryer", data: 'amenity', group_as: "Room Features" }},
 
-        { room_floorplans:        { label: "Floorplans", special: 'thumbnails', tagged_as: 'floorplan'}},
+        { room_floorplans:        { label: "Floorplans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan'}},
       ],
     },
 
@@ -271,7 +271,7 @@ class DataDictionary
         { diet_vegan:             { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
         { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
 
-        { food_menus:             { label: "Sample Menus", special: 'thumbnails', tagged_as: 'menu'}},
+        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu'}},
       ],
     },
 
@@ -431,7 +431,7 @@ class DataDictionary
         { activity_video_games: { label: "Video Games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_word_games:  { label: "Word Games", data: 'amenity', group_as: "Games & Trivia" }},
 
-        { activity_calendars:   { label: "Sample Calendars", special: 'thumbnails', tagged_as: 'calendar'}},
+        { activity_calendars:   { label: "Sample Calendars", data: 'ignore', special: 'thumbnails', tagged_as: 'calendar'}},
       ],
     },
 
