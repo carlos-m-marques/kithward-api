@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
     resources :accounts
 
+    resources :leads
+
     resources :geo_places
 
     scope 'auth' do

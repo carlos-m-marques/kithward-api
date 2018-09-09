@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_202640) do
+ActiveRecord::Schema.define(version: 2018_09_09_183538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,20 @@ ActiveRecord::Schema.define(version: 2018_09_07_202640) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "weight", default: 0
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.bigint "account_id"
+    t.bigint "community_id"
+    t.string "name", limit: 256
+    t.string "email", limit: 128
+    t.string "phone", limit: 128
+    t.string "request", limit: 64
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_leads_on_account_id"
+    t.index ["community_id"], name: "index_leads_on_community_id"
   end
 
   create_table "versions", force: :cascade do |t|
