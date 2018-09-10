@@ -381,7 +381,7 @@ class DataDictionary
         { activity_episcopal:               { label: "Episcopal services", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_hindu_prayer:            { label: "Hindu prayer", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_meditation:              { label: "Meditation", data: 'amenity', group_as: "Religious & Spiritual" }},
-        { activity_nondenominational:       { label: "Non-denominational faith group", data: 'amenity', group_as: "Religious & Spiritual"
+        { activity_nondenominational:       { label: "Non-denominational faith group", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_nondenominational_svcs:  { label: "Non-denominational services", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_quaker_services:         { label: "Quaker services", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_rabbi_study:             { label: "Rabbi study group", data: 'amenity', group_as: "Religious & Spiritual" }},
