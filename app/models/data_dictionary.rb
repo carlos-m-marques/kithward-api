@@ -254,29 +254,6 @@ class DataDictionary
       ],
     },
 
-    { section: "Dining",
-      desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
-            "they can accomodate. If you have special restrictions, contact us to find out more.",
-      attrs: [
-        { food_3_meals:           { label: "3 meals daily", data: 'amenity', group_as: "Dining Style" }},
-        { diet_foodie_friendly:   { label: "Chef-prepared meals", data: 'amenity', group_as: "Dining Style" }},
-        { food_all_day:           { label: "Dining available all day", data: 'amenity', group_as: "Dining Style" }},
-        { food_guest_meals:       { label: "Guest meals", data: 'amenity', group_as: "Dining Style" }},
-        { food_meal_vouchers:     { label: "Meal plans/vouchers", data: 'amenity', group_as: "Dining Style" }},        
-        { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group_as: "Dining Style" }},
-        { food_room_service:      { label: "Room service", data: 'amenity', group_as: "Dining Style" }},
-        { food_24h_snacks:        { label: "Snacks available all day", data: 'amenity', group_as: "Dining Style" }},
-
-        { diet_restricted:        { label: "Restricted diets", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_gluten_free:       { label: "Gluten-free", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_kosher_meals:      { label: "Kosher meals", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_vegan:             { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
-        { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
-
-        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu'}},
-      ],
-    },
-
     { section: "Services",
       desc: "Here are the many services offered at the community by staff and visiting professionals, though some " \
             "services may come with an additional cost or be subject to availability.",
@@ -301,15 +278,15 @@ class DataDictionary
         { services_wifi:           { label: "WiFi included", data: 'amenity', group_as: "Available Services" }},
         { services_wifi_common:    { label: "WiFi in common areas", data: 'amenity', group_as: "Available Services" }},
         
-        { services_shuttle_service:     { label: "Car/shuttle service", data: 'amenity', group_as: "Transportation & Parking" }},
-        { services_parking:             { label: "Parking available", data: 'amenity', group_as: "Transportation & Parking" }},
-        { services_scheduled_transport: { label: "Scheduled transportation", data: 'amenity', group_as: "Transportation & Parking" }},
-        { services_transportation:      { label: "Transportation arrangement", data: 'amenity', group_as: "Transportation & Parking" }},
-        { services_valet_parking:       { label: "Valet parking", data: 'amenity', group_as: "Transportation & Parking" }},
+        { services_shuttle_service:     { label: "Car/shuttle service", data: 'amenity', group_as: "Parking & Transportation" }},
+        { services_parking:             { label: "Parking available", data: 'amenity', group_as: "Parking & Transportation" }},
+        { services_scheduled_transport: { label: "Scheduled transportation", data: 'amenity', group_as: "Parking & Transportation" }},
+        { services_transportation:      { label: "Transportation arrangement", data: 'amenity', group_as: "Parking & Transportation" }},
+        { services_valet_parking:       { label: "Valet parking", data: 'amenity', group_as: "Parking & Transportation" }},
 
         { security_electronic_key:             { label: "Electronic key entry system", data: 'flag', group_as: "Security" }},
         { security_emergency_pendant:          { label: "Emergency alert pendants", data: 'flag', group_as: "Security" }},
-        { security_ft_security:                { label: "Full-Time Security Staff", data: 'flag', group_as: "Security" }},
+        { security_ft_security:                { label: "Full-time security staff", data: 'flag', group_as: "Security" }},
         { security_emergency_call:             { label: "In-room emergency call system", data: 'flag', group_as: "Security" }},
         { security_night_checks:               { label: "Night checks", data: 'flag', group_as: "Security" }},
         { security_safety_checks:              { label: "Regular safety checks", data: 'flag', group_as: "Security" }},
@@ -318,6 +295,29 @@ class DataDictionary
         { security_staff_background_checks:    { label: "Staff background checks", data: 'flag', group_as: "Security" }},
         { security_video_surveillance:         { label: "Video surveillance", data: 'flag', group_as: "Security" }},
         { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: "Security" }},
+      ],
+    },
+    
+    { section: "Dining",
+      desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
+            "they can accomodate. If you have special restrictions, contact us to find out more.",
+      attrs: [
+        { food_3_meals:           { label: "3 meals daily", data: 'amenity', group_as: "Dining Style" }},
+        { diet_foodie_friendly:   { label: "Chef-prepared meals", data: 'amenity', group_as: "Dining Style" }},
+        { food_all_day:           { label: "Dining available all day", data: 'amenity', group_as: "Dining Style" }},
+        { food_guest_meals:       { label: "Guest meals", data: 'amenity', group_as: "Dining Style" }},
+        { food_meal_vouchers:     { label: "Meal plans/vouchers", data: 'amenity', group_as: "Dining Style" }},        
+        { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group_as: "Dining Style" }},
+        { food_room_service:      { label: "Room service", data: 'amenity', group_as: "Dining Style" }},
+        { food_24h_snacks:        { label: "Snacks available all day", data: 'amenity', group_as: "Dining Style" }},
+
+        { diet_restricted:        { label: "Restricted diets", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_gluten_free:       { label: "Gluten-free", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_kosher_meals:      { label: "Kosher meals", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_vegan:             { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
+
+        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu'}},
       ],
     },
 
