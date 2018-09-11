@@ -86,7 +86,7 @@ class DataDictionary
         { phone: { label: "Phone", data: 'phone' }},
         { email: { label: "Email", data: 'email' }},
         { fax:   { label: "Fax", data: 'fax' }},
-        { web:   { label: "Web site", data: 'url' }
+        { web:   { label: "Web site", data: 'url' },
 
         { street: { label: "Address", data: 'string', direct_model_attribute: true }},
         { street_more: { label: "", data: 'string', direct_model_attribute: true }},
