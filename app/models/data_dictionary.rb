@@ -317,7 +317,7 @@ class DataDictionary
         { security_security_system:            { label: "Security system", data: 'flag', group_as: "Security" }},
         { security_staff_background_checks:    { label: "Staff background checks", data: 'flag', group_as: "Security" }},
         { security_video_surveillance:         { label: "Video surveillance", data: 'flag', group_as: "Security" }},
-        { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: "Security" }},]
+        { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: "Security" }},
       ],
     },
 
