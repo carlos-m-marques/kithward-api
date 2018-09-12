@@ -79,7 +79,7 @@ class DataDictionary
                         ]}},
 
         { ccrc:   { label: "Continuing Care Retirement Community", data: 'flag' }},
-        { aip:    { label: "Allows for 'Aging In Place'", data: 'flag', admin_break_after: 'yes'  }},
+        { aip:    { label: "Allows 'Aging In Place'", data: 'flag', admin_break_after: 'yes'  }},
 
         { related_communities:  { label: "Related Communities", data: 'list_of_ids', admin_only: true }},
 
@@ -140,7 +140,6 @@ class DataDictionary
         
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
-
       ]
     },
 
@@ -195,13 +194,12 @@ class DataDictionary
 
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
-
       ]
     },
 
     { section: "Care & Support",
-      desc: "Here are the types of healthcare, assistance and support offered at this community, some of which " \
-            "may come at an additional cost.",
+      desc: "Here you will find the types of healthcare, assistance and support offered at this community, some of which " \
+            "may come with an additional cost.",
       attrs: [
         { staff_doctors:              { label: "Doctors", data: 'count' }},
         { staff_doctors_ft:           { label: "Full-Time Doctors", data: 'count' }},
@@ -255,14 +253,14 @@ class DataDictionary
     },
 
     { section: "Services",
-      desc: "Here are the many services offered at the community by staff and visiting professionals, though some " \
-            "services may come with an additional cost or be subject to availability.",
+      desc: "Staff and visiting professionals offer a variety of services to make residents lives easier, though some " \
+            "may come with an additional cost or be subject to availability.",
       attrs: [
         { services_banking:        { label: "Banking services", data: 'amenity', group_as: "Available Services" }},
         { services_cable:          { label: "Cable included", data: 'amenity', group_as: "Available Services" }},
-        { services_drycleaning:    { label: "Concierge", data: 'amenity', group_as: "Available Services" }},
+        { services_concierge:      { label: "Concierge", data: 'amenity', group_as: "Available Services" }},
         { services_domestic_phone: { label: "Domestic phone included", data: 'amenity', group_as: "Available Services" }},        
-        { services_concierge:      { label: "Dry-cleaning services", data: 'amenity', group_as: "Available Services" }},
+        { services_drycleaning:    { label: "Dry-cleaning services", data: 'amenity', group_as: "Available Services" }},
         { services_hairdresser:    { label: "Hairdresser/barber", data: 'amenity', group_as: "Available Services" }},
         { services_housekeeping:   { label: "Housekeeping", data: 'amenity', group_as: "Available Services" }},
         { services_laundry:        { label: "Laundry service", data: 'amenity', group_as: "Available Services" }},
@@ -322,8 +320,8 @@ class DataDictionary
     },
 
     { section: "Activities",
-      desc: "Activity calendars speak volumes about the culture of a community. Here you'll learn " \
-            "what opportunities there are to socialize, stay fit, be creative, stay engaged, grow " \
+      desc: "Activity calendars speak volumes about the culture of a community. Learn what " \
+            " opportunities there are to socialize, stay fit, be creative, stay engaged, grow " \
             "spiritually, and more.",
       attrs: [
         { activity_acting:            { label: "Acting/drama", data: 'amenity', group_as: "Creative & Artistic" }},
@@ -450,8 +448,8 @@ class DataDictionary
     },
 
     { section: "Amenities",
-      desc: "These are the amenities that represent the 'bones' of the community: the rooms, " \
-            "facilities, features and infrastructure meant to enhance and enrich the lives of the residents.",
+      desc: "Amenities represent the 'bones' of a community: the rooms, facilities, features and infrastructure " \
+            "meant to enhance and enrich the lives of its residents.",
       attrs: [
         { amenity_ATM:                 { label: "ATM", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_crafts_room:         { label: "Arts & crafts room", data: 'amenity', group_as: "Indoor Amenities" }},
@@ -538,7 +536,6 @@ class DataDictionary
         { amenity_bocce_court:           { label: "Bocce ball court", data: 'amenity', group_as: "Fitness Facilities" }},
         { amenity_bowling_alley:         { label: "Bowling alley", data: 'amenity', group_as: "Fitness Facilities" }},
         { amenity_shuffleboard_court:    { label: "Shuffleboard court", data: 'amenity', group_as: "Fitness Facilities" }},
-        
       ],
     },
 
@@ -560,7 +557,6 @@ class DataDictionary
         { admin_care_decision_notes:       { label: "Admin Care Decision Notes", data: 'string', admin_only: true }},
 
         { admin_governance_notes:          { label: "Admin Governance Notes", data: 'text', admin_only: true }},
-
       ],
     },
 
