@@ -222,11 +222,16 @@ class DataDictionary
         { care_onsite_dentist:        { label: "Dentist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_dermatologist:  { label: "Dermatologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_dietician:      { label: "Dietician", data: 'flag', group_as: 'Visiting Specialists' }},
+        { care_onsite_endocronologist: { label: "Endocronologist", data: 'flag', group_as: 'Visiting Specialists' }},
+        { care_onsite_internist:      { label: "Internist", data: 'flag', group_as: 'Visiting Specialists' }},
+        { care_onsite_neurologist:    { label: "Neurologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_opthamologist:  { label: "Opthamologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_podiatrist:     { label: "Podiatrist", data: 'flag', group_as: 'Visiting Specialists' }},
+        { care_onsite_pulmonologist:  { label: "Pulmonologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_psychologist:   { label: "Psychologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_psychiatrist:   { label: "Psychiatrist", data: 'flag', group_as: 'Visiting Specialists' }},
+        { care_onsite_urologist:      { label: "Urologist", data: 'flag', group_as: 'Visiting Specialists' }},
 
 
         { assistance_bathing:     { label: "Bathing assistance",   data: 'amenity', group_as: 'Day-to-Day Assistance' }},
@@ -244,7 +249,7 @@ class DataDictionary
         { care_mild_cognitive:    { label: "Mild cognitive impairment care", data: 'amenity', group_as: 'Special Care' }},
         { care_music_therapy:     { label: "Music therapy", data: 'amenity', group_as: 'Special Care' }},
         { care_occupational:      { label: "Occupational therapy", data: 'amenity', group_as: 'Special Care' }},
-        { care_parkinsons:        { label: "Parkinsons care", data: 'amenity', group_as: 'Special Care' }},
+        { care_parkinsons:        { label: "Parkinson's care", data: 'amenity', group_as: 'Special Care' }},
         { care_physical:          { label: "Physical therapy", data: 'amenity', group_as: 'Special Care' }},
         { care_rehabilitation:    { label: "Rehabilitation program", data: 'amenity', group_as: 'Special Care' }},
         { care_speech:            { label: "Speech therapy", data: 'amenity', group_as: 'Special Care' }},
@@ -312,6 +317,7 @@ class DataDictionary
         { diet_restricted:        { label: "Restricted diets", data: 'amenity', group_as: "Dietary Accomodations" }},
         { diet_gluten_free:       { label: "Gluten-free", data: 'amenity', group_as: "Dietary Accomodations" }},
         { diet_kosher_meals:      { label: "Kosher meals", data: 'amenity', group_as: "Dietary Accomodations" }},
+        { diet_pureed:            { label: "Pureed", data: 'amenity', group_as: "Dietary Accomodations" }},
         { diet_vegan:             { label: "Vegan", data: 'amenity', group_as: "Dietary Accomodations" }},
         { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group_as: "Dietary Accomodations" }},
 
@@ -371,6 +377,7 @@ class DataDictionary
 
         { activity_billiards:         { label: "Billiards/pool", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_bingo:             { label: "Bingo", data: 'amenity', group_as: "Games & Trivia" }},
+        { activity_blackjack:         { label: "Blackjack", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_board_games:       { label: "Board games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_bridge:            { label: "Bridge", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_card_games:        { label: "Card games", data: 'amenity', group_as: "Games & Trivia" }},
