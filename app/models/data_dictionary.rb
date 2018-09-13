@@ -626,7 +626,6 @@ class DataDictionary
         { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
         { refund_conditions:           { label: "Conditions for Refund", data: 'string', group_as: "Entrance Fee & Refund" }},
         { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group_as: "Entrance Fee & Refund" }},
-
         ],
     },
 
