@@ -140,6 +140,9 @@ class DataDictionary
         
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
+        
+        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
+        
       ]
     },
 
@@ -165,9 +168,11 @@ class DataDictionary
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group_as: "Available Features" }},
         { room_feat_den:          { label: "Den/extra room", data: 'amenity', group_as: "Available Features" }},
         { room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group_as: "Available Features" }},
+        { room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group_as: "Available Features" }},
         { room_feat_kitchen:      { label: "Full kitchen", data: 'amenity', group_as: "Available Features" }},
         { room_feat_climate:      { label: "Individual climate control", data: 'amenity', group_as: "Available Features" }},
         { room_feat_kitchenette:  { label: "Kitchenette", data: 'amenity', group_as: "Available Features" }},
+        { room_feat_pvt_garage:   { label: "Private garage", data: 'amenity', group_as: "Available Features" }},
         { room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group_as: "Available Features" }},
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group_as: "Available Features" }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group_as: "Available Features" }},
@@ -290,6 +295,7 @@ class DataDictionary
         { security_electronic_key:             { label: "Electronic key entry system", data: 'flag', group_as: "Security" }},
         { security_emergency_pendant:          { label: "Emergency alert pendants", data: 'flag', group_as: "Security" }},
         { security_ft_security:                { label: "Full-time security staff", data: 'flag', group_as: "Security" }},
+        { security_ft_gatedf_community:        { label: "Gated community", data: 'flag', group_as: "Security" }},
         { security_emergency_call:             { label: "In-room emergency call system", data: 'flag', group_as: "Security" }},
         { security_night_checks:               { label: "Night checks", data: 'flag', group_as: "Security" }},
         { security_safety_checks:              { label: "Regular safety checks", data: 'flag', group_as: "Security" }},
@@ -465,6 +471,7 @@ class DataDictionary
         { amenity_billiards_table:     { label: "Billiards/pool table", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_cafe:                { label: "Cafe/bistro", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_chapel:              { label: "Chapel/worship space", data: 'amenity', group_as: "Indoor Amenities" }},
+        { amenity_playroom:            { label: "Children's playroom", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_classroom:           { label: "Classroom/lecture hall", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_walkways:            { label: "Climate-controlled walkways", data: 'amenity', group_as: "Indoor Amenities" }},
         { amenity_clubhouse:           { label: "Clubhouse", data: 'amenity', group_as: "Indoor Amenities" }},
