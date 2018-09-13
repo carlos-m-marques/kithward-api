@@ -159,6 +159,7 @@ class DataDictionary
       attrs: [
         { room_shared:            { label: "Shared room", data: 'amenity', group_as: "Unit Sizes" }},
         { room_private:           { label: "Private room", data: 'amenity', group_as: "Unit Sizes" }},
+        { room_companion:         { label: "Shared suite", data: 'amenity', group_as: "Unit Sizes" }},
         { room_studio:            { label: "Studio", data: 'amenity', group_as: "Unit Sizes" }},
         { room_one_bed:           { label: "1 bedroom", data: 'amenity', group_as: "Unit Sizes" }},
         { room_two_plus:          { label: "2 bedrooms +", data: 'amenity', group_as: "Unit Sizes" }},
