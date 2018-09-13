@@ -570,7 +570,6 @@ class DataDictionary
     { section: "Community Values",
       attrs: [
         { community_values:                { label: "Community Values", data: 'text' }},
-
       ],
     },
 
