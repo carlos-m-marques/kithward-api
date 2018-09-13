@@ -26,6 +26,26 @@ Or, if you don't want/need a background service you can just run:
 cluster.routing.allocation.disk.threshold_enabled: false
 
 
+## Postgres notes
+
+#### JSON Queries
+
+```sql
+-- Look for specific key/value pairs
+SELECT * FROM communities WHERE data @> '{"star_rating": 5}';
+
+-- Rows that have one key
+SELECT * FROM communities WHERE data ? 'activity_trivia';
+
+-- Rows that have at least one of a list of keys
+SELECT * FROM communities WHERE data ?| array['activity_bridge', 'activity_trivia'];
+
+-- Rows that have all keys in a list of keys
+SELECT * FROM communities WHERE data ?& array['activity_bridge', 'activity_trivia'];
+```
+
+More info at https://schinckel.net/2014/05/25/querying-json-in-postgres/
+
 
 ## TROUBLESHOOTING
 
