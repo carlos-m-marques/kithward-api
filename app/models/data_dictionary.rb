@@ -107,7 +107,7 @@ class DataDictionary
                                        {'L' => 'Large'},
                                     ]}},
         { bed_count:              { label: "Beds", data: 'count', admin_break_after: 'yes' }},
-        
+
         { staff_total:            { label: "Total Staff", data: 'count' }},
         { staff_full_time:        { label: "Full-Time Staff", data: 'count' }},
         { staff_ratio:            { label: "Staff to Resident Ratio", data: 'number', admin_break_after: 'yes' }},
@@ -120,7 +120,7 @@ class DataDictionary
                                     ]}},
         { access_to_city:         { label: "Access to the city", data: 'flag' }},
         { access_to_outdoors:     { label: "Access to the outdoors", data: 'flag', admin_break_after: 'yes' }},
-        
+
         { religious_affiliation:  { label: "Religious affiliation", data: 'select',
                                     values: [
                                       {'-' => 'None'},
@@ -137,12 +137,12 @@ class DataDictionary
 
         { smoking:                { label: "Smoking allowed", data: 'flag' }},
         { non_smoking:            { label: "Smoking prohibited", data: 'flag', admin_break_after: 'yes' }},
-        
+
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
-        
+
         { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
-        
+
       ]
     },
 
@@ -186,8 +186,6 @@ class DataDictionary
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
             "level of assistance you require, if any. Contact us to find out more.",
       attrs: [
-        { price_rating:           { label: "Price Rating", data: 'rating', admin_break_after: 'yes' }},
-
         { rent_starting_price:    { label: "Base Rent Minimum", data: 'price' }},
         { rent_maximum_price:     { label: "Base Rent Maximum", data: 'price' }},
         { rent_includes_care:     { label: "Base Rent Includes Care Cost", data: 'flag', admin_break_after: 'yes' }},
@@ -222,7 +220,7 @@ class DataDictionary
         { care_social_worker:         { label: "Social worker(s)", data: 'flag', group_as: 'Healthcare Staff' }},
         { care_onsite_doctor_visits:  { label: "Doctor visits", data: 'flag', group_as: 'Healthcare Staff' }},
         { care_onsite_nurse_visits:   { label: "Nurse visits", data: 'flag', group_as: 'Healthcare Staff' }},
-        
+
         { care_onsite_audiologist:    { label: "Audiologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_cardiologist:   { label: "Cardiologist", data: 'flag', group_as: 'Visiting Specialists' }},
         { care_onsite_dentist:        { label: "Dentist", data: 'flag', group_as: 'Visiting Specialists' }},
@@ -270,7 +268,7 @@ class DataDictionary
         { services_banking:        { label: "Banking services", data: 'amenity', group_as: "Available Services" }},
         { services_cable:          { label: "Cable included", data: 'amenity', group_as: "Available Services" }},
         { services_concierge:      { label: "Concierge", data: 'amenity', group_as: "Available Services" }},
-        { services_domestic_phone: { label: "Domestic phone included", data: 'amenity', group_as: "Available Services" }},        
+        { services_domestic_phone: { label: "Domestic phone included", data: 'amenity', group_as: "Available Services" }},
         { services_drycleaning:    { label: "Dry-cleaning services", data: 'amenity', group_as: "Available Services" }},
         { services_hairdresser:    { label: "Hairdresser/barber", data: 'amenity', group_as: "Available Services" }},
         { services_housekeeping:   { label: "Housekeeping", data: 'amenity', group_as: "Available Services" }},
@@ -286,7 +284,7 @@ class DataDictionary
         { services_rabbi:          { label: "Rabbi", data: 'amenity', group_as: "Available Services" }},
         { services_wifi:           { label: "WiFi included", data: 'amenity', group_as: "Available Services" }},
         { services_wifi_common:    { label: "WiFi in common areas", data: 'amenity', group_as: "Available Services" }},
-        
+
         { services_shuttle_service:     { label: "Car/shuttle service", data: 'amenity', group_as: "Parking & Transportation" }},
         { services_parking:             { label: "Parking available", data: 'amenity', group_as: "Parking & Transportation" }},
         { services_scheduled_transport: { label: "Scheduled transportation", data: 'amenity', group_as: "Parking & Transportation" }},
@@ -307,7 +305,7 @@ class DataDictionary
         { security_visitor_checkins:           { label: "Visitor check-in", data: 'flag', group_as: "Security" }},
       ],
     },
-    
+
     { section: "Dining",
       desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
@@ -316,7 +314,7 @@ class DataDictionary
         { diet_foodie_friendly:   { label: "Chef-prepared meals", data: 'amenity', group_as: "Dining Style" }},
         { food_all_day:           { label: "Dining available all day", data: 'amenity', group_as: "Dining Style" }},
         { food_guest_meals:       { label: "Guest meals", data: 'amenity', group_as: "Dining Style" }},
-        { food_meal_vouchers:     { label: "Meal plans/vouchers", data: 'amenity', group_as: "Dining Style" }},        
+        { food_meal_vouchers:     { label: "Meal plans/vouchers", data: 'amenity', group_as: "Dining Style" }},
         { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group_as: "Dining Style" }},
         { food_room_service:      { label: "Room service", data: 'amenity', group_as: "Dining Style" }},
         { food_24h_snacks:        { label: "Snacks available all day", data: 'amenity', group_as: "Dining Style" }},
@@ -398,7 +396,7 @@ class DataDictionary
         { activity_trivia:            { label: "Trivia/brain games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_video_games:       { label: "Video games", data: 'amenity', group_as: "Games & Trivia" }},
         { activity_word_games:        { label: "Word games", data: 'amenity', group_as: "Games & Trivia" }},
-        
+
         { activity_art_classes:             { label: "Art classes", data: 'amenity', group_as: "Lifelong Learning" }},
         { activity_book_club:               { label: "Book club/reading group", data: 'amenity', group_as: "Lifelong Learning" }},
         { activity_technology_classes:      { label: "Computer classes", data: 'amenity', group_as: "Lifelong Learning" }},
@@ -425,7 +423,7 @@ class DataDictionary
         { activity_rosary_group:            { label: "Rosary group", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_shabbat_services:        { label: "Shabbat services", data: 'amenity', group_as: "Religious & Spiritual" }},
         { activity_church_bus:              { label: "Transportation to church", data: 'amenity', group_as: "Religious & Spiritual" }},
-        
+
         { activity_charity:                 { label: "Charity/outreach", data: 'amenity', group_as: "Social & Entertainment" }},
         { activity_civic:                   { label: "Civic engagement", data: 'amenity', group_as: "Social & Entertainment" }},
         { activity_happy_hour:              { label: "Happy/social Hour", data: 'amenity', group_as: "Social & Entertainment" }},
