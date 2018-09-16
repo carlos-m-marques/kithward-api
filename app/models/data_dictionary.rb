@@ -186,15 +186,18 @@ class DataDictionary
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
             "level of assistance you require, if any. Contact us to find out more.",
       attrs: [
-        { rent_starting_price:    { label: "Base Rent Minimum", data: 'price' }},
-        { rent_maximum_price:     { label: "Base Rent Maximum", data: 'price' }},
+        { base_rent:              { label: "Base Rent", data: 'pricerange' }},
+        # { rent_starting_price:    { label: "Base Rent Minimum", data: 'price' }},
+        # { rent_maximum_price:     { label: "Base Rent Maximum", data: 'price' }},
         { rent_includes_care:     { label: "Base Rent Includes Care Cost", data: 'flag', admin_break_after: 'yes' }},
 
-        { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
-        { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
+        { care_cost:              { label: "Care Cost", data: 'pricerange' }},
+        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
 
-        { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
-        { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
+        { entrance_fee:           { label: "Entrance Fee", data: 'pricerange' }},
+        # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
+        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
 
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
@@ -620,8 +623,9 @@ class DataDictionary
 
         { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group_as: "Entrance Fee & Refund" }},
         { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag', group_as: "Entrance Fee & Refund" }},
-        { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
-        { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
+        { refund_offered:              { label: "Refund Offered", data: 'countrange', group_as: "Entrance Fee & Refund" }},
+        # { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
+        # { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group_as: "Entrance Fee & Refund" }},
         { refund_conditions:           { label: "Conditions for Refund", data: 'string', group_as: "Entrance Fee & Refund" }},
         { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group_as: "Entrance Fee & Refund" }},
         ],
