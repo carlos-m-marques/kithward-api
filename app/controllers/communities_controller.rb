@@ -121,7 +121,7 @@ class CommunitiesController < ApplicationController
 
     if params[:data]
       params[:data].permit!
-      @community.data = @community.data.merge(params[:data])
+      @community.data = (@community.data || {}).merge(params[:data])
     end
 
     @community.save
