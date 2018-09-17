@@ -109,6 +109,30 @@ class CommunitiesController < ApplicationController
     end
   end
 
+  def create
+    @community = Community.new
+
+    @community.attributes = params.permit(
+      :care_type, :status,
+      :name, :description,
+      :address, :address_more, :city, :state, :postal, :country,
+      :lat, :lon, :website, :phone, :fax, :email
+    )
+
+    if params[:data]
+      params[:data].permit!
+      @community.data = @community.data.merge(params[:data])
+    end
+
+    @community.save
+
+    if @community.errors.any?
+      render json: { errors: @community.errors}, status: :unprocessable_entity
+    else
+      render json: CommunitySerializer.new(@community)
+    end
+  end
+
   def dictionary
     render json: DataDictionary::Community.to_h
   end
