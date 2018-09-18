@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       resources :images, controller: 'community_images'
     end
 
-    resources :accounts
+    resources :accounts do
+      get 'exception', on: :collection
+    end
 
     resources :leads
 
