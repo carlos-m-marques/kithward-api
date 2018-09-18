@@ -3,6 +3,7 @@ class AccountsController < ApplicationController
   before_action :authentication_required!, except: [:create]
 
   def index
+    raise "Not Allowed"
   end
 
   def show
