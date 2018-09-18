@@ -1,6 +1,15 @@
 require 'json_web_token'
 
 class ApplicationController < ActionController::API
+  before_action :set_raven_context
+
+  def set_raven_context
+    Raven.user_context(id: access_token_payload[:account_id])
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+  private :set_raven_context
+
+
   def access_token_payload
     @access_token_payload ||= begin
       access_token = nil
