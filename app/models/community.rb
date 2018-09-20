@@ -38,6 +38,15 @@ class Community < ApplicationRecord
   TYPE_HOSPICE     = 'H'
   TYPE_RESPITE     = 'R'
 
+  SLUG_FOR_TYPE = {
+    TYPE_INDEPENDENT: '-independent-living',
+    TYPE_ASSISTED: '-assisted-living',
+    TYPE_NURSING: '-skilled-nursing',
+    TYPE_MEMORY: '-memory-care',
+    TYPE_HOSPICE: '-hospice-care',
+    TYPE_RESPITE: '-respite-care',
+  }
+
   begin # attributes
     serialize :old_data, Hash
   end
@@ -78,6 +87,10 @@ class Community < ApplicationRecord
     def address_complete?
       street.present? and ((city.present? and state.present?) or postal.present?)
     end
+  end
+
+  def slug
+    "#{name.parameterize}#{SLUG_FOR_TYPE[care_type]}-#{id}"
   end
 
   def is_active?
