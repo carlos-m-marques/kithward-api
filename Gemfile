@@ -21,14 +21,16 @@ gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.4.0'
-gem "aws-sdk-s3", require: false
-gem "sentry-raven"
+gem 'aws-sdk-s3', require: false
+gem 'sentry-raven'
+gem 'ddtrace'
+
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem "factory_bot_rails", "~> 4.0"
-  gem "mocha"
+  gem 'factory_bot_rails', '~> 4.0'
+  gem 'mocha'
 end
 
 group :development do
