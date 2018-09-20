@@ -93,7 +93,7 @@ Or, if you don't want/need a background service you can just run:
 
 cluster.routing.allocation.disk.threshold_enabled: false
 
-
+ 
 ## Postgres notes
 
 #### JSON Queries
