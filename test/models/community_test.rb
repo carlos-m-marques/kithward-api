@@ -20,6 +20,7 @@
 #  status           :string(1)        default("?")
 #  data             :jsonb
 #  cached_image_url :string(128)
+#  cached_data      :jsonb
 #
 
 require 'test_helper'

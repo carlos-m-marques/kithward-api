@@ -20,6 +20,7 @@
 #  status           :string(1)        default("?")
 #  data             :jsonb
 #  cached_image_url :string(128)
+#  cached_data      :jsonb
 #
 
 class CommunitySerializer < Blueprinter::Base
@@ -32,7 +33,9 @@ class CommunitySerializer < Blueprinter::Base
       :care_type,
       :street, :street_more, :city, :state, :postal, :country,
       :lat, :lon,
-      :updated_at
+      :updated_at,
+      :cached_image_url, :cached_data
+
   end
 
   view 'complete' do
