@@ -24,25 +24,34 @@
 class CommunitySerializer < Blueprinter::Base
   identifier :idstr, name: :id
 
-  fields :status,
-    :name, :description,
-    :slug,
-    :care_type,
-    :street, :street_more, :city, :state, :postal, :country,
-    :lat, :lon,
-    :data,
-    :updated_at
+  view 'simple' do
+    fields :status,
+      :name,
+      :slug,
+      :care_type,
+      :street, :street_more, :city, :state, :postal, :country,
+      :lat, :lon,
+      :updated_at
+  end
 
-  field :images do |object|
-    object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
-      {
-        id: image.id,
-        url: "/v1/communities/#{object.id}/images/#{image.id}",
-        caption: image.caption,
-        tags: image.tags,
-        sort_order: image.sort_order,
-        content_type: image.image.content_type,
-      }
+  view 'complete' do
+    include_view 'simple'
+
+    field :description
+    field :data
+
+    field :images do |object|
+      object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
+        {
+          id: image.id,
+          url: "/v1/communities/#{object.id}/images/#{image.id}",
+          caption: image.caption,
+          tags: image.tags,
+          sort_order: image.sort_order,
+          content_type: image.image.content_type,
+        }
+      end
     end
   end
+
 end

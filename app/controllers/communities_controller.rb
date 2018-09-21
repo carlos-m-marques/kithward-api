@@ -43,14 +43,14 @@ class CommunitiesController < ApplicationController
 
     @communities = Community.search(params[:q] || "*", search_options)
 
-    render json: CommunitySerializer.render(@communities.to_a)
+    render json: CommunitySerializer.render(@communities.to_a, view: (params[:view] || 'simple'))
   end
 
   def show
     @community = Community.find(params[:id])
 
     if @community.is_active? or (accessing_account and accessing_account.is_admin?)
-      render json: CommunitySerializer.render(@community)
+      render json: CommunitySerializer.render(@community, view: 'complete')
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -105,7 +105,7 @@ class CommunitiesController < ApplicationController
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(@community)
+      render json: CommunitySerializer.render(@community, view: 'complete')
     end
   end
 
@@ -129,7 +129,7 @@ class CommunitiesController < ApplicationController
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(@community)
+      render json: CommunitySerializer.render(@community, view: :complete)
     end
   end
 
