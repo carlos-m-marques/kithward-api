@@ -26,38 +26,38 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
 
     get "/v1/communities", params: {q: 'Care'}
     assert_response :success
-    assert_equal [@c1.id.to_s, @c2.id.to_s], json_response['data'].collect {|result| result['id']}
-    assert_equal [@c1.name, @c2.name], json_response['data'].collect {|result| result['attributes']['name']}
+    assert_equal [@c1.id.to_s, @c2.id.to_s], json_response.collect {|result| result['id']}
+    assert_equal [@c1.name, @c2.name], json_response.collect {|result| result['name']}
 
     get "/v1/communities", params: {q: 'Incredible'}
     assert_response :success
-    assert_equal [@c2.id.to_s, @c3.id.to_s], json_response['data'].collect {|result| result['id']}
-    assert_equal [@c2.name, @c3.name], json_response['data'].collect {|result| result['attributes']['name']}
+    assert_equal [@c2.id.to_s, @c3.id.to_s], json_response.collect {|result| result['id']}
+    assert_equal [@c2.name, @c3.name], json_response.collect {|result| result['name']}
 
     get "/v1/communities", params: {q: 'Service'}
     assert_response :success
-    assert_equal [@c3.id.to_s], json_response['data'].collect {|result| result['id']}
-    assert_equal [@c3.name], json_response['data'].collect {|result| result['attributes']['name']}
+    assert_equal [@c3.id.to_s], json_response.collect {|result| result['id']}
+    assert_equal [@c3.name], json_response.collect {|result| result['name']}
 
     get "/v1/communities", params: {q: 'Incredible', care_type: 'assisted'}
     assert_response :success
-    assert_equal [@c3.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@c3.id.to_s], json_response.collect {|result| result['id']}
 
     get "/v1/communities", params: {care_type: 'assisted'}
     assert_response :success
-    assert_equal [@c1.id.to_s, @c3.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@c1.id.to_s, @c3.id.to_s], json_response.collect {|result| result['id']}
 
     get "/v1/communities", params: {care_type: 'i'}
     assert_response :success
-    assert_equal [@c2.id.to_s], json_response['data'].collect {|result| result['id']}
+    assert_equal [@c2.id.to_s], json_response.collect {|result| result['id']}
   end
 
   test "retrieve one" do
     get "/v1/communities/#{@c1.id}"
     assert_response :success
 
-    assert_equal @c1.id.to_s, json_response['data']['id']
-    assert_equal @c1.name, json_response['data']['attributes']['name']
+    assert_equal @c1.id.to_s, json_response['id']
+    assert_equal @c1.name, json_response['name']
   end
 
   test "anonymous users can get all communities" do
@@ -88,28 +88,28 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     put "/v1/communities/#{@c1.id}", params: {name: "Updated Community", access_token: @admin_token}
     assert_response :success
 
-    assert_equal @c1.id.to_s, json_response['data']['id']
-    assert_equal "Updated Community", json_response['data']['attributes']['name']
+    assert_equal @c1.id.to_s, json_response['id']
+    assert_equal "Updated Community", json_response['name']
 
     get "/v1/communities/#{@c1.id}"
     assert_response :success
 
-    assert_equal @c1.id.to_s, json_response['data']['id']
-    assert_equal "Updated Community", json_response['data']['attributes']['name']
+    assert_equal @c1.id.to_s, json_response['id']
+    assert_equal "Updated Community", json_response['name']
   end
 
   test "admin users can add images to communities" do
     put "/v1/communities/#{@c1.id}", params: {name: "Updated Community", access_token: @admin_token}
     assert_response :success
 
-    assert_equal @c1.id.to_s, json_response['data']['id']
-    assert_equal "Updated Community", json_response['data']['attributes']['name']
+    assert_equal @c1.id.to_s, json_response['id']
+    assert_equal "Updated Community", json_response['name']
 
     get "/v1/communities/#{@c1.id}"
     assert_response :success
 
-    assert_equal @c1.id.to_s, json_response['data']['id']
-    assert_equal "Updated Community", json_response['data']['attributes']['name']
+    assert_equal @c1.id.to_s, json_response['id']
+    assert_equal "Updated Community", json_response['name']
   end
 
   test "search communities by geo place" do
@@ -124,11 +124,11 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
 
     get "/v1/communities", params: {geo: @soho.id}
     assert_response :success
-    assert_equal [@nyc1.id.to_s, @nyc2.id.to_s].sort, json_response['data'].collect {|result| result['id']}.sort
+    assert_equal [@nyc1.id.to_s, @nyc2.id.to_s].sort, json_response.collect {|result| result['id']}.sort
 
     get "/v1/communities", params: {geo: @jersey.id}
     assert_response :success
-    assert_equal [@nj1.id.to_s].sort, json_response['data'].collect {|result| result['id']}.sort
+    assert_equal [@nj1.id.to_s].sort, json_response.collect {|result| result['id']}.sort
   end
 
   test "update community data" do
@@ -136,25 +136,25 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
 
     get "/v1/communities/#{community.id}", params: {access_token: @admin_token}
     assert_response :success
-    assert_equal "SoHo Care", json_response['data']['attributes']['name']
-    assert_equal "Incredible Service", json_response['data']['attributes']['description']
-    assert_equal "212 555 1234", json_response['data']['attributes']['data']['phone']
-    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
+    assert_equal "SoHo Care", json_response['name']
+    assert_equal "Incredible Service", json_response['description']
+    assert_equal "212 555 1234", json_response['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['web']
 
     put "/v1/communities/#{community.id}", params: {name: "SoHo Cares", description: "Good Service", data: {phone: "212 555 9876", email: "info@soho.nyc"}, access_token: @admin_token}
     assert_response :success
-    assert_equal "SoHo Cares", json_response['data']['attributes']['name']
-    assert_equal "Good Service", json_response['data']['attributes']['description']
-    assert_equal "212 555 9876", json_response['data']['attributes']['data']['phone']
-    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
-    assert_equal "info@soho.nyc", json_response['data']['attributes']['data']['email']
+    assert_equal "SoHo Cares", json_response['name']
+    assert_equal "Good Service", json_response['description']
+    assert_equal "212 555 9876", json_response['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['web']
+    assert_equal "info@soho.nyc", json_response['data']['email']
 
     get "/v1/communities/#{community.id}", params: {access_token: @admin_token}
     assert_response :success
-    assert_equal "SoHo Cares", json_response['data']['attributes']['name']
-    assert_equal "Good Service", json_response['data']['attributes']['description']
-    assert_equal "212 555 9876", json_response['data']['attributes']['data']['phone']
-    assert_equal "http://soho.nyc/", json_response['data']['attributes']['data']['web']
-    assert_equal "info@soho.nyc", json_response['data']['attributes']['data']['email']
+    assert_equal "SoHo Cares", json_response['name']
+    assert_equal "Good Service", json_response['description']
+    assert_equal "212 555 9876", json_response['data']['phone']
+    assert_equal "http://soho.nyc/", json_response['data']['web']
+    assert_equal "info@soho.nyc", json_response['data']['email']
   end
 end

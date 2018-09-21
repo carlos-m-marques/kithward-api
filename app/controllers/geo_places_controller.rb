@@ -12,12 +12,12 @@ class GeoPlacesController < ApplicationController
 
     @places = GeoPlace.search(params[:q], search_options)
 
-    render json: GeoPlaceSerializer.new(@places)
+    render json: GeoPlaceSerializer.render(@places.to_a)
   end
 
   def show
     @place = GeoPlace.find(params[:id])
 
-    render json: GeoPlaceSerializer.new(@place)
+    render json: GeoPlaceSerializer.render(@place)
   end
 end

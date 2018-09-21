@@ -11,7 +11,7 @@ class LeadsController < ApplicationController
     if @lead.errors.any?
       render json: { errors: @lead.errors}, status: :unprocessable_entity
     else
-      render json: LeadSerializer.new(@lead)
+      render json: LeadSerializer.render(@lead)
     end
   end
 

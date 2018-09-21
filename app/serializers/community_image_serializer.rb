@@ -15,16 +15,16 @@
 #  index_community_images_on_community_id  (community_id)
 #
 
-class CommunityImageSerializer
-  include FastJsonapi::ObjectSerializer
+class CommunityImageSerializer < Blueprinter::Base
+  identifier :idstr, name: :id
 
-  attributes :caption, :tags, :sort_order
+  fields :caption, :tags, :sort_order
 
-  attribute :url do |object|
+  field :url do |object|
     "/v1/communities/#{object.community_id}/images/#{object.id}"
   end
 
-  attribute :content_type do |object|
+  field :content_type do |object|
     object.image.content_type
   end
 end

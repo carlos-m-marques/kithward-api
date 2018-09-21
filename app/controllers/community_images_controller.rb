@@ -5,7 +5,7 @@ class CommunityImagesController < ApplicationController
     @community = Community.find(params[:community_id])
     @images = @community.community_images
 
-    render json: CommunityImageSerializer.new(@images)
+    render json: CommunityImageSerializer.render(@images)
   end
 
   def show
@@ -22,7 +22,7 @@ class CommunityImagesController < ApplicationController
     if @image.errors.any?
       render json: { errors: @image.errors}, status: :unprocessable_entity
     else
-      render json: CommunityImageSerializer.new(@image)
+      render json: CommunityImageSerializer.render(@image)
     end
   end
 
@@ -35,7 +35,7 @@ class CommunityImagesController < ApplicationController
     if @image.errors.any?
       render json: { errors: @image.errors}, status: :unprocessable_entity
     else
-      render json: CommunityImageSerializer.new(@image)
+      render json: CommunityImageSerializer.render(@image)
     end
   end
 end

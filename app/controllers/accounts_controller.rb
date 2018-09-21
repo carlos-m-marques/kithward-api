@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     if @account.id == accessing_account.id || accessing_account.is_admin?
-      render json: AccountSerializer.new(@account)
+      render json: AccountSerializer.render(@account)
     else
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
     if @account.errors.any?
       render json: { errors: @account.errors}, status: :unprocessable_entity
     else
-      render json: AccountSerializer.new(@account)
+      render json: AccountSerializer.render(@account)
     end
   end
 
@@ -40,7 +40,7 @@ class AccountsController < ApplicationController
       if @account.errors.any?
         render json: { errors: @account.errors}, status: :unprocessable_entity
       else
-        render json: AccountSerializer.new(@account)
+        render json: AccountSerializer.render(@account)
       end
     else
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized

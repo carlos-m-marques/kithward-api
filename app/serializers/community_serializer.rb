@@ -21,10 +21,10 @@
 #  data        :jsonb
 #
 
-class CommunitySerializer
-  include FastJsonapi::ObjectSerializer
+class CommunitySerializer < Blueprinter::Base
+  identifier :idstr, name: :id
 
-  attributes :status,
+  fields :status,
     :name, :description,
     :slug,
     :care_type,
@@ -33,7 +33,7 @@ class CommunitySerializer
     :data,
     :updated_at
 
-  attribute :images do |object|
+  field :images do |object|
     object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
       {
         id: image.id,

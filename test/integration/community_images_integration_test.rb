@@ -21,16 +21,16 @@ class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
     }
     assert_response :success
 
-    assert_equal "Main Building", json_response['data']['attributes']['caption']
-    assert_equal "outside", json_response['data']['attributes']['tags']
+    assert_equal "Main Building", json_response['caption']
+    assert_equal "outside", json_response['tags']
 
     get "/v1/communities/#{@f1.id}/images"
     assert_response :success
 
-    assert_equal "Main Building", json_response['data'][0]['attributes']['caption']
-    assert_equal "outside", json_response['data'][0]['attributes']['tags']
+    assert_equal "Main Building", json_response[0]['caption']
+    assert_equal "outside", json_response[0]['tags']
 
-    url = json_response['data'][0]['attributes']['url']
+    url = json_response[0]['url']
 
     get url
     assert_response :redirect
@@ -61,11 +61,11 @@ class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
     }
     assert_response :success
 
-    assert_equal "Golden Pond with logo", json_response['data']['attributes']['name']
-    assert_equal "logo", json_response['data']['attributes']['images'][0]['caption']
-    assert_equal "outside", json_response['data']['attributes']['images'][0]['tags']
+    assert_equal "Golden Pond with logo", json_response['name']
+    assert_equal "logo", json_response['images'][0]['caption']
+    assert_equal "outside", json_response['images'][0]['tags']
 
-    url = json_response['data']['attributes']['images'][0]['url']
+    url = json_response['images'][0]['url']
 
     get url
     assert_response :redirect

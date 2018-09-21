@@ -15,8 +15,8 @@
 #  weight     :integer          default(0)
 #
 
-class GeoPlaceSerializer
-  include FastJsonapi::ObjectSerializer
+class GeoPlaceSerializer < Blueprinter::Base
+  identifier :idstr, name: :id
 
-  attributes :name, :slug, :full_name, :state, :lat, :lon, :geo_type, :reference
+  fields :name, :slug, :full_name, :state, :lat, :lon, :geo_type, :reference
 end

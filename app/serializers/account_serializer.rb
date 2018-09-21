@@ -15,8 +15,16 @@
 #  index_accounts_on_email  (email) UNIQUE
 #
 
-class AccountSerializer
-  include FastJsonapi::ObjectSerializer
+class AccountSerializer < Blueprinter::Base
+  identifier :idstr, name: :id
 
-  attributes :name, :email, :is_admin
+  fields :name, :email, :is_admin
+
+  field :meta do |obj, options|
+    options[:meta]
+  end
+
+  # field :meta, if: ->(obj, options) {options[:meta]} do |obj, options|
+  #   options[:meta]
+  # end
 end

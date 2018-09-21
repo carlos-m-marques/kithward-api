@@ -9,7 +9,7 @@ class AuthController < ApplicationController
 
       @access_token = JsonWebToken.access_token_for_account(@account)
 
-      render json: AccountSerializer.new(@account, meta: {access_token: @access_token, refresh_token: @refresh_token})
+      render json: AccountSerializer.render(@account, meta: {access_token: @access_token, refresh_token: @refresh_token})
     else
       render json: { errors: ['Invalid Credentials'] }, status: :unauthorized
     end
@@ -24,7 +24,7 @@ class AuthController < ApplicationController
       if @account && Digest::SHA1.hexdigest(@account.password_digest) == refresh_data[:digest]
         @access_token = JsonWebToken.access_token_for_account(@account)
 
-        render json: AccountSerializer.new(@account, meta: {access_token: @access_token, refresh_token: @refresh_token})
+        render json: AccountSerializer.render(@account, meta: {access_token: @access_token, refresh_token: @refresh_token})
       else
         render json: { errors: ['Invalid Token'] }, status: :unauthorized
       end

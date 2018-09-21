@@ -12,13 +12,13 @@ class GeoPlaceIntegrationTest < ActionDispatch::IntegrationTest
 
     get "/v1/geo_places", params: {q: '100'}
     assert_response :success
-    assert_equal [@g1.id.to_s, @g2.id.to_s], json_response['data'].collect {|result| result['id']}
-    assert_equal [@g1.name, @g2.name], json_response['data'].collect {|result| result['attributes']['name']}
+    assert_equal [@g1.id.to_s, @g2.id.to_s], json_response.collect {|result| result['id']}
+    assert_equal [@g1.name, @g2.name], json_response.collect {|result| result['name']}
   end
 
   test "retrieve geo place" do
     get "/v1/geo_places/#{@g2.id}"
     assert_response :success
-    assert_equal @g2.id.to_s, json_response['data']['id']
+    assert_equal @g2.id.to_s, json_response['id']
   end
 end
