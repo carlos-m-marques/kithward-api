@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_09_183538) do
+ActiveRecord::Schema.define(version: 2018_09_21_131725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2018_09_09_183538) do
     t.string "care_type", limit: 1, default: "?"
     t.string "status", limit: 1, default: "?"
     t.jsonb "data"
+    t.string "cached_image_url", limit: 128
   end
 
   create_table "community_images", force: :cascade do |t|

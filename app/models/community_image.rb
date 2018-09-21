@@ -19,4 +19,10 @@ class CommunityImage < ApplicationRecord
   belongs_to :community
 
   has_one_attached :image
+
+  after_save { community&.update_cached_image_url! }
+
+  def url
+    "/v1/communities/#{self.community_id}/images/#{self.id}"
+  end
 end

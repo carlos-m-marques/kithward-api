@@ -18,11 +18,7 @@
 class CommunityImageSerializer < Blueprinter::Base
   identifier :idstr, name: :id
 
-  fields :caption, :tags, :sort_order
-
-  field :url do |object|
-    "/v1/communities/#{object.community_id}/images/#{object.id}"
-  end
+  fields :caption, :tags, :sort_order, :url
 
   field :content_type do |object|
     object.image.content_type
