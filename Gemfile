@@ -23,7 +23,7 @@ gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'geocoder', '~> 1.4.0'
 gem 'aws-sdk-s3', require: false
 gem 'sentry-raven'
-gem 'ddtrace'
+gem 'ddtrace', require: false
 
 
 #== DEVELOPMENT & TESTING ==================
