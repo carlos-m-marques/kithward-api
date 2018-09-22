@@ -40,6 +40,7 @@ class CommunitySerializer < Blueprinter::Base
 
   view 'complete' do
     include_view 'simple'
+    exclude :cached_data
 
     field :description
     field :data
