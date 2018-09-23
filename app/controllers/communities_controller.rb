@@ -62,7 +62,7 @@ class CommunitiesController < ApplicationController
     @community.attributes = params.permit(
       :care_type, :status,
       :name, :description,
-      :address, :address_more, :city, :state, :postal, :country,
+      :street, :street_more, :city, :state, :postal, :country,
       :lat, :lon, :website, :phone, :fax, :email
     )
 
@@ -115,7 +115,7 @@ class CommunitiesController < ApplicationController
     @community.attributes = params.permit(
       :care_type, :status,
       :name, :description,
-      :address, :address_more, :city, :state, :postal, :country,
+      :street, :street_more, :city, :state, :postal, :country,
       :lat, :lon, :website, :phone, :fax, :email
     )
 
