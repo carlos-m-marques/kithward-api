@@ -101,7 +101,8 @@ class CommunitiesController < ApplicationController
 
     @community.save
 
-
+    @community.community_images.reload
+    
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
