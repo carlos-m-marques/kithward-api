@@ -102,7 +102,7 @@ class CommunitiesController < ApplicationController
     @community.save
 
     @community.community_images.reload
-    
+
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
@@ -130,7 +130,7 @@ class CommunitiesController < ApplicationController
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(@community, view: :complete)
+      render json: CommunitySerializer.render(@community, view: 'complete')
     end
   end
 
