@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
   private :set_raven_context
 
   def inject_kithward_headers
-    response.headers['X-Kw'] = "#{ENV['HEROKU_APP_NAME'] || 'kwweb-development'}[#{controller_name}/#{action_name}] #{(ENV['HEROKU_SLUG_COMMIT'] || '?')[0..6]} #{ENV['HEROKU_RELEASE_CREATED_AT']}"
+    response.headers['X-Kw'] = "#{ENV['HEROKU_APP_NAME'] || 'kwweb-development'}[#{controller_name}/#{action_name}] #{(ENV['HEROKU_SLUG_COMMIT'] || '?')[0..7]} #{ENV['HEROKU_RELEASE_CREATED_AT']}"
   end
   protected :inject_kithward_headers
 
