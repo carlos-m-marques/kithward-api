@@ -2,13 +2,18 @@ require 'json_web_token'
 
 class ApplicationController < ActionController::API
   before_action :set_raven_context
+  after_action :inject_kithward_headers
 
-  def set_raven_context
+  def set_raven_context # Sentry
     Raven.user_context(id: access_token_payload[:account_id])
     Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
   private :set_raven_context
 
+  def inject_kithward_headers
+    response.headers['X-KW'] = "#{ENV['HEROKU_APP_NAME'] || 'kwweb-development'}[#{controller_name}/#{action_name}] #{(ENV['HEROKU_SLUG_COMMIT'] || '?')[0..6]} #{ENV['HEROKU_RELEASE_CREATED_AT']}"
+  end
+  protected :inject_kithward_headers
 
   def access_token_payload
     @access_token_payload ||= begin
