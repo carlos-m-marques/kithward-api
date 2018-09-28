@@ -157,7 +157,7 @@ class DataDictionary
       desc: "Here are the various types of units available to choose from, subject to availability. " \
             "There may be more options than what are shown. Contact us to find out more.",
       groups: [
-        { units: { label: "Unit Sizes"}},
+        { units: { label: "Apartment Sizes"}},
         { features: { label: "Available Features"}},
       ],
       attrs: [
@@ -357,13 +357,13 @@ class DataDictionary
             " opportunities there are to socialize, stay fit, be creative, stay engaged, grow " \
             "spiritually, and more.",
       groups: [
-        { artistic: {label: "Creative & Artistic", }},
-        { fitness: {label: "Fitness & Exercise", }},
-        { games: { label: "Games & Trivia", }},
-        { learning: { label: "Lifelong Learning", }},
-        { religious: { label: "Religious & Spiritual", }},
-        { social: { label: "Social & Entertainment" , }},
-        { trips: { label: "Trips & Outings", }},
+        { artistic: {label: "Creative & Artistic", icon: "paint-brush", }},
+        { fitness: {label: "Fitness & Exercise", icon: "trophy", }},
+        { games: { label: "Games & Trivia", icon: "puzzle-piece",}},
+        { learning: { label: "Lifelong Learning", icon: "graduation-cap", }},
+        { religious: { label: "Religious & Spiritual", icon: "universal-access", }},
+        { social: { label: "Social & Entertainment" icon: "beer", , }},
+        { trips: { label: "Trips & Outings", icon: "shuttle-van", }},
       ],
       attrs: [
         { activity_acting:            { label: "Acting/drama", data: 'amenity', group: :artistic }},
@@ -494,9 +494,9 @@ class DataDictionary
       desc: "Amenities represent the 'bones' of a community: the rooms, facilities, features and infrastructure " \
             "meant to enhance and enrich the lives of its residents.",
       groups: [
-        { indoor: { label: "Indoor Amenities", }},
-        { outdoor: { label: "Outdoor Amenities", }},
-        { fitness: { label: "Fitness Facilities", }},
+        { indoor: { label: "Indoor Amenities", icon: "hotel", }},
+        { outdoor: { label: "Outdoor Amenities", icon: "tree-alt", }},
+        { fitness: { label: "Fitness Facilities", icon: "dumbbell", }},
       ],
       attrs: [
         { amenity_ATM:                 { label: "ATM", data: 'amenity', group: :indoor }},
