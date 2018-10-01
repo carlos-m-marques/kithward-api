@@ -97,11 +97,12 @@ class CommunitiesController < ApplicationController
           tempfile.unlink
         end
       end
+      
+      @community.community_images.reload
+      @community.update_cached_image_url!
     end
 
     @community.save
-
-    @community.community_images.reload
 
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
