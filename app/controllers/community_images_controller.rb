@@ -12,17 +12,25 @@ class CommunityImagesController < ApplicationController
     @community = Community.find(params[:community_id])
     @image = @community.community_images.find_by_id(params[:id])
 
-    redirect_to url_for(@image.image)
+    if @image && @image.image
+      redirect_to url_for(@image.image)
+    else
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def create
     @community = Community.find(params[:community_id])
     @image = @community.community_images.create(params.permit(:caption, :tags, :sort_order, :image))
 
-    if @image.errors.any?
-      render json: { errors: @image.errors}, status: :unprocessable_entity
+    if @image
+      if @image.errors.any?
+        render json: { errors: @image.errors}, status: :unprocessable_entity
+      else
+        render json: CommunityImageSerializer.render(@image)
+      end
     else
-      render json: CommunityImageSerializer.render(@image)
+      raise ActiveRecord::RecordNotFound
     end
   end
 
@@ -32,10 +40,14 @@ class CommunityImagesController < ApplicationController
 
     @image.update_attributes(params.permit(:caption, :tags, :sort_order, :image))
 
-    if @image.errors.any?
-      render json: { errors: @image.errors}, status: :unprocessable_entity
+    if @image
+      if @image.errors.any?
+        render json: { errors: @image.errors}, status: :unprocessable_entity
+      else
+        render json: CommunityImageSerializer.render(@image)
+      end
     else
-      render json: CommunityImageSerializer.render(@image)
+      raise ActiveRecord::RecordNotFound
     end
   end
 end
