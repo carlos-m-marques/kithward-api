@@ -35,6 +35,6 @@ class GeoPlace < ApplicationRecord
   end
 
   def slug
-    "#{full_name.parameterize}-#{id}"
+    "#{full_name&.parameterize}-#{id}"
   end
 end

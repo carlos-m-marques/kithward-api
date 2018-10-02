@@ -94,7 +94,7 @@ class Community < ApplicationRecord
   end
 
   def slug
-    "#{name.parameterize}#{SLUG_FOR_TYPE[care_type]}-#{id}"
+    "#{name&.parameterize}#{SLUG_FOR_TYPE[care_type]}-#{id}"
   end
 
   def is_active?
