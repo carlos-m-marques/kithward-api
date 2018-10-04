@@ -18,7 +18,7 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     get "/v1/communities/dictionary"
     assert_response :success
 
-    assert_not_nil json_response[0]['section']
+    assert_not_nil json_response[0]['label']
   end
 
   test "search communities" do
