@@ -9,11 +9,11 @@ class DataDictionary
     (sections and sections.size > 0) or raise "The specification cannot be empty"
 
     sections.each {|section|
-      (section.has_key?(:id) and section.has_key?(:label) and section.has_key?(:attrs) and section[:attrs].size > 0) \
+      (section.has_key?(:section) and section.has_key?(:label) and section.has_key?(:attrs) and section[:attrs].size > 0) \
       or raise "Sections need an id, a label and attributes"
     }
 
-    repeated_ids = sections.collect {|s| s[:id]}.group_by(&:itself).select {|k, v| v.size > 1}
+    repeated_ids = sections.collect {|s| s[:section]}.group_by(&:itself).select {|k, v| v.size > 1}
     repeated_ids.length == 0 or raise "Sections need unique ids (#{repeated_ids.collect {|k, v| k}.join(", ")})"
 
     all_attrs = attributes
@@ -67,7 +67,7 @@ class DataDictionary
   #   address (street, city, state, zip, lat, lon)
 
   Community = self.new([
-    { id: 'details',
+    { section: 'details',
       label: "Community Details",
       attrs: [
         { name:   { label: "Community name", data: 'string', direct_model_attribute: true }},
@@ -147,7 +147,7 @@ class DataDictionary
       ]
     },
 
-    { id: 'kithward',
+    { section: 'kithward',
       label: "Kithward Color",
       attrs: [
         { kithward_color:         { label: "Kithward Color", data: 'text' }},
@@ -155,7 +155,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'accomodations',
+    { section: 'accomodations',
       label: "Accomodations",
       desc: "Here are the various types of units available to choose from, subject to availability. " \
             "There may be more options than what are shown. Contact us to find out more.",
@@ -189,7 +189,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'pricing',
+    { section: 'pricing',
       label: "Pricing Summary",
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
             "level of assistance you require, if any. Contact us to find out more.",
@@ -212,7 +212,7 @@ class DataDictionary
       ]
     },
 
-    { id: 'care',
+    { section: 'care',
       label: "Care & Support",
       desc: "Here you will find the types of healthcare, assistance and support offered at this community, some of which " \
             "may come with an additional cost.",
@@ -279,7 +279,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'services',
+    { section: 'services',
       label: "Services",
       desc: "Staff and visiting professionals offer a variety of services to make residents lives easier, though some " \
             "may come with an additional cost or be subject to availability.",
@@ -330,7 +330,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'dining',
+    { section: 'dining',
       label: "Dining",
       desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
@@ -359,7 +359,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'activities',
+    { section: 'activities',
       label: "Activities",
       desc: "Activity calendars speak volumes about the culture of a community. Learn what " \
             " opportunities there are to socialize, stay fit, be creative, stay engaged, grow " \
@@ -498,7 +498,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'amenities',
+    { section: 'amenities',
       label: "Amenities",
       desc: "Amenities represent the 'bones' of a community: the rooms, facilities, features and infrastructure " \
             "meant to enhance and enrich the lives of its residents.",
@@ -597,7 +597,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'governance',
+    { section: 'governance',
       label: "Community Governance",
       groups: [
         { ownership:  { label: "Ownership", }},
@@ -623,14 +623,14 @@ class DataDictionary
       ],
     },
 
-    { id: 'values',
+    { section: 'values',
       label: "Community Values",
       attrs: [
         { community_values:                { label: "Community Values", data: 'text' }},
       ],
     },
 
-    { id: 'certifications',
+    { section: 'certifications',
       label: "Awards & Certifications",
       attrs: [
         { community_awards:                { label: "Awards & Certifications", data: 'text' }},
@@ -638,7 +638,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'makeup',
+    { section: 'makeup',
       label: "Community Makeup",
       attrs: [
         { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
@@ -663,7 +663,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'contracts',
+    { section: 'contracts',
       label: "Contract Options",
       groups: [
         { contract: { label: "Contract Types", }},
@@ -686,7 +686,7 @@ class DataDictionary
       ],
     },
 
-    { id: 'entrance',
+    { section: 'entrance',
       label: "Entrance Requirements",
       attrs: [
         { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
