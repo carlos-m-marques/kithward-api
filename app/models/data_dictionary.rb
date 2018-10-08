@@ -142,7 +142,7 @@ class DataDictionary
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
 
-        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
+        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map' , group: 'maps' }},
 
       ]
     },
@@ -174,6 +174,7 @@ class DataDictionary
 
         { room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features' }},
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features' }},
+        { room_feat_parking:      { label: "Dedicated parking", data: 'amenity', group: 'features' }},
         { room_feat_den:          { label: "Den/extra room", data: 'amenity', group: 'features' }},
         { room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group: 'features' }},
         { room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group: 'features' }},
@@ -185,7 +186,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
 
-        { room_floorplans:        { label: "Sample Floor Plans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan'}},
+        { room_floorplans:        { label: "Sample Floor Plans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan', group: 'floor plans' }},
       ],
     },
 
@@ -302,6 +303,7 @@ class DataDictionary
         { services_massage:        { label: "Massage therapist", data: 'amenity', group: 'services' }},
         { services_newspaper:      { label: "Newspaper delivery", data: 'amenity', group: 'services' }},
         { services_volunteers:     { label: "Outside volunteers", data: 'amenity', group: 'services' }},
+        { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'services' }},        
         { services_pharmacy:       { label: "Pharmacy services", data: 'amenity', group: 'services' }},
         { services_chaplain:       { label: "Priest/chaplain", data: 'amenity', group: 'services' }},
         { services_catering:       { label: "Private event catering", data: 'amenity', group: 'services' }},
@@ -355,7 +357,7 @@ class DataDictionary
         { diet_vegan:             { label: "Vegan", data: 'amenity', group: 'dietary' }},
         { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group: 'dietary' }},
 
-        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu'}},
+        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu', group: 'menus' }},
       ],
     },
 
@@ -385,6 +387,7 @@ class DataDictionary
         { activity_gardening:         { label: "Gardening", data: 'amenity', group: 'artistic' }},
         { activity_knitting:          { label: "Knitting/crocheting", data: 'amenity', group: 'artistic' }},
         { activity_painting:          { label: "Painting", data: 'amenity', group: 'artistic' }},
+        { activity_photography:       { label: "Photography", data: 'amenity', group: 'artistic' }},
         { activity_poetry:            { label: "Poetry readings", data: 'amenity', group: 'artistic' }},
         { activity_singing:           { label: "Singing/choir", data: 'amenity', group: 'artistic' }},
         { activity_woodworking:       { label: "Woodworking", data: 'amenity', group: 'artistic' }},
@@ -402,7 +405,6 @@ class DataDictionary
         { activity_hiking:            { label: "Hiking", data: 'amenity', group: 'fitness' }},
         { activity_horseback:         { label: "Horseback riding", data: 'amenity', group: 'fitness' }},
         { activity_lawn_games:        { label: "Lawn games", data: 'amenity', group: 'fitness' }},
-        { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'fitness' }},
         { activity_pickleball:        { label: "Pickleball", data: 'amenity', group: 'fitness' }},
         { activity_pilates:           { label: "Pilates", data: 'amenity', group: 'fitness' }},
         { activity_ping_pong:         { label: "Ping pong", data: 'amenity', group: 'fitness' }},
@@ -494,7 +496,7 @@ class DataDictionary
         { activity_theater:                 { label: "Theater/performing arts", data: 'amenity', group: 'trips' }},
         { activity_wineries:                { label: "Wineries", data: 'amenity', group: 'trips' }},
 
-        { activity_calendars:   { label: "Sample Calendars", data: 'ignore', special: 'thumbnails', tagged_as: 'calendar'}},
+        { activity_calendars:   { label: "Sample Calendars", data: 'ignore', special: 'thumbnails', tagged_as: 'calendar', group: 'calendars' }},
       ],
     },
 
@@ -521,6 +523,7 @@ class DataDictionary
         { amenity_clubhouse:           { label: "Clubhouse", data: 'amenity', group: 'indoor' }},
         { amenity_common_kitchen:      { label: "Common kitchen", data: 'amenity', group: 'indoor' }},
         { amenity_computer_room:       { label: "Computer room/area", data: 'amenity', group: 'indoor' }},
+        { amenity_exam_room:           { label: "Examination room", data: 'amenity', group: 'indoor' }},
         { amenity_fireplace:           { label: "Fireplaces", data: 'amenity', group: 'indoor' }},
         { amenity_game_room:           { label: "Game/card room", data: 'amenity', group: 'indoor' }},
         { amenity_hair_salon:          { label: "Hair salon/barber", data: 'amenity', group: 'indoor' }},
