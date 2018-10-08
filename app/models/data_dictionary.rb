@@ -80,7 +80,7 @@ class DataDictionary
                         ]}},
 
         { ccrc:   { label: "Continuing Care Retirement Community", data: 'flag' }},
-        { aip:    { label: "Allows 'Aging In Place'", data: 'flag', admin_break_after: 'yes'  }},
+        { aip:    { label: "Allows 'aging in place'", data: 'flag', admin_break_after: 'yes'  }},
 
         { related_communities:  { label: "Related Communities", data: 'list_of_ids', admin_only: true }},
 
