@@ -142,7 +142,7 @@ class DataDictionary
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
 
-        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map' , group: 'maps' }},
+        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
 
       ]
     },
@@ -162,6 +162,7 @@ class DataDictionary
       groups: [
         { units: { label: "Apartment Sizes"}},
         { features: { label: "Available Features"}},
+        { floorplans: { label: "-Floorplans" }},
       ],
       attrs: [
         { room_shared:            { label: "Shared room", data: 'amenity', group: 'units' }},
@@ -186,7 +187,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
 
-        { room_floorplans:        { label: "Sample Floor Plans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan', group: 'floor plans' }},
+        { room_floorplans:        { label: "Sample Floor Plans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan', group: 'floorplans' }},
       ],
     },
 
@@ -303,7 +304,7 @@ class DataDictionary
         { services_massage:        { label: "Massage therapist", data: 'amenity', group: 'services' }},
         { services_newspaper:      { label: "Newspaper delivery", data: 'amenity', group: 'services' }},
         { services_volunteers:     { label: "Outside volunteers", data: 'amenity', group: 'services' }},
-        { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'services' }},        
+        { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'services' }},
         { services_pharmacy:       { label: "Pharmacy services", data: 'amenity', group: 'services' }},
         { services_chaplain:       { label: "Priest/chaplain", data: 'amenity', group: 'services' }},
         { services_catering:       { label: "Private event catering", data: 'amenity', group: 'services' }},
@@ -339,6 +340,7 @@ class DataDictionary
       groups: [
         { dining: { label: "Dining Style", }},
         { dietary: { label: "Dietary Accomodations", }},
+        { menus: { label: "-Menus", }},
       ],
       attrs: [
         { food_3_meals:           { label: "3 meals daily", data: 'amenity', group: 'dining' }},
@@ -374,6 +376,7 @@ class DataDictionary
         { religious: { label: "Religious & Spiritual", icon: "universal-access", }},
         { social: { label: "Social & Entertainment", icon: "beer", }},
         { trips: { label: "Trips & Outings", icon: "shuttle-van", }},
+        { calendars: { label: "-Calendars", }},
       ],
       attrs: [
         { activity_acting:            { label: "Acting/drama", data: 'amenity', group: 'artistic' }},
