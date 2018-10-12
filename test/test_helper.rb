@@ -38,6 +38,6 @@ end
 class ActionDispatch::IntegrationTest
   def json_response
     @json_cache ||= {}
-    @json_cache[@response] ||= ActiveSupport::JSON.decode @response.body
+    @json_cache[@response] ||= ActiveSupport::JSON.decode(@response.body)
   end
 end

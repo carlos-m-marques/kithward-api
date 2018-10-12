@@ -97,7 +97,7 @@ class CommunitiesController < ApplicationController
           tempfile.unlink
         end
       end
-      
+
       @community.community_images.reload
       @community.update_cached_image_url!
     end
@@ -139,4 +139,9 @@ class CommunitiesController < ApplicationController
     render json: DataDictionary::Community.to_h
   end
 
+  def import
+    importer = CommunityImporter.new params[:data]
+
+    render json: importer.to_h
+  end
 end

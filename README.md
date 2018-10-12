@@ -75,7 +75,9 @@ elasticsearch
 Seed your local database from production
 
 ```
-heroku pg:pull DATABASE_URL kw_development -a kithward-api
+dropdb kw_development
+heroku pg:pull DATABASE_URL kw_development -a kwapi
+rails runner 'Community.reindex; GeoPlace.reindex'
 ```
 
 ## ElasticSearch notes
