@@ -75,9 +75,15 @@ elasticsearch
 Seed your local database from production
 
 ```
-dropdb kw_development
+dropdb kw_development # or rails db:drop
 heroku pg:pull DATABASE_URL kw_development -a kwapi
 rails runner 'Community.reindex; GeoPlace.reindex'
+```
+
+Copy production data to staging
+
+```
+heroku pg:copy kwapi::DATABASE_URL DATABASE_URL --app kwapi-staging
 ```
 
 ## ElasticSearch notes
