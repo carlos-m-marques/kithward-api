@@ -98,20 +98,6 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "Updated Community", json_response['name']
   end
 
-  test "admin users can add images to communities" do
-    put "/v1/communities/#{@c1.id}", params: {name: "Updated Community", access_token: @admin_token}
-    assert_response :success
-
-    assert_equal @c1.id.to_s, json_response['id']
-    assert_equal "Updated Community", json_response['name']
-
-    get "/v1/communities/#{@c1.id}"
-    assert_response :success
-
-    assert_equal @c1.id.to_s, json_response['id']
-    assert_equal "Updated Community", json_response['name']
-  end
-
   test "search communities by geo place" do
     @soho = GeoPlace.create(name: "SoHo", lat: 40.72, lon: -73.99)
     @jersey = GeoPlace.create(name: "Jersey Shore", lat: 40.21, lon: -74.00)
@@ -156,5 +142,17 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "212 555 9876", json_response['data']['phone']
     assert_equal "http://soho.nyc/", json_response['data']['web']
     assert_equal "info@soho.nyc", json_response['data']['email']
+
+    put "/v1/communities/#{community.id}", params: {listings: [{name: "1 Bedroom", data: {description: "one bed", room_type: '1'}}], access_token: @admin_token}
+    assert_response :success
+    assert_equal "SoHo Cares", json_response['name']
+    assert_equal "1 Bedroom", json_response['listings'][0]['name']
+    assert_equal "one bed", json_response['listings'][0]['data']['description']
+
+    put "/v1/communities/#{community.id}", params: {listings: [{name: "1 Bedroom", data: {description: "Actually a studio", room_type: 'S'}}], access_token: @admin_token}
+    assert_response :success
+    assert_equal "SoHo Cares", json_response['name']
+    assert_equal "1 Bedroom", json_response['listings'][0]['name']
+    assert_equal "Actually a studio", json_response['listings'][0]['data']['description']
   end
 end

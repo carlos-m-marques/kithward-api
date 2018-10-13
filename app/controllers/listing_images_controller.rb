@@ -1,16 +1,16 @@
-class CommunityImagesController < ApplicationController
+class ListingImagesController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index
-    @community = Community.find(params[:community_id])
-    @images = @community.community_images
+    @listing = Listing.find(params[:listing_id])
+    @images = @listing.listing_images
 
-    render json: CommunityImageSerializer.render(@images)
+    render json: ListingImageSerializer.render(@images)
   end
 
   def show
-    @community = Community.find(params[:community_id])
-    @image = @community.community_images.find_by_id(params[:id])
+    @listing = Listing.find(params[:listing_id])
+    @image = @listing.listing_images.find_by_id(params[:id])
 
     if @image && @image.image
       redirect_to url_for(@image.image)
@@ -20,14 +20,14 @@ class CommunityImagesController < ApplicationController
   end
 
   def create
-    @community = Community.find(params[:community_id])
-    @image = @community.community_images.create(params.permit(:caption, :tags, :sort_order, :image))
+    @listing = Listing.find(params[:listing_id])
+    @image = @listing.listing_images.create(params.permit(:caption, :tags, :sort_order, :image))
 
     if @image
       if @image.errors.any?
         render json: { errors: @image.errors}, status: :unprocessable_entity
       else
-        render json: CommunityImageSerializer.render(@image)
+        render json: ListingImageSerializer.render(@image)
       end
     else
       raise ActiveRecord::RecordNotFound
@@ -35,8 +35,8 @@ class CommunityImagesController < ApplicationController
   end
 
   def update
-    @community = Community.find(params[:community_id])
-    @image = @community.community_images.find_by_id(params[:id])
+    @listing = Listing.find(params[:listing_id])
+    @image = @listing.listing_images.find_by_id(params[:id])
 
     @image.update_attributes(params.permit(:caption, :tags, :sort_order, :image))
 
@@ -44,16 +44,16 @@ class CommunityImagesController < ApplicationController
       if @image.errors.any?
         render json: { errors: @image.errors}, status: :unprocessable_entity
       else
-        render json: CommunityImageSerializer.render(@image)
+        render json: ListingImageSerializer.render(@image)
       end
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
-  def self.process_one_image(community, params)
+  def self.process_one_image(listing, params)
     if params && params[:id] && params[:id].to_i > 0
-      image = community.community_images.find_by_id(params[:id])
+      image = listing.listing_images.find_by_id(params[:id])
       if params[:deleted] == 'deleted'
         image.destroy
       else
@@ -70,13 +70,14 @@ class CommunityImagesController < ApplicationController
       tempfile = Tempfile.new(filename, encoding: "ASCII-8BIT")
       tempfile.write(decoded_params)
       tempfile.rewind
-      image = community.community_images.create(params.permit(:caption, :tags, :sort_order))
+      image = listing.listing_images.create(params.permit(:caption, :tags, :sort_order))
       image.image.attach(io: tempfile, filename: filename)
       tempfile.close
       tempfile.unlink
     end
     image
   end
+
 end
 
 # NOTES:

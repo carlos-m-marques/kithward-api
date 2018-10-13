@@ -45,18 +45,21 @@ class CommunitySerializer < Blueprinter::Base
     field :description
     field :data
 
-    field :images do |object|
-      object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
-        {
-          id: image.id,
-          url: image.url,
-          caption: image.caption,
-          tags: image.tags,
-          sort_order: image.sort_order,
-          content_type: image.image.content_type,
-        }
-      end
-    end
+    association :listings, blueprint: ListingSerializer
+    association :community_images, name: :images, blueprint: CommunityImageSerializer
+
+    # field :images do |object|
+    #   object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
+    #     {
+    #       id: image.id,
+    #       url: image.url,
+    #       caption: image.caption,
+    #       tags: image.tags,
+    #       sort_order: image.sort_order,
+    #       content_type: image.image.content_type,
+    #     }
+    #   end
+    # end
   end
 
 end

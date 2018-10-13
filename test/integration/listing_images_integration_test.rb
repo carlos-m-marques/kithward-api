@@ -1,11 +1,10 @@
 require 'test_helper'
 require 'digest'
 
-class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
+class ListingImagesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
-    Community.delete_all
-
     @c1 = create(:community, name: 'Golden Pond', description: 'Excelent Care')
+    @l1 = @c1.listings.create(name: 'One Bedroom')
 
     @admin_account = create(:account, is_admin: true)
     @admin_token = JsonWebToken.access_token_for_account(@admin_account)
@@ -14,21 +13,21 @@ class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
   teardown do
   end
 
-  test "admin users can add images to communities" do
-    post "/v1/communities/#{@c1.id}/images", params: {access_token: @admin_token,
-      caption: "Main Building", tags: "outside",
+  test "admin users can add images to listings" do
+    post "/v1/listings/#{@l1.id}/images", params: {access_token: @admin_token,
+      caption: "Bathroom", tags: "bathroom",
       image: fixture_file_upload("photo.jpg", "image/jpeg")
     }
     assert_response :success
 
-    assert_equal "Main Building", json_response['caption']
-    assert_equal "outside", json_response['tags']
+    assert_equal "Bathroom", json_response['caption']
+    assert_equal "bathroom", json_response['tags']
 
-    get "/v1/communities/#{@c1.id}/images"
+    get "/v1/listings/#{@l1.id}/images"
     assert_response :success
 
-    assert_equal "Main Building", json_response[0]['caption']
-    assert_equal "outside", json_response[0]['tags']
+    assert_equal "Bathroom", json_response[0]['caption']
+    assert_equal "bathroom", json_response[0]['tags']
 
     url = json_response[0]['url']
 
@@ -46,7 +45,7 @@ class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
 
     get "/v1/communities/#{@c1.id}"
     assert_response :success
-    assert_equal "Main Building", json_response['images'][0]['caption']
+    assert_equal "Bathroom", json_response['listings'][0]['images'][0]['caption']
   end
 
   test "admin users can add base64-encoded images on the community object endpoint" do
@@ -54,21 +53,26 @@ class CommunityImagesIntegrationTest < ActionDispatch::IntegrationTest
 
     put "/v1/communities/#{@c1.id}", params: {access_token: @admin_token,
       name: "Golden Pond with logo",
-      images: [
+      listings: [
         {
-          caption: "logo",
-          tags: "outside",
-          data: encoded_image
+          id: @l1.id,
+          images: [
+            {
+              caption: "Vista",
+              tags: "outside",
+              data: encoded_image
+            }
+          ]
         }
       ]
     }
     assert_response :success
 
     assert_equal "Golden Pond with logo", json_response['name']
-    assert_equal "logo", json_response['images'][0]['caption']
-    assert_equal "outside", json_response['images'][0]['tags']
+    assert_equal "Vista", json_response['listings'][0]['images'][0]['caption']
+    assert_equal "outside", json_response['listings'][0]['images'][0]['tags']
 
-    url = json_response['images'][0]['url']
+    url = json_response['listings'][0]['images'][0]['url']
 
     get url
     assert_response :redirect

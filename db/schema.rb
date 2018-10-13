@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_133941) do
+ActiveRecord::Schema.define(version: 2018_10_12_201444) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
@@ -102,6 +103,27 @@ ActiveRecord::Schema.define(version: 2018_09_21_133941) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_leads_on_account_id"
     t.index ["community_id"], name: "index_leads_on_community_id"
+  end
+
+  create_table "listing_images", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.string "caption", limit: 1024
+    t.string "tags", limit: 1024
+    t.integer "sort_order", default: 9999
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_listing_images_on_listing_id"
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.bigint "community_id"
+    t.string "name", limit: 1024
+    t.string "status", limit: 1, default: "?"
+    t.integer "sort_order", default: 9999
+    t.jsonb "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_listings_on_community_id"
   end
 
   create_table "versions", force: :cascade do |t|

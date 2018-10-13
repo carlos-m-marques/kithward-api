@@ -27,6 +27,7 @@ class Community < ApplicationRecord
   has_paper_trail
 
   has_many :community_images
+  has_many :listings
 
   before_save :update_cached_data
 

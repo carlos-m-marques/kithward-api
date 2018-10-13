@@ -6,7 +6,12 @@ Rails.application.routes.draw do
       get 'dictionary', on: :collection
       post 'import', on: :collection
 
+      resources :listings
       resources :images, controller: 'community_images'
+    end
+
+    resources :listings do
+      resources :images, controller: 'listing_images'
     end
 
     resources :accounts do

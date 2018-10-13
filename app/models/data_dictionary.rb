@@ -66,6 +66,7 @@ class DataDictionary
   #   ratio   (1:3)
   #   address (street, city, state, zip, lat, lon)
 
+  #================================================================================================
   Community = self.new([
     { section: 'details',
       label: "Community Details",
@@ -711,4 +712,17 @@ class DataDictionary
     },
 
   ])
+
+  #================================================================================================
+  Listing = self.new([
+    { section: 'listing',
+      label: "Details",
+      attrs: [
+        { name:   { label: "Layout Name", data: 'string', direct_model_attribute: true }},
+        { description:   { label: "Description", data: 'text', direct_model_attribute: true }},
+      ],
+    }
+  ])
+
+  #================================================================================================
 end
