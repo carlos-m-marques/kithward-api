@@ -100,15 +100,15 @@ class DataDictionary
         { description:            { label: "Description", data: 'text', direct_model_attribute: true }},
         { admin_notes: { label: "Admin Notes", data: 'text', admin_only: true }},
 
-        { star_rating:            { label: "Kithward Rating", data: 'rating', admin_break_after: 'yes' }},
+        { star_rating:            { label: "Service Level", data: 'rating', admin_break_after: 'yes' }},
 
         { community_size:         { label: "Community Size", data: 'select',
                                      values: [
                                        {'S' => 'Small'},
-                                       {'M' => 'Medium'},
+                                       {'M' => 'Medium-sized'},
                                        {'L' => 'Large'},
                                     ]}},
-        { bed_count:              { label: "Beds", data: 'count', admin_break_after: 'yes' }},
+        { bed_count:              { label: "Total Beds", data: 'count', admin_break_after: 'yes' }},
 
         { staff_total:            { label: "Total Staff", data: 'count' }},
         { staff_full_time:        { label: "Full-Time Staff", data: 'count' }},
@@ -142,7 +142,17 @@ class DataDictionary
 
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
-
+        
+        { completeness:           { label: "Completeness", data: 'select',
+                                    values: [
+                                      {'0' => "Incomplete"},
+                                      {'30' => "Somewhat complete"},
+                                      {'60' => "Very complete"},
+                                      {'90' => 'Complete},
+                                   admin_only: true ]}},
+        { needs_review:          { label: "Needs review", data: 'flag', admin_only: true }},
+        { last_visited:          { label: "Last Visited", data: 'string', admin_only: true }},
+      
         { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
 
       ]
@@ -196,27 +206,74 @@ class DataDictionary
       label: "Pricing Summary",
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
             "level of assistance you require, if any. Contact us to find out more.",
+      groups: [
+        { onetimefees: { label: "One-Time Fees", }},
+        { otherfees: { label: "Other Fees", }},
+        { carelevels: { label: "Levels Of Care", }},
+        { itemizedcare: { label: "Itemized Care", }},
+      ],
       attrs: [
-        { base_rent:              { label: "Base Rent", data: 'pricerange' }},
-        # { rent_starting_price:    { label: "Base Rent Minimum", data: 'price' }},
-        # { rent_maximum_price:     { label: "Base Rent Maximum", data: 'price' }},
-        { rent_includes_care:     { label: "Base Rent Includes Care Cost", data: 'flag', admin_break_after: 'yes' }},
+        { base_rent:              { label: "Base Fee", data: 'pricerange' }},
+        # { rent_starting_price:    { label: "Base Fee Minimum", data: 'price' }},
+        # { rent_maximum_price:     { label: "Base Fee Maximum", data: 'price' }},
 
-        { care_cost:              { label: "Care Cost", data: 'pricerange' }},
+        { base_rent_second:       { label: "Second Resident Base Fee", data: 'fee' }},        
+        
+        { care_cost:              { label: "Care Costs", data: 'pricerange' }},
         # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
         # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
-
-        { entrance_fee:           { label: "Entrance Fee", data: 'pricerange' }},
+        { rent_includes_care:     { label: "Base Monthly Fee Includes Care Costs", data: 'flag', admin_break_after: 'yes' }},        
+        
+        { memory_care_cost:       { label: "Memory Care Costs", data: 'pricerange' }},
+        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
+        { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', admin_break_after: 'yes' }},
+        
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange' }},
         # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
         # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
 
+        { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},        
+        
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
-      ]
+        
+        { waiting_list_fee:       { label: "Waiting List Fee", data: 'fee' group: 'onetimefees' }}, 
+        { reservation_fee:        { label: "Reservation Fee", data: 'fee' group: 'onetimefees' }}, 
+        { application_fee:        { label: "Application Fee", data: 'fee' group: 'onetimefees' }},
+        { security_deposit:       { label: "Security Deposit", data: 'fee' group: 'onetimefees' }},
+        { administrative_fee:     { label: "Administrative Fee", data: 'fee' group: 'onetimefees' }},
+        { pendant_fee:            { label: "Emergency Pendant Fee", data: 'fee' group: 'onetimefees' }},
+        { pet_fee:                { label: "Pet Fee", data: 'fee' group: 'onetimefees' }},     
+        
+        { basic_cable_fee:        { label: "Cable (Basic)", data: 'fee' group: 'otherfees' }}, 
+        { premium_cable_fee:      { label: "Cable (Premium)", data: 'fee' group: 'otherfees' }}, 
+        { internet_fee:           { label: "Internet", data: 'fee' group: 'otherfees' }},
+        { broadband_fee:          { label: "Internet (Broadband)", data: 'fee' group: 'otherfees' }},
+        { laundry_fee:            { label: "Laundry Services", data: 'fee' group: 'otherfees' }},
+        { newspaper_fee:          { label: "Newspaper Deliver", data: 'fee' group: 'otherfees' }},
+        { phone_fee:              { label: "Phone (Domestic)", data: 'fee' group: 'otherfees' }},  
+
+        { care_level_1:           { label: "Care Level 1", data: 'fee' group: 'carelevels' }}, 
+        { care_level_2:           { label: "Care Level 2", data: 'fee' group: 'carelevels' }}, 
+        { care_level_3:           { label: "Care Level 3", data: 'fee' group: 'carelevels' }},
+        { care_level_4:           { label: "Care Level 4", data: 'fee' group: 'carelevels' }},
+        { care_level_5:           { label: "Care Level 5", data: 'fee' group: 'carelevels' }},
+        { care_explanation:       { label: "Explanation of Care Levels", data: 'text' group: 'carelevels' }},      
+
+        { day_care_fee:           { label: "Adult Day Care", data: 'fee' group: 'itemizedcare' }}, 
+        { diabetes_fee:           { label: "Diabetes Support", data: 'fee' group: 'itemizedcare' }}, 
+        { hospice_fee:            { label: "Hospice Care", data: 'fee' group: 'itemizedcare' }},
+        { incontinence_fee:       { label: "Incontinence Care", data: 'fee' group: 'itemizedcare' }},
+        { med_mgmt_fee:           { label: "Medication Management", data: 'fee' group: 'itemizedcare' }},   
+        { respite_fee:            { label: "Respite Care", data: 'fee' group: 'itemizedcare' }},
+        { rehab_fee:              { label: "Short-Term Rehab", data: 'fee' group: 'itemizedcare' }},           
+        
+        ],
     },
 
     { section: 'care',
-      label: "Care & Support",
+      label: "Available Care",
       desc: "Here you will find the types of healthcare, assistance and support offered at this community, some of which " \
             "may come with an additional cost.",
       groups: [
@@ -253,6 +310,7 @@ class DataDictionary
         { care_onsite_opthamologist:  { label: "Opthamologist", data: 'flag', group: 'visiting' }},
         { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group: 'visiting' }},
         { care_onsite_podiatrist:     { label: "Podiatrist", data: 'flag', group: 'visiting' }},
+        { care_onsite_aide:           { label: "Private aide", data: 'flag', group: 'visiting' }},
         { care_onsite_pulmonologist:  { label: "Pulmonologist", data: 'flag', group: 'visiting' }},
         { care_onsite_psychologist:   { label: "Psychologist", data: 'flag', group: 'visiting' }},
         { care_onsite_psychiatrist:   { label: "Psychiatrist", data: 'flag', group: 'visiting' }},
@@ -261,22 +319,24 @@ class DataDictionary
 
         { assistance_bathing:     { label: "Bathing assistance",   data: 'amenity', group: 'assistance' }},
         { assistance_dressing:    { label: "Dressing assistance",  data: 'amenity', group: 'assistance' }},
-        { assistance_errands:     { label: "Escorts for errands",   data: 'amenity', group: 'assistance' }},
+        { assistance_errands:     { label: "Escorts to dinner/errands",   data: 'amenity', group: 'assistance' }},
         { assistance_grooming:    { label: "Grooming assistance",  data: 'amenity', group: 'assistance' }},
         { assistance_medication:  { label: "Medication management", data: 'amenity', group: 'assistance' }},
         { assistance_mobility:    { label: "Mobility assistance",  data: 'amenity', group: 'assistance' }},
         { assistance_toileting:   { label: "Toileting assistance", data: 'amenity', group: 'assistance' }},
 
+        { care_daycare:           { label: "Adult day care", data: 'amenity', group: 'special' }},
         { care_dementia:          { label: "Alzheimer's/dementia care", data: 'amenity', group: 'special' }},
         { care_diabetes:          { label: "Diabetes care", data: 'amenity', group: 'special' }},
+        { care_hopspice:          { label: "Hospice care", data: 'amenity', group: 'special' }},
         { care_incontinence:      { label: "Incontinence care", data: 'amenity', group: 'special' }},
-        { care_urinary:           { label: "Incontinence care (Urinary only)", data: 'amenity', group: 'special' }},
         { care_mild_cognitive:    { label: "Mild cognitive impairment care", data: 'amenity', group: 'special' }},
         { care_music_therapy:     { label: "Music therapy", data: 'amenity', group: 'special' }},
         { care_occupational:      { label: "Occupational therapy", data: 'amenity', group: 'special' }},
         { care_parkinsons:        { label: "Parkinson's care", data: 'amenity', group: 'special' }},
         { care_physical:          { label: "Physical therapy", data: 'amenity', group: 'special' }},
         { care_rehabilitation:    { label: "Rehabilitation program", data: 'amenity', group: 'special' }},
+        { care_respite:           { label: "Respite care", data: 'amenity', group: 'special' }},
         { care_speech:            { label: "Speech therapy", data: 'amenity', group: 'special' }},
         { care_wellness:          { label: "Wellness program", data: 'amenity', group: 'special' }},
       ],
@@ -294,7 +354,7 @@ class DataDictionary
       attrs: [
         { services_banking:        { label: "Banking services", data: 'amenity', group: 'services' }},
         { services_cable:          { label: "Cable included", data: 'amenity', group: 'services' }},
-        { services_concierge:      { label: "Concierge", data: 'amenity', group: 'services' }},
+        { services_concierge:      { label: "Concierge services", data: 'amenity', group: 'services' }},
         { services_domestic_phone: { label: "Domestic phone included", data: 'amenity', group: 'services' }},
         { services_drycleaning:    { label: "Dry-cleaning services", data: 'amenity', group: 'services' }},
         { services_hairdresser:    { label: "Hairdresser/barber", data: 'amenity', group: 'services' }},
@@ -345,8 +405,8 @@ class DataDictionary
       ],
       attrs: [
         { food_3_meals:           { label: "3 meals daily", data: 'amenity', group: 'dining' }},
-        { diet_foodie_friendly:   { label: "Chef-prepared meals", data: 'amenity', group: 'dining' }},
         { food_all_day:           { label: "Dining available all day", data: 'amenity', group: 'dining' }},
+        { diet_foodie_friendly:   { label: "Gourmet dining", data: 'amenity', group: 'dining' }},
         { food_guest_meals:       { label: "Guest meals", data: 'amenity', group: 'dining' }},
         { food_meal_vouchers:     { label: "Meal plans/vouchers", data: 'amenity', group: 'dining' }},
         { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group: 'dining' }},
