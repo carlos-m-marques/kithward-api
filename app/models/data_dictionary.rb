@@ -172,7 +172,7 @@ class DataDictionary
         { room_studio:            { label: "Studio", data: 'amenity', group: 'units' }},
         { room_one_bed:           { label: "1 bedroom", data: 'amenity', group: 'units' }},
         { room_two_plus:          { label: "2 bedrooms +", data: 'amenity', group: 'units' }},
-        { room_dettached:         { label: "Detached home", data: 'amenity', group: 'units' }},
+        { room_detached:          { label: "Detached home", data: 'amenity', group: 'units' }},
 
         { room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features' }},
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features' }},
