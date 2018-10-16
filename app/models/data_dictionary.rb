@@ -143,7 +143,7 @@ class DataDictionary
         { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
         { pet_policy:             { label: "Pet policy", data: 'string' }},
 
-        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
+        { community_map:          { label: "Community Map", data: 'thumbnails', tagged_as: 'map'}},
 
       ]
     },
@@ -188,7 +188,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
 
-        { room_floorplans:        { label: "Sample Floor Plans", data: 'ignore', special: 'thumbnails', tagged_as: 'floorplan', group: 'floorplans' }},
+        { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', tagged_as: 'floorplan', group: 'floorplans' }},
       ],
     },
 
@@ -360,7 +360,7 @@ class DataDictionary
         { diet_vegan:             { label: "Vegan", data: 'amenity', group: 'dietary' }},
         { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group: 'dietary' }},
 
-        { food_menus:             { label: "Sample Menus", data: 'ignore', special: 'thumbnails', tagged_as: 'menu', group: 'menus' }},
+        { food_menus:             { label: "Sample Menus", data: 'thumbnails', tagged_as: 'menu', group: 'menus' }},
       ],
     },
 
@@ -500,7 +500,7 @@ class DataDictionary
         { activity_theater:                 { label: "Theater/performing arts", data: 'amenity', group: 'trips' }},
         { activity_wineries:                { label: "Wineries", data: 'amenity', group: 'trips' }},
 
-        { activity_calendars:   { label: "Sample Calendars", data: 'ignore', special: 'thumbnails', tagged_as: 'calendar', group: 'calendars' }},
+        { activity_calendars:   { label: "Sample Calendars", data: 'thumbnails', tagged_as: 'calendar', group: 'calendars' }},
       ],
     },
 
