@@ -247,6 +247,7 @@ class DataDictionary
                                       {'M' => "Community accepts Medicaid"},
                                       {'F' => "Community foundation supports resident"},
                                       {'L' => "Resident must leave community"},
+                                   ]}},
                                       
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
