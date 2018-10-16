@@ -240,7 +240,14 @@ class DataDictionary
         # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
 
         { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
-
+        
+        { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select', group: 'characteristics',
+                                    values: [
+                                      {'-' => 'None'},
+                                      {'M' => "Community accepts Medicaid"},
+                                      {'F' => "Community foundation supports resident"},
+                                      {'L' => "Resident must leave community"},
+                                      
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
 
@@ -314,6 +321,7 @@ class DataDictionary
         { care_onsite_neurologist:    { label: "Neurologist", data: 'flag', group: 'visiting' }},
         { care_onsite_opthamologist:  { label: "Opthamologist", data: 'flag', group: 'visiting' }},
         { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group: 'visiting' }},
+        { care_onsite_orthopedist:    { label: "Orthopedist", data: 'flag', group: 'visiting' }},
         { care_onsite_podiatrist:     { label: "Podiatrist", data: 'flag', group: 'visiting' }},
         { care_onsite_aide:           { label: "Private aide", data: 'flag', group: 'visiting' }},
         { care_onsite_pulmonologist:  { label: "Pulmonologist", data: 'flag', group: 'visiting' }},
