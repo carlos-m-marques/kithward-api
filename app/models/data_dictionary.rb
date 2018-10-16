@@ -70,9 +70,16 @@ class DataDictionary
   Community = self.new([
     { section: 'details',
       label: "Community Details",
+      groups: [
+        { basics: {}},
+        { related: {}},
+        { contact: {}},
+        { characteristics: {}},
+        { admin: {}},
+      ],
       attrs: [
-        { name:   { label: "Community name", data: 'string', direct_model_attribute: true }},
-        { care_type:  { label: "Community type", data: 'select', direct_model_attribute: true,
+        { name:   { label: "Community name", data: 'string', direct_model_attribute: true, group: 'basics', }},
+        { care_type:  { label: "Community type", data: 'select', direct_model_attribute: true, group: 'basics',
                         values: [
                           {'A' => "Assisted Living"},
                           {'I' => "Independent Living"},
@@ -80,50 +87,48 @@ class DataDictionary
                           {'M' => "Memory Care"},
                         ]}},
 
-        { ccrc:   { label: "Continuing Care Retirement Community", data: 'flag' }},
-        { aip:    { label: "Allows 'aging in place'", data: 'flag', admin_break_after: 'yes'  }},
+        { ccrc:   { label: "Continuing Care Retirement Community", data: 'flag', group: 'basics', }},
+        { aip:    { label: "Allows 'aging in place'", data: 'flag', admin_break_after: 'yes', group: 'basics', }},
 
-        { related_communities:  { label: "Related Communities", data: 'list_of_ids', admin_only: true }},
+        { related_communities:  { label: "Related Communities", data: 'list_of_ids', admin_only: true, group: 'related'}},
 
-        { phone: { label: "Phone", data: 'phone' }},
-        { email: { label: "Email", data: 'email' }},
-        { fax:   { label: "Fax", data: 'fax' }},
-        { web:   { label: "Web site", data: 'url' }},
+        { phone: { label: "Phone", data: 'phone', group: 'contact' }},
+        { email: { label: "Email", data: 'email', group: 'contact' }},
+        { fax:   { label: "Fax", data: 'fax', group: 'contact' }},
+        { web:   { label: "Web site", data: 'url', group: 'contact' }},
 
-        { street: { label: "Address", data: 'string', direct_model_attribute: true }},
-        { street_more: { label: "", data: 'string', direct_model_attribute: true }},
-        { city: { label: "City", data: 'string', direct_model_attribute: true }},
-        { state: { label: "State", data: 'string', direct_model_attribute: true }},
-        { postal: { label: "ZIP", data: 'string', direct_model_attribute: true }},
-        { country: { label: "Country", data: 'string', direct_model_attribute: true }},
+        { street: { label: "Address", data: 'string', direct_model_attribute: true, group: 'contact' }},
+        { street_more: { label: "", data: 'string', direct_model_attribute: true, group: 'contact'  }},
+        { city: { label: "City", data: 'string', direct_model_attribute: true, group: 'contact'  }},
+        { state: { label: "State", data: 'string', direct_model_attribute: true, group: 'contact'  }},
+        { postal: { label: "ZIP", data: 'string', direct_model_attribute: true, group: 'contact'  }},
+        { country: { label: "Country", data: 'string', direct_model_attribute: true, group: 'contact'  }},
 
-        { description:            { label: "Description", data: 'text', direct_model_attribute: true }},
-        { admin_notes: { label: "Admin Notes", data: 'text', admin_only: true }},
+        { description:            { label: "Description", data: 'text', direct_model_attribute: true, group: 'basics', }},
+        { admin_notes: { label: "Admin Notes", data: 'text', admin_only: true, group: 'admin', }},
 
-        { star_rating:            { label: "Service Level", data: 'rating', admin_break_after: 'yes' }},
-
-        { community_size:         { label: "Community Size", data: 'select',
+        { community_size:         { label: "Community Size", data: 'select', group: 'characteristics',
                                      values: [
                                        {'S' => 'Small'},
                                        {'M' => 'Medium-sized'},
                                        {'L' => 'Large'},
                                     ]}},
-        { bed_count:              { label: "Total Beds", data: 'count', admin_break_after: 'yes' }},
+        { bed_count:              { label: "Total Beds", data: 'count', group: 'characteristics', }},
 
-        { staff_total:            { label: "Total Staff", data: 'count' }},
-        { staff_full_time:        { label: "Full-Time Staff", data: 'count' }},
-        { staff_ratio:            { label: "Staff to Resident Ratio", data: 'number', admin_break_after: 'yes' }},
+        { staff_total:            { label: "Total Staff", data: 'count', group: 'characteristics', }},
+        { staff_full_time:        { label: "Full-Time Staff", data: 'count', group: 'characteristics', }},
+        { staff_ratio:            { label: "Staff to Resident Ratio", data: 'number', group: 'characteristics' }},
 
-        { setting:                { label: "Setting", data: 'select',
+        { setting:                { label: "Setting", data: 'select', group: 'characteristics',
                                     values: [
                                       {'U' => "Urban setting"},
                                       {'S' => "Suburban setting"},
                                       {'R' => "Rural setting"},
                                     ]}},
-        { access_to_city:         { label: "Access to the city", data: 'flag' }},
-        { access_to_outdoors:     { label: "Access to the outdoors", data: 'flag', admin_break_after: 'yes' }},
+        { access_to_city:         { label: "Access to the city", data: 'flag', group: 'characteristics', }},
+        { access_to_outdoors:     { label: "Access to the outdoors", data: 'flag', group: 'characteristics', }},
 
-        { religious_affiliation:  { label: "Religious affiliation", data: 'select',
+        { religious_affiliation:  { label: "Religious affiliation", data: 'select', group: 'characteristics',
                                     values: [
                                       {'-' => 'None'},
                                       {'B' => "Buddhist-affiliated"},
@@ -135,15 +140,15 @@ class DataDictionary
                                       {'Q' => "Quaker-affiliated"},
                                       {'O' => "Other"},
                                     ]}},
-        { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', admin_break_after: 'yes' }},
+        { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', admin_break_after: 'yes', group: 'characteristics', }},
 
-        { smoking:                { label: "Smoking allowed", data: 'flag' }},
-        { non_smoking:            { label: "Smoking prohibited", data: 'flag', admin_break_after: 'yes' }},
+        { smoking:                { label: "Smoking allowed", data: 'flag', group: 'characteristics', }},
+        { non_smoking:            { label: "Smoking prohibited", data: 'flag', admin_break_after: 'yes', group: 'characteristics', }},
 
-        { pet_friendly:           { label: "Pet-friendly", data: 'flag' }},
-        { pet_policy:             { label: "Pet policy", data: 'string' }},
+        { pet_friendly:           { label: "Pet-friendly", data: 'flag', group: 'characteristics', }},
+        { pet_policy:             { label: "Pet policy", data: 'string', group: 'characteristics', }},
 
-        { completeness:           { label: "Completeness", data: 'select',
+        { completeness:           { label: "Completeness", data: 'select', group: 'admin',
                                     admin_only: true,
                                     values: [
                                       {'0' =>  "Incomplete"},
@@ -151,10 +156,10 @@ class DataDictionary
                                       {'60' => "Very complete"},
                                       {'90' => "Complete"},
                                     ]}},
-        { needs_review:           { label: "Needs review", data: 'flag', admin_only: true }},
-        { last_visited:           { label: "Last Visited", data: 'string', admin_only: true }},
+        { needs_review:           { label: "Needs review", data: 'flag', admin_only: true, group: 'admin', }},
+        { last_visited:           { label: "Last Visited", data: 'string', admin_only: true, group: 'admin', }},
 
-        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map'}},
+        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map', group: 'basics',}},
 
       ]
     },
