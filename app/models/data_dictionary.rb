@@ -763,6 +763,7 @@ class DataDictionary
         { requires_insurance:         { label: "Requires insurance", data: 'flag' }},
         { accepts_medicare:           { label: "Accepts Medicare", data: 'flag' }},
         { accepts_medicare_supl:      { label: "Accepts Medicare supplement", data: 'flag' }},
+        { accepts_medicaid:           { label: "Accepts Medicaid", data: 'flag' }},
         { accepts_private_ins:        { label: "Accepts private plan insurance", data: 'flag' }},
         { accepts_long_term_ins:      { label: "Accepts long-term care insurance", data: 'flag' }},
         { insurance_requirements:     { label: "Insurance requirements", data: 'string' }},
