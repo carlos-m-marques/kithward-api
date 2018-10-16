@@ -118,7 +118,7 @@ class CommunitiesController < ApplicationController
   end
 
   def dictionary
-    render json: DataDictionary::Community.to_h
+    render json: {community: DataDictionary::Community.to_h, listing: DataDictionary::Listing.to_h}
   end
 
   def import

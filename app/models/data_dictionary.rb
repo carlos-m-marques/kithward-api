@@ -794,9 +794,64 @@ class DataDictionary
   Listing = self.new([
     { section: 'listing',
       label: "Details",
+      groups: [
+        { basics: {}},
+        { unit: {}},
+        { features: {label: "Features"}},
+      ],
       attrs: [
-        { name:   { label: "Layout Name", data: 'string', direct_model_attribute: true }},
-        { description:   { label: "Description", data: 'text', direct_model_attribute: true }},
+        { name:         { label: "Layout Name", data: 'string', direct_model_attribute: true, group: 'basics' }},
+        { caption:      { label: "Caption", data: 'string', group: 'basics' }},
+        { description:  { label: "Description", data: 'text', group: 'basics' }},
+
+        { base_rent:              { label: "Base Fee", data: 'pricerange', group: 'basics' }},
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'basics' }},
+
+        { unit_type:    { label: "Unit type", data: 'select', group: 'unit',
+                          values: [
+                            {'room' => "Room"},
+                            {'apt' => "Apartment"},
+                            {'home' => "Detached Home"},
+                        ]}},
+        { privacy:      { label: "Unit type", data: 'select', group: 'unit',
+                          values: [
+                            {'private' => "Private"},
+                            {'shared' => "Shared"},
+                          ],
+                          default: 'private',
+                        }},
+        { bedrooms:     { label: "Bedrooms", data: 'select', group: 'unit',
+                          values: [
+                            {'Studio' => "Studio"},
+                            {'1' => "1 Bedroom"},
+                            {'2' => "2 Bedrooms"},
+                            {'3' => "3 Bedrooms"},
+                            {'4+' => "4 or more bedrooms"},
+                          ],
+                        }},
+        { bathrooms:    { label: "Bathrooms", data: 'select', group: 'unit',
+                          values: [
+                            {'1' => "1 Bathroom"},
+                            {'1.5' => "1½ Bathrooms"},
+                            {'2' => "2 Bathrooms"},
+                            {'3+' => "3 or more bathrooms"},
+                          ],
+                        }},
+        { sqft:         { label: "Area (ft²)", data: 'number', group: 'unit', }},
+
+        { room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features' }},
+        { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features' }},
+        { room_feat_parking:      { label: "Dedicated parking", data: 'amenity', group: 'features' }},
+        { room_feat_den:          { label: "Den/extra room", data: 'amenity', group: 'features' }},
+        { room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group: 'features' }},
+        { room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group: 'features' }},
+        { room_feat_kitchen:      { label: "Full kitchen", data: 'amenity', group: 'features' }},
+        { room_feat_climate:      { label: "Individual climate control", data: 'amenity', group: 'features' }},
+        { room_feat_kitchenette:  { label: "Kitchenette", data: 'amenity', group: 'features' }},
+        { room_feat_pvt_garage:   { label: "Private garage", data: 'amenity', group: 'features' }},
+        { room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group: 'features' }},
+        { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
+        { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
       ],
     }
   ])
