@@ -18,6 +18,8 @@
 class CommunityImage < ApplicationRecord
   belongs_to :community
 
+  default_scope { order(sort_order: :asc, id: :asc) }
+
   has_one_attached :image
 
   after_save { community&.update_cached_image_url! }

@@ -18,6 +18,8 @@
 class ListingImage < ApplicationRecord
   belongs_to :listing
 
+  default_scope { order(sort_order: :asc, id: :asc) }
+
   has_one_attached :image
 
   def url
