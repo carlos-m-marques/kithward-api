@@ -13,7 +13,6 @@
 #  country          :string(64)
 #  lat              :float
 #  lon              :float
-#  old_data         :jsonb
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  care_type        :string(1)        default("?")

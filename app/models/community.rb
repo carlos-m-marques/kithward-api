@@ -13,7 +13,6 @@
 #  country          :string(64)
 #  lat              :float
 #  lon              :float
-#  old_data         :jsonb
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  care_type        :string(1)        default("?")
@@ -52,10 +51,6 @@ class Community < ApplicationRecord
     TYPE_RESPITE: '-respite-care',
   }
 
-  begin # attributes
-    serialize :old_data, Hash
-  end
-
   begin # Elasticsearch / Searchkick
     searchkick  match: :word_start,
                 word_start:  ['name', 'description'],
@@ -74,6 +69,31 @@ class Community < ApplicationRecord
         country: country,
         location: {lat: lat, lon: lon},
       }
+    end
+  end
+
+  begin # Data manipulation
+    scope :with_data, ->(name, value = nil) do
+      if value
+        where("communities.data @> :json", :json => {name.to_sym => value}.to_json)
+      else
+        where("communities.data ? :attr_name", {attr_name: name})
+      end
+    end
+
+    scope :with_any_of_data, ->(*names) do
+      where("communities.data ?| array[:names]", :names => names.flatten)
+    end
+
+    scope :with_all_of_data, ->(*names) do
+      where("communities.data ?& array[:names]", :names => names.flatten)
+    end
+
+    def rename_data(from, to)
+      if self.data[from.to_s]
+        self.data[to.to_s] = self.data[from.to_s]
+        self.data.delete(from.to_s)
+      end
     end
   end
 
