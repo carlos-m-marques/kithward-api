@@ -426,7 +426,9 @@ class DataDictionary
         { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group: 'dining' }},
         { food_room_service:      { label: "Room service", data: 'amenity', group: 'dining' }},
         { food_24h_snacks:        { label: "Snacks available all day", data: 'amenity', group: 'dining' }},
-
+        
+        { meal_plan:              { label: "Meal Plan", data: 'string', group: 'dining', }},
+        
         { diet_restricted:        { label: "Restricted diets", data: 'amenity', group: 'dietary' }},
         { diet_gluten_free:       { label: "Gluten-free", data: 'amenity', group: 'dietary' }},
         { diet_kosher_meals:      { label: "Kosher meals", data: 'amenity', group: 'dietary' }},
