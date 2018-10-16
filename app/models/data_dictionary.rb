@@ -241,7 +241,7 @@ class DataDictionary
 
         { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
         
-        { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select', group: 'characteristics',
+        { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select',
                                     values: [
                                       {'-' => 'None'},
                                       {'M' => "Community accepts Medicaid"},
