@@ -88,7 +88,9 @@ class DataDictionary
                         ]}},
 
         { ccrc:   { label: "Continuing Care Retirement Community", data: 'flag', group: 'basics', }},
-        { aip:    { label: "Allows 'aging in place'", data: 'flag', admin_break_after: 'yes', group: 'basics', }},
+        { aip:    { label: "Allows 'aging in place'", data: 'flag', group: 'basics', }},
+
+        { star_rating:  { label: "Service Level", data: 'rating', group: 'basics' }},
 
         { related_communities:  { label: "Related Communities", data: 'list_of_ids', admin_only: true, group: 'related'}},
 
@@ -240,7 +242,7 @@ class DataDictionary
         # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
 
         { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
-        
+
         { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select',
                                     values: [
                                       {'-' => 'None'},
@@ -248,7 +250,7 @@ class DataDictionary
                                       {'F' => "Community foundation supports resident"},
                                       {'L' => "Resident must leave community"},
                                    ]}},
-                                      
+
         { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
         { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
 
@@ -426,9 +428,9 @@ class DataDictionary
         { food_restaurant_style:  { label: "Restaurant-style dining", data: 'amenity', group: 'dining' }},
         { food_room_service:      { label: "Room service", data: 'amenity', group: 'dining' }},
         { food_24h_snacks:        { label: "Snacks available all day", data: 'amenity', group: 'dining' }},
-        
+
         { meal_plan:              { label: "Meal Plan", data: 'string', group: 'dining', }},
-        
+
         { diet_restricted:        { label: "Restricted diets", data: 'amenity', group: 'dietary' }},
         { diet_gluten_free:       { label: "Gluten-free", data: 'amenity', group: 'dietary' }},
         { diet_kosher_meals:      { label: "Kosher meals", data: 'amenity', group: 'dietary' }},
