@@ -142,10 +142,10 @@ class DataDictionary
                                       {'Q' => "Quaker-affiliated"},
                                       {'O' => "Other"},
                                     ]}},
-        { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', admin_break_after: 'yes', group: 'characteristics', }},
+        { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', group: 'characteristics', }},
 
         { smoking:                { label: "Smoking allowed", data: 'flag', group: 'characteristics', }},
-        { non_smoking:            { label: "Smoking prohibited", data: 'flag', admin_break_after: 'yes', group: 'characteristics', }},
+        { non_smoking:            { label: "Smoking prohibited", data: 'flag', group: 'characteristics', }},
 
         { pet_friendly:           { label: "Pet-friendly", data: 'flag', group: 'characteristics', }},
         { pet_policy:             { label: "Pet policy", data: 'string', group: 'characteristics', }},
@@ -229,17 +229,17 @@ class DataDictionary
 
         { care_cost:              { label: "Care Costs", data: 'pricerange' }},
         # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
-        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
-        { rent_includes_care:     { label: "Base Monthly Fee Includes Care Costs", data: 'flag', admin_break_after: 'yes' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', }},
+        { rent_includes_care:     { label: "Base Monthly Fee Includes Care Costs", data: 'flag' }},
 
         { memory_care_cost:       { label: "Memory Care Costs", data: 'pricerange' }},
         # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
-        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', admin_break_after: 'yes' }},
-        { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', admin_break_after: 'yes' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price' }},
+        { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', }},
 
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange' }},
         # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
-        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', admin_break_after: 'yes' }},
+        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', }},
 
         { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
 
