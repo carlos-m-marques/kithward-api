@@ -795,19 +795,21 @@ class DataDictionary
   #================================================================================================
   Listing = self.new([
     { section: 'listing',
-      label: "Details",
+      label: "Listing Details",
       groups: [
         { basics: {}},
+        { description: {}},
+        { pricing: {}},
         { unit: {}},
         { features: {label: "Features"}},
       ],
       attrs: [
         { name:         { label: "Layout Name", data: 'string', direct_model_attribute: true, group: 'basics' }},
         { caption:      { label: "Caption", data: 'string', group: 'basics' }},
-        { description:  { label: "Description", data: 'text', group: 'basics' }},
+        { description:  { label: "Description", data: 'text', group: 'description' }},
 
-        { base_rent:              { label: "Base Fee", data: 'pricerange', group: 'basics' }},
-        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'basics' }},
+        { base_rent:              { label: "Base Fee", data: 'pricerange', group: 'pricing' }},
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
 
         { unit_type:    { label: "Unit type", data: 'select', group: 'unit',
                           values: [
