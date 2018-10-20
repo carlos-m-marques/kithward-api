@@ -817,7 +817,7 @@ class DataDictionary
                             {'apt' => "Apartment"},
                             {'home' => "Detached Home"},
                         ]}},
-        { privacy:      { label: "Unit type", data: 'select', group: 'unit',
+        { privacy:      { label: "Privacy", data: 'select', group: 'unit',
                           values: [
                             {'private' => "Private"},
                             {'shared' => "Shared"},
