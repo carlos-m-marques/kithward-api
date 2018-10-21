@@ -153,7 +153,7 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     put "/v1/communities/#{community.id}", params: {listings: [{name: "1 Bedroom", data: {description: "Actually a studio", room_type: 'S'}}], access_token: @admin_token}
     assert_response :success
     assert_equal "SoHo Cares", json_response['name']
-    assert_equal "1 Bedroom", json_response['listings'][0]['name']
-    assert_equal "Actually a studio", json_response['listings'][0]['data']['description']
+    assert_equal "1 Bedroom", json_response['listings'][1]['name']
+    assert_equal "Actually a studio", json_response['listings'][1]['data']['description']
   end
 end
