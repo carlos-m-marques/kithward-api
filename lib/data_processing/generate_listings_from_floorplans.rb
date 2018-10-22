@@ -18,8 +18,9 @@ module GenerateListingsFromFloorplans
       puts "#{community.id} #{community.name} - #{floorplans.length} floorplans"
       puts "   #{floorplans.collect(&:caption).join(", ")}"
       floorplans.each_with_index do |floorplan, index|
-        name = floorplan.caption || "Layout \##{index}"
+        name = floorplan.caption
         name = name.gsub("Floorplan: ", "")
+        name = "Layout \##{index}" if name.blank?
 
         listing = community.listings.find_or_create_by(name: name)
         if !listing.listing_images.any?
@@ -43,8 +44,6 @@ module GenerateListingsFromFloorplans
               "\n\n"
           end
         end
-
-        listing.save
       end
       puts ""
     end
