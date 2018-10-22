@@ -31,6 +31,8 @@ gem 'ddtrace', require: false
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug'
+
   gem 'factory_bot_rails', '~> 4.0'
   gem 'mocha'
 end
