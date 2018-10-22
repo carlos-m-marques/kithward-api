@@ -817,15 +817,9 @@ class DataDictionary
                             {'apt' => "Apartment"},
                             {'home' => "Detached Home"},
                         ]}},
-        { privacy:      { label: "Privacy", data: 'select', group: 'unit',
-                          values: [
-                            {'private' => "Private"},
-                            {'shared' => "Shared"},
-                          ],
-                          default: 'private',
-                        }},
         { bedrooms:     { label: "Bedrooms", data: 'select', group: 'unit',
                           values: [
+                            {'Shared' => "Shared"},
                             {'Studio' => "Studio"},
                             {'1' => "1 Bedroom"},
                             {'2' => "2 Bedrooms"},
