@@ -47,4 +47,19 @@ class CommunityTest < ActiveSupport::TestCase
     assert_equal(40.75, community.lat)
     assert_equal(-74.00, community.lon)
   end
+
+  test "When a community gets some related communities, it caches their data" do
+    community_1 = Community.create(name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT, status: Community::STATUS_ACTIVE)
+    community_2 = Community.create(name: "Broadway Care AL", care_type: Community::TYPE_ASSISTED, status: Community::STATUS_DELETED)
+    community_3 = Community.create(name: "Broadway Care Too", care_type: Community::TYPE_INDEPENDENT, status: Community::STATUS_DRAFT)
+
+    community_1.data['related_communities'] = [community_2.id, -community_3.id].join(",")
+    community_1.save
+
+    assert_equal [
+      {'id' => community_2.id, 'name' => community_2.name, 'care_type' => community_2.care_type, 'status' => community_2.status, 'slug' => community_2.slug, 'related' => true},
+      {'id' => community_3.id, 'name' => community_3.name, 'care_type' => community_3.care_type, 'status' => community_3.status, 'slug' => community_3.slug, 'similar' => true},
+    ], community_1.data['related_community_data']
+
+  end
 end

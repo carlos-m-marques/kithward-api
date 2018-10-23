@@ -20,6 +20,7 @@ gem 'fast_jsonapi', '~> 1.2'
 gem 'oj', '~> 3.6'
 gem 'blueprinter', '~> 0.6'
 gem 'jwt'
+gem 'hashdiff'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 
 #== APIS ===================================
