@@ -13,6 +13,7 @@ gem 'rack-cors', '~> 1.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'searchkick', '~> 3.1'
 gem 'paper_trail', '~> 9.0'
+gem 'paper_trail-hashdiff'
 
 #== UTILITIES ==============================
 gem 'fast_jsonapi', '~> 1.2'

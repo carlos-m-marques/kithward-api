@@ -130,6 +130,8 @@ GEM
       paper_trail-association_tracking (< 2)
       request_store (~> 1.1)
     paper_trail-association_tracking (1.0.0)
+    paper_trail-hashdiff (0.0.4)
+      hashdiff (~> 0.3)
     pg (1.0.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -218,6 +220,7 @@ DEPENDENCIES
   mocha
   oj (~> 3.6)
   paper_trail (~> 9.0)
+  paper_trail-hashdiff
   pg (>= 0.18, < 2.0)
   pry-byebug
   puma (~> 3.11)
