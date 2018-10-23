@@ -206,7 +206,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
 
-        { room_layouts:           { label: "Layouts", data: 'listings', group: 'listings' }},
+        { room_layouts:           { label: "Layouts", data: 'listings', group: 'floorplans' }},
         { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', tagged_as: 'floorplan', group: 'floorplans' }},
         { room_photos:            { label: "Photos", data: 'thumbnails', tagged_as: 'room', group: 'floorplans' }},
       ],
