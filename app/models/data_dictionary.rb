@@ -161,7 +161,7 @@ class DataDictionary
         { needs_review:           { label: "Needs review", data: 'flag', admin_only: true, group: 'admin', }},
         { last_visited:           { label: "Last Visited", data: 'string', admin_only: true, group: 'admin', }},
 
-        { community_map:          { label: "Community Map", data: 'ignore', special: 'thumbnails', tagged_as: 'map', group: 'basics',}},
+        { community_map:          { label: "Community Map", data: 'thumbnails', special: true, tagged_as: 'map', group: 'basics',}},
 
       ]
     },
@@ -206,9 +206,9 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features' }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features' }},
 
-        { room_layouts:           { label: "Layouts", data: 'listings', group: 'floorplans' }},
-        { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', tagged_as: 'floorplan', group: 'floorplans' }},
-        { room_photos:            { label: "Photos", data: 'thumbnails', tagged_as: 'room', group: 'floorplans' }},
+        { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
+        { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
+        { room_photos:            { label: "Photos", data: 'thumbnails', special: true, tagged_as: 'room', group: 'floorplans' }},
       ],
     },
 
@@ -440,7 +440,7 @@ class DataDictionary
         { diet_vegan:             { label: "Vegan", data: 'amenity', group: 'dietary' }},
         { diet_vegetarian:        { label: "Vegetarian", data: 'amenity', group: 'dietary' }},
 
-        { food_menus:             { label: "Sample Menus", data: 'thumbnails', tagged_as: 'menu', group: 'menus' }},
+        { food_menus:             { label: "Sample Menus", data: 'thumbnails', special: true, tagged_as: 'menu', group: 'menus' }},
       ],
     },
 
@@ -580,7 +580,7 @@ class DataDictionary
         { activity_theater:                 { label: "Theater/performing arts", data: 'amenity', group: 'trips' }},
         { activity_wineries:                { label: "Wineries", data: 'amenity', group: 'trips' }},
 
-        { activity_calendars:   { label: "Sample Calendars", data: 'thumbnails', tagged_as: 'calendar', group: 'calendars' }},
+        { activity_calendars:   { label: "Sample Calendars", data: 'thumbnails', special: true, tagged_as: 'calendar', group: 'calendars' }},
       ],
     },
 
