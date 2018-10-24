@@ -84,6 +84,7 @@ class CommunitiesController < ApplicationController
       params[:listings].each {|data| ListingsController.process_one_listing(@community, data) }
 
       @community.listings.reload
+      @community.update_reflected_attributes_from_listings
     end
 
     if @community.errors.any?

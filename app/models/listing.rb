@@ -22,6 +22,7 @@ class Listing < ApplicationRecord
   belongs_to :community
 
   default_scope { order(sort_order: :asc, id: :asc) }
+  scope :active, -> { where(status: STATUS_ACTIVE) }
 
   has_many :listing_images
 

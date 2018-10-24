@@ -26,6 +26,9 @@ require 'test_helper'
 
 class CommunityTest < ActiveSupport::TestCase
   setup do
+  end
+
+  test "Addresses are geocoded automatically" do
     Geocoder::Lookup::Test.add_stub(
       "123 Broadway, New York, NY, 10001, USA", [
         {
@@ -39,9 +42,7 @@ class CommunityTest < ActiveSupport::TestCase
         }
       ]
     )
-  end
 
-  test "Addresses are geocoded automatically" do
     community = Community.create(name: "Broadway Care", street: "123 Broadway", city: "New York", state: "NY", postal: "10001", country: "USA")
 
     assert_equal(40.75, community.lat)
@@ -61,5 +62,27 @@ class CommunityTest < ActiveSupport::TestCase
       {'id' => community_3.id, 'name' => community_3.name, 'care_type' => community_3.care_type, 'status' => community_3.status, 'slug' => community_3.slug, 'similar' => true},
     ], community_1.data['related_community_data']
 
+  end
+
+  test "When listings are updated, their attributes are reflected in the containing community" do
+    community = Community.create(status: Community::STATUS_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
+    listing_1 = community.listings.create(status: Listing::STATUS_ACTIVE, name: "1 Bedroom", data: {unit_type: 'room', bedrooms: '1', base_rent: '1000', room_feat_parking: true })
+    listing_2 = community.listings.create(status: Listing::STATUS_ACTIVE, name: "2 Bedrooms", data: {unit_type: 'room', bedrooms: '2', base_rent: '1500:1800', room_feat_dishwasher: true })
+
+    community.update_reflected_attributes_from_listings
+    community.reload
+
+    assert_equal "1,2", community.data['listings_bedrooms']
+    assert_equal "1000:1800", community.data['listings_base_rent']
+    assert_equal true, community.data['listings_room_feat_parking']
+
+    listing_1.data['base_rent'] = '800:1200'
+    listing_1.data.delete('room_feat_parking')
+    listing_1.save
+    community.update_reflected_attributes_from_listings
+    community.reload
+
+    assert_equal "800:1800", community.data['listings_base_rent']
+    assert_nil nil, community.data['listings_room_feat_parking']
   end
 end

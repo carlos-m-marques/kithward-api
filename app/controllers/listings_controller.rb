@@ -33,6 +33,8 @@ class ListingsController < ApplicationController
     if @listing.errors.any?
       render json: { errors: @listing.errors}, status: :unprocessable_entity
     else
+      @community.update_reflected_attributes_from_listings
+
       render json: ListingsSerializer.render(@listing)
     end
   end
@@ -56,6 +58,8 @@ class ListingsController < ApplicationController
     if @listing.errors.any?
       render json: { errors: @listing.errors}, status: :unprocessable_entity
     else
+      @community.update_reflected_attributes_from_listings
+
       render json: ListingsSerializer.render(@listing)
     end
   end

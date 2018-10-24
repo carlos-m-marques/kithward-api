@@ -198,4 +198,76 @@ class Community < ApplicationRecord
       self.update_attributes(cached_image_url: image.url)
     end
   end
+
+  def update_reflected_attributes_from_listings
+    attrs = DataDictionary::Listing.attributes
+
+    reflection = {}
+    attrs.each do |key, attr_def|
+      case attr_def && attr_def[:data]
+      when 'select'
+        reflection[key] = []
+      when 'pricerange', 'numberrange'
+        reflection[key] = [nil, nil]
+      when 'price', 'number'
+        reflection[key] = [nil, nil]
+      when 'amenity', 'flag'
+        reflection[key] = false
+      end
+    end
+
+    listings.active.each do |listing|
+      (listing.data || {}).each do |key, value|
+        case attrs[key] && attrs[key][:data]
+        when 'select'
+          values = value.split(/\s*,\s*/)
+          reflection[key] = (reflection[key] + [values]).flatten.uniq
+        when 'pricerange', 'numberrange'
+          values = value.split(":").collect {|p| p.to_i}
+          if values.first
+            reflection[key][0] = [reflection[key].first || values.first, values.first].min
+          end
+          if values.last
+            reflection[key][1] = [reflection[key].last || values.last, values.last].max
+          end
+        when 'price', 'number'
+          value = value.to_i
+          if value
+            reflection[key][0] = [reflection[key].first || value, value].min
+          end
+          if values.last
+            reflection[key][1] = [reflection[key].last || value, value].max
+          end
+
+        when 'amenity', 'flag'
+          reflection[key] = reflection[key] || value
+        end
+      end
+    end
+
+    attrs.each do |key, attr_def|
+      case attr_def && attr_def[:data]
+      when 'select'
+        if reflection[key].any?
+          self.data["listings_#{key}"] = reflection[key].join(",")
+        else
+          self.data.delete("listings_#{key}")
+        end
+      when 'pricerange', 'numberrange', 'price', 'number'
+        if reflection[key].compact.any?
+          self.data["listings_#{key}"] = reflection[key][0..1].join(":")
+        else
+          self.data.delete("listings_#{key}")
+        end
+      when 'amenity', 'flag'
+        if reflection[key]
+          self.data["listings_#{key}"] = true
+        else
+          self.data.delete("listings_#{key}")
+        end
+      end
+    end
+
+    self.save
+  end
 end

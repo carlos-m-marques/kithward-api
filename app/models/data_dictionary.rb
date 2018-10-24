@@ -16,7 +16,7 @@ class DataDictionary
     repeated_ids = sections.collect {|s| s[:section]}.group_by(&:itself).select {|k, v| v.size > 1}
     repeated_ids.length == 0 or raise "Sections need unique ids (#{repeated_ids.collect {|k, v| k}.join(", ")})"
 
-    all_attrs = attributes
+    all_attrs = spec.collect {|section| section[:attrs]}.flatten
 
     all_attrs.each {|attr| attr.keys.size == 1 \
     or raise "Attributes should be hashes with a single key, the attribute name (#{attr.inspect})"}
@@ -46,7 +46,7 @@ class DataDictionary
   end
 
   def attributes
-    @attributes ||= spec.collect {|section| section[:attrs]}.flatten
+    @attributes ||= spec.collect {|section| section[:attrs]}.flatten.collect {|a| [a.keys.first, a.values.first&.with_indifferent_access]}.to_h.with_indifferent_access
   end
 
   # DATA TYPES:
