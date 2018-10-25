@@ -813,13 +813,13 @@ class DataDictionary
         { base_rent:              { label: "Base Fee", data: 'pricerange', group: 'pricing' }},
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
 
-        { unit_type:    { label: "Unit type", data: 'select', group: 'unit',
+        { unit_type:    { label: "Unit type", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
                             {'room' => "Room"},
                             {'apt' => "Apartment"},
                             {'home' => "Detached Home"},
                         ]}},
-        { bedrooms:     { label: "Bedrooms", data: 'select', group: 'unit',
+        { bedrooms:     { label: "Bedrooms", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
                             {'Shared' => "Shared"},
                             {'Studio' => "Studio"},
@@ -829,7 +829,7 @@ class DataDictionary
                             {'4+' => "4 or more bedrooms"},
                           ],
                         }},
-        { bathrooms:    { label: "Bathrooms", data: 'select', group: 'unit',
+        { bathrooms:    { label: "Bathrooms", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
                             {'1' => "1 Bathroom"},
                             {'1.5' => "1½ Bathrooms"},
