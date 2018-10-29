@@ -18,6 +18,10 @@
 class Account < ApplicationRecord
   has_secure_password
   has_paper_trail
-  
+
   validates :email, presence: true, uniqueness: true
+
+  def intercom_hash
+    OpenSSL::HMAC.hexdigest('sha256', Rails.application.credentials.dig(:intercom, :secret_key), self.id.to_s)
+  end
 end

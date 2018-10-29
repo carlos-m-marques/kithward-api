@@ -24,6 +24,8 @@ class AccountSerializer < Blueprinter::Base
     options[:meta]
   end
 
+  field :intercom_hash
+  
   # field :meta, if: ->(obj, options) {options[:meta]} do |obj, options|
   #   options[:meta]
   # end
