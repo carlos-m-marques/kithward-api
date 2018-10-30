@@ -184,13 +184,13 @@ class DataDictionary
         { floorplans: { label: "-Floorplans" }},
       ],
       attrs: [
-        { listings_unit_type: { label: "Unit type", data: 'select', group: 'units', readonly: true, hide: true,
+        { listings_unit_type: { label: "Unit type", data: 'select', group: 'units', readonly: true, 
                           values: [
                             {'room' => "Room"},
                             {'apt' => "Apartment"},
                             {'home' => "Detached Home"},
                         ]}},
-        { listings_bedrooms:  { label: "Bedrooms", data: 'select', group: 'units', readonly: true, hide: true,
+        { listings_bedrooms:  { label: "Bedrooms", data: 'select', group: 'units', readonly: true, 
                           values: [
                             {'Shared' => "Shared"},
                             {'Studio' => "Studio"},
@@ -200,7 +200,7 @@ class DataDictionary
                             {'4+' => "4 or more bedrooms"},
                           ],
                         }},
-        { listings_bathrooms:  { label: "Bathrooms", data: 'select', group: 'units', readonly: true, hide: true,
+        { listings_bathrooms:  { label: "Bathrooms", data: 'select', group: 'units', readonly: true, 
                           values: [
                             {'1' => "1 Bathroom"},
                             {'1.5' => "1½ Bathrooms"},
@@ -218,19 +218,19 @@ class DataDictionary
         { room_two_plus:          { label: "2 bedrooms +", data: 'amenity', group: 'units', readonly: true, hide: true }},
         { room_detached:          { label: "Detached home", data: 'amenity', group: 'units', readonly: true, hide: true }},
 
-        { listings_room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_parking:      { label: "Dedicated parking", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_den:          { label: "Den/extra room", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_kitchen:      { label: "Full kitchen", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_climate:      { label: "Individual climate control", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_kitchenette:  { label: "Kitchenette", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_pvt_garage:   { label: "Private garage", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        { listings_room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true, hide: true }},
+        { listings_room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_parking:      { label: "Dedicated parking", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_den:          { label: "Den/extra room", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_kitchen:      { label: "Full kitchen", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_climate:      { label: "Individual climate control", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_kitchenette:  { label: "Kitchenette", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_pvt_garage:   { label: "Private garage", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features', readonly: true }},
+        { listings_room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true }},
 
         { room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features', readonly: true, hide: true }},
@@ -270,6 +270,13 @@ class DataDictionary
 
         { base_rent_second:       { label: "Second Resident Base Fee", data: 'fee' }},
 
+        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
+        # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
+        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', }},
+
+        { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
+
         { care_cost:              { label: "Care Costs", data: 'pricerange' }},
         # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
         # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', }},
@@ -279,13 +286,6 @@ class DataDictionary
         # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
         # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price' }},
         { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', }},
-
-        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
-        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
-        # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
-        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', }},
-
-        { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
 
         { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select',
                                     values: [
