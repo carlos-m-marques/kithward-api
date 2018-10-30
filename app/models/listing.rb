@@ -45,4 +45,8 @@ class Listing < ApplicationRecord
   def not_active?
     status != STATUS_ACTIVE
   end
+
+  def data
+    self[:data] ||= {}
+  end
 end
