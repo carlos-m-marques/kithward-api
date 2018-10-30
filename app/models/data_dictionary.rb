@@ -184,13 +184,13 @@ class DataDictionary
         { floorplans: { label: "-Floorplans" }},
       ],
       attrs: [
-        { listings_unit_type: { label: "Unit type", data: 'select', group: 'units', readonly: true, 
+        { listings_unit_type: { label: "Unit type", data: 'select', group: 'units', readonly: true,
                           values: [
                             {'room' => "Room"},
                             {'apt' => "Apartment"},
                             {'home' => "Detached Home"},
                         ]}},
-        { listings_bedrooms:  { label: "Bedrooms", data: 'select', group: 'units', readonly: true, 
+        { listings_bedrooms:  { label: "Bedrooms", data: 'select', group: 'units', readonly: true,
                           values: [
                             {'Shared' => "Shared"},
                             {'Studio' => "Studio"},
@@ -200,7 +200,7 @@ class DataDictionary
                             {'4+' => "4 or more bedrooms"},
                           ],
                         }},
-        { listings_bathrooms:  { label: "Bathrooms", data: 'select', group: 'units', readonly: true, 
+        { listings_bathrooms:  { label: "Bathrooms", data: 'select', group: 'units', readonly: true,
                           values: [
                             {'1' => "1 Bathroom"},
                             {'1.5' => "1½ Bathrooms"},
@@ -247,7 +247,7 @@ class DataDictionary
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true, hide: true }},
 
         { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
-        { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
+        # { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
         { room_photos:            { label: "Photos", data: 'thumbnails', special: true, tagged_as: 'room', group: 'floorplans' }},
       ],
     },
