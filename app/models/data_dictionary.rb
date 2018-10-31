@@ -248,7 +248,7 @@ class DataDictionary
 
         { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
         { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
-        { room_photos:            { label: "Photos", data: 'thumbnails', special: true, tagged_as: 'room', group: 'floorplans' }},
+        { room_photos:            { label: "Photos", data: 'thumbnails', special: true, tagged_as: 'unit', group: 'floorplans' }},
       ],
     },
 
