@@ -87,6 +87,7 @@ module GenerateListingsFromFloorplans
       if data.keys.any?
         listing = community.listings.find_or_create_by(name: "General Layout Information")
         listing.data = data
+        listing.is_hidden!
         listing.save
       end
 

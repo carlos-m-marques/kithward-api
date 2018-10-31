@@ -140,6 +140,18 @@ class Community < ApplicationRecord
     status != STATUS_ACTIVE
   end
 
+  def is_active!
+    self.status = STATUS_ACTIVE
+  end
+
+  def is_draft!
+    self.status = STATUS_DRAFT
+  end
+
+  def is_deleted!
+    self.status = STATUS_DELETED
+  end
+
   ATTRIBUTES_TO_CACHE = [
     'star_rating', 'aip', 'ccrc',
     'room_shared', 'room_private', 'room_studio', 'room_one_bed', 'room_two_plus', 'room_detached',
@@ -216,7 +228,7 @@ class Community < ApplicationRecord
       end
     end
 
-    listings.active.each do |listing|
+    listings.active_or_hidden.each do |listing|
       (listing.data || {}).each do |key, value|
         case attrs[key] && attrs[key][:data]
         when 'select'

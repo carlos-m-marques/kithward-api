@@ -23,15 +23,21 @@ class Listing < ApplicationRecord
 
   default_scope { order(sort_order: :asc, id: :asc) }
   scope :active, -> { where(status: STATUS_ACTIVE) }
+  scope :active_or_hidden, -> { where(status: [STATUS_ACTIVE, STATUS_HIDDEN]) }
 
   has_many :listing_images
 
   STATUS_ACTIVE    = 'A'
+  STATUS_HIDDEN    = 'H'
   STATUS_DRAFT     = '?'
   STATUS_DELETED   = 'X'
 
   def is_active?
     status == STATUS_ACTIVE
+  end
+
+  def is_hidden?
+    status == STATUS_HIDDEN
   end
 
   def is_draft?
@@ -44,6 +50,22 @@ class Listing < ApplicationRecord
 
   def not_active?
     status != STATUS_ACTIVE
+  end
+
+  def is_active!
+    self.status = STATUS_ACTIVE
+  end
+
+  def is_hidden!
+    self.status = STATUS_HIDDEN
+  end
+
+  def is_draft!
+    self.status = STATUS_DRAFT
+  end
+
+  def is_deleted!
+    self.status = STATUS_DELETED
   end
 
   def data
