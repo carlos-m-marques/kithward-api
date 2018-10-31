@@ -235,7 +235,7 @@ class Community < ApplicationRecord
           if value
             reflection[key][0] = [reflection[key].first || value, value].min
           end
-          if values.last
+          if value
             reflection[key][1] = [reflection[key].last || value, value].max
           end
 
