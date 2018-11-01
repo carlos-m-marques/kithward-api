@@ -28,7 +28,7 @@ gem 'geocoder', '~> 1.4.0'
 gem 'aws-sdk-s3', require: false
 gem 'sentry-raven'
 gem 'ddtrace', require: false
-
+gem 'intercom', '~> 3.6.0'
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do

@@ -45,16 +45,29 @@ class Community < ApplicationRecord
   TYPE_RESPITE     = 'R'
 
   SLUG_FOR_TYPE = {
-    TYPE_INDEPENDENT: '-independent-living',
-    TYPE_ASSISTED: '-assisted-living',
-    TYPE_NURSING: '-skilled-nursing',
-    TYPE_MEMORY: '-memory-care',
-    TYPE_HOSPICE: '-hospice-care',
-    TYPE_RESPITE: '-respite-care',
+    TYPE_INDEPENDENT => '-independent-living',
+    TYPE_ASSISTED => '-assisted-living',
+    TYPE_NURSING => '-skilled-nursing',
+    TYPE_MEMORY => '-memory-care',
+    TYPE_HOSPICE => '-hospice-care',
+    TYPE_RESPITE => '-respite-care',
+  }
+
+  LABEL_FOR_TYPE = {
+    TYPE_INDEPENDENT => 'Independent Living',
+    TYPE_ASSISTED => 'Assisted Living',
+    TYPE_NURSING => 'Skilled Nursing',
+    TYPE_MEMORY => 'Memory Care',
+    TYPE_HOSPICE => 'Hospice Care',
+    TYPE_RESPITE => 'Respite Care',
   }
 
   def data
     self[:data] ||= {}
+  end
+
+  def care_type_label
+    LABEL_FOR_TYPE[care_type]
   end
 
   begin # Elasticsearch / Searchkick

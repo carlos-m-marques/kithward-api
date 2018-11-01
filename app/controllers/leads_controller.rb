@@ -4,7 +4,7 @@ class LeadsController < ApplicationController
 
   def create
     @lead = Lead.create(params.permit(
-      :name, :phone, :email, :community_id, :request, :message
+      :name, :phone, :email, :community_id, :request, :message, :data
     ).merge(account_id: accessing_account&.id))
 
 
