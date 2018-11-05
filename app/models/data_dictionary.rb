@@ -852,9 +852,6 @@ class DataDictionary
         { caption:      { label: "Caption", data: 'string', group: 'basics' }},
         { description:  { label: "Description", data: 'text', group: 'description' }},
 
-        { base_rent:              { label: "Base Fee", data: 'pricerange', group: 'pricing' }},
-        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
-
         { unit_type:    { label: "Unit type", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
                             {'room' => "Room"},
@@ -894,6 +891,10 @@ class DataDictionary
                           ],
                         }},
         { sqft:         { label: "Area (ft²)", data: 'number', group: 'unit', }},
+
+        { base_rent:              { label: "Base Monthly Fee", data: 'pricerange', group: 'pricing' }},
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
+
 
         { room_feat_bathtub:      { label: "Bathtub", data: 'amenity', group: 'features' }},
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features' }},
