@@ -41,16 +41,12 @@ class Community < ApplicationRecord
   TYPE_ASSISTED    = 'A'
   TYPE_NURSING     = 'N'
   TYPE_MEMORY      = 'M'
-  TYPE_HOSPICE     = 'H'
-  TYPE_RESPITE     = 'R'
 
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',
     TYPE_ASSISTED => '-assisted-living',
     TYPE_NURSING => '-skilled-nursing',
     TYPE_MEMORY => '-memory-care',
-    TYPE_HOSPICE => '-hospice-care',
-    TYPE_RESPITE => '-respite-care',
   }
 
   LABEL_FOR_TYPE = {
@@ -58,8 +54,6 @@ class Community < ApplicationRecord
     TYPE_ASSISTED => 'Assisted Living',
     TYPE_NURSING => 'Skilled Nursing',
     TYPE_MEMORY => 'Memory Care',
-    TYPE_HOSPICE => 'Hospice Care',
-    TYPE_RESPITE => 'Respite Care',
   }
 
   def data
