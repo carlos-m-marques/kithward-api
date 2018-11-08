@@ -47,11 +47,12 @@ class Lead < ApplicationRecord
 
     message = ""
     message += "#{self.request}\n" if self.request.present?
-    message += "#{self.message}\n" if self.message.present?
 
     if self.community
-      message += "at #{self.community.name} (#{self.community.care_type_label} \##{self.community.id})"
+      message += "for #{self.community.care_type_label} at #{self.community.name} (\##{self.community.id})"
     end
+
+    message += "#{self.message}\n" if self.message.present?
 
     begin
       if account
