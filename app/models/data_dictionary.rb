@@ -115,7 +115,7 @@ class DataDictionary
                                        {'M' => 'Medium-sized'},
                                        {'L' => 'Large'},
                                     ]}},
-        { bed_count:              { label: "Total Beds", data: 'count', group: 'characteristics', }},
+        { unit_count:             { label: "Total Units", data: 'count', group: 'characteristics', }},
 
         { staff_total:            { label: "Total Staff", data: 'count', group: 'characteristics', }},
         { staff_full_time:        { label: "Full-Time Staff", data: 'count', group: 'characteristics', }},
@@ -733,7 +733,9 @@ class DataDictionary
         { council: { label: "Resident Council", }},
       ],
       attrs: [
-        { parent_company:                  { label: "Operator", data: 'string', admin_only: true }},
+        { provider:                        { label: "Provider", data: 'string', admin_only: true }},
+        { managed_by:                      { label: "Managed By", data: 'string', admin_only: true }},
+        { year_est:                        { label: "Year Established", data: 'number', admin_only: true }},
 
         { ownership_nonprofit_religious:   { label: "Religious Non-Profit", data: 'flag', group: 'ownership' }},
         { ownership_nonprofit_secular:     { label: "Secular Non-Profit", data: 'flag', group: 'ownership' }},
