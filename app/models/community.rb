@@ -289,4 +289,17 @@ class Community < ApplicationRecord
 
     self.save
   end
+
+
+  def self.rename_data_attributes(map)
+    # Use this method to clean up data
+    # Example: Community.rename_data_attributes('parent_company' => 'provider', 'bed_count' => 'unit_count')
+    Community.where('data ?| array[:keys]', keys: map.keys).find_each do |community|
+      map.each do |key, new_key|
+        community.data[new_key] = community.data[key]
+        community.data.delete(key)
+      end
+      community.save
+    end
+  end
 end
