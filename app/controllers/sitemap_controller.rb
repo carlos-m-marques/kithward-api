@@ -14,16 +14,17 @@ class SitemapController < ApplicationController
     end
 
     def to_xml(args)
-      "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n" \
+      "<?xml version='1.0' encoding='UTF-8'?>\n" \
+      + "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n" \
       + @entries.collect {|entry|
-        "<url>" \
-        + "<loc>#{entry[:loc]}</loc>" \
+        "  <url>" \
+        + "   <loc>#{entry[:loc]}</loc>" \
         + (entry[:lastmod] ? "<lastmod>#{entry[:lastmod]}</lastmod>" : "") \
         + (entry[:changefreq] ? "<changefreq>#{entry[:changefreq]}</changefreq>" : "") \
         + (entry[:priority] ? "<priority>#{entry[:priority]}</priority>" : "") \
-        + "</url>"
-      }.join("\n") \
-      + '</urlset>\n'
+        + "  </url>\n"
+      } \
+      + "</urlset>\n"
     end
   end
 
