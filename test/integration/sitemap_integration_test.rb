@@ -13,8 +13,8 @@ class SitemapIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert response.body.include?("<loc>https://kithward.com/</loc>")
-    assert response.body.include?("<loc>https://kithward.com/community/silver-lining-independent-living-#{@c2.id}</loc><lastmod>#{@c2.updated_at.strftime("%F")}</lastmod>")
-    assert response.body.include?("<loc>https://kithward.com/community/gray-peaks-independent-living-#{@c3.id}</loc><lastmod>#{@c3.updated_at.strftime("%F")}</lastmod>")
+    assert response.body.include?("<loc>https://kithward.com/community/silver-lining-independent-living-#{@c2.id}</loc>\n    <lastmod>#{@c2.updated_at.strftime("%F")}</lastmod>")
+    assert response.body.include?("<loc>https://kithward.com/community/gray-peaks-independent-living-#{@c3.id}</loc>\n    <lastmod>#{@c3.updated_at.strftime("%F")}</lastmod>")
   end
 
 end
