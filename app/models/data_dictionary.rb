@@ -263,14 +263,14 @@ class DataDictionary
         { itemizedcare: { label: "Itemized Care", }},
       ],
       attrs: [
-        { listings_base_rent:     { label: "Base Fee", data: 'pricerange', readonly: true, hide: true }},
+        { listings_base_rent:     { label: "Base Fee", data: 'pricerange', readonly: true }},
         { base_rent:              { label: "Base Fee", data: 'pricerange', readonly: true, hide: true }},
         # { rent_starting_price:    { label: "Base Fee Minimum", data: 'price' }},
         # { rent_maximum_price:     { label: "Base Fee Maximum", data: 'price' }},
 
         { base_rent_second:       { label: "Second Resident Base Fee", data: 'fee' }},
 
-        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
+        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true }},
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
         # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
         # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', }},
