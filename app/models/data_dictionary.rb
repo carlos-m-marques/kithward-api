@@ -894,7 +894,7 @@ class DataDictionary
                         }},
         { sqft:         { label: "Area (ft²)", data: 'number', group: 'unit', }},
 
-        { base_rent:              { label: "Base Monthly Fee", data: 'pricerange', group: 'pricing' }},
+        { base_rent:              { label: "Base Monthly Fee", data: 'pricerange', group: 'pricing', suffix: "per month" }},
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
 
 
