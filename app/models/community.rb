@@ -36,11 +36,18 @@ class Community < ApplicationRecord
   STATUS_DRAFT     = '?'
   STATUS_DELETED   = 'X'
 
+  scope :active, -> { where(status: STATUS_ACTIVE) }
+
   TYPE_UNKNOWN     = '?'
   TYPE_INDEPENDENT = 'I'
   TYPE_ASSISTED    = 'A'
   TYPE_NURSING     = 'N'
   TYPE_MEMORY      = 'M'
+
+  scope :care_type_il, -> { where(care_type: TYPE_INDEPENDENT) }
+  scope :care_type_al, -> { where(care_type: TYPE_ASSISTED) }
+  scope :care_type_sn, -> { where(care_type: TYPE_NURSING) }
+  scope :care_type_mc, -> { where(care_type: TYPE_MEMORY_CARE) }
 
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',

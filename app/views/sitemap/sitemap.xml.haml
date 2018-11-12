@@ -1,0 +1,10 @@
+# app/views/sitemap/index.xml.haml
+
+!!! XML
+%urlset{:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9"}
+  - for community in @communities
+   %url
+     %loc="https://kithward.com/community/#{community.slug}"
+     %lastmod=community.updated_at.strftime('%Y-%m-%d')
+     %changefreq monthly
+     %priority 0.5

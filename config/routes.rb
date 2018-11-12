@@ -26,5 +26,8 @@ Rails.application.routes.draw do
       match 'login', to: 'auth#login', via: [:post]
       match 'token', to: 'auth#token', via: [:post]
     end
+
   end
+
+  get 'sitemap.xml', :to => 'sitemap#sitemap', :defaults => {:format => 'xml'}
 end
