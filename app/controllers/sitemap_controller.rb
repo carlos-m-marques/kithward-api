@@ -18,10 +18,10 @@ class SitemapController < ApplicationController
       + "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n" \
       + @entries.collect {|entry|
         "  <url>" \
-        + "   <loc>#{entry[:loc]}</loc>" \
-        + (entry[:lastmod] ? "<lastmod>#{entry[:lastmod]}</lastmod>" : "") \
-        + (entry[:changefreq] ? "<changefreq>#{entry[:changefreq]}</changefreq>" : "") \
-        + (entry[:priority] ? "<priority>#{entry[:priority]}</priority>" : "") \
+        + "    <loc>#{entry[:loc]}</loc>\n" \
+        + (entry[:lastmod] ? "    <lastmod>#{entry[:lastmod]}</lastmod>\n" : "") \
+        + (entry[:changefreq] ? "    <changefreq>#{entry[:changefreq]}</changefreq>\n" : "") \
+        + (entry[:priority] ? "    <priority>#{entry[:priority]}</priority>\n" : "") \
         + "  </url>\n"
       }.join \
       + "</urlset>\n"
