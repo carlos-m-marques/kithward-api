@@ -23,7 +23,7 @@ class SitemapController < ApplicationController
         + (entry[:changefreq] ? "<changefreq>#{entry[:changefreq]}</changefreq>" : "") \
         + (entry[:priority] ? "<priority>#{entry[:priority]}</priority>" : "") \
         + "  </url>\n"
-      } \
+      }.join \
       + "</urlset>\n"
     end
   end
