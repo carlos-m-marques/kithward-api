@@ -29,6 +29,7 @@ gem 'aws-sdk-s3', require: false
 gem 'sentry-raven'
 gem 'ddtrace', require: false
 gem 'intercom', '~> 3.6.0'
+gem 'prismic.io', '~> 1.6.0'
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do

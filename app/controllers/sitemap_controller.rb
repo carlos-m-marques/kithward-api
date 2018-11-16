@@ -33,7 +33,7 @@ class SitemapController < ApplicationController
 
     @sitemap << {loc: "https://kithward.com/", changefreq: 'daily', priority: 1.0}
     @sitemap << {loc: "https://kithward.com/learn", changefreq: 'daily', priority: 1.0}
-    @sitemap << {loc: "https://kithward.com/thrive", changefreq: 'daily', priority: 1.0}
+    # @sitemap << {loc: "https://kithward.com/thrive", changefreq: 'daily', priority: 1.0}
 
     Community.active.care_type_il.find_each do |community|
       @sitemap << {
@@ -50,6 +50,21 @@ class SitemapController < ApplicationController
         changefreq: 'weekly',
         priority: 0.8,
       }
+    end
+
+    if $PRISMIC_BASE_URI
+      prismic = Prismic.api($PRISMIC_BASE_URI)
+
+      tags = ['guidance-intro', 'guidance-types', 'guidance-ccrc']
+      docs = prismic.query(Prismic::Predicates.at('document.tags', [tags]))
+
+      docs.results each do |doc|
+        @sitemap << {
+          loc: "https://kithward.com/guidance/#{doc.slug}",
+          changefreq: 'weekly',
+          priority: 0.9,
+        }
+      end
     end
 
     render xml: @sitemap
