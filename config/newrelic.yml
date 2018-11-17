@@ -16,7 +16,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: KWAPI
+  app_name: kithward-api
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
@@ -30,7 +30,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: KWAPI (Development)
+  app_name: kithward-api (Development)
   monitor_mode: false
 
 test:
@@ -40,7 +40,7 @@ test:
 
 staging:
   <<: *default_settings
-  app_name: KWAPI (Staging)
+  app_name: kithward-api (Staging)
   monitor_mode: false
 
 production:
