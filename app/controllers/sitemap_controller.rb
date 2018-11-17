@@ -16,7 +16,7 @@ class SitemapController < ApplicationController
     def to_xml(args)
       "<?xml version='1.0' encoding='UTF-8'?>\n" \
       + "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>\n" \
-      + @entries.collect {|entry|
+      + @entries.flatten.uniq.collect {|entry|
         "  <url>\n" \
         + "    <loc>#{entry[:loc]}</loc>\n" \
         + (entry[:lastmod] ? "    <lastmod>#{entry[:lastmod]}</lastmod>\n" : "") \
@@ -55,15 +55,15 @@ class SitemapController < ApplicationController
     if $PRISMIC_BASE_URI
       prismic = Prismic.api($PRISMIC_BASE_URI)
 
-      tags = ['guidance-intro', 'guidance-types', 'guidance-ccrc']
-      docs = prismic.query(Prismic::Predicates.at('document.tags', [tags]))
-
-      docs.results each do |doc|
-        @sitemap << {
-          loc: "https://kithward.com/guidance/#{doc.slug}",
-          changefreq: 'weekly',
-          priority: 0.9,
-        }
+      ['guidance-intro', 'guidance-types', 'guidance-ccrc'].each do |tag|
+        docs = prismic.query(['at', 'document.tags', [tag]])
+        docs.results each do |doc|
+          @sitemap << {
+            loc: "https://kithward.com/guidance/#{doc.slug}",
+            changefreq: 'weekly',
+            priority: 0.9,
+          }
+        end
       end
     end
 
