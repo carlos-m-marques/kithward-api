@@ -57,7 +57,7 @@ class SitemapController < ApplicationController
 
       ['guidance-intro', 'guidance-types', 'guidance-ccrc'].each do |tag|
         docs = prismic.query(['at', 'document.tags', [tag]])
-        docs.results each do |doc|
+        docs.results.each do |doc|
           @sitemap << {
             loc: "https://kithward.com/guidance/#{doc.slug}",
             changefreq: 'weekly',
