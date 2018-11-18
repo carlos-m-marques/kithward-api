@@ -1,4 +1,6 @@
 class SitemapController < ApplicationController
+  newrelic_ignore_apdex
+  
   class Sitemap
     def initialize(entries = [])
       @entries = entries
