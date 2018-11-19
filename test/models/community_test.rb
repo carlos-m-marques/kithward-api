@@ -64,6 +64,21 @@ class CommunityTest < ActiveSupport::TestCase
 
   end
 
+  test "When data is changed, some of it gets cached in a separate field" do
+    community = Community.create(status: Community::STATUS_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
+    community.data['star_rating'] = 4
+    community.data['ccrc'] = true
+    community.data['provider'] = 'Acme Inc'
+    community.save
+
+    assert_equal 4, community.data['star_rating']
+    assert_equal 4, community.cached_data['star_rating']
+    assert_equal true, community.data['ccrc']
+    assert_equal true, community.cached_data['ccrc']
+    assert_equal 'Acme Inc', community.data['provider']
+    assert_nil community.cached_data['provider']
+  end
+
   test "When listings are updated, their attributes are reflected in the containing community" do
     community = Community.create(status: Community::STATUS_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
     listing_1 = community.listings.create(status: Listing::STATUS_ACTIVE, name: "1 Bedroom", data: {unit_type: 'room', bedrooms: '1', base_rent: '1000', room_feat_parking: true })
@@ -83,6 +98,13 @@ class CommunityTest < ActiveSupport::TestCase
     community.reload
 
     assert_equal "800:1800", community.data['listings_base_rent']
-    assert_nil nil, community.data['listings_room_feat_parking']
+    assert_nil community.data['listings_room_feat_parking']
+
+    listing_2.data['base_rent'] = '1000:1300'
+    listing_2.save
+    community.update_reflected_attributes_from_listings
+    community.reload
+
+    assert_equal "800:1300", community.data['listings_base_rent']
   end
 end

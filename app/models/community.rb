@@ -173,18 +173,8 @@ class Community < ApplicationRecord
     'room_feat_pvt_outdoor', 'room_feat_walkin', 'room_feat_washer',
     'access_to_city', 'access_to_outdoors', 'amenitiy_any_fitness', 'services_parking', 'amenity_any_pool',
     'food_restaurant_style', 'smoking',
-    'assistance_any_day_to_day', 'staff_doctors_ft', 'staff_nurses_ft', 'care_incontinence',
-    'assistance_medication', 'care_dementia', 'care_occupational', 'care_physical',
-    'care_speech', 'care_any_visiting_specialists',
     'amenitiy_gym', 'amenitiy_fitness_center', 'amenitiy_athletic_club',
     'amenity_indoor_pool', 'amenity_outdoor_pool',
-    'assistance_bathing', 'assistance_dressing', 'assistance_errands', 'assistance_grooming',
-    'assistance_mobility', 'assistance_toileting',
-    'care_onsite_audiologist', 'care_onsite_cardiologist', 'care_onsite_dentist',
-    'care_onsite_dermatologist', 'care_onsite_dietician', 'care_onsite_endocronologist',
-    'care_onsite_internist', 'care_onsite_neurologist', 'care_onsite_opthamologist',
-    'care_onsite_optometrist', 'care_onsite_podiatrist', 'care_onsite_pulmonologist',
-    'care_onsite_psychologist', 'care_onsite_psychiatrist', 'care_onsite_urologist',
   ]
 
   def update_cached_data
@@ -195,7 +185,7 @@ class Community < ApplicationRecord
       changed_attributes = diff.collect {|change, name, value| name}
 
       if (changed_attributes & ATTRIBUTES_TO_CACHE).any?
-        self.cached_data = (self.data || {}).slice(ATTRIBUTES_TO_CACHE)
+        self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
       end
 
       if changed_attributes.include? 'related_communities'
@@ -205,9 +195,9 @@ class Community < ApplicationRecord
           if c = Community.find(id.abs)
             row = {id: c.id, name: c.name, care_type: c.care_type, status: c.status, slug: c.slug}
             if id < 0
-              row[:similar] = true
+              row['similar'] = true
             else
-              row[:related] = true
+              row['related'] = true
             end
           end
           row
