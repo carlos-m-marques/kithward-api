@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   newrelic_ignore_apdex
-  
+
   class Sitemap
     def initialize(entries = [])
       @entries = entries
@@ -61,7 +61,7 @@ class SitemapController < ApplicationController
         docs = prismic.query(['at', 'document.tags', [tag]])
         docs.results.each do |doc|
           @sitemap << {
-            loc: "https://kithward.com/guidance/#{doc.slug}",
+            loc: "https://kithward.com/learn/#{doc.slug}",
             changefreq: 'weekly',
             priority: 0.9,
           }
