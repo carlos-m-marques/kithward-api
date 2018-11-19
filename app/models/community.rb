@@ -177,18 +177,18 @@ class Community < ApplicationRecord
     'amenity_indoor_pool', 'amenity_outdoor_pool',
   ]
 
-  def update_cached_data
+  def update_cached_data(force = false)
     # WARNING: This subset of keys should reflect what's on web/src/tools/KWConsts.js#CRITERIA_SPEC
 
-    if data_changed?
+    if data_changed? || force
       diff = HashDiff.diff(self.data_was || {}, self.data || {})
       changed_attributes = diff.collect {|change, name, value| name}
 
-      if (changed_attributes & ATTRIBUTES_TO_CACHE).any?
+      if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
         self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
       end
 
-      if changed_attributes.include? 'related_communities'
+      if changed_attributes.include? 'related_communities' || force
         ids = (self.data['related_communities'] || "").split(/\s*,\s*/)
         self.data['related_community_data'] = ids.collect do |id|
           id = id.to_i
