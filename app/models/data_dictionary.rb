@@ -735,7 +735,7 @@ class DataDictionary
       attrs: [
         { provider:                        { label: "Provider", data: 'string', admin_only: true }},
         { managed_by:                      { label: "Managed By", data: 'string', admin_only: true }},
-        { year_est:                        { label: "Year Established", data: 'number', admin_only: true }},
+        { year_est:                        { label: "Year Established", data: 'number', admin_only: true, commas: false }},
 
         { ownership_nonprofit_religious:   { label: "Religious Non-Profit", data: 'flag', group: 'ownership' }},
         { ownership_nonprofit_secular:     { label: "Secular Non-Profit", data: 'flag', group: 'ownership' }},
