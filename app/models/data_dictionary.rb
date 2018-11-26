@@ -70,6 +70,7 @@ class DataDictionary
   Community = self.new([
     { section: 'details',
       label: "Community Details",
+      admin_tab: "Community",
       groups: [
         { basics: {}},
         { related: {}},
@@ -178,6 +179,7 @@ class DataDictionary
       label: "Accomodations",
       desc: "Here are the various types of units available to choose from, subject to availability. " \
             "There may be more options than what are shown. Contact us to find out more.",
+      admin_tab: "Layouts",
       groups: [
         { units: { label: "Apartment Sizes"}},
         { features: { label: "Available Features"}},
@@ -256,6 +258,7 @@ class DataDictionary
       label: "Pricing Summary",
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
             "level of assistance you require, if any. Contact us to find out more.",
+      admin_tab: "Pricing",
       groups: [
         { onetimefees: { label: "One-Time Fees", }},
         { otherfees: { label: "Other Fees", }},
@@ -335,6 +338,7 @@ class DataDictionary
       label: "Available Care",
       desc: "Here you will find the types of healthcare, assistance and support offered at this community, some of which " \
             "may come with an additional cost.",
+      admin_tab: "Care",
       groups: [
         { healthcare: { label: "Healthcare Staff", }},
         { visiting: { label: "Visiting Specialists", }},
@@ -406,6 +410,7 @@ class DataDictionary
       label: "Services",
       desc: "Staff and visiting professionals offer a variety of services to make residents lives easier, though some " \
             "may come with an additional cost or be subject to availability.",
+      admin_tab: "Amenities",
       groups: [
         { services: { label: "Available Services", }},
         { transportation: { label: "Parking & Transportation", }},
@@ -458,6 +463,7 @@ class DataDictionary
       label: "Dining",
       desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
+      admin_tab: "Amenities"
       groups: [
         { dining: { label: "Dining Style", }},
         { dietary: { label: "Dietary Accomodations", }},
@@ -491,6 +497,7 @@ class DataDictionary
       desc: "Activity calendars speak volumes about the culture of a community. Learn what " \
             " opportunities there are to socialize, stay fit, be creative, stay engaged, grow " \
             "spiritually, and more.",
+      admin_tab: "Activities",
       groups: [
         { artistic: {label: "Creative & Artistic", icon: "paint-brush", }},
         { fitness: {label: "Fitness & Exercise", icon: "trophy", }},
@@ -630,6 +637,7 @@ class DataDictionary
       label: "Amenities",
       desc: "Amenities represent the 'bones' of a community: the rooms, facilities, features and infrastructure " \
             "meant to enhance and enrich the lives of its residents.",
+      admin_tab: "Amenities",
       groups: [
         { indoor: { label: "Indoor Amenities", icon: "hotel", }},
         { outdoor: { label: "Outdoor Amenities", icon: "tree-alt", }},
@@ -728,6 +736,7 @@ class DataDictionary
 
     { section: 'governance',
       label: "Community Governance",
+      admin_tab: "Community",
       groups: [
         { ownership:  { label: "Ownership", }},
         { council: { label: "Resident Council", }},
@@ -756,6 +765,7 @@ class DataDictionary
 
     { section: 'values',
       label: "Community Values",
+      admin_tab: "Community",
       attrs: [
         { community_values:                { label: "Community Values", data: 'text' }},
       ],
@@ -771,6 +781,7 @@ class DataDictionary
 
     { section: 'makeup',
       label: "Community Makeup",
+      admin_tab: "Community",      
       attrs: [
         { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
         { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},
@@ -796,6 +807,7 @@ class DataDictionary
 
     { section: 'contracts',
       label: "Contract Options",
+      admin_tab: "Pricing",
       groups: [
         { contract: { label: "Contract Types", }},
         { entrance: { label: "Entrance Fee & Refund", }},
