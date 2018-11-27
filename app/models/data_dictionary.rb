@@ -463,7 +463,7 @@ class DataDictionary
       label: "Dining",
       desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
-      admin_tab: "Amenities"
+      admin_tab: "Amenities",
       groups: [
         { dining: { label: "Dining Style", }},
         { dietary: { label: "Dietary Accomodations", }},
