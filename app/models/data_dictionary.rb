@@ -260,35 +260,43 @@ class DataDictionary
             "level of assistance you require, if any. Contact us to find out more.",
       admin_tab: "Pricing",
       groups: [
+        { feesummary: {label: ""}},
+        { notes: {label: ""}},
         { onetimefees: { label: "One-Time Fees", }},
         { otherfees: { label: "Other Fees", }},
         { carelevels: { label: "Levels Of Care", }},
         { itemizedcare: { label: "Itemized Care", }},
       ],
+      collapsed_groups: [:onetimefees, :otherfees, :carelevels, :itemizedcare],
+      collapsed_prompt: "Show more pricing information",
       attrs: [
-        { listings_base_rent:     { label: "Base Fee", data: 'pricerange', readonly: true, suffix: "per month" }},
-        { base_rent:              { label: "Base Fee", data: 'pricerange', readonly: true, hide: true }},
-        # { rent_starting_price:    { label: "Base Fee Minimum", data: 'price' }},
-        # { rent_maximum_price:     { label: "Base Fee Maximum", data: 'price' }},
+        { listings_base_rent:     { label: "Base Fee", data: 'pricerange', readonly: true, suffix: "per month", group: 'feesummary' }},
+        { base_rent:              { label: "Base Fee", data: 'pricerange', readonly: true, hide: true, group: 'feesummary' }},
+        # { rent_starting_price:    { label: "Base Fee Minimum", data: 'price', group: 'feesummary' }},
+        # { rent_maximum_price:     { label: "Base Fee Maximum", data: 'price', group: 'feesummary' }},
 
-        { base_rent_second:       { label: "Second Resident Base Fee", data: 'fee', suffix: "per month" }},
+        { base_rent_second:       { label: "Second Resident Base Fee", data: 'fee', suffix: "per month", group: 'feesummary' }},
 
-        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true }},
-        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true }},
-        # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price' }},
-        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', }},
+        { listings_entrance_fee:    { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, group: 'feesummary' }},
+        { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', readonly: true, hide: true, group: 'feesummary' }},
+        # { entrance_fee_min:       { label: "Minimum Entrance Fee", data: 'price', group: 'feesummary' }},
+        # { entrance_fee_max:       { label: "Maximum Entrance Fee", data: 'price', group: 'feesummary' }},
 
-        { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee' }},
+        { entrance_fee_second:    { label: "Second Resident Entrance Fee", data: 'fee', group: 'feesummary' }},
 
-        { care_cost:              { label: "Care Costs", data: 'pricerange' }},
-        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
-        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', }},
-        { rent_includes_care:     { label: "Base Monthly Fee Includes Care Costs", data: 'flag' }},
+        { care_cost:              { label: "Care Costs", data: 'pricerange', group: 'feesummary' }},
+        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price', group: 'feesummary' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', group: 'feesummary' }},
+        { rent_includes_care:     { label: "Base Monthly Fee Includes Care Costs", data: 'flag', group: 'feesummary' }},
 
-        { memory_care_cost:       { label: "Memory Care Costs", data: 'pricerange' }},
-        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price' }},
-        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price' }},
-        { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', }},
+        { memory_care_cost:       { label: "Memory Care Costs", data: 'pricerange', group: 'feesummary' }},
+        # { care_starting_price:    { label: "Care Cost Minimum", data: 'price', group: 'feesummary' }},
+        # { care_maximum_price:     { label: "Care Cost Maximum", data: 'price', group: 'feesummary' }},
+        { care_includes_rent:     { label: "Memory Care Costs Include Base Monthly Fee", data: 'flag', group: 'feesummary' }},
+
+        { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text', group: 'notes' }},
+
+        { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true, group: 'notes' }},
 
         { pay_runs_out:           { label: "Policy If Private Pay Runs Out", data: 'select',
                                     values: [
@@ -297,9 +305,6 @@ class DataDictionary
                                       {'F' => "Community foundation supports resident"},
                                       {'L' => "Resident must leave community"},
                                    ]}},
-
-        { public_pricing_notes:   { label: "Additional Pricing Information", data: 'text' }},
-        { admin_pricing_notes:    { label: "Admin Pricing Notes", data: 'text', admin_only: true }},
 
         { waiting_list_fee:       { label: "Waiting List Fee", data: 'fee', group: 'onetimefees' }},
         { reservation_fee:        { label: "Reservation Fee", data: 'fee', group: 'onetimefees' }},
@@ -781,7 +786,7 @@ class DataDictionary
 
     { section: 'makeup',
       label: "Community Makeup",
-      admin_tab: "Community",      
+      admin_tab: "Community",
       attrs: [
         { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
         { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},
