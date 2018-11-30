@@ -379,7 +379,6 @@ class DataDictionary
         { care_onsite_optometrist:    { label: "Optometrist", data: 'flag', group: 'visiting' }},
         { care_onsite_orthopedist:    { label: "Orthopedist", data: 'flag', group: 'visiting' }},
         { care_onsite_podiatrist:     { label: "Podiatrist", data: 'flag', group: 'visiting' }},
-        { care_onsite_aide:           { label: "Private aide", data: 'flag', group: 'visiting' }},
         { care_onsite_pulmonologist:  { label: "Pulmonologist", data: 'flag', group: 'visiting' }},
         { care_onsite_psychologist:   { label: "Psychologist", data: 'flag', group: 'visiting' }},
         { care_onsite_psychiatrist:   { label: "Psychiatrist", data: 'flag', group: 'visiting' }},
@@ -471,6 +470,7 @@ class DataDictionary
         { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'services' }},
         { services_pharmacy:       { label: "Pharmacy services", data: 'amenity', group: 'services' }},
         { services_chaplain:       { label: "Priest/chaplain", data: 'amenity', group: 'services' }},
+        { care_onsite_aide:        { label: "Private aide", data: 'flag', group: 'services' }},        
         { services_catering:       { label: "Private event catering", data: 'amenity', group: 'services' }},
         { services_rabbi:          { label: "Rabbi", data: 'amenity', group: 'services' }},
         { services_wifi:           { label: "WiFi included", data: 'amenity', group: 'services' }},
@@ -665,7 +665,7 @@ class DataDictionary
         { amenity_exam_room:           { label: "Examination room", data: 'amenity', group: 'indoor' }},
         { amenity_fireplace:           { label: "Fireplaces", data: 'amenity', group: 'indoor' }},
         { amenity_game_room:           { label: "Game/card room", data: 'amenity', group: 'indoor' }},
-        { amenity_hair_salon:          { label: "Hair salon/barber", data: 'amenity', group: 'indoor' }},
+        { amenity_hair_salon:          { label: "Beauty salon/barber", data: 'amenity', group: 'indoor' }},
         { amenity_laundry:             { label: "Laundry room", data: 'amenity', group: 'indoor' }},
         { amenity_library:             { label: "Library", data: 'amenity', group: 'indoor' }},
         { amenity_lounge:              { label: "Lounge/community room", data: 'amenity', group: 'indoor' }},
@@ -673,7 +673,6 @@ class DataDictionary
         { amenity_meditation_room:     { label: "Meditation/prayer room", data: 'amenity', group: 'indoor' }},
         { amenity_theater:             { label: "Movie theater", data: 'amenity', group: 'indoor' }},
         { amenity_music_room:          { label: "Music room/conservatory", data: 'amenity', group: 'indoor' }},
-        { amenity_nail_salon:          { label: "Nail salon", data: 'amenity', group: 'indoor' }},
         { amenity_guest_suite:         { label: "Overnight guest suite", data: 'amenity', group: 'indoor' }},
         { amenity_piano:               { label: "Piano", data: 'amenity', group: 'indoor' }},
         { amenity_pharmacy:            { label: "Pharmacy", data: 'amenity', group: 'indoor' }},
@@ -815,7 +814,8 @@ class DataDictionary
       admin_tab: "Pricing",
       groups: [
         { contract: { label: "Contract Types", }},
-        { entrance: { label: "Entrance Fee & Refund", }},
+        { entrance: { label: "Entrance Fee Policies", }},
+        { refund:   { label: "Entrance Fee Refunds", }},
       ],
       attrs: [
         { contract_type_extensive:     { label: "Extensive (Life Care)", data: 'flag', group: 'contract' }},
@@ -825,12 +825,21 @@ class DataDictionary
         { contract_type_equity:        { label: "Equity", data: 'flag', group: 'contract' }},
 
         { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group: 'entrance' }},
-        { refund_option:               { label: "Entrance Fee Refund Option", data: 'flag', group: 'entrance' }},
-        { refund_offered:              { label: "Refund Offered", data: 'countrange', group: 'entrance' }},
-        # { refund_option_min:           { label: "Minimum Refund Offered", data: 'count', group: 'entrance' }},
-        # { refund_option_max:           { label: "Maximum Refund Offered", data: 'count', group: 'entrance' }},
-        { refund_conditions:           { label: "Conditions for Refund", data: 'string', group: 'entrance' }},
         { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group: 'entrance' }},
+        
+        { refund_options:              { label: "Available Refund Options", data: 'select', selectMulti: 'true', group: 'refund' }},
+          values: [
+            {'0' => "0%" },
+            {'50' => "50%" },
+            {'80' => "80%" },
+            {'90' => "90%" },
+          ] }    
+
+        # { refund_offered:              { label: "Refund Offered", data: 'countrange', group: 'refund' }},
+        # { refund_option_min:         { label: "Minimum Refund Offered", data: 'count', group: 'refund' }},
+        # { refund_option_max:         { label: "Maximum Refund Offered", data: 'count', group: 'refund' }},
+        { refund_conditions:           { label: "Conditions for Refund", data: 'string', group: 'refund' }},
+
       ],
     },
 
@@ -886,6 +895,7 @@ class DataDictionary
         { bedrooms:     { label: "Bedrooms", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
                             {'Shared' => "Shared room"},
+                            {'Suite' => "Shared suite"},
                             {'Studio' => "Studio"},
                             {'1' => "1 Bedroom"},
                             {'2' => "2 Bedrooms"},
@@ -906,6 +916,7 @@ class DataDictionary
                             {'1' => "1 Bathroom"},
                             {'1.5' => "1½ Bathrooms"},
                             {'2' => "2 Bathrooms"},
+                            {'2.5' => "2½ Bathrooms"},
                             {'3+' => "3 or more bathrooms"},
                           ],
                         }},
