@@ -116,6 +116,12 @@ class DataDictionary
                                        {'M' => 'Medium-sized'},
                                        {'L' => 'Large'},
                                     ]}},
+        { community_majority:     { label: "Community Majority", data: 'select', group: 'characteristics',
+                                     values: [
+                                       {'I' => 'Majority Independent Living'},
+                                       {'A' => 'Majority Assisted Living'},
+                                       {'M' => 'Majority Memory Care'},
+                                    ]}},        
         { unit_count:             { label: "Total Units", data: 'count', group: 'characteristics', }},
 
         { staff_total:            { label: "Total Staff", data: 'count', group: 'characteristics', }},
@@ -144,6 +150,7 @@ class DataDictionary
                                       {'O' => "Other"},
                                     ]}},
         { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', group: 'characteristics', }},
+        { affordable_housing:     { label: "Affordable housing available", data: 'flag', group: 'characteristics', }},        
 
         { smoking:                { label: "Smoking allowed", data: 'flag', group: 'characteristics', }},
         { non_smoking:            { label: "Smoking prohibited", data: 'flag', group: 'characteristics', }},
@@ -332,6 +339,8 @@ class DataDictionary
         { room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true, hide: true }},
+        
+        { accommodations_notes:   { label: "Additional Accomodations Information", data: 'text', group: 'features' }},        
 
         { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
         { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
@@ -681,6 +690,7 @@ class DataDictionary
         { amenity_restaurant:          { label: "Restaurant", data: 'amenity', group: 'indoor' }},
         { amenity_spa:                 { label: "Spa", data: 'amenity', group: 'indoor' }},
         { amenity_stage:               { label: "Stage/theater", data: 'amenity', group: 'indoor' }},
+        { amenity_storage:             { label: "Storage units", data: 'amenity', group: 'indoor' }},
         { amenity_store:               { label: "Store", data: 'amenity', group: 'indoor' }},
         { amenity_sun_room:            { label: "Sun room", data: 'amenity', group: 'indoor' }},
         { amenity_tea_room:            { label: "Tea/coffee room", data: 'amenity', group: 'indoor' }},
@@ -931,6 +941,7 @@ class DataDictionary
         { room_feat_custom:       { label: "Custom renovations available", data: 'amenity', group: 'features' }},
         { room_feat_parking:      { label: "Dedicated parking", data: 'amenity', group: 'features' }},
         { room_feat_den:          { label: "Den/extra room", data: 'amenity', group: 'features' }},
+        { room_feat_dining:       { label: "Dining room/area", data: 'amenity', group: 'features' }},
         { room_feat_dishwasher:   { label: "Dishwasher", data: 'amenity', group: 'features' }},
         { room_feat_fireplace:    { label: "Fireplace", data: 'amenity', group: 'features' }},
         { room_feat_kitchen:      { label: "Full kitchen", data: 'amenity', group: 'features' }},
