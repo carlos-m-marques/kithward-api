@@ -827,13 +827,14 @@ class DataDictionary
         { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group: 'entrance' }},
         { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group: 'entrance' }},
         
-        { refund_options:              { label: "Available Refund Options", data: 'select', selectMulti: 'true', group: 'refund' }},
+        { refund_options:              { label: "Available Refund Options", data: 'select', selectMulti: 'true', group: 'refund',
           values: [
             {'0' => "0%" },
             {'50' => "50%" },
             {'80' => "80%" },
             {'90' => "90%" },
-          ] }    
+          ]
+        }},
 
         # { refund_offered:              { label: "Refund Offered", data: 'countrange', group: 'refund' }},
         # { refund_option_min:         { label: "Minimum Refund Offered", data: 'count', group: 'refund' }},
