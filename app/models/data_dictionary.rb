@@ -71,6 +71,7 @@ class DataDictionary
     { section: 'details',
       label: "Community Details",
       admin_tab: "Community",
+      admin_only: true,
       groups: [
         { basics: {}},
         { related: {}},
@@ -121,7 +122,7 @@ class DataDictionary
                                        {'I' => 'Majority Independent Living'},
                                        {'A' => 'Majority Assisted Living'},
                                        {'M' => 'Majority Memory Care'},
-                                    ]}},        
+                                    ]}},
         { unit_count:             { label: "Total Units", data: 'count', group: 'characteristics', }},
 
         { staff_total:            { label: "Total Staff", data: 'count', group: 'characteristics', }},
@@ -150,7 +151,7 @@ class DataDictionary
                                       {'O' => "Other"},
                                     ]}},
         { lgbt_friendly:          { label: "LGBTQ focus", data: 'flag', group: 'characteristics', }},
-        { affordable_housing:     { label: "Affordable housing available", data: 'flag', group: 'characteristics', }},        
+        { affordable_housing:     { label: "Affordable housing available", data: 'flag', group: 'characteristics', }},
 
         { smoking:                { label: "Smoking allowed", data: 'flag', group: 'characteristics', }},
         { non_smoking:            { label: "Smoking prohibited", data: 'flag', group: 'characteristics', }},
@@ -176,12 +177,13 @@ class DataDictionary
 
     { section: 'kithward',
       label: "Kithward Color",
+      admin_only: true,
       attrs: [
         { kithward_color:         { label: "Kithward Color", data: 'text' }},
         { kithward_color_y:       { label: "Display Kithward Color", data: 'flag' }},
       ],
     },
-    
+
 { section: 'pricing',
       label: "Pricing Summary",
       desc: "Pricing can vary greatly depending on the accomodations you choose and the " \
@@ -339,15 +341,15 @@ class DataDictionary
         { room_feat_pvt_outdoor:  { label: "Private outdoor space", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true, hide: true }},
-        
-        { accommodations_notes:   { label: "Additional Accomodations Information", data: 'text', group: 'features' }},        
+
+        { accommodations_notes:   { label: "Additional Accomodations Information", data: 'text', group: 'features' }},
 
         { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
         { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
         { room_photos:            { label: "Photos", data: 'thumbnails', special: true, tagged_as: 'unit', group: 'floorplans' }},
       ],
     },
-   
+
     { section: 'care',
       label: "Available Care",
       desc: "Here you will find the types of healthcare, assistance and support offered at this community, some of which " \
@@ -451,7 +453,7 @@ class DataDictionary
         { food_menus:             { label: "Sample Menus", data: 'thumbnails', special: true, tagged_as: 'menu', group: 'menus' }},
       ],
     },
-    
+
     { section: 'services',
       label: "Services",
       desc: "Staff and visiting professionals offer a variety of services to make residents lives easier, though some " \
@@ -479,7 +481,7 @@ class DataDictionary
         { activity_personal_training: { label: "Personal training", data: 'amenity', group: 'services' }},
         { services_pharmacy:       { label: "Pharmacy services", data: 'amenity', group: 'services' }},
         { services_chaplain:       { label: "Priest/chaplain", data: 'amenity', group: 'services' }},
-        { care_onsite_aide:        { label: "Private aide", data: 'flag', group: 'services' }},        
+        { care_onsite_aide:        { label: "Private aide", data: 'flag', group: 'services' }},
         { services_catering:       { label: "Private event catering", data: 'amenity', group: 'services' }},
         { services_rabbi:          { label: "Rabbi", data: 'amenity', group: 'services' }},
         { services_wifi:           { label: "WiFi included", data: 'amenity', group: 'services' }},
@@ -751,6 +753,7 @@ class DataDictionary
     { section: 'governance',
       label: "Community Governance",
       admin_tab: "Community",
+      admin_only: true,
       groups: [
         { ownership:  { label: "Ownership", }},
         { council: { label: "Resident Council", }},
@@ -780,6 +783,7 @@ class DataDictionary
     { section: 'values',
       label: "Community Values",
       admin_tab: "Community",
+      admin_only: true,
       attrs: [
         { community_values:                { label: "Community Values", data: 'text' }},
       ],
@@ -787,6 +791,7 @@ class DataDictionary
 
     { section: 'certifications',
       label: "Awards & Certifications",
+      admin_only: true,
       attrs: [
         { community_awards:                { label: "Awards & Certifications", data: 'text' }},
 
@@ -796,6 +801,7 @@ class DataDictionary
     { section: 'makeup',
       label: "Community Makeup",
       admin_tab: "Community",
+      admin_only: true,
       attrs: [
         { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
         { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},
@@ -822,6 +828,7 @@ class DataDictionary
     { section: 'contracts',
       label: "Contract Options",
       admin_tab: "Pricing",
+      admin_only: true,
       groups: [
         { contract: { label: "Contract Types", }},
         { entrance: { label: "Entrance Fee Policies", }},
@@ -836,7 +843,7 @@ class DataDictionary
 
         { entrance_fee_required:       { label: "Entrance Fee Required", data: 'flag', group: 'entrance' }},
         { entrance_fee_amort:          { label: "Amortization Details", data: 'text', group: 'entrance' }},
-        
+
         { refund_options:              { label: "Available Refund Options", data: 'select', selectMulti: 'true', group: 'refund',
           values: [
             {'0' => "0%" },
@@ -856,6 +863,7 @@ class DataDictionary
 
     { section: 'entrance',
       label: "Entrance Requirements",
+      admin_only: true,
       attrs: [
         { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
         { age_qual_requirements:      { label: "Age qualification requirements", data: 'string' }},
