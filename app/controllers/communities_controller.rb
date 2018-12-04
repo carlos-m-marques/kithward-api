@@ -111,6 +111,20 @@ class CommunitiesController < ApplicationController
 
     @community.save
 
+    if params[:images]
+      params[:images].each {|data| CommunityImagesController.process_one_image(@community, data) }
+
+      @community.community_images.reload
+      @community.update_cached_image_url!
+    end
+
+    if params[:listings]
+      params[:listings].each {|data| ListingsController.process_one_listing(@community, data) }
+
+      @community.listings.reload
+      @community.update_reflected_attributes_from_listings
+    end
+
     if @community.errors.any?
       render json: { errors: @community.errors}, status: :unprocessable_entity
     else
