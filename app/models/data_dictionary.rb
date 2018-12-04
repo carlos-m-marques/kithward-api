@@ -177,6 +177,7 @@ class DataDictionary
 
     { section: 'kithward',
       label: "Kithward Color",
+      admin_tab: "Community",
       admin_only: true,
       attrs: [
         { kithward_color:         { label: "Kithward Color", data: 'text' }},
@@ -425,7 +426,7 @@ class DataDictionary
       label: "Dining",
       desc: "Here you will find the style of dining offered at the community, as well as the types of diets " \
             "they can accomodate. If you have special restrictions, contact us to find out more.",
-      admin_tab: "Amenities",
+      admin_tab: "Dining",
       groups: [
         { dining: { label: "Dining Style", }},
         { dietary: { label: "Dietary Accomodations", }},
@@ -791,6 +792,7 @@ class DataDictionary
 
     { section: 'certifications',
       label: "Awards & Certifications",
+      admin_tab: "Community",
       admin_only: true,
       attrs: [
         { community_awards:                { label: "Awards & Certifications", data: 'text' }},
@@ -863,6 +865,7 @@ class DataDictionary
 
     { section: 'entrance',
       label: "Entrance Requirements",
+      admin_tab: "Pricing",      
       admin_only: true,
       attrs: [
         { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
@@ -896,8 +899,9 @@ class DataDictionary
       ],
       attrs: [
         { name:         { label: "Layout Name", data: 'string', direct_model_attribute: true, group: 'basics' }},
+        { bldg_name:    { label: "Building Name", data: 'string', group: 'basics' }},
         { caption:      { label: "Caption", data: 'string', group: 'basics' }},
-        { description:  { label: "Description", data: 'text', group: 'description' }},
+        #{ description:  { label: "Description", data: 'text', group: 'description' }},
 
         { unit_type:    { label: "Unit type", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
