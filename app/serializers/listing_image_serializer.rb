@@ -18,9 +18,5 @@
 class ListingImageSerializer < Blueprinter::Base
   identifier :idstr, name: :id
 
-  fields :caption, :tags, :sort_order, :url
-
-  field :content_type do |object|
-    object.image.content_type
-  end
+  fields :caption, :tags, :sort_order, :url, :content_type
 end

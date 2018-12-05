@@ -27,4 +27,8 @@ class CommunityImage < ApplicationRecord
   def url
     "/v1/communities/#{self.community_id}/images/#{self.id}"
   end
+
+  def content_type
+    image and image.attachment and image.attachment.content_type
+  end
 end
