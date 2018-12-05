@@ -274,7 +274,7 @@ class DataDictionary
       label: "Accomodations",
       desc: "Here are the various types of units available to choose from, subject to availability. " \
             "There may be more options than what are shown. Contact us to find out more.",
-      admin_tab: "Layouts",
+      admin_tab: "Community",
       groups: [
         { units: { label: "Apartment Sizes"}},
         { features: { label: "Available Features"}},
@@ -343,7 +343,7 @@ class DataDictionary
         { room_feat_walkin:       { label: "Walk-in closet", data: 'amenity', group: 'features', readonly: true, hide: true }},
         { room_feat_washer:       { label: "Washer/dryer", data: 'amenity', group: 'features', readonly: true, hide: true }},
 
-        { accommodations_notes:   { label: "Additional Accomodations Information", data: 'text', group: 'features' }},
+        { accommodations_notes:   { label: "Additional Accomodations Information", data: 'text', group: 'notes' }},
 
         { room_layouts:           { label: "Layouts", data: 'listings', special: true, group: 'floorplans' }},
         { room_floorplans:        { label: "Sample Floor Plans", data: 'thumbnails', special: true, tagged_as: 'floorplan', group: 'floorplans' }},
@@ -865,7 +865,7 @@ class DataDictionary
 
     { section: 'entrance',
       label: "Entrance Requirements",
-      admin_tab: "Pricing",      
+      admin_tab: "Pricing",
       admin_only: true,
       attrs: [
         { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
