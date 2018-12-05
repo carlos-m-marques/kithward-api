@@ -943,7 +943,7 @@ class DataDictionary
                             {'3+' => "3 or more bathrooms"},
                           ],
                         }},
-        { sqft:         { label: "Area (ft²)", data: 'number', group: 'unit', }},
+        { sqft:         { label: "Area (ft²)", data: 'numberrange', group: 'unit', }},
 
         { base_rent:              { label: "Base Monthly Fee", data: 'pricerange', group: 'pricing', suffix: "per month" }},
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
