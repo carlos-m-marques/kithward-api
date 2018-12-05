@@ -899,9 +899,9 @@ class DataDictionary
       ],
       attrs: [
         { name:         { label: "Layout Name", data: 'string', direct_model_attribute: true, group: 'basics' }},
-        { bldg_name:    { label: "Building Name", data: 'string', group: 'basics' }},
-        { caption:      { label: "Caption", data: 'string', group: 'basics' }},
-        #{ description:  { label: "Description", data: 'text', group: 'description' }},
+        { building:     { label: "Building Name", data: 'string', group: 'basics' }},
+        # { caption:      { label: "Caption", data: 'string', group: 'basics' }},
+        # { description:  { label: "Description", data: 'text', group: 'description' }},
 
         { unit_type:    { label: "Unit type", data: 'select', group: 'unit', adminSelectMulti: true,
                           values: [
