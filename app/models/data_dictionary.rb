@@ -122,6 +122,9 @@ class DataDictionary
                                        {'I' => 'Majority Independent Living'},
                                        {'A' => 'Majority Assisted Living'},
                                        {'M' => 'Majority Memory Care'},
+                                       {'AI' => 'All Independent Living'},
+                                       {'AA' => 'All Assisted Living'},
+                                       {'AM' => 'All Memory Care'},
                                     ]}},
         { unit_count:             { label: "Total Units", data: 'count', group: 'characteristics', }},
 
@@ -543,6 +546,7 @@ class DataDictionary
         { activity_singing:           { label: "Singing/choir", data: 'amenity', group: 'artistic' }},
         { activity_woodworking:       { label: "Woodworking", data: 'amenity', group: 'artistic' }},
 
+        { activity_aerobics:          { label: "Aerobics/cardio", data: 'amenity', group: 'fitness' }},
         { activity_aquatics:          { label: "Aquatics/water aerobics", data: 'amenity', group: 'fitness' }},
         { activity_balance:           { label: "Balance/stability", data: 'amenity', group: 'fitness' }},
         { activity_biking:            { label: "Biking", data: 'amenity', group: 'fitness' }},
