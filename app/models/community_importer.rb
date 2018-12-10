@@ -10,6 +10,8 @@ class CommunityImporter
   }
 
   def initialize(params)
+    params = params || {}
+
     @attrs = []
     @entries = []
     @errors = []
