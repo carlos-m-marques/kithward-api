@@ -29,6 +29,7 @@ class CommunityTest < ActiveSupport::TestCase
   end
 
   test "Addresses are geocoded automatically" do
+    Geocoder::Lookup::Test.reset
     Geocoder::Lookup::Test.add_stub(
       "123 Broadway, New York, NY, 10001, USA", [
         {

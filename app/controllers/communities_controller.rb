@@ -137,7 +137,20 @@ class CommunitiesController < ApplicationController
   end
 
   def import
-    importer = CommunityImporter.new params[:data]
+    # parameters:
+    # - data
+    # or
+    # - entries, attrs (as returned by previous calls with 'data')
+    #
+    # - dry_run: don't save anything
+    # - force_import: process entries matched by geolocation and simplified name, instead of just id or name
+
+    params.permit!
+    importer = CommunityImporter.new params
+
+    unless params[:dryrun] || params[:dry_run]
+      importer.import
+    end
 
     render json: importer.to_h
   end

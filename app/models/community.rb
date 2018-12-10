@@ -122,7 +122,7 @@ class Community < ApplicationRecord
     after_validation :geocode, if: ->(obj){ obj.address_changed? and obj.address_complete? }
 
     def address
-      [street, city, state, postal, country].compact.join(', ')
+      [street, city, state, postal, country || 'USA'].compact.join(', ')
     end
 
     def address_changed?
