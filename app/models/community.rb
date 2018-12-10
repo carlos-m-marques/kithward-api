@@ -239,7 +239,7 @@ class Community < ApplicationRecord
           values = value.split(/\s*,\s*/)
           reflection[key] = (reflection[key] + [values]).flatten.uniq
         when 'pricerange', 'numberrange'
-          values = value.split(":").collect {|p| p.to_i}
+          values = "#{value}".split(":").collect {|p| p.to_i}
           if values.first
             reflection[key][0] = [reflection[key].first || values.first, values.first].min
           end
