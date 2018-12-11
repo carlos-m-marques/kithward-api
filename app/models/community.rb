@@ -209,7 +209,7 @@ class Community < ApplicationRecord
   end
 
   def update_cached_image_url!
-    image = self.community_images.reload.sort_by {|i| [i.sort_order, i.id]}.first
+    image = self.community_images.reload.select {|i| i.tags !~ /(floorplan|map|calendar)/ }.sort_by {|i| [i.sort_order, i.id]}.first
     if image
       self.update_attributes(cached_image_url: image.url)
     end
