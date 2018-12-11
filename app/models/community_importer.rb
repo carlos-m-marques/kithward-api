@@ -21,7 +21,14 @@ class CommunityImporter
       @entries = refetch_community_for_previous_entries(params[:entries])
       @errors = []
     else
-      lines = CSV.parse(params[:data] || "")
+      data = params[:data] || ""
+      options = {}
+
+      if data =~ /\t/
+        options[:col_sep] = "\t"
+      end
+
+      lines = CSV.parse(data, options)
 
       if lines.length > 0
         @attrs = process_headers(lines[0])

@@ -66,4 +66,19 @@ AL,The Willows,459 East Oak Orchard Street,Medina,NY,14103,(585) 798-5233
       {'data' => {'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233"}},
     ], importer.to_h[:entries]
   end
+
+  test "It can parse tab-separated data, and strip spaces, and quoted new lines" do
+    importer = CommunityImporter.new data: <<-END
+Type\tName\tAddress\tCity\tState\tPostal\tPhone\tNotes
+AL\tThe Osborn\t101 Theall Road\tRye\tNY\t10580\t(914) 925-8200\t Some notes with spaces around
+AL\tThe Willows\t459 East Oak Orchard Street\tMedina\tNY\t14103\t(585) 798-5233\t"Notes
+in multiple lines"
+    END
+
+    assert_equal 2, importer.to_h[:entries].length
+    assert_equal [
+      {'data' => {'line_number' => 2, 'care_type' => "AL", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'phone' => "(914) 925-8200", 'notes' => "Some notes with spaces around"}},
+      {'data' => {'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233", 'notes' => "Notes\nin multiple lines"}},
+    ], importer.to_h[:entries]
+  end
 end
