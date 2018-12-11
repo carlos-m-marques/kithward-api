@@ -309,7 +309,7 @@ class DataDictionary
                             {'3+' => "3 or more bathrooms"},
                           ],
                         }},
-        { listings_sqft:       { label: "Area (ft²)", data: 'numberrange', group: 'units', readonly: true, hide: true }},
+        { listings_sqft:       { label: "Area", data: 'numberrange', group: 'units', readonly: true, hide: true, suffix: "ft²" }},
 
         { room_shared:            { label: "Shared room", data: 'amenity', group: 'units', readonly: true, hide: true }},
         { room_private:           { label: "Private room", data: 'amenity', group: 'units', readonly: true, hide: true }},
@@ -948,7 +948,7 @@ class DataDictionary
                             {'3+' => "3 or more bathrooms"},
                           ],
                         }},
-        { sqft:         { label: "Area (ft²)", data: 'numberrange', group: 'unit', }},
+        { sqft:         { label: "Area", data: 'numberrange', group: 'unit', suffix: "ft²"}},
 
         { base_rent:              { label: "Base Monthly Fee", data: 'pricerange', group: 'pricing', suffix: "per month" }},
         { entrance_fee:           { label: "Entrance/Community Fee", data: 'pricerange', group: 'pricing' }},
