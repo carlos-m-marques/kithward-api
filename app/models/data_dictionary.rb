@@ -281,8 +281,8 @@ class DataDictionary
       groups: [
         { units: { label: "Apartment Sizes"}},
         { features: { label: "Available Features"}},
-        { floorplans: { label: "-Floorplans" }},
         { notes: {label: ""}},
+        { floorplans: { label: "-Floorplans" }},
       ],
       attrs: [
         { listings_unit_type: { label: "Unit type", data: 'select', group: 'units', readonly: true,
