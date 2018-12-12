@@ -47,7 +47,7 @@ class CommunityImporter
   def to_h
     hash = {
       attrs: @attrs,
-      entries: @entries.reject {|k, v| k === :community_object},
+      entries: @entries.collect {|e| e.reject {|k, v| k === :community_object}},
     }
     if @errors.any?
       hash[:errors] = @errors
@@ -210,6 +210,47 @@ class CommunityImporter
     {id: c.id, name: c.name, care_type: c.care_type, street: c.street, city: c.city, postal: c.postal, status: c.status}
   end
 
+  def compare
+    @entries.each do |entry|
+      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
+        if entry[:community_object]
+          community = entry[:community_object]
+        elsif entry[:community] and entry[:community][:id]
+          community = Community.find(entry[:community][:id])
+        else
+          community = Community.new
+          entry[:is_new] = true
+        end
+
+        entry[:data].keys.each do |attr|
+          value = entry[:data][attr]
+          definition = DataDictionary::Community.attributes[attr]
+          if definition
+            case definition[:data]
+            when 'number', 'price', 'count', 'rating'
+              value = value.to_i
+            when 'flag', 'amenity', 'boolean'
+              value = value.downcase
+              value = !!(["1", "yes", "true"].include?(value))
+            end
+
+            if definition[:direct_model_attribute]
+              entry[:community][attr] = community.send(attr)
+            else
+              entry[:community][attr] = community.data[attr]
+            end
+
+            if entry[:community][attr]
+              entry[:diff] = entry[:community][attr] != value
+            else
+              entry[:diff] = true
+            end
+          end
+        end
+      end
+    end
+  end
+
   def import
     @entries.each do |entry|
       if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
@@ -254,7 +295,7 @@ class CommunityImporter
 
         if direct.any? || attributes.any?
           community.save
-          entry[:community] = community
+          entry[:community_object] = community
           entry[:saved] = true
         end
       end
