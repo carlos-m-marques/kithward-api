@@ -175,6 +175,7 @@ class Community < ApplicationRecord
     'food_restaurant_style', 'smoking',
     'amenitiy_gym', 'amenitiy_fitness_center', 'amenitiy_athletic_club',
     'amenity_indoor_pool', 'amenity_outdoor_pool',
+    'completeness', 'needs_review',
   ]
 
   def update_cached_data(force = false)
