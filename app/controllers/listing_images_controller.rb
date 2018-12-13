@@ -61,7 +61,7 @@ class ListingImagesController < ApplicationController
       end
     elsif params && params[:data] && params[:data] =~ /^data:(.*)/
       content_type = params[:data][/(image\/[a-z]{3,4})|(application\/[a-z]{3,4})/]
-      content_type = content_type[/\b(?!.*\/).*/]
+      content_type = content_type && content_type[/\b(?!.*\/).*/]
 
       encoded_params = params[:data].gsub(/data:((image|application)\/.{3,}),/, '')
       decoded_params = Base64.decode64(encoded_params).force_encoding("ASCII-8BIT")
