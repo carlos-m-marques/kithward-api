@@ -28,19 +28,25 @@ class CommunityImporter
         options[:col_sep] = "\t"
       end
 
-      lines = CSV.parse(data, options)
+      begin
+        lines = CSV.parse(data, options)
 
-      if lines.length > 0
-        @attrs = process_headers(lines[0])
+
+        if lines.length > 0
+          @attrs = process_headers(lines[0])
+        end
+
+        if lines.length > 1
+          rows = process_lines(lines[1..-1], 2) # '2' because line 1 is headers, so line 2 is first entry
+          @entries = match_communities(rows)
+        else
+          @errors << {message: "No data!"}
+        end
+      rescue CSV::MalformedCSVError => e
+        @errors << {message: "Malformed CSV: #{e.message}"}
+      rescue StandardError => e
+        @errors << {message: "Unexpected error #{e.class} #{e.message}"}
       end
-
-      if lines.length > 1
-        rows = process_lines(lines[1..-1], 2) # '2' because line 1 is headers, so line 2 is first entry
-        @entries = match_communities(rows)
-      else
-        @errors << {message: "No data!"}
-      end
-
     end
   end
 
