@@ -14,12 +14,12 @@ class CommunityImporter
 
     @attrs = []
     @entries = []
-    @errors = []
+    @messages = []
 
     if params[:entries]
       @attrs = params[:attrs]
       @entries = refetch_community_for_previous_entries(params[:entries])
-      @errors = []
+      @messages = []
     else
       data = params[:data] || ""
       options = {}
@@ -40,12 +40,12 @@ class CommunityImporter
           rows = process_lines(lines[1..-1], 2) # '2' because line 1 is headers, so line 2 is first entry
           @entries = match_communities(rows)
         else
-          @errors << {message: "No data!"}
+          @messages << {error: "No data!"}
         end
       rescue CSV::MalformedCSVError => e
-        @errors << {message: "Malformed CSV: #{e.message}"}
+        @messages << {error: "Malformed CSV: #{e.message}"}
       rescue StandardError => e
-        @errors << {message: "Unexpected error #{e.class} #{e.message}"}
+        @messages << {error: "Unexpected error #{e.class} #{e.message}"}
       end
     end
   end
@@ -55,8 +55,8 @@ class CommunityImporter
       attrs: @attrs,
       entries: @entries.collect {|e| e.reject {|k, v| k === :community_object}},
     }
-    if @errors.any?
-      hash[:errors] = @errors
+    if @messages.any?
+      hash[:messages] = @messages
     end
     hash
   end
@@ -66,7 +66,7 @@ class CommunityImporter
       header = header.strip
       attr = header.underscore.gsub(/\s+/, '_')
       attr = (ATTR_ALIASES[attr] || attr)
-      {attr: attr, header: header, pos: index}.with_indifferent_access
+      {attr: attr, header: header, pos: index, definition: DataDictionary::Community.attributes[attr]}.with_indifferent_access
     end
   end
 
@@ -94,8 +94,8 @@ class CommunityImporter
       entry = {data: line}.with_indifferent_access
 
       if !entry[:data][:kwid] && !(entry[:data][:care_type] && entry[:data][:name] && entry[:data][:postal])
-        entry[:errors] ||= []
-        entry[:errors] << {message: 'Entries require at least Care Type, Name, and Postal attributes; or a Kithward ID.'}
+        entry[:messages] ||= []
+        entry[:messages] << {error: 'Entries require at least Care Type, Name, and Postal attributes; or a Kithward ID.'}
       else
         entry = match_kwid(entry)
 
@@ -119,8 +119,8 @@ class CommunityImporter
     if entry[:data][:kwid]
       community = Community.find(entry[:data][:kwid])
       if community.is_deleted?
-        entry[:errors] ||= []
-        entry[:errors] << {message: 'Entry is marked as deleted'}
+        entry[:messages] ||= []
+        entry[:messages] << {error: 'Entry is marked as deleted'}
       else
         entry[:community] = extract_community_fields(community)
         entry[:community_object] = community
@@ -213,7 +213,12 @@ class CommunityImporter
   end
 
   def extract_community_fields(c)
-    {id: c.id, name: c.name, care_type: c.care_type, street: c.street, city: c.city, postal: c.postal, status: c.status}
+    {
+      id: c.id, status: c.status, slug: c.slug,
+      name: c.name, care_type: c.care_type,
+      street: c.street, city: c.city, postal: c.postal,
+      lat: c.lat, lon: c.lon,
+    }
   end
 
   def compare
@@ -231,25 +236,27 @@ class CommunityImporter
         entry[:data].keys.each do |attr|
           value = entry[:data][attr]
           definition = DataDictionary::Community.attributes[attr]
+# debugger if  attr ==  'name'
           if definition
             case definition[:data]
             when 'number', 'price', 'count', 'rating'
               value = value.to_i
             when 'flag', 'amenity', 'boolean'
-              value = value.downcase
-              value = !!(["1", "yes", "true"].include?(value))
+              value = value && value.downcase
+              value = !!(["1", "yes", "true", "x"].include?(value))
             end
+
+            entry[:data][attr] = value
 
             if definition[:direct_model_attribute]
-              entry[:community][attr] = community.send(attr)
+              existing_value = community.send(attr)
             else
-              entry[:community][attr] = community.data[attr]
+              existing_value = community.data[attr]
             end
 
-            if entry[:community][attr]
-              entry[:diff] = entry[:community][attr] != value
-            else
-              entry[:diff] = true
+            if existing_value != value
+              entry[:diffs] ||= {}
+              entry[:diffs][attr] = existing_value
             end
           end
         end
@@ -259,38 +266,49 @@ class CommunityImporter
 
   def import
     @entries.each do |entry|
-      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
-        if entry[:community_object]
-          community = entry[:community_object]
-        elsif entry[:community] and entry[:community][:id]
-          community = Community.find(entry[:community][:id])
-        else
-          community = Community.new
-          entry[:is_new] = true
-        end
+      if entry[:community_object]
+        community = entry[:community_object]
+      elsif entry[:community] and entry[:community][:id]
+        community = Community.find(entry[:community][:id])
+      else
+        community = Community.new
+        entry[:is_new] = true
+      end
 
-        attributes = {}
-        direct = {}
-        entry[:data].keys.each do |attr|
-          value = entry[:data][attr]
-          definition = DataDictionary::Community.attributes[attr]
-          if definition
-            case definition[:data]
-            when 'number', 'price', 'count', 'rating'
-              value = value.to_i
-            when 'flag', 'amenity', 'boolean'
-              value = value.downcase
-              value = !!(["1", "yes", "true"].include?(value))
-            end
-
-            if definition[:direct_model_attribute]
-              direct[attr] = value
-            else
-              attributes[attr] = value
-            end
+      attributes = {}
+      direct = {}
+      entry[:data].keys.each do |attr|
+        # debugger if entry[:data][:name] == 'Silver Lining'
+        value = entry[:data][attr]
+        definition = DataDictionary::Community.attributes[attr]
+        if !entry[:is_new]
+          if ['name', 'street', 'city', 'state', 'postal', 'country', 'care_type'].include? attr.to_s
+            entry[:messages] ||= []
+            entry[:messages] << {warning: "Cannot change '#{attr}' on existing records."}
+            next
           end
         end
 
+        if definition
+          case definition[:data]
+          when 'number', 'price', 'count', 'rating'
+            value = value.to_i
+          when 'flag', 'amenity', 'boolean'
+            value = value && value.downcase
+            value = !!(["1", "yes", "true"].include?(value))
+          end
+
+          entry[:data][attr] = value
+
+          if definition[:direct_model_attribute]
+            direct[attr] = value
+          else
+            attributes[attr] = value
+          end
+        end
+      end
+
+      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
         if attributes.any?
           community.data = (community.data || {}).merge(attributes)
         end

@@ -2,90 +2,27 @@ require 'test_helper'
 
 class CommunityImporterIntegrationTest < ActionDispatch::IntegrationTest
   setup do
+    DataDictionary::Community.stubs(:attributes).returns({
+      care_type: {data: 'select', values: [{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], direct_model_attribute: true},
+      name: {data: 'string', direct_model_attribute: true},
+      street: {data: 'string', direct_model_attribute: true},
+      city: {data: 'string', direct_model_attribute: true},
+      state: {data: 'string', direct_model_attribute: true},
+      postal: {data: 'string', direct_model_attribute: true},
+      phone: {data: 'string'},
+      notes: {data: 'text'},
+      description: {data: 'text', direct_model_attribute: true},
+      star_rating: {data: 'rating'},
+      pool: {data: 'amenity'},
+    }.with_indifferent_access)
+
     Geocoder::Lookup::Test.reset
-    Geocoder::Lookup::Test.add_stub(
-      "123 Broadway, New York, NY, 10001, USA", [
-        {
-          'latitude'     => 40.75,
-          'longitude'    => -74.00,
-          'address'      => '123 Broadway',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "125 Broadway, New York, NY, 10001, USA", [
-        {
-          'latitude'     => 40.7501,
-          'longitude'    => -74.00,
-          'address'      => '123 Broadway',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "200 Broadway, New York, NY, 10001, USA", [
-        {
-          'latitude'     => 40.85,
-          'longitude'    => -74.00,
-          'address'      => '123 Broadway',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "123 Broadway, Washington, DC, 20001, USA", [
-        {
-          'latitude'     => 38.90,
-          'longitude'    => -77.00,
-          'address'      => '123 Broadway',
-          'state'        => 'Washington',
-          'state_code'   => 'DC',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "456 Broadway, New York, NY, 10002, USA", [
-        {
-          'latitude'     => 40.80,
-          'longitude'    => -74.10,
-          'address'      => '456 Broadway',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
-
-    Geocoder::Lookup::Test.add_stub(
-      "789 Broadway, New York, NY, 10003, USA", [
-        {
-          'latitude'     => 40.90,
-          'longitude'    => -74.10,
-          'address'      => '789 Broadway',
-          'state'        => 'New York',
-          'state_code'   => 'NY',
-          'country'      => 'United States',
-          'country_code' => 'US'
-        }
-      ]
-    )
+    Geocoder::Lookup::Test.add_stub("123 Broadway, New York, NY, 10001, USA", [{'latitude' => 40.75, 'longitude' => -74.00}])
+    Geocoder::Lookup::Test.add_stub("125 Broadway, New York, NY, 10001, USA", [{'latitude' => 40.7501, 'longitude' => -74.00}])
+    Geocoder::Lookup::Test.add_stub("200 Broadway, New York, NY, 10001, USA", [{'latitude' => 40.85, 'longitude' => -74.00}])
+    Geocoder::Lookup::Test.add_stub("456 Broadway, New York, NY, 10002, USA", [{'latitude' => 40.80, 'longitude' => -74.10}])
+    Geocoder::Lookup::Test.add_stub("789 Broadway, New York, NY, 10003, USA", [{'latitude' => 40.90, 'longitude' => -74.10}])
+    Geocoder::Lookup::Test.add_stub("123 Broadway, Washington, DC, 20001, USA", [{'latitude' => 38.90, 'longitude' => -77.00}])
 
     @c1 = create(:community, name: 'Silver Lining', description: 'Incredible Care', care_type: 'I', street: '123 Broadway', city: 'New York', state: 'NY', postal: '10001', country: 'USA')
     @c1.geocode; @c1.save
@@ -114,37 +51,39 @@ class CommunityImporterIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_equal [], json_response['entries']
-    assert_equal [{'message' => "No data!"}], json_response['errors']
+    assert_equal [{'error' => "No data!"}], json_response['messages']
   end
 
   test "minimum field requirements" do
-    data = <<-EOF
+    data = <<-END
 kwid, name, address, city, state, care_type
 , Golden Peaks, 100 Broadway, New York, NY, I
-EOF
+END
     post "/v1/communities/import", params: {access_token: @admin_token, data: data}
     assert_response :success
-    assert_match(/Entries require at least/, json_response['entries'][0]['errors'][0]['message'])
+    assert_match(/Entries require at least/, json_response['entries'][0]['messages'][0]['error'])
 
   end
 
   test "dry-run import data" do
-    data = <<-EOF
+    data = <<-END
 kwid, name, address, city, state, postal, care_type
 , Silver Lining, 123 Broadway, New York, NY, 10001, I
 , Lining Silvers, 125 Broadway, New York, NY, 10001, I
 , Gray Peaks, 123 Broadway, Washington, DC, 20001, I
-EOF
+END
 
     post "/v1/communities/import", params: {access_token: @admin_token, data: data, dryrun: true}
     assert_response :success
-    assert_equal({'header' => 'kwid', 'attr' => 'kwid', 'pos' => 0}, json_response['attrs'][0])
-    assert_equal({'header' => 'name', 'attr' => 'name', 'pos' => 1}, json_response['attrs'][1])
-    assert_equal({'header' => 'address', 'attr' => 'street', 'pos' => 2}, json_response['attrs'][2])
-    assert_equal({'header' => 'city', 'attr' => 'city', 'pos' => 3}, json_response['attrs'][3])
-    assert_equal({'header' => 'state', 'attr' => 'state', 'pos' => 4}, json_response['attrs'][4])
-    assert_equal({'header' => 'postal', 'attr' => 'postal', 'pos' => 5}, json_response['attrs'][5])
-    assert_equal({'header' => 'care_type', 'attr' => 'care_type', 'pos' => 6}, json_response['attrs'][6])
+    assert_equal [
+      {'attr' => "kwid", 'header' => "kwid", 'pos' => 0, 'definition' => nil},
+      {'attr' => "name", 'header' => "name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
+      {'attr' => "street", 'header' => "address", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
+      {'attr' => "city", 'header' => "city", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
+      {'attr' => "state", 'header' => "state", 'pos' => 4, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
+      {'attr' => "postal", 'header' => "postal", 'pos' => 5, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
+      {'attr' => "care_type", 'header' => "care_type", 'pos' => 6, 'definition' => {'data' => 'select',  'values'=>[{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], 'direct_model_attribute' => true}},
+    ], json_response['attrs']
 
     assert_equal({
       'kwid' => nil,
@@ -164,12 +103,12 @@ EOF
   end
 
   test "resend processed entries" do
-    data = <<-EOF
+    data = <<-END
 kwid, name, address, city, state, postal, care_type
 , Silver Lining, 123 Broadway, New York, NY, 10001, I
 , Lining Silvers, 125 Broadway, New York, NY, 10001, I
 , Gray Peaks, 123 Broadway, Washington, DC, 20001, I
-EOF
+END
 
     post "/v1/communities/import", params: {access_token: @admin_token, data: data, dryrun: true}
     assert_response :success
@@ -184,14 +123,14 @@ EOF
   end
 
   test "full run" do
-    data = <<-EOF
+    data = <<-END
 kwid, name, address, city, state, postal, care_type, star_rating, description, process
 , Silver Lining, 123 Broadway, New York, NY, 10001, I, 5, this is a test,
 , Lining Silvers, 125 Broadway, New York, NY, 10001, I, 3, a test with \\, commas,
 , Gray Peaks, 123 Broadway, Washington, DC, 20001, I, 1, nothing to say,
 , New Peaks, 456 Broadway, New York, NY, 10002, I, 4, a new community, yes
 , Newer Peaks, 789 Broadway, New York, NY, 10003, I, 4, should not be processed,
-EOF
+END
 
     c = Community.find_by_name('New Peaks')
     assert_nil c

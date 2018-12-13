@@ -33,6 +33,11 @@ class ActiveSupport::TestCase
       PaperTrail.request.enabled = was_enabled_for_request
     end
   end
+
+  def assert_hashes_equal(expected, actual, message = nil)
+    full_message = [message, "Hashes were not equal, diff was:\n.\n", HashDiff.diff(expected, actual)].compact.collect(&:to_s).join("\n")
+    assert expected == actual, full_message
+  end
 end
 
 class ActionDispatch::IntegrationTest
