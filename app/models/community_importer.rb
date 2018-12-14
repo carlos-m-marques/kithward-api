@@ -245,9 +245,9 @@ class CommunityImporter
           if definition
             case definition[:data]
             when 'number', 'price', 'count', 'rating'
-              value = value.to_i
+              value = value.to_i if value.present?
             when 'flag', 'amenity', 'boolean'
-              value = value && value.downcase
+              value = value.downcase if value.present?
               value = !!(["1", "yes", "true", "x"].include?(value))
             end
 
@@ -296,9 +296,9 @@ class CommunityImporter
         if definition
           case definition[:data]
           when 'number', 'price', 'count', 'rating'
-            value = value.to_i
+            value = value.to_i if value.present?
           when 'flag', 'amenity', 'boolean'
-            value = value && value.downcase
+            value = value.downcase if value.present?
             value = !!(["1", "yes", "true"].include?(value))
           end
 
