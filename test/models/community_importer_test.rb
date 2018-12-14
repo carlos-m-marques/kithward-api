@@ -240,10 +240,10 @@ END
     @c5.data[:star_rating] = 3; @c5.data[:pool] = true; @c5.save
 
     importer = CommunityImporter.new data: <<-END
-kwid, name, care_type, street, city, state, postal, star_rating, pool, process
-, Silver Lining, I,,,, 10001, 5, yes,
-#{@c5.id}, Gray Peaks, I,,,, 20001, 3, FALSE,
-, The Osborn, I, 101 Theall Road, Rye, NY, 10580, 4, false, yes
+kwid, name, care_type, street, city, state, postal, star_rating, pool
+, Silver Lining, I,,,, 10001, 5, yes
+#{@c5.id}, Gray Peaks, I,,,, 20001, 3, FALSE
+create, The Osborn, I, 101 Theall Road, Rye, NY, 10580, 4, false
 END
 
     importer.import
@@ -254,9 +254,9 @@ END
     assert_equal "101 Theall Road", c6.street
 
     entries = results[:entries].collect {|e| e[:data]}
-    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'name' => "Silver Lining", 'care_type' => 'I', 'star_rating' => 5, 'pool' => true, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "10001", 'process' => nil}, entries[0])
-    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 3, 'name' => "Gray Peaks", 'care_type' => 'I', 'star_rating' => 3, 'pool' => false, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "20001", 'process' => nil}, entries[1])
-    assert_hashes_equal({'kwid' => nil, 'line_number' => 4, 'name' => "The Osborn", 'care_type' => 'I', 'star_rating' => 4, 'pool' => false, 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'process' => "yes"}, entries[2])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'name' => "Silver Lining", 'care_type' => 'I', 'star_rating' => 5, 'pool' => true, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "10001"}, entries[0])
+    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 3, 'name' => "Gray Peaks", 'care_type' => 'I', 'star_rating' => 3, 'pool' => false, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "20001"}, entries[1])
+    assert_hashes_equal({'kwid' => "create", 'line_number' => 4, 'name' => "The Osborn", 'care_type' => 'I', 'star_rating' => 4, 'pool' => false, 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580"}, entries[2])
 
     assert_equal([true, true, true], results[:entries].collect {|e| e[:saved]})
     assert_equal([nil, nil, true], results[:entries].collect {|e| e[:is_new]})

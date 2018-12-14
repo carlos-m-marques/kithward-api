@@ -45,7 +45,7 @@ class CommunityImporter
       rescue CSV::MalformedCSVError => e
         @messages << {error: "Malformed CSV: #{e.message}"}
       rescue StandardError => e
-        @messages << {error: "Unexpected error #{e.class} #{e.message}"}
+        @messages << {error: "Unexpected error: #{e.class} #{e.message}"}
       end
     end
   end
@@ -117,14 +117,19 @@ class CommunityImporter
 
   def match_kwid(entry)
     if entry[:data][:kwid]
-      community = Community.find(entry[:data][:kwid])
-      if community.is_deleted?
-        entry[:messages] ||= []
-        entry[:messages] << {error: 'Entry is marked as deleted'}
+      community = Community.find_by_id(entry[:data][:kwid])
+      if community
+        if community.is_deleted?
+          entry[:messages] ||= []
+          entry[:messages] << {error: 'Entry is marked as deleted.'}
+        else
+          entry[:community] = extract_community_fields(community)
+          entry[:community_object] = community
+          entry[:match] = 'kwid'
+        end
       else
-        entry[:community] = extract_community_fields(community)
-        entry[:community_object] = community
-        entry[:match] = 'kwid'
+        entry[:messages] ||= []
+        entry[:messages] << {error: 'Community not found.'}
       end
     end
     entry
@@ -223,7 +228,7 @@ class CommunityImporter
 
   def compare
     @entries.each do |entry|
-      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
+      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'create'
         if entry[:community_object]
           community = entry[:community_object]
         elsif entry[:community] and entry[:community][:id]
@@ -236,7 +241,7 @@ class CommunityImporter
         entry[:data].keys.each do |attr|
           value = entry[:data][attr]
           definition = DataDictionary::Community.attributes[attr]
-# debugger if  attr ==  'name'
+
           if definition
             case definition[:data]
             when 'number', 'price', 'count', 'rating'
@@ -278,7 +283,6 @@ class CommunityImporter
       attributes = {}
       direct = {}
       entry[:data].keys.each do |attr|
-        # debugger if entry[:data][:name] == 'Silver Lining'
         value = entry[:data][attr]
         definition = DataDictionary::Community.attributes[attr]
         if !entry[:is_new]
@@ -308,7 +312,7 @@ class CommunityImporter
         end
       end
 
-      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'yes'
+      if entry[:match] == 'kwid' || entry[:match] == 'name' || (entry[:is_new] && entry[:data][:kwid] == 'create')
         if attributes.any?
           community.data = (community.data || {}).merge(attributes)
         end

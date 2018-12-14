@@ -124,12 +124,12 @@ END
 
   test "full run" do
     data = <<-END
-kwid, name, address, city, state, postal, care_type, star_rating, description, process
-, Silver Lining, 123 Broadway, New York, NY, 10001, I, 5, this is a test,
-, Lining Silvers, 125 Broadway, New York, NY, 10001, I, 3, a test with \\, commas,
-, Gray Peaks, 123 Broadway, Washington, DC, 20001, I, 1, nothing to say,
-, New Peaks, 456 Broadway, New York, NY, 10002, I, 4, a new community, yes
-, Newer Peaks, 789 Broadway, New York, NY, 10003, I, 4, should not be processed,
+kwid, name, address, city, state, postal, care_type, star_rating, description
+, Silver Lining, 123 Broadway, New York, NY, 10001, I, 5, this is a test
+, Lining Silvers, 125 Broadway, New York, NY, 10001, I, 3, a test with \\, commas
+, Gray Peaks, 123 Broadway, Washington, DC, 20001, I, 1, nothing to say
+create, New Peaks, 456 Broadway, New York, NY, 10002, I, 4, a new community
+, Newer Peaks, 789 Broadway, New York, NY, 10003, I, 4, should not be processed
 END
 
     c = Community.find_by_name('New Peaks')
