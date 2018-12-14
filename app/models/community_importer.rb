@@ -116,7 +116,7 @@ class CommunityImporter
   end
 
   def match_kwid(entry)
-    if entry[:data][:kwid]
+    if entry[:data][:kwid] and entry[:data][:kwid] =~ /^\d+$/
       community = Community.find_by_id(entry[:data][:kwid])
       if community
         if community.is_deleted?
