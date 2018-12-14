@@ -53,7 +53,7 @@ class CommunityImporter
   def to_h
     hash = {
       attrs: @attrs,
-      entries: @entries.collect {|e| e.reject {|k, v| k === :community_object}},
+      entries: @entries.collect {|e| e.reject {|k, v| k.to_s == 'community_object'}},
     }
     if @messages.any?
       hash[:messages] = @messages
