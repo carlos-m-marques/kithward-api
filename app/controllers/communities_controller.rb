@@ -13,6 +13,10 @@ class CommunitiesController < ApplicationController
       includes: [:community_images]
     }
 
+    if accessing_account and accessing_account.is_admin?
+      search_options[:where][:status] = [ Community::STATUS_ACTIVE, Community::STATUS_DRAFT ]
+    end
+
     if params[:geo]
       geo = GeoPlace.find_by_id(params[:geo])
       if geo
