@@ -136,15 +136,7 @@ class CommunityImporter
   end
 
   def match_exact_name(entry)
-    search_options = {
-      fields: [{'name' => 'exact'}],
-      match: :word_start,
-      where: {
-        care_type: entry[:data][:care_type],
-        postal: entry[:data][:postal]
-      },
-    }
-    matches = Community.search(entry[:data][:name], search_options)
+    matches = Community.where(name: entry[:data][:name], care_type: entry[:data][:care_type], postal: entry[:data][:postal])
     matches = matches.reject {|m| m.is_deleted? }
 
     if matches.size > 0
@@ -170,7 +162,11 @@ class CommunityImporter
     }
 
     name = entry[:data][:name].gsub(/\s+(Assisted|Senior) Living(| Center|Residences|Residence)\s*$/, '')
-    matches = Community.search(name, search_options)
+    name = name.gsub(/^\s*the\s+/, '')
+    name = name.gsub(/,\s*the\s*$/, '')
+    name = name.gsub(/,*\s*Inc\.*\s*$/, '')
+
+    matches = Community.where(name: name, care_type: entry[:data][:care_type], postal: entry[:data][:postal])
 
     if matches.size > 0
       entry[:community] = extract_community_fields(matches[0])
