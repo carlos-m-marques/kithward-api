@@ -271,6 +271,9 @@ class CommunityImporter
 
   def import
     @entries.each do |entry|
+      attributes = {}
+      direct = {}
+
       if entry[:community_object]
         community = entry[:community_object]
       elsif entry[:community] and entry[:community][:id]
@@ -278,10 +281,10 @@ class CommunityImporter
       else
         community = Community.new
         entry[:is_new] = true
+        attributes[:needs_review] = true
+        attributes[:completeness] = '0'
       end
 
-      attributes = {}
-      direct = {}
       entry[:data].keys.each do |attr|
         value = entry[:data][attr]
         definition = DataDictionary::Community.attributes[attr]

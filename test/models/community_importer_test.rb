@@ -252,6 +252,8 @@ END
 
     c6 = Community.find_by_name("The Osborn")
     assert_equal "101 Theall Road", c6.street
+    assert_equal '0', c6.data['completeness']
+    assert_equal true, c6.data['needs_review']
 
     entries = results[:entries].collect {|e| e[:data]}
     assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'name' => "Silver Lining", 'care_type' => 'I', 'star_rating' => 5, 'pool' => true, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "10001"}, entries[0])
