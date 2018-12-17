@@ -245,8 +245,10 @@ class CommunityImporter
             when 'number', 'price', 'count', 'rating'
               value = value.to_i
             when 'flag', 'amenity', 'boolean'
-              value = value.downcase
-              value = !!(["1", "yes", "true", "x"].include?(value))
+              if value.kind_of? String
+                value = value.downcase
+                value = !!(["1", "yes", "true", "x"].include?(value))
+              end
             end
 
             entry[:data][attr] = value
@@ -299,8 +301,10 @@ class CommunityImporter
           when 'number', 'price', 'count', 'rating'
             value = value.to_i if value.present?
           when 'flag', 'amenity', 'boolean'
-            value = value.downcase if value.present?
-            value = !!(["1", "yes", "true"].include?(value))
+            if value.kind_of? String
+              value = value.downcase if value.present?
+              value = !!(["1", "yes", "true"].include?(value))
+            end
           end
 
           entry[:data][attr] = value
