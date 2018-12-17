@@ -154,6 +154,8 @@ class CommunitiesController < ApplicationController
 
     unless params[:dryrun] || params[:dry_run]
       importer.import
+    else
+      importer.compare
     end
 
     render json: importer.to_h
