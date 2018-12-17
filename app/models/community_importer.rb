@@ -238,12 +238,14 @@ class CommunityImporter
           value = entry[:data][attr]
           definition = DataDictionary::Community.attributes[attr]
 
+          next unless value.present?  # ignore empty strings
+
           if definition
             case definition[:data]
             when 'number', 'price', 'count', 'rating'
-              value = value.to_i if value.present?
+              value = value.to_i
             when 'flag', 'amenity', 'boolean'
-              value = value.downcase if value.present?
+              value = value.downcase
               value = !!(["1", "yes", "true", "x"].include?(value))
             end
 
