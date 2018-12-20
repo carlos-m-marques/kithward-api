@@ -67,15 +67,14 @@ EOF
     results = importer.to_h
 
     assert_equal 2, results[:entries].length
-    assert_equal [
-      {'attr' => "care_type", 'header' => "Care Type", 'pos' => 0, 'definition' => {'data' => 'select',  'values'=>[{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], 'direct_model_attribute' => true}},
-      {'attr' => "name", 'header' => "Name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "street", 'header' => "Street", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "city", 'header' => "City", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "state", 'header' => "State", 'pos' => 4, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "postal", 'header' => "Postal", 'pos' => 5, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "phone", 'header' => "Phone", 'pos' => 6, 'definition' => {'data' => 'string'}},
-    ], results[:attrs]
+
+    assert_hashes_equal({'attr' => "care_type", 'header' => "Care Type", 'pos' => 0, 'definition' => {'data' => 'select',  'values'=>[{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], 'direct_model_attribute' => true}}, results[:attrs][0])
+    assert_hashes_equal({'attr' => "name", 'header' => "Name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][1])
+    assert_hashes_equal({'attr' => "street", 'header' => "Street", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][2])
+    assert_hashes_equal({'attr' => "city", 'header' => "City", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][3])
+    assert_hashes_equal({'attr' => "state", 'header' => "State", 'pos' => 4, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][4])
+    assert_hashes_equal({'attr' => "postal", 'header' => "Postal", 'pos' => 5, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][5])
+    assert_hashes_equal({'attr' => "phone", 'header' => "Phone", 'pos' => 6, 'definition' => {'data' => 'string'}}, results[:attrs][6])
 
   end
 
@@ -89,15 +88,14 @@ AL,The Willows,459 East Oak Orchard Street,Medina,NY,14103,(585) 798-5233
     results = importer.to_h
 
     assert_equal 2, results[:entries].length
-    assert_equal [
-      {'attr' => "care_type", 'header' => "Type", 'pos' => 0, 'definition' => {'data' => 'select',  'values'=>[{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], 'direct_model_attribute' => true}},
-      {'attr' => "name", 'header' => "Name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "street", 'header' => "Address", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "city", 'header' => "City", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "state", 'header' => "State", 'pos' => 4, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "postal", 'header' => "Zip Code", 'pos' => 5, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
-      {'attr' => "phone", 'header' => "Phone", 'pos' => 6, 'definition' => {'data' => 'string'}},
-    ], results[:attrs]
+
+    assert_hashes_equal({'attr' => "care_type", 'header' => "Type", 'pos' => 0, 'definition' => {'data' => 'select',  'values'=>[{"A"=>"Assisted Living"}, {"I"=>"Independent Living"}], 'direct_model_attribute' => true}}, results[:attrs][0])
+    assert_hashes_equal({'attr' => "name", 'header' => "Name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][1])
+    assert_hashes_equal({'attr' => "street", 'header' => "Address", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][2])
+    assert_hashes_equal({'attr' => "city", 'header' => "City", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][3])
+    assert_hashes_equal({'attr' => "state", 'header' => "State", 'pos' => 4, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][4])
+    assert_hashes_equal({'attr' => "postal", 'header' => "Zip Code", 'pos' => 5, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}}, results[:attrs][5])
+    assert_hashes_equal({'attr' => "phone", 'header' => "Phone", 'pos' => 6, 'definition' => {'data' => 'string'}}, results[:attrs][6])
   end
 
   test "It can parse each line" do
@@ -110,10 +108,8 @@ AL,The Willows,459 East Oak Orchard Street,Medina,NY,14103,(585) 798-5233
     results = importer.to_h
 
     assert_equal 2, results[:entries].length
-    assert_equal [
-      {'data' => {'line_number' => 2, 'care_type' => "AL", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'phone' => "(914) 925-8200"}},
-      {'data' => {'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233"}},
-    ], results[:entries]
+    assert_hashes_equal({'line_number' => 2, 'care_type' => "AL", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'phone' => "(914) 925-8200"}, results[:entries][0][:data])
+    assert_hashes_equal({'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233"}, results[:entries][1][:data])
   end
 
   test "It can parse tab-separated data, and strip spaces, and quoted new lines" do
@@ -127,10 +123,8 @@ in multiple lines"
     results = importer.to_h
 
     assert_equal 2, results[:entries].length
-    assert_equal [
-      {'data' => {'line_number' => 2, 'care_type' => "AL", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'phone' => "(914) 925-8200", 'notes' => "Some notes with spaces around"}},
-      {'data' => {'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233", 'notes' => "Notes\nin multiple lines"}},
-    ], results[:entries]
+    assert_hashes_equal({'line_number' => 2, 'care_type' => "AL", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580", 'phone' => "(914) 925-8200", 'notes' => "Some notes with spaces around"}, results[:entries][0][:data])
+    assert_hashes_equal({'line_number' => 3, 'care_type' => "AL", 'name' => "The Willows", 'street' => "459 East Oak Orchard Street", 'city' => "Medina", 'state' => "NY", 'postal' => "14103", 'phone' => "(585) 798-5233", 'notes' => "Notes\nin multiple lines"}, results[:entries][1][:data])
   end
 
   test "It can match existing communities" do
@@ -146,21 +140,17 @@ END
 
     assert_nil results[:messages]
 
-    assert_equal [
-      {'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"},
-      {'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"},
-      {'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"},
-      {'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"},
-    ], results[:entries].collect {|e| e[:data]}
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"}, results[:entries][0][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"}, results[:entries][1][:data])
+    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"}, results[:entries][2][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"}, results[:entries][3][:data])
 
     assert_equal ['name', 'geocoding', 'kwid', nil], results[:entries].collect {|e| e[:match]}
 
-    assert_equal [
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil},
-      nil,
-    ], results[:entries].collect {|e| e[:community]}
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results[:entries][0][:community])
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results[:entries][1][:community])
+    assert_hashes_equal({'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil}, results[:entries][2][:community])
+    assert_nil results[:entries][3][:community]
   end
 
   test "It can process data as CSV or as preprocessed entries" do
@@ -174,43 +164,33 @@ END
 
     results = importer.to_h
 
-    assert_equal [
-      {'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"},
-      {'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"},
-      {'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"},
-      {'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"},
-    ], results[:entries].collect {|e| e[:data]}
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"}, results[:entries][0][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"}, results[:entries][1][:data])
+    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"}, results[:entries][2][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"}, results[:entries][3][:data])
 
     assert_equal ['name', 'geocoding', 'kwid', nil], results[:entries].collect {|e| e[:match]}
 
-    assert_equal [
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil},
-      nil,
-    ], results[:entries].collect {|e| e[:community]}
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results[:entries][0][:community])
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results[:entries][1][:community])
+    assert_hashes_equal({'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil}, results[:entries][2][:community])
+    assert_nil results[:entries][4]
 
     # Lets rinse and repeat...
     importer2 = CommunityImporter.new results
 
     results2 = importer2.to_h
 
-    assert_equal [
-      {'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"},
-      {'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"},
-      {'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"},
-      {'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"},
-    ], results2[:entries].collect {|e| e[:data]}
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'care_type' => "I", 'name' => "Silver Lining", 'street' => "123 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for Silver Lining"}, results2[:entries][0][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 3, 'care_type' => "I", 'name' => "Lining Silvers", 'street' => "125 Broadway", 'city' => "New York", 'state' => "NY", 'postal' => "10001",  'notes' => "Some Notes for other Silver Lining"}, results2[:entries][1][:data])
+    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 4, 'care_type' => "I", 'name' => "Gray Peaks", 'street' => "123 Broadway", 'city' => "Washington", 'state' => "DC", 'postal' => "20001",  'notes' => "Some Notes for Gray Peaks"}, results2[:entries][2][:data])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 5, 'care_type' => "I", 'name' => "The Osborn", 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580",  'notes' => "Some Notes for The Osborn"}, results2[:entries][3][:data])
 
     assert_equal ['name', 'geocoding', 'kwid', nil], results2[:entries].collect {|e| e[:match]}
 
-    assert_equal [
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0},
-      { 'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil},
-      nil,
-    ], results2[:entries].collect {|e| e[:community]}
-
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results2[:entries][0][:community])
+    assert_hashes_equal({'id' => @c1.id, 'status' => 'A', 'slug' => "silver-lining-independent-living-#{@c1.id}", 'name' => "Silver Lining", 'care_type' => "I", 'street' => "123 Broadway", 'city' => "New York", 'postal' => "10001", 'lat' => 40.75, 'lon' => -74.0}, results2[:entries][1][:community])
+    assert_hashes_equal({'id' => @c5.id, 'status' => 'A', 'slug' => "gray-peaks-independent-living-#{@c5.id}", 'name' => "Gray Peaks", 'care_type' => "I", 'street' => nil, 'city' => nil, 'postal' => "20001", 'lat' => nil, 'lon' => nil}, results2[:entries][2][:community])
   end
 
   test "It can compare with existing data" do
@@ -227,10 +207,8 @@ END
 
     results = importer.to_h
 
-    assert_equal [
-      {'kwid' => @c1.id.to_s, 'line_number' => 2, 'name' => "Silver Lining", 'star_rating' => 5, 'pool' => true},
-      {'kwid' => @c5.id.to_s, 'line_number' => 3, 'name' => "Gray Peaks", 'star_rating' => 3, 'pool' => false},
-    ], results[:entries].collect {|e| e[:data]}
+    assert_hashes_equal({'kwid' => @c1.id.to_s, 'line_number' => 2, 'name' => "Silver Lining", 'star_rating' => 5, 'pool' => true}, results[:entries][0][:data])
+    assert_hashes_equal({'kwid' => @c5.id.to_s, 'line_number' => 3, 'name' => "Gray Peaks", 'star_rating' => 3, 'pool' => false}, results[:entries][1][:data])
 
     assert_equal [{'star_rating' => 2}, {'pool' => true}], results[:entries].collect {|e| e[:diffs]}
   end
@@ -262,5 +240,23 @@ END
 
     assert_equal([true, true, true], results[:entries].collect {|e| e[:saved]})
     assert_equal([nil, nil, true], results[:entries].collect {|e| e[:is_new]})
+  end
+
+  test "It can titlecase names and addresses when needed" do
+    importer = CommunityImporter.new data: <<-END
+kwid, name_titlecase, care_type, street_titlecase, city_titlecase, state, postal, star_rating, pool
+, SILVER LINING, I,,,, 10001, 5, yes
+, GRAY PEAKS, I,,,, 20001, 3, FALSE
+, THE OSBORN,  I, 101 THEALL ROAD, RYE, NY, 10580, 4, false
+END
+
+    importer.compare
+
+    results = importer.to_h
+
+    entries = results[:entries].collect {|e| e[:data]}
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 2, 'name' => "Silver Lining", 'care_type' => 'I', 'star_rating' => 5, 'pool' => true, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "10001"}, entries[0])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 3, 'name' => "Gray Peaks", 'care_type' => 'I', 'star_rating' => 3, 'pool' => false, 'street' => nil, 'city' => nil, 'state' => nil, 'postal' => "20001"}, entries[1])
+    assert_hashes_equal({'kwid' => nil, 'line_number' => 4, 'name' => "The Osborn", 'care_type' => 'I', 'star_rating' => 4, 'pool' => false, 'street' => "101 Theall Road", 'city' => "Rye", 'state' => "NY", 'postal' => "10580"}, entries[2])
   end
 end

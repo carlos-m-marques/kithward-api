@@ -31,7 +31,6 @@ class CommunityImporter
       begin
         lines = CSV.parse(data, options)
 
-
         if lines.length > 0
           @attrs = process_headers(lines[0])
         end
@@ -65,14 +64,47 @@ class CommunityImporter
     headers.each.with_index.collect do |header, index|
       header = header.strip
       attr = header.underscore.gsub(/\s+/, '_')
+      if attr =~ /(.*)_titlecase/
+        attr = $1
+        preprocess = :titlecase
+      else
+        preprocess = false
+      end
       attr = (ATTR_ALIASES[attr] || attr)
-      {attr: attr, header: header, pos: index, definition: DataDictionary::Community.attributes[attr]}.with_indifferent_access
+
+      data = {attr: attr, header: header, pos: index}
+
+      data[:preprocess] = preprocess if preprocess
+      data[:definition] = DataDictionary::Community.attributes[attr] if DataDictionary::Community.attributes[attr]
+
+      data.with_indifferent_access
     end
   end
 
   def process_lines(lines, starting_line_number = 2)
     lines.each.with_index.collect do |line, index|
-      hash = @attrs.collect {|attr| [attr[:attr], (line[attr[:pos]] || "").strip]}.collect {|key, attr| [key, attr.present? ? attr : nil]}.to_h
+      pairs = @attrs.collect do |attr|
+        key = attr[:attr]
+        value = (line[attr[:pos]] || "").strip
+
+        if attr[:preprocess] == :titlecase
+          value = value.titlecase
+        end
+
+        case attr[:definition] && attr[:definition][:data]
+        when 'number', 'price', 'count', 'rating'
+          value = value.to_i
+        when 'flag', 'amenity', 'boolean'
+          if value.kind_of? String
+            value = value.downcase
+            value = ["1", "yes", "true", "x"].include?(value)
+          end
+        end
+
+        [key, value]
+      end
+      hash = pairs.collect {|key, attr| [key, (attr.present? || attr === false) ? attr : nil]}.to_h
+
       hash[:line_number] = starting_line_number + index
       hash.with_indifferent_access
     end
@@ -238,21 +270,9 @@ class CommunityImporter
           value = entry[:data][attr]
           definition = DataDictionary::Community.attributes[attr]
 
-          next unless value.present?  # ignore empty strings
+          next unless value.present? || value === false # ignore empty strings
 
           if definition
-            case definition[:data]
-            when 'number', 'price', 'count', 'rating'
-              value = value.to_i
-            when 'flag', 'amenity', 'boolean'
-              if value.kind_of? String
-                value = value.downcase
-                value = !!(["1", "yes", "true", "x"].include?(value))
-              end
-            end
-
-            entry[:data][attr] = value
-
             if definition[:direct_model_attribute]
               existing_value = community.send(attr)
             else
@@ -297,18 +317,6 @@ class CommunityImporter
         end
 
         if definition
-          case definition[:data]
-          when 'number', 'price', 'count', 'rating'
-            value = value.to_i if value.present?
-          when 'flag', 'amenity', 'boolean'
-            if value.kind_of? String
-              value = value.downcase if value.present?
-              value = !!(["1", "yes", "true"].include?(value))
-            end
-          end
-
-          entry[:data][attr] = value
-
           if definition[:direct_model_attribute]
             direct[attr] = value
           else

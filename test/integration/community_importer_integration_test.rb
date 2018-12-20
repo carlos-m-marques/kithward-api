@@ -76,7 +76,7 @@ END
     post "/v1/communities/import", params: {access_token: @admin_token, data: data, dryrun: true}
     assert_response :success
     assert_equal [
-      {'attr' => "kwid", 'header' => "kwid", 'pos' => 0, 'definition' => nil},
+      {'attr' => "kwid", 'header' => "kwid", 'pos' => 0},
       {'attr' => "name", 'header' => "name", 'pos' => 1, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
       {'attr' => "street", 'header' => "address", 'pos' => 2, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
       {'attr' => "city", 'header' => "city", 'pos' => 3, 'definition' => {'data' => 'string', 'direct_model_attribute' => true}},
