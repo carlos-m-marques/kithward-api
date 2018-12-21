@@ -2,9 +2,10 @@ require 'test_helper'
 
 class GeoPlaceIntegrationTest < ActionDispatch::IntegrationTest
   setup do
-    @g1 = create(:geo_place, name: '10011', full_name: '10011 - New York, NY')
-    @g2 = create(:geo_place, name: '10012', full_name: '10012 - New York, NY')
-    @g3 = create(:geo_place, name: '07094', full_name: '07094 - Secaucus, NJ')
+    @g1 = create(:geo_place, name: '10011', full_name: '10011 - New York, NY', state: 'NY')
+    @g2 = create(:geo_place, name: '10012', full_name: '10012 - New York, NY', state: 'NY')
+    @g3 = create(:geo_place, name: '07094', full_name: '07094 - Secaucus, NJ', state: 'NJ')
+    @g4 = create(:geo_place, name: '50000', full_name: '50000 - Somewhere, XY', state: 'XY')
   end
 
   test "search geo places" do
