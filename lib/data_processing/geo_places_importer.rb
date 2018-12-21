@@ -15,8 +15,7 @@ module GeoPlacesImporter
       "tmp/geonames-us/US.txt",
       col_sep: "\t", quote_char: "‽" # use a random quote char to prevent problems with quotes in TSV files
     ) do |row|
-
-      next unless row[7][0..2] == 'PPL' # Populated place
+      next unless row && row[7] && row[7][0..2] == 'PPL' # Populated place
 
       next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[10])
 
