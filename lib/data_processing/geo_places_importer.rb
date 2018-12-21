@@ -57,6 +57,18 @@ module GeoPlacesImporter
 
     `rm -rf tmp/geonames-zips-us tmp/geonames-zips-us.zip`
 
+
+    place = GeoPlace.find_or_create_by(reference: "geoname-manual:bloomfield-ct")
+    place.geo_type = GeoPlace::TYPE_GEONAME
+    place.name = "Bloomfield"
+    place.state = "CT"
+    place.full_name = "Bloomfield, CT"
+    place.lat = 41.8316
+    place.lon = -72.7249
+    place.weight = 0
+    place.save
+
+
     GeoPlace.reindex
   end
 end
