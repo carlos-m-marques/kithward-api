@@ -13,6 +13,10 @@ class GeoPlacesController < ApplicationController
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 
+    if accessing_account
+      search_options[:where][:state] << 'CA'
+    end
+    
     @places = GeoPlace.search(params[:q], search_options)
 
     render json: GeoPlaceSerializer.render(@places.to_a)
