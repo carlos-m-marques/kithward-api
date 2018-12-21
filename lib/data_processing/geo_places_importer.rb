@@ -18,7 +18,7 @@ module GeoPlacesImporter
 
       next unless row[7][0..2] == 'PPL' # Populated place
 
-      next unless ['NY', 'NJ', 'CT'].include?(row[10])
+      next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[10])
 
       next unless row[14].to_i >= 100
 
@@ -43,7 +43,7 @@ module GeoPlacesImporter
       col_sep: "\t", quote_char: "‽" # use a random quote char to prevent problems with quotes in TSV files
     ) do |row|
 
-      next unless ['NY', 'NJ', 'CT'].include?(row[4])
+      next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[4])
 
       place = GeoPlace.find_or_create_by(reference: "geoname-zip-us:#{row[1]}")
       place.geo_type = GeoPlace::TYPE_POSTAL
