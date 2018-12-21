@@ -28,6 +28,7 @@ class GeoPlace < ApplicationRecord
     def search_data
       {
         name: name,
+        state: state,
         location: {lat: lat, lon: lon},
         weight: weight,
       }

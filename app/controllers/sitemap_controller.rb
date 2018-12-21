@@ -46,7 +46,7 @@ class SitemapController < ApplicationController
       }
     end
 
-    GeoPlace.where(geo_type: 'geoname').find_each do |geo|
+    GeoPlace.where(geo_type: 'geoname', state: ['NY', 'NJ', 'CT']).find_each do |geo|
       @sitemap << {
         loc: "https://kithward.com/independent-living/near-#{geo.slug}",
         changefreq: 'weekly',

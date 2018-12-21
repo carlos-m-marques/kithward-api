@@ -5,6 +5,9 @@ class GeoPlacesController < ApplicationController
       fields: ['name'],
       match: :word_start,
       order: {weight: :desc},
+      where: {
+        state: ['NY', 'NJ', 'CT'],
+      },
     }
 
     search_options[:limit] = params[:limit] || 20
