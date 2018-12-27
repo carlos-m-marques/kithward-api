@@ -14,7 +14,7 @@ class AccountsController < ApplicationController
     if @account.id == accessing_account.id || accessing_account.is_admin?
       render json: AccountSerializer.render(@account)
     else
-      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+      render json: { errors: ['Not Authorized'] }, status: :unauthorized
     end
   end
 
@@ -43,7 +43,7 @@ class AccountsController < ApplicationController
         render json: AccountSerializer.render(@account)
       end
     else
-      render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+      render json: { errors: ['Not Authorized'] }, status: :unauthorized
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_01_175308) do
+ActiveRecord::Schema.define(version: 2018_12_20_163917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 2018_11_01_175308) do
     t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", limit: 1, default: "?"
+    t.string "verified_email", limit: 128
+    t.string "verification_token", limit: 64
+    t.datetime "verification_expiration"
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
