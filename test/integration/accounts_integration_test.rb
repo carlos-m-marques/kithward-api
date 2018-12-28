@@ -67,6 +67,7 @@ class AccountsIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "anyone can create a new account" do
+    MailTools.expects(:send_template).once
     post "/v1/accounts", params: {email: "test@example.com", password: "123"}
     assert_response :success
 
@@ -84,6 +85,7 @@ class AccountsIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "passwords can be changed" do
+    MailTools.expects(:send_template).once
     post "/v1/accounts", params: {email: "test@example.com", password: "123"}
     assert_response :success
 
