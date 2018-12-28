@@ -31,6 +31,7 @@ gem 'ddtrace', require: false
 gem 'intercom', '~> 3.6.0'
 gem 'prismic.io', '~> 1.6.0'
 gem 'newrelic_rpm'
+gem 'sendgrid-ruby'
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do

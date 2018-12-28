@@ -48,7 +48,7 @@ class AuthController < ApplicationController
     if account
       account.generate_verification_email
     end
-    render json: {}, status: :success
+    render json: { messages: ["Email sent!"]}
   end
 
   def token

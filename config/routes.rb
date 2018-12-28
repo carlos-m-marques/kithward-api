@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     scope 'auth' do
       match 'login', to: 'auth#login', via: [:post]
       match 'token', to: 'auth#token', via: [:post]
+      match 'request_verification', to: 'auth#request_verification', via: [:post]
     end
 
   end

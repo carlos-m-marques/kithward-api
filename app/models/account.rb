@@ -19,11 +19,15 @@
 #  index_accounts_on_email  (email) UNIQUE
 #
 
+require 'mail_tools'
+
 class Account < ApplicationRecord
   has_secure_password(validations: false)
   has_paper_trail
 
   validates :email, presence: true, uniqueness: true
+
+  after_create :send_verification_email_for_new_accounts
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'
@@ -57,16 +61,29 @@ class Account < ApplicationRecord
     OpenSSL::HMAC.hexdigest('sha256', Rails.application.credentials.dig(:intercom, :secret_key), self.id.to_s)
   end
 
+  def send_verification_email_for_new_accounts
+    if self.status != STATUS_REAL
+      generate_verification_email
+    end
+  end
+
   def generate_verification_email
     self.verification_token = SecureRandom.base58(48)
     self.verification_expiration = 24.hours.from_now
     self.save!
 
-    # TODO: SEND EMAIL
+    MailTools.send_template(
+      self.email,
+      "d-eb98144a7ab2430d9cc0763d70a5e0ea",
+      {
+        email_address: self.email,
+        validation_link: "#{ENV['BASE_URI'] || 'https://api.kithward.com'}/v1/auth/login?email=#{self.email}&verify=#{self.verification_token}"
+      }
+    )
   end
 
   def verify_email(token)
-    if token == self.verification_token and Date.now < self.verification_expiration
+    if token == self.verification_token and Time.now < self.verification_expiration
       self.verified_email = true
       self.verification_token = nil
       self.verification_expiration = nil
