@@ -17,7 +17,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal Account::STATUS_REAL, json_response['status']
     token = json_response['meta']['access_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal @joe_real.email, json_response['email']
   end
@@ -41,17 +41,17 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal Account::STATUS_REAL, json_response['status']
     token = json_response['meta']['access_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal @joe_real.email, json_response['email']
 
     travel 8.hours do
-      get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+      get "/v1/accounts/self", params: {access_token: token}
       assert_response :success
     end
 
     travel 25.hours do
-      get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+      get "/v1/accounts/self", params: {access_token: token}
       assert_response 401
     end
   end
@@ -64,12 +64,12 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     token = json_response['meta']['access_token']
     refresh_token = json_response['meta']['refresh_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal @joe_real.email, json_response['email']
 
     travel 25.hours do
-      get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+      get "/v1/accounts/self", params: {access_token: token}
       assert_response 401
 
       post "/v1/auth/token", params: {refresh_token: refresh_token}
@@ -77,7 +77,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal @joe_real.email, json_response['email']
       new_token = json_response['meta']['access_token']
 
-      get "/v1/accounts/#{@joe_real.id}", params: {access_token: new_token}
+      get "/v1/accounts/self", params: {access_token: new_token}
       assert_response :success
     end
   end
@@ -89,14 +89,14 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     token = json_response['meta']['access_token']
     refresh_token = json_response['meta']['refresh_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal @joe_real.email, json_response['email']
 
     post "/v1/auth/token", params: {refresh_token: refresh_token}
     assert_response :success
 
-    put "/v1/accounts/#{@joe_real.id}", params: {access_token: token, password: 'abc', password_confirmation: 'abc'}
+    put "/v1/accounts/self", params: {access_token: token, password: 'abc', password_confirmation: 'abc'}
     assert_response :success
 
     post "/v1/auth/token", params: {refresh_token: refresh_token}
@@ -110,7 +110,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     token = json_response['meta']['access_token']
     refresh_token = json_response['meta']['refresh_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal @joe_real.email, json_response['email']
 
@@ -135,10 +135,9 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal "new@example.com", json_response['email']
     assert_equal Account::STATUS_PSEUDO, json_response['status']
-    id = json_response['id']
     token = json_response['meta']['access_token']
 
-    get "/v1/accounts/#{id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal "new@example.com", json_response['email']
     assert_equal Account::STATUS_PSEUDO, json_response['status']
@@ -149,7 +148,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal Account::STATUS_REAL, json_response['status']
     token = json_response['meta']['access_token']
 
-    get "/v1/accounts/#{id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal "new@example.com", json_response['email']
     assert_equal Account::STATUS_REAL, json_response['status']
@@ -181,7 +180,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "joe@example.com", json_response['email']
     token = json_response['meta']['access_token']
 
-    get "/v1/accounts/#{@joe_real.id}", params: {access_token: token}
+    get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal "joe@example.com", json_response['email']
   end

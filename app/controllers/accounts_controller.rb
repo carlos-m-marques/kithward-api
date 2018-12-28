@@ -10,6 +10,10 @@ class AccountsController < ApplicationController
   end
 
   def show
+    if params[:id] == 'self'
+      params[:id] = accessing_account.id
+    end
+
     @account = Account.find(params[:id])
     if @account.id == accessing_account.id || accessing_account.is_admin?
       render json: AccountSerializer.render(@account)
@@ -31,6 +35,10 @@ class AccountsController < ApplicationController
   end
 
   def update
+    if params[:id] == 'self'
+      params[:id] = accessing_account.id
+    end
+
     @account = Account.find(params[:id])
     if @account.id == accessing_account.id || accessing_account.is_admin?
       @account.update_attributes(params.permit(
