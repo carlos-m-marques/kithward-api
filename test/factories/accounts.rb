@@ -31,7 +31,7 @@ FactoryBot.define do
   factory :account do
     email { generate :account_email }
     name { generate :account_name }
-    password "123"
-    status Account::STATUS_REAL
+    password { "123" }
+    status { Account::STATUS_REAL }
   end
 end
