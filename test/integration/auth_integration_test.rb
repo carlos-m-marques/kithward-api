@@ -6,7 +6,6 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     Account.delete_all
 
     @joe_real = create(:account, email: "joe@example.com", password: "j03")
-    MailTools.expects(:send_template).once
     @sam_pseudo = create(:account, email: "sam@example.com", password: nil, status: Account::STATUS_PSEUDO)
   end
 
@@ -151,6 +150,39 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     get "/v1/accounts/self", params: {access_token: token}
     assert_response :success
     assert_equal "new@example.com", json_response['email']
+    assert_equal Account::STATUS_REAL, json_response['status']
+  end
+
+  test "a new real account can be created by including a name and password" do
+    MailTools.expects(:send_template).with {|email, template, params|
+      email == "real@example.com" && params[:email_address] == "real@example.com" \
+      && params[:validation_link] =~ /\/v1\/auth\/login\?email=real@example\.com/
+    }
+
+    post "/v1/auth/login", params: {email: "real@example.com", name: "Real Account", password: "123"}
+    assert_response :success
+    assert_equal "real@example.com", json_response['email']
+    assert_equal "Real Account", json_response['name']
+    assert_equal Account::STATUS_REAL, json_response['status']
+    token = json_response['meta']['access_token']
+
+    get "/v1/accounts/self", params: {access_token: token}
+    assert_response :success
+    assert_equal "real@example.com", json_response['email']
+    assert_equal "Real Account", json_response['name']
+    assert_equal Account::STATUS_REAL, json_response['status']
+
+    post "/v1/auth/login", params: {email: "real@example.com", password: "123"}
+    assert_response :success
+    assert_equal "real@example.com", json_response['email']
+    assert_equal "Real Account", json_response['name']
+    assert_equal Account::STATUS_REAL, json_response['status']
+    token = json_response['meta']['access_token']
+
+    get "/v1/accounts/self", params: {access_token: token}
+    assert_response :success
+    assert_equal "real@example.com", json_response['email']
+    assert_equal "Real Account", json_response['name']
     assert_equal Account::STATUS_REAL, json_response['status']
   end
 

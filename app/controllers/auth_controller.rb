@@ -5,12 +5,18 @@ class AuthController < ApplicationController
   def login
     account = Account.find_by_email(params[:email])
     if params[:password].present?
-      unless account && account.is_valid? && account.authenticate(params[:password])
+      if !account && params[:name] # no need for name.present? because it can be blank
+        # sign up!
+        account = Account.create(params.permit(:email, :name, :password).merge(status: Account::STATUS_REAL))
+      elsif account && account.is_valid? && account.authenticate(params[:password])
+        # login!
+      else
         account = nil
         error = "Invalid Credentials"
       end
     elsif params[:verify].present?
       if account && account.is_valid? && account.verify_email(params[:verify])
+        # verified!
         account.save
       else
         account = nil
@@ -29,7 +35,8 @@ class AuthController < ApplicationController
         end
         account = nil
       else
-        account = Account.create(email: params[:email], status: Account::STATUS_PSEUDO)
+        # sign up!
+        account = Account.create(params.permit(:email, :name).merge(status: Account::STATUS_PSEUDO))
       end
     end
 

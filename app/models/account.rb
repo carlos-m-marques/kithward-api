@@ -27,7 +27,7 @@ class Account < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
 
-  after_create :send_verification_email_for_new_accounts
+  after_save :send_verification_email_if_needed
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'
@@ -61,8 +61,17 @@ class Account < ApplicationRecord
     OpenSSL::HMAC.hexdigest('sha256', Rails.application.credentials.dig(:intercom, :secret_key), self.id.to_s)
   end
 
-  def send_verification_email_for_new_accounts
-    if self.status != STATUS_REAL
+  def email=(value)
+    if value != self[:email]
+      self[:email] = value
+      self.verified_email = nil
+      self.verification_token = nil
+      self.verification_expiration = nil
+    end
+  end
+
+  def send_verification_email_if_needed
+    if !self.verified_email && !self.verification_token
       generate_verification_email
     end
   end
@@ -84,7 +93,7 @@ class Account < ApplicationRecord
 
   def verify_email(token)
     if token == self.verification_token and Time.now < self.verification_expiration
-      self.verified_email = true
+      self.verified_email = self.email
       self.verification_token = nil
       self.verification_expiration = nil
       if is_pseudo?
