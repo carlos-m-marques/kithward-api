@@ -552,7 +552,6 @@ class DataDictionary
         { activity_biking:            { label: "Biking", data: 'amenity', group: 'fitness' }},
         { activity_bocce:             { label: "Bocce ball", data: 'amenity', group: 'fitness' }},
         { activity_bowling:           { label: "Bowling", data: 'amenity', group: 'fitness' }},
-        { activity_cardio_machines:   { label: "Cardio machines", data: 'amenity', group: 'fitness' }},
         { activity_chair_exercise:    { label: "Chair exercise", data: 'amenity', group: 'fitness' }},
         { activity_dancing:           { label: "Dancing", data: 'amenity', group: 'fitness' }},
         { activity_fitness_classes:   { label: "Fitness classes", data: 'amenity', group: 'fitness' }},
