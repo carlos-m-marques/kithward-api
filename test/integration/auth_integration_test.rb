@@ -127,7 +127,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     MailTools.expects(:send_template).with {|email, template, params|
       captured_validation_link = params[:validation_link]
       email == "new@example.com" && params[:email_address] == "new@example.com" \
-      && params[:validation_link] =~ /\/v1\/auth\/login\?email=new@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=new@example\.com/
     }
 
     post "/v1/auth/login", params: {email: "new@example.com"}
@@ -141,7 +141,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "new@example.com", json_response['email']
     assert_equal Account::STATUS_PSEUDO, json_response['status']
 
-    post captured_validation_link.gsub('https://api.kithward.com', '')
+    post captured_validation_link.gsub('https://kithward.com/auth/verify', '/v1/auth/login')
     assert_response :success
     assert_equal "new@example.com", json_response['email']
     assert_equal Account::STATUS_REAL, json_response['status']
@@ -156,7 +156,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
   test "a new real account can be created by including a name and password" do
     MailTools.expects(:send_template).with {|email, template, params|
       email == "real@example.com" && params[:email_address] == "real@example.com" \
-      && params[:validation_link] =~ /\/v1\/auth\/login\?email=real@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=real@example\.com/
     }
 
     post "/v1/auth/login", params: {email: "real@example.com", name: "Real Account", password: "123"}
@@ -201,13 +201,15 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     MailTools.expects(:send_template).with {|email, template, params|
       captured_validation_link = params[:validation_link]
       email == "joe@example.com" && params[:email_address] == "joe@example.com" \
-      && params[:validation_link] =~ /\/v1\/auth\/login\?email=joe@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=joe@example\.com/
     }
 
-    post "/v1/auth/request_verification", params: {email: "joe@example.com"}
+    post "/v1/auth/request_verification", params: {email: "joe@example.com", reason: "vanity"}
     assert_response :success
 
-    post captured_validation_link.gsub('https://api.kithward.com', '')
+    assert_match(/reason=vanity/, captured_validation_link)
+
+    post captured_validation_link.gsub('https://kithward.com/auth/verify', '/v1/auth/login')
     assert_response :success
     assert_equal "joe@example.com", json_response['email']
     token = json_response['meta']['access_token']

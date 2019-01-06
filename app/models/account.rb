@@ -72,11 +72,11 @@ class Account < ApplicationRecord
 
   def send_verification_email_if_needed
     if !self.verified_email && !self.verification_token
-      generate_verification_email
+      generate_verification_email(reason: 'verify')
     end
   end
 
-  def generate_verification_email
+  def generate_verification_email(params)
     self.verification_token = SecureRandom.base58(48)
     self.verification_expiration = 24.hours.from_now
     self.save!
@@ -86,7 +86,7 @@ class Account < ApplicationRecord
       "d-eb98144a7ab2430d9cc0763d70a5e0ea",
       {
         email_address: self.email,
-        validation_link: "#{ENV['FRONTEND_URL'] || 'https://kithward.com'}/auth/verify?email=#{self.email}&verify=#{self.verification_token}"
+        validation_link: "#{ENV['FRONTEND_URL'] || 'https://kithward.com'}/auth/verify?email=#{self.email}&verify=#{self.verification_token}&reason=#{params[:reason]}"
       }
     )
   end

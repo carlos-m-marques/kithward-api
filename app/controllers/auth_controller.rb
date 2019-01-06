@@ -53,8 +53,9 @@ class AuthController < ApplicationController
   def request_verification
     account = Account.find_by_email(params[:email])
     if account
-      account.generate_verification_email
+      account.generate_verification_email(params.permit(:reason))
     end
+    
     render json: { messages: ["Email sent!"]}
   end
 
