@@ -86,7 +86,7 @@ class Account < ApplicationRecord
       "d-eb98144a7ab2430d9cc0763d70a5e0ea",
       {
         email_address: self.email,
-        validation_link: "#{ENV['BASE_URI'] || 'https://api.kithward.com'}/v1/auth/login?email=#{self.email}&verify=#{self.verification_token}"
+        validation_link: "#{ENV['FRONTEND_URL'] || 'https://kithward.com'}/auth/verify?email=#{self.email}&verify=#{self.verification_token}"
       }
     )
   end
