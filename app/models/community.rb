@@ -49,6 +49,11 @@ class Community < ApplicationRecord
   scope :care_type_sn, -> { where(care_type: TYPE_NURSING) }
   scope :care_type_mc, -> { where(care_type: TYPE_MEMORY_CARE) }
 
+  scope :has_data_field, ->(field) { where('data ? :field', field: field) }
+  scope :has_no_data_field, ->(field) { where('NOT(data ? :field)', field: field) }
+  scope :has_one_of_data_fields, ->(fields) { where('data ?| :fields', field: fields) }
+  scope :has_all_of_data_fields, ->(fields) { where('data ?& :fields', field: fields) }
+
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',
     TYPE_ASSISTED => '-assisted-living',
