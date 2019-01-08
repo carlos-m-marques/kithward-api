@@ -22,7 +22,6 @@ class CommunitiesController < ApplicationController
       if !geo && (params[:geoLabel] || params[:geo_label])
         parts = (params[:geoLabel] || params[:geo_label]).split('-')
 
-        geo = GeoPlace.find_by
         search_options = {
           fields: ['name'],
           match: :word_start,
