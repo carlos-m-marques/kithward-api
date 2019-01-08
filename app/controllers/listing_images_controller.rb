@@ -2,32 +2,32 @@ class ListingImagesController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index
-    @listing = Listing.find(params[:listing_id])
-    @images = @listing.listing_images
+    listing = Listing.find(params[:listing_id])
+    images = listing.listing_images
 
-    render json: ListingImageSerializer.render(@images)
+    render json: ListingImageSerializer.render(images)
   end
 
   def show
-    @listing = Listing.find(params[:listing_id])
-    @image = @listing.listing_images.find_by_id(params[:id])
+    listing = Listing.find(params[:listing_id])
+    image = listing.listing_images.find_by_id(params[:id])
 
-    if @image && @image.image
-      redirect_to url_for(@image.image)
+    if image && image.image
+      redirect_to url_for(image.image)
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
   def create
-    @listing = Listing.find(params[:listing_id])
-    @image = @listing.listing_images.create(params.permit(:caption, :tags, :sort_order, :image))
+    listing = Listing.find(params[:listing_id])
+    image = listing.listing_images.create(params.permit(:caption, :tags, :sort_order, :image))
 
-    if @image
-      if @image.errors.any?
-        render json: { errors: @image.errors}, status: :unprocessable_entity
+    if image
+      if image.errors.any?
+        render json: { errors: image.errors}, status: :unprocessable_entity
       else
-        render json: ListingImageSerializer.render(@image)
+        render json: ListingImageSerializer.render(image)
       end
     else
       raise ActiveRecord::RecordNotFound
@@ -35,16 +35,16 @@ class ListingImagesController < ApplicationController
   end
 
   def update
-    @listing = Listing.find(params[:listing_id])
-    @image = @listing.listing_images.find_by_id(params[:id])
+    listing = Listing.find(params[:listing_id])
+    image = listing.listing_images.find_by_id(params[:id])
 
-    @image.update_attributes(params.permit(:caption, :tags, :sort_order, :image))
+    image.update_attributes(params.permit(:caption, :tags, :sort_order, :image))
 
-    if @image
-      if @image.errors.any?
-        render json: { errors: @image.errors}, status: :unprocessable_entity
+    if image
+      if image.errors.any?
+        render json: { errors: image.errors}, status: :unprocessable_entity
       else
-        render json: ListingImageSerializer.render(@image)
+        render json: ListingImageSerializer.render(image)
       end
     else
       raise ActiveRecord::RecordNotFound

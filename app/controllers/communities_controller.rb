@@ -60,11 +60,11 @@ class CommunitiesController < ApplicationController
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 
-    @communities = Community.search(params[:q] || "*", search_options)
+    communities = Community.search(params[:q] || "*", search_options)
 
     if params[:meta]
       json = {
-        results: CommunitySerializer.render(@communities.to_a, view: (params[:view] || 'simple')),
+        results: CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple')),
         meta: {
           query: (params[:q] || "*"),
           limit: (params[:limit] || 20),
@@ -73,30 +73,30 @@ class CommunitiesController < ApplicationController
       }
 
       if geo
-        json[:meta][:geo] = GeoPlaceSerializer.render(@geo)
+        json[:meta][:geo] = GeoPlaceSerializer.render(geo)
         json[:meta][:distance] = params[:distance] || "20mi"
       end
     else
-      json = CommunitySerializer.render(@communities.to_a, view: (params[:view] || 'simple'))
+      json = CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple'))
     end
 
     render json: json
   end
 
   def show
-    @community = Community.find(params[:id])
+    community = Community.find(params[:id])
 
-    if @community.is_active? or (accessing_account and accessing_account.is_admin?)
-      render json: CommunitySerializer.render(@community, view: 'complete')
+    if community.is_active? or (accessing_account and accessing_account.is_admin?)
+      render json: CommunitySerializer.render(community, view: 'complete')
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
   def update
-    @community = Community.find(params[:id])
+    community = Community.find(params[:id])
 
-    @community.attributes = params.permit(
+    community.attributes = params.permit(
       :care_type, :status,
       :name, :description,
       :street, :street_more, :city, :state, :postal, :country,
@@ -105,36 +105,36 @@ class CommunitiesController < ApplicationController
 
     if params[:data]
       params[:data].permit!
-      @community.data = (@community.data || {}).merge(params[:data])
+      community.data = (community.data || {}).merge(params[:data])
     end
 
     if params[:images]
-      params[:images].each {|data| CommunityImagesController.process_one_image(@community, data) }
+      params[:images].each {|data| CommunityImagesController.process_one_image(community, data) }
 
-      @community.community_images.reload
-      @community.update_cached_image_url!
+      community.community_images.reload
+      community.update_cached_image_url!
     end
 
-    @community.save
+    community.save
 
     if params[:listings]
-      params[:listings].each {|data| ListingsController.process_one_listing(@community, data) }
+      params[:listings].each {|data| ListingsController.process_one_listing(community, data) }
 
-      @community.listings.reload
-      @community.update_reflected_attributes_from_listings
+      community.listings.reload
+      community.update_reflected_attributes_from_listings
     end
 
-    if @community.errors.any?
-      render json: { errors: @community.errors}, status: :unprocessable_entity
+    if community.errors.any?
+      render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(@community, view: 'complete')
+      render json: CommunitySerializer.render(community, view: 'complete')
     end
   end
 
   def create
-    @community = Community.new
+    community = Community.new
 
-    @community.attributes = params.permit(
+    community.attributes = params.permit(
       :care_type, :status,
       :name, :description,
       :street, :street_more, :city, :state, :postal, :country,
@@ -143,29 +143,29 @@ class CommunitiesController < ApplicationController
 
     if params[:data]
       params[:data].permit!
-      @community.data = (@community.data || {}).merge(params[:data])
+      community.data = (community.data || {}).merge(params[:data])
     end
 
-    @community.save
+    community.save
 
     if params[:images]
-      params[:images].each {|data| CommunityImagesController.process_one_image(@community, data) }
+      params[:images].each {|data| CommunityImagesController.process_one_image(community, data) }
 
-      @community.community_images.reload
-      @community.update_cached_image_url!
+      community.community_images.reload
+      community.update_cached_image_url!
     end
 
     if params[:listings]
-      params[:listings].each {|data| ListingsController.process_one_listing(@community, data) }
+      params[:listings].each {|data| ListingsController.process_one_listing(community, data) }
 
-      @community.listings.reload
-      @community.update_reflected_attributes_from_listings
+      community.listings.reload
+      community.update_reflected_attributes_from_listings
     end
 
-    if @community.errors.any?
-      render json: { errors: @community.errors}, status: :unprocessable_entity
+    if community.errors.any?
+      render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(@community, view: 'complete')
+      render json: CommunitySerializer.render(community, view: 'complete')
     end
   end
 

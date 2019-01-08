@@ -4,63 +4,63 @@ class ListingsController < ApplicationController
   before_action :admin_account_required!, except: [:index, :show, :dictionary]
 
   def index
-    @community = Community.find(params[:community_id])
+    community = Community.find(params[:community_id])
 
-    @listings = @community.listings
+    listings = community.listings
 
-    if @community.is_active? or (accessing_account and accessing_account.is_admin?)
-      render json: ListingsSerializer.render(@listings.to_a)
+    if community.is_active? or (accessing_account and accessing_account.is_admin?)
+      render json: ListingsSerializer.render(listings.to_a)
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
   def show
-    @listing = Listing.find(params[:id])
+    listing = Listing.find(params[:id])
 
-    if (@listing.is_active? and @community.is_active?) or (accessing_account and accessing_account.is_admin?)
+    if (listing.is_active? and community.is_active?) or (accessing_account and accessing_account.is_admin?)
 
-      render json: ListingsSerializer.render(@listing)
+      render json: ListingsSerializer.render(listing)
     else
       raise ActiveRecord::RecordNotFound
     end
   end
 
   def update
-    @community = Community.find(params[:community_id])
-    @listing = process_one_listing(@community, params)
+    community = Community.find(params[:community_id])
+    listing = process_one_listing(community, params)
 
-    if @listing.errors.any?
-      render json: { errors: @listing.errors}, status: :unprocessable_entity
+    if listing.errors.any?
+      render json: { errors: listing.errors}, status: :unprocessable_entity
     else
-      @community.update_reflected_attributes_from_listings
+      community.update_reflected_attributes_from_listings
 
-      render json: ListingsSerializer.render(@listing)
+      render json: ListingsSerializer.render(listing)
     end
   end
 
   def create
-    @community = Community.find(params[:community_id])
+    community = Community.find(params[:community_id])
 
-    @listing = @community.listings.create
+    listing = community.listings.create
 
-    @listing.attributes = params.permit(
+    listing.attributes = params.permit(
       :name, :status, :sort_order
     )
 
     if params[:data]
       params[:data].permit!
-      @listing.data = (@listing.data || {}).merge(params[:data])
+      listing.data = (listing.data || {}).merge(params[:data])
     end
 
-    @listing.save
+    listing.save
 
-    if @listing.errors.any?
-      render json: { errors: @listing.errors}, status: :unprocessable_entity
+    if listing.errors.any?
+      render json: { errors: listing.errors}, status: :unprocessable_entity
     else
-      @community.update_reflected_attributes_from_listings
+      community.update_reflected_attributes_from_listings
 
-      render json: ListingsSerializer.render(@listing)
+      render json: ListingsSerializer.render(listing)
     end
   end
 

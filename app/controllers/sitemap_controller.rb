@@ -31,14 +31,14 @@ class SitemapController < ApplicationController
   end
 
   def sitemap
-    @sitemap = Sitemap.new
+    sitemap = Sitemap.new
 
-    @sitemap << {loc: "https://kithward.com/", changefreq: 'daily', priority: 1.0}
-    @sitemap << {loc: "https://kithward.com/learn", changefreq: 'daily', priority: 1.0}
-    # @sitemap << {loc: "https://kithward.com/thrive", changefreq: 'daily', priority: 1.0}
+    sitemap << {loc: "https://kithward.com/", changefreq: 'daily', priority: 1.0}
+    sitemap << {loc: "https://kithward.com/learn", changefreq: 'daily', priority: 1.0}
+    # sitemap << {loc: "https://kithward.com/thrive", changefreq: 'daily', priority: 1.0}
 
     Community.active.care_type_il.find_each do |community|
-      @sitemap << {
+      sitemap << {
         loc: "https://kithward.com/community/#{community.slug}",
         lastmod: community.updated_at.strftime("%F"),
         changefreq: 'weekly',
@@ -47,7 +47,7 @@ class SitemapController < ApplicationController
     end
 
     GeoPlace.where(geo_type: 'geoname', state: ['NY', 'NJ', 'CT']).find_each do |geo|
-      @sitemap << {
+      sitemap << {
         loc: "https://kithward.com/independent-living/near-#{geo.slug}",
         changefreq: 'weekly',
         priority: 0.8,
@@ -60,7 +60,7 @@ class SitemapController < ApplicationController
       ['guidance-intro', 'guidance-types', 'guidance-ccrc'].each do |tag|
         docs = prismic.query(['at', 'document.tags', [tag]])
         docs.results.each do |doc|
-          @sitemap << {
+          sitemap << {
             loc: "https://kithward.com/learn/#{doc.slug}",
             changefreq: 'weekly',
             priority: 0.9,
@@ -69,6 +69,6 @@ class SitemapController < ApplicationController
       end
     end
 
-    render xml: @sitemap
+    render xml: sitemap
   end
 end

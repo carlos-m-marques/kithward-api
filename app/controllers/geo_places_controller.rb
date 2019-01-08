@@ -16,15 +16,15 @@ class GeoPlacesController < ApplicationController
     if accessing_account
       search_options[:where][:state] << 'CA'
     end
-    
-    @places = GeoPlace.search(params[:q], search_options)
 
-    render json: GeoPlaceSerializer.render(@places.to_a)
+    places = GeoPlace.search(params[:q], search_options)
+
+    render json: GeoPlaceSerializer.render(places.to_a)
   end
 
   def show
-    @place = GeoPlace.find(params[:id])
+    place = GeoPlace.find(params[:id])
 
-    render json: GeoPlaceSerializer.render(@place)
+    render json: GeoPlaceSerializer.render(place)
   end
 end
