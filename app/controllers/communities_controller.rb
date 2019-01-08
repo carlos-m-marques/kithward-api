@@ -19,6 +19,21 @@ class CommunitiesController < ApplicationController
 
     if params[:geo]
       geo = GeoPlace.find_by_id(params[:geo])
+      if !geo && (params[:geoLabel] || params[:geo_label])
+        parts = (params[:geoLabel] || params[:geo_label]).split('-')
+
+        geo = GeoPlace.find_by
+        search_options = {
+          fields: ['name'],
+          match: :word_start,
+          order: {weight: :desc},
+          where: {state: parts[-1]},
+          limit: 1
+        }
+
+        geo = GeoPlace.search(parts[0..-1].join(" "), search_options).first
+      end
+
       if geo
         search_options[:where][:location] = {near: {lat: geo.lat, lon: geo.lon}}
         if params[:distance]
