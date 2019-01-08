@@ -63,8 +63,8 @@ class CommunitiesController < ApplicationController
     communities = Community.search(params[:q] || "*", search_options)
 
     if params[:meta]
-      json = {
-        results: CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple')),
+      result = {
+        results: CommunitySerializer.render_as_json(communities.to_a, view: (params[:view] || 'simple')),
         meta: {
           query: (params[:q] || "*"),
           limit: (params[:limit] || 20),
@@ -73,14 +73,14 @@ class CommunitiesController < ApplicationController
       }
 
       if geo
-        json[:meta][:geo] = GeoPlaceSerializer.render(geo)
-        json[:meta][:distance] = params[:distance] || "20mi"
+        result[:meta][:geo] = GeoPlaceSerializer.render_as_json(geo)
+        result[:meta][:distance] = params[:distance] || "20mi"
       end
     else
-      json = CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple'))
+      result = CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple'))
     end
 
-    render json: json
+    render json: result
   end
 
   def show
