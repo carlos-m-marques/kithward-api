@@ -25,7 +25,6 @@ class CommunitiesController < ApplicationController
         search_options = {
           fields: ['name'],
           match: :word_start,
-          order: {weight: :desc},
           where: {state: parts[-1]},
           limit: 1
         }
