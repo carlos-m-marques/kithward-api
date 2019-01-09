@@ -20,7 +20,7 @@ class CommunitiesController < ApplicationController
     if params[:geo]
       geo = GeoPlace.find_by_id(params[:geo])
       if !geo && (params[:geoLabel] || params[:geo_label])
-        parts = (params[:geoLabel] || params[:geo_label]).split('-')
+        parts = (params[:geoLabel] || params[:geo_label]).split(/[ -]+/)
 
         geo_search_options = {
           fields: ['name'],

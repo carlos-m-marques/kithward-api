@@ -25,6 +25,21 @@ class GeoPlacesController < ApplicationController
   def show
     place = GeoPlace.find(params[:id])
 
+    if !place && (params[:geoLabel] || params[:geo_label] || params[:label])
+      parts = (params[:geoLabel] || params[:geo_label] || params[:label]).split(/[ -]+/)
+
+      geo_search_options = {
+        fields: ['name'],
+        match: :word_start,
+        where: {state: parts[-1]},
+        limit: 1
+      }
+
+      place = GeoPlace.search(parts[0..-1].join(" "), geo_search_options).first
+    end
+
     render json: GeoPlaceSerializer.render(place)
   end
 end
+
+search_options = {fields: ['name'],  match: :word_start,  order: {weight: :desc},  where: {    state: ['NY', 'NJ', 'CT'],  },}
