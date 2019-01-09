@@ -22,14 +22,14 @@ class CommunitiesController < ApplicationController
       if !geo && (params[:geoLabel] || params[:geo_label])
         parts = (params[:geoLabel] || params[:geo_label]).split('-')
 
-        search_options = {
+        geo_search_options = {
           fields: ['name'],
           match: :word_start,
           where: {state: parts[-1]},
           limit: 1
         }
 
-        geo = GeoPlace.search(parts[0..-1].join(" "), search_options).first
+        geo = GeoPlace.search(parts[0..-1].join(" "), geo_search_options).first
       end
 
       if geo
@@ -58,11 +58,11 @@ class CommunitiesController < ApplicationController
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 
-    communities = Community.search(params[:q] || "*", search_options)
+    communities = Community.search(params[:q] || "*", search_options).to_a
 
     if params[:meta]
       result = {
-        results: CommunitySerializer.render_as_json(communities.to_a, view: (params[:view] || 'simple')),
+        results: CommunitySerializer.render_as_json(communities, view: (params[:view] || 'simple')),
         meta: {
           query: (params[:q] || "*"),
           limit: (params[:limit] || 20),
@@ -75,7 +75,7 @@ class CommunitiesController < ApplicationController
         result[:meta][:distance] = params[:distance] || "20mi"
       end
     else
-      result = CommunitySerializer.render(communities.to_a, view: (params[:view] || 'simple'))
+      result = CommunitySerializer.render(communities, view: (params[:view] || 'simple'))
     end
 
     render json: result

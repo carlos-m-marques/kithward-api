@@ -2,10 +2,18 @@ require 'test_helper'
 
 class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   setup do
-    @c1 = create(:community, name: 'Golden Pond', description: 'Excelent Care', care_type: 'A')
-    @c2 = create(:community, name: 'Silver Lining', description: 'Incredible Care', care_type: 'I')
-    @c3 = create(:community, name: 'Gray Peaks', description: 'Incredible Service', care_type: 'A')
-    @c4 = create(:community, name: 'Deleted Community', description: 'Useless Service', status: Community::STATUS_DELETED)
+    Community.delete_all
+    @c1 = create(:community, name: "Golden Pond", description: "Excelent Care", care_type: 'A', lat: 40.75, lon: -73.97)
+    @c2 = create(:community, name: "Silver Lining", description: "Incredible Care", care_type: 'I', lat: 40.72, lon: -74.00)
+    @c3 = create(:community, name: "Gray Peaks", description: "Incredible Service", care_type: 'A', lat: 40.20, lon: -74.01)
+    @c4 = create(:community, name: "Deleted Community", description: "Useless Service", status: Community::STATUS_DELETED)
+
+    GeoPlace.delete_all
+    @soho = GeoPlace.create(name: "SoHo", state: "NY", lat: 40.72, lon: -73.99)
+    @jersey = GeoPlace.create(name: "Jersey Shore", state: "NJ", lat: 40.21, lon: -74.00)
+
+    Community.reindex
+    GeoPlace.reindex
 
     @account = create(:account)
     @admin_account = create(:account, is_admin: true)
@@ -100,22 +108,20 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "search communities by geo place" do
-    @soho = GeoPlace.create(name: "SoHo", lat: 40.72, lon: -73.99)
-    @jersey = GeoPlace.create(name: "Jersey Shore", lat: 40.21, lon: -74.00)
-
-    @nyc1 = create(:community, name: 'NYC Houses', lat: 40.75, lon: -73.97)
-    @nyc2 = create(:community, name: 'SoHo Care', lat: 40.72, lon: -74.00)
-    @nj1 = create(:community, name: 'Jersey Shore', lat: 40.20, lon: -74.01)
-
-    Community.reindex
-
     get "/v1/communities", params: {geo: @soho.id}
     assert_response :success
-    assert_equal [@nyc1.id.to_s, @nyc2.id.to_s].sort, json_response.collect {|result| result['id']}.sort
+    assert_equal [@c1.id.to_s, @c2.id.to_s].sort, json_response.collect {|result| result['id']}.sort
 
     get "/v1/communities", params: {geo: @jersey.id}
     assert_response :success
-    assert_equal [@nj1.id.to_s].sort, json_response.collect {|result| result['id']}.sort
+    assert_equal [@c3.id.to_s].sort, json_response.collect {|result| result['id']}.sort
+  end
+
+  test "search communities by geo place with missing or wrong id" do
+    get "/v1/communities", params: {geo: @soho.id + 1000000000, geoLabel: "Jersey-Shore-NJ", meta:true}
+    assert_response :success
+    assert_equal [@c3.id.to_s].sort, json_response['results'].collect {|result| result['id']}.sort
+    assert_equal @jersey.id.to_s, json_response['meta']['geo']['id']
   end
 
   test "update community data" do
