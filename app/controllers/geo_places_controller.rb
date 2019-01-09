@@ -26,7 +26,7 @@ class GeoPlacesController < ApplicationController
     place = GeoPlace.find(params[:id])
 
     if !place && (params[:geoLabel] || params[:geo_label] || params[:label])
-      parts = (params[:geoLabel] || params[:geo_label] || params[:label]).split(/[ -]+/)
+      parts = (params[:geoLabel] || params[:geo_label] || params[:label]).split(/[ -]+/).reject {|p| p.blank?}
 
       geo_search_options = {
         fields: ['name'],
@@ -35,7 +35,7 @@ class GeoPlacesController < ApplicationController
         limit: 1
       }
 
-      place = GeoPlace.search(parts[0..-1].join(" "), geo_search_options).first
+      place = GeoPlace.search(parts[0..-2].join(" "), geo_search_options).first
     end
 
     render json: GeoPlaceSerializer.render(place)
