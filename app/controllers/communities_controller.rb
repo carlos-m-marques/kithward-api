@@ -19,6 +19,7 @@ class CommunitiesController < ApplicationController
 
     if params[:geo]
       geo = GeoPlace.find_by_id(params[:geo])
+
       if !geo && (params[:geoLabel] || params[:geo_label])
         parts = (params[:geoLabel] || params[:geo_label]).split(/[ -]+/).reject {|p| p.blank?}
 
@@ -30,6 +31,15 @@ class CommunitiesController < ApplicationController
         }
 
         geo = GeoPlace.search(parts[0..-2].join(" "), geo_search_options).first
+        if geo
+          new_params = params.permit(:care_type, :distance, :geo, :geoLabel, :geo_label, :limit, :offset, :view, :meta)
+          new_params[:geo] = geo.id
+
+          redirect_to communities_url(new_params), :status => :moved_permanently
+        else
+          render nothing: true, status: 404 and return
+        end
+        return
       end
 
       if geo

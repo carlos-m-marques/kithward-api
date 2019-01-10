@@ -118,10 +118,9 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "search communities by geo place with missing or wrong id" do
-    get "/v1/communities", params: {geo: @soho.id + 1000000000, geoLabel: "Jersey-Shore-NJ", meta:true}
-    assert_response :success
-    assert_equal [@c3.id.to_s].sort, json_response['results'].collect {|result| result['id']}.sort
-    assert_equal @jersey.id.to_s, json_response['meta']['geo']['id']
+    get "/v1/communities", params: {geo: @soho.id + 1000000000, geoLabel: "Jersey-Shore-NJ"}
+    assert_response :moved_permanently
+    assert_redirected_to communities_url(geo: @jersey.id, geoLabel: "Jersey-Shore-NJ")
   end
 
   test "update community data" do
