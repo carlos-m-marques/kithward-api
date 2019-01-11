@@ -256,7 +256,7 @@ class CommunityImporter
 
   def compare
     @entries.each do |entry|
-      if entry[:match] == 'kwid' || entry[:match] == 'name' || entry[:data][:process] == 'create'
+      if entry && (entry[:match] == 'kwid' || entry[:match] == 'name' || (entry[:data] && entry[:data][:process] == 'create'))
         if entry[:community_object]
           community = entry[:community_object]
         elsif entry[:community] and entry[:community][:id]
