@@ -83,6 +83,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-
+  # This was causing problems accessing the site from some corporate networks, such as Vornado
   config.action_dispatch.ip_spoofing_check = false
 end
