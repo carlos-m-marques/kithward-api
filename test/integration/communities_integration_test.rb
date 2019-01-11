@@ -9,8 +9,8 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     @c4 = create(:community, name: "Deleted Community", description: "Useless Service", status: Community::STATUS_DELETED)
 
     GeoPlace.delete_all
-    @soho = GeoPlace.create(name: "SoHo", state: "NY", lat: 40.72, lon: -73.99)
-    @jersey = GeoPlace.create(name: "Jersey Shore", state: "NJ", lat: 40.21, lon: -74.00)
+    @soho = create(:geo_place, name: "SoHo", state: "NY", lat: 40.72, lon: -73.99)
+    @jersey = create(:geo_place, name: "Jersey Shore", state: "NJ", lat: 40.21, lon: -74.00)
 
     Community.reindex
     GeoPlace.reindex
@@ -121,6 +121,16 @@ class CommunitiesIntegrationTest < ActionDispatch::IntegrationTest
     get "/v1/communities", params: {geo: @soho.id + 1000000000, geoLabel: "Jersey-Shore-NJ"}
     assert_response :moved_permanently
     assert_redirected_to communities_url(geo: @jersey.id, geoLabel: "Jersey-Shore-NJ")
+  end
+
+  test "include metadata for searches" do
+    get "/v1/communities", params: {geo: @jersey.id, geoLabel: "Jersey-Shore-NJ", meta: true}
+    assert_response :success
+    assert_equal [@c3.id.to_s].sort, json_response['results'].collect {|result| result['id']}.sort
+    assert_equal @jersey.id.to_s, json_response['meta']['params']['geo']
+    assert_equal "Jersey Shore, NJ", json_response['meta']['params']['geo_name']
+    assert_equal 20, json_response['meta']['params']['limit']
+    assert_equal '20mi', json_response['meta']['params']['distance']
   end
 
   test "update community data" do

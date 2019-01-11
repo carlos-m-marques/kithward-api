@@ -74,15 +74,20 @@ class CommunitiesController < ApplicationController
       result = {
         results: CommunitySerializer.render_as_json(communities, view: (params[:view] || 'simple')),
         meta: {
-          query: (params[:q] || "*"),
-          limit: (params[:limit] || 20),
-          offset: params[:offset] || 0,
+          params: {
+            query: (params[:q] || "*"),
+            limit: (params[:limit] || 20),
+            offset: params[:offset] || 0,
+          }
         }
       }
 
       if geo
-        result[:meta][:geo] = GeoPlaceSerializer.render_as_json(geo)
-        result[:meta][:distance] = params[:distance] || "20mi"
+        result[:meta][:params][:geo] = geo.idstr
+        result[:meta][:params][:geo_name] = geo.full_name
+        result[:meta][:params][:lat] = geo.lat
+        result[:meta][:params][:lon] = geo.lon
+        result[:meta][:params][:distance] = params[:distance] || "20mi"
       end
     else
       result = CommunitySerializer.render(communities, view: (params[:view] || 'simple'))
