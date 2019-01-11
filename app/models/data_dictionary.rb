@@ -172,6 +172,7 @@ class DataDictionary
                                     ]}},
         { needs_review:           { label: "Needs review", data: 'flag', admin_only: true, group: 'admin', }},
         { last_visited:           { label: "Last Visited", data: 'string', admin_only: true, group: 'admin', }},
+        { import_tags:            { label: "Import Tags",  data: 'string', admin_only: true, group: 'admin'}},
 
         { community_map:          { label: "Community Map", data: 'thumbnails', special: true, tagged_as: 'map', group: 'basics',}},
 

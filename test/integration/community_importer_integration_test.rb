@@ -14,6 +14,7 @@ class CommunityImporterIntegrationTest < ActionDispatch::IntegrationTest
       description: {data: 'text', direct_model_attribute: true},
       star_rating: {data: 'rating'},
       pool: {data: 'amenity'},
+      import_tags: {data: 'string'},
     }.with_indifferent_access)
 
     Geocoder::Lookup::Test.reset
@@ -104,7 +105,7 @@ END
 
   test "resend processed entries" do
     data = <<-END
-kwid, name, address, city, state, postal, care_type
+kwid, name, address, city, state, postal, care_type, import_tags
 , Silver Lining, 123 Broadway, New York, NY, 10001, I
 , Lining Silvers, 125 Broadway, New York, NY, 10001, I
 , Gray Peaks, 123 Broadway, Washington, DC, 20001, I
@@ -124,12 +125,12 @@ END
 
   test "full run" do
     data = <<-END
-kwid, name, address, city, state, postal, care_type, star_rating, description
-, Silver Lining, 123 Broadway, New York, NY, 10001, I, 5, this is a test
-, Lining Silvers, 125 Broadway, New York, NY, 10001, I, 3, a test with \\, commas
-, Gray Peaks, 123 Broadway, Washington, DC, 20001, I, 1, nothing to say
-create, New Peaks, 456 Broadway, New York, NY, 10002, I, 4, a new community
-, Newer Peaks, 789 Broadway, New York, NY, 10003, I, 4, should not be processed
+kwid, name, address, city, state, postal, care_type, star_rating, description, import_tags
+, Silver Lining, 123 Broadway, New York, NY, 10001, I, 5, this is a test, FIRST
+, Lining Silvers, 125 Broadway, New York, NY, 10001, I, 3, a test with \\, commas, FIRST
+, Gray Peaks, 123 Broadway, Washington, DC, 20001, I, 1, nothing to say, FIRST
+create, New Peaks, 456 Broadway, New York, NY, 10002, I, 4, a new community, FIRST
+, Newer Peaks, 789 Broadway, New York, NY, 10003, I, 4, should not be processed, FIRST
 END
 
     c = Community.find_by_name('New Peaks')
@@ -144,6 +145,7 @@ END
     @c1.reload # Silver Lining
     assert_equal 5, @c1.data['star_rating']
     assert_equal "this is a test", @c1.description
+    assert_equal "FIRST", @c1.data['import_tags']
 
     @c5.reload # Gray Peaks, in DC
     assert_equal 1, @c5.data['star_rating']
@@ -156,6 +158,26 @@ END
 
     c = Community.find_by_name('Newer Peaks')
     assert_nil c  # Not flagged with 'process'
+
+    # Post the same data, should not cause multiple tags
+    post "/v1/communities/import", params: {access_token: @admin_token, data: data}
+    assert_response :success
+
+    @c1.reload # Silver Lining
+    assert_equal 5, @c1.data['star_rating']
+    assert_equal "this is a test", @c1.description
+    assert_equal "FIRST", @c1.data['import_tags']
+
+    # Post with different import tags
+    retagged_data = data.gsub(/FIRST/, "SECOND")
+
+    post "/v1/communities/import", params: {access_token: @admin_token, data: retagged_data}
+    assert_response :success
+
+    @c1.reload # Silver Lining
+    assert_equal 5, @c1.data['star_rating']
+    assert_equal "this is a test", @c1.description
+    assert_equal "FIRST,SECOND", @c1.data['import_tags']
   end
 
 end

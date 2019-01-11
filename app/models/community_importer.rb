@@ -301,8 +301,8 @@ class CommunityImporter
       else
         community = Community.new
         entry[:is_new] = true
-        attributes[:needs_review] = true
-        attributes[:completeness] = '0'
+        attributes['needs_review'] = true
+        attributes['completeness'] = '0'
       end
 
       entry[:data].keys.each do |attr|
@@ -317,10 +317,12 @@ class CommunityImporter
         end
 
         if definition
-          if definition[:direct_model_attribute]
-            direct[attr] = value
+          if attr.to_s === 'import_tags'
+            attributes[attr.to_s] = ((community.data['import_tags'] || "").split(/\,\s*/) + [value]).uniq.compact.join(",")
+          elsif definition[:direct_model_attribute]
+            direct[attr.to_s] = value
           else
-            attributes[attr] = value
+            attributes[attr.to_s] = value
           end
         end
       end
