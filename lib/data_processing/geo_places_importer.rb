@@ -6,7 +6,7 @@ require 'csv'
 
 module GeoPlacesImporter
   def self.import
-    GeoPlace.delete_all
+    # GeoPlace.delete_all
 
     `curl -o tmp/geonames-us.zip http://download.geonames.org/export/dump/US.zip`
     `unzip tmp/geonames-us.zip -d tmp/geonames-us`
@@ -17,7 +17,7 @@ module GeoPlacesImporter
     ) do |row|
       next unless row && row[7] && row[7][0..2] == 'PPL' # Populated place
 
-      next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[10])
+      # next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[10])
 
       next unless row[14].to_i >= 100
 
@@ -42,7 +42,7 @@ module GeoPlacesImporter
       col_sep: "\t", quote_char: "‽" # use a random quote char to prevent problems with quotes in TSV files
     ) do |row|
 
-      next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[4])
+      # next unless ['NY', 'NJ', 'CT', 'CA'].include?(row[4])
 
       place = GeoPlace.find_or_create_by(reference: "geoname-zip-us:#{row[1]}")
       place.geo_type = GeoPlace::TYPE_POSTAL
