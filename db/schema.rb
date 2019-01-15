@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_20_163917) do
+ActiveRecord::Schema.define(version: 2019_01_15_172746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(version: 2018_12_20_163917) do
     t.jsonb "cached_data"
   end
 
+  create_table "communities_pois", id: false, force: :cascade do |t|
+    t.bigint "poi_id", null: false
+    t.bigint "community_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "created_by_id"
+    t.index ["created_by_id"], name: "index_communities_pois_on_created_by_id"
+  end
+
   create_table "community_images", force: :cascade do |t|
     t.bigint "community_id"
     t.string "caption", limit: 1024
@@ -128,6 +137,27 @@ ActiveRecord::Schema.define(version: 2018_12_20_163917) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["community_id"], name: "index_listings_on_community_id"
+  end
+
+  create_table "poi_categories", force: :cascade do |t|
+    t.string "name", limit: 128
+  end
+
+  create_table "pois", force: :cascade do |t|
+    t.string "name", limit: 1024
+    t.bigint "poi_category_id"
+    t.string "address", limit: 1024
+    t.string "city", limit: 256
+    t.string "state", limit: 128
+    t.string "postal", limit: 32
+    t.string "country", limit: 64
+    t.float "lat"
+    t.float "lon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "created_by_id"
+    t.index ["created_by_id"], name: "index_pois_on_created_by_id"
+    t.index ["poi_category_id"], name: "index_pois_on_poi_category_id"
   end
 
   create_table "versions", force: :cascade do |t|

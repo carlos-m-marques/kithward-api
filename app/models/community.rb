@@ -29,6 +29,7 @@ class Community < ApplicationRecord
 
   has_many :community_images
   has_many :listings
+  has_and_belongs_to_many :pois
 
   before_save :update_cached_data
 
