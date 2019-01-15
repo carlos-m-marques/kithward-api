@@ -127,7 +127,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     MailTools.expects(:send_template).with {|email, template, params|
       captured_validation_link = params[:validation_link]
       email == "new@example.com" && params[:email_address] == "new@example.com" \
-      && params[:validation_link] =~ /\/auth\/verify\?email=new@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=new%40example\.com/
     }
 
     post "/v1/auth/login", params: {email: "new@example.com"}
@@ -156,7 +156,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
   test "a new real account can be created by including a name and password" do
     MailTools.expects(:send_template).with {|email, template, params|
       email == "real@example.com" && params[:email_address] == "real@example.com" \
-      && params[:validation_link] =~ /\/auth\/verify\?email=real@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=real%40example\.com/
     }
 
     post "/v1/auth/login", params: {email: "real@example.com", name: "Real Account", password: "123"}
@@ -201,7 +201,7 @@ class AuthIntegrationTest < ActionDispatch::IntegrationTest
     MailTools.expects(:send_template).with {|email, template, params|
       captured_validation_link = params[:validation_link]
       email == "joe@example.com" && params[:email_address] == "joe@example.com" \
-      && params[:validation_link] =~ /\/auth\/verify\?email=joe@example\.com/
+      && params[:validation_link] =~ /\/auth\/verify\?email=joe%40example\.com/
     }
 
     post "/v1/auth/request_verification", params: {email: "joe@example.com", reason: "vanity"}
