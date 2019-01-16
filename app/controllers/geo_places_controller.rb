@@ -34,7 +34,7 @@ class GeoPlacesController < ApplicationController
         geo_search_options = {
           fields: ['name'],
           match: :word_start,
-          where: {state: parts[-1]},
+          where: {state: parts[-1].upcase},
           limit: 1
         }
 
