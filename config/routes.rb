@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
       resources :listings
       resources :images, controller: 'community_images'
+      resources :pois, controller: 'community_pois'
     end
 
     resources :listings do
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
     resources :leads
 
     resources :geo_places
+    resources :poi_categories
+    resources :pois
 
     scope 'auth' do
       match 'login', to: 'auth#login', via: [:post]

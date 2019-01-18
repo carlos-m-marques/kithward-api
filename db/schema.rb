@@ -72,12 +72,10 @@ ActiveRecord::Schema.define(version: 2019_01_15_172746) do
   end
 
   create_table "communities_pois", id: false, force: :cascade do |t|
-    t.bigint "poi_id", null: false
     t.bigint "community_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "created_by_id"
-    t.index ["created_by_id"], name: "index_communities_pois_on_created_by_id"
+    t.bigint "poi_id", null: false
+    t.index ["community_id"], name: "index_communities_pois_on_community_id"
+    t.index ["poi_id"], name: "index_communities_pois_on_poi_id"
   end
 
   create_table "community_images", force: :cascade do |t|
@@ -146,7 +144,7 @@ ActiveRecord::Schema.define(version: 2019_01_15_172746) do
   create_table "pois", force: :cascade do |t|
     t.string "name", limit: 1024
     t.bigint "poi_category_id"
-    t.string "address", limit: 1024
+    t.string "street", limit: 1024
     t.string "city", limit: 256
     t.string "state", limit: 128
     t.string "postal", limit: 32

@@ -46,6 +46,7 @@ class CommunitySerializer < Blueprinter::Base
 
     association :listings, blueprint: ListingSerializer
     association :community_images, name: :images, blueprint: CommunityImageSerializer
+    association :pois, blueprint: PoiSerializer
 
     # field :images do |object|
     #   object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|

@@ -7,13 +7,11 @@ require 'json_web_token'
 
 #-- Search Kick --------
 Searchkick.disable_callbacks
-Community.search_index.clean_indices
-Community.search_index.delete rescue nil
-Community.reindex(import: false)
-
-GeoPlace.search_index.clean_indices
-GeoPlace.search_index.delete rescue nil
-GeoPlace.reindex(import: false)
+[Community, GeoPlace, Poi].each do |model_klass|
+  model_klass.search_index.clean_indices
+  model_klass.search_index.delete rescue nil
+  model_klass.reindex(import: false)
+end
 
 #-- Geocoder -----------
 Geocoder.configure(lookup: :test)

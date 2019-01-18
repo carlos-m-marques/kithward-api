@@ -5,7 +5,7 @@
 #  id              :bigint(8)        not null, primary key
 #  name            :string(1024)
 #  poi_category_id :bigint(8)
-#  address         :string(1024)
+#  street          :string(1024)
 #  city            :string(256)
 #  state           :string(128)
 #  postal          :string(32)

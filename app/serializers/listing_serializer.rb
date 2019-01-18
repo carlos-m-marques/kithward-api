@@ -17,7 +17,7 @@
 #
 
 class ListingSerializer < Blueprinter::Base
-  identifier :id
+  identifier :idstr, name: :id
 
   field :name
   field :status
