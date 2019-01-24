@@ -22,8 +22,11 @@ Rails.application.routes.draw do
     resources :leads
 
     resources :geo_places
-    resources :poi_categories
-    resources :pois
+    resources :pois do
+      collection do
+        resources :categories, controller: 'poi_categories'
+      end
+    end
 
     scope 'auth' do
       match 'login', to: 'auth#login', via: [:post]

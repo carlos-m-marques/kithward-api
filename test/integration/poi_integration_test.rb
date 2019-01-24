@@ -80,7 +80,7 @@ class PoiIntegrationTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal [], json_response
 
-    post "/v1/communities/#{@c1.id}/pois", params: {id: @cafe_lala.id, access_token: @admin_token}
+    post "/v1/communities/#{@c1.id}/pois/", params: {id: @cafe_lala.id, access_token: @admin_token}
     assert_response :success
     assert_equal [@cafe_lala.id.to_s], json_response.collect {|p| p['id']}
     assert_equal [@cafe_lala.name], json_response.collect {|p| p['name']}
