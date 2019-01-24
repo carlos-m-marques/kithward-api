@@ -30,14 +30,15 @@ class Poi < ApplicationRecord
 
   begin # Elasticsearch / Searchkick
     searchkick  match: :word_start,
-                word_start:  ['name'],
-                default_fields: ['name'],
+                word_start:  ['name', 'street'],
+                default_fields: ['name', 'street'],
                 locations: ['location']
 
     def search_data
       {
         name: name,
-        category: category.name,
+        category: poi_category.name,
+        street: street,
         city: city,
         state: state,
         postal: postal,
