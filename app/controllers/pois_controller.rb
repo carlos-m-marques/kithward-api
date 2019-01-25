@@ -4,7 +4,7 @@ class PoisController < ApplicationController
 
   def index
     search_options = {
-      fields: ['name', 'street'],
+      fields: ['name', 'street', 'category'],
       match: :word_start,
       includes: [:poi_category],
     }
@@ -17,6 +17,8 @@ class PoisController < ApplicationController
       geo = GeoPlace.find(params[:geo])
 
       search_options[:where] = {location: {near: {lat: geo.lat, lon: geo.lon}}}
+    elsif params[:lat]
+      search_options[:where] = {location: {near: {lat: params[:lat], lon: params[:lon]}}}
     end
 
     if search_options[:where]
@@ -27,8 +29,8 @@ class PoisController < ApplicationController
       end
     end
 
-    search_options[:limit] = params[:limit] || 100
-    search_options[:offset] = params[:offset] || 0
+    search_options[:limit] = [params[:limit] || 20, 100].min # don't allow limits higher than 100
+    search_options[:offset] = [params[:offset] || 0, 100].min # don't allow offsets higher than 100
 
     pois = Poi.search(params[:q] || "*", search_options).to_a
 
