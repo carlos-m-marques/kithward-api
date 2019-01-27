@@ -39,4 +39,14 @@ class CommunityPoisController < ApplicationController
 
     render json: PoiSerializer.render(community.pois)
   end
+
+  def self.process_one_poi(community, params)
+    if params && params[:id] && params[:id].to_i > 0
+      if params[:deleted] == 'deleted'
+        community.pois.delete(params[:id])
+      else
+        community.pois << Poi.find(params[:id]) unless community.pois.exists?(params[:id])
+      end
+    end
+  end
 end

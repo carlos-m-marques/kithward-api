@@ -121,6 +121,12 @@ class CommunitiesController < ApplicationController
       community.data = (community.data || {}).merge(params[:data])
     end
 
+    if params[:pois]
+      params[:pois].each {|data| CommunityPoisController.process_one_poi(community, data) }
+
+      community.pois.reload
+    end
+
     if params[:images]
       params[:images].each {|data| CommunityImagesController.process_one_image(community, data) }
 

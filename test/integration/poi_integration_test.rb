@@ -75,6 +75,17 @@ class PoiIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal [], json_response
   end
 
+  test "admins can add and delete POIs through the Community endpoint" do
+    put "/v1/communities/#{@c1.id}", params: {pois: [id: @cafe_lala.id], access_token: @admin_token}
+    assert_response :success
+    assert_equal [@cafe_lala.id.to_s], json_response['pois'].collect {|p| p['id']}
+    assert_equal [@cafe_lala.name], json_response['pois'].collect {|p| p['name']}
+
+    put "/v1/communities/#{@c1.id}", params: {pois: [id: @cafe_lala.id, deleted: 'deleted'], access_token: @admin_token}
+    assert_response :success
+    assert_equal [], json_response['pois'].collect {|p| p['id']}
+  end
+
   test "anyone can see what POIs have been listed for a community" do
     get "/v1/communities/#{@c1.id}/pois"
     assert_response :success
