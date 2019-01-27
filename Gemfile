@@ -27,7 +27,6 @@ gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'geocoder', '~> 1.5.0'
 gem 'aws-sdk-s3', '~> 1.0.0', require: false
 gem 'sentry-raven'
-gem 'ddtrace', '~> 0.18.0', require: false
 gem 'intercom', '~> 3.7.0'
 gem 'prismic.io', '~> 1.6.0'
 gem 'newrelic_rpm'
