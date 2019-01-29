@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-["Eating", "Shopping", "Entertainment", "Culture", "Transportation", "Hospitals", "Medical Care", "Outdoors", "Golf"].each do |name|
+["Dining", "Retail", "Entertainment", "Culture", "Transportation", "Hospitals", "Doctors", "Outdoors", "Sports", "Services"].each do |name|
   PoiCategory.create(name: name)
 end
 hospitals = PoiCategory.find_by_name("Hospitals")
