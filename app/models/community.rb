@@ -174,9 +174,12 @@ class Community < ApplicationRecord
 
   ATTRIBUTES_TO_CACHE = [
     'star_rating', 'aip', 'ccrc',
-    'room_shared', 'room_private', 'room_studio', 'room_one_bed', 'room_two_plus', 'room_detached',
-    'room_feat_den', 'room_feat_dishwasher', 'room_feat_kitchen', 'room_feat_climate',
-    'room_feat_pvt_outdoor', 'room_feat_walkin', 'room_feat_washer',
+
+    'listing_room_shared', 'listing_room_private', 'listing_room_studio', 'listing_room_one_bed', 'listing_room_two_plus', 'listing_room_detached',
+
+    'listing_room_feat_den', 'listing_room_feat_dishwasher', 'listing_room_feat_kitchen', 'listing_room_feat_climate',
+    'listing_room_feat_pvt_outdoor', 'listing_room_feat_walkin', 'listing_room_feat_washer',
+
     'access_to_city', 'access_to_outdoors', 'amenitiy_any_fitness', 'services_parking', 'amenity_any_pool',
     'food_restaurant_style', 'smoking',
     'amenitiy_gym', 'amenitiy_fitness_center', 'amenitiy_athletic_club',
@@ -245,6 +248,26 @@ class Community < ApplicationRecord
         when 'select'
           values = value.split(/\s*,\s*/)
           reflection[key] = (reflection[key] + [values]).flatten.uniq
+
+          if key == :bedrooms
+            case value
+            when 'Shared'
+              reflection[:room_shared] = true
+            when 'Suite'
+              reflection[:room_companion] = true
+            when 'Studio'
+              reflection[:room_studio] = true
+            when '1'
+              reflection[:room_one_bed] = true
+            when '2'
+              reflection[:room_two_plus] = true
+            when '3'
+              reflection[:room_two_plus] = true
+            when '4+'
+              reflection[:room_two_plus] = true
+            end
+          end
+
         when 'pricerange', 'numberrange'
           values = "#{value}".split(":").collect {|p| p.to_i}
           if values.first
@@ -265,6 +288,7 @@ class Community < ApplicationRecord
         when 'amenity', 'flag'
           reflection[key] = reflection[key] || value
         end
+
       end
     end
 
