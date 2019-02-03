@@ -249,7 +249,7 @@ class Community < ApplicationRecord
           values = value.split(/\s*,\s*/)
           reflection[key] = (reflection[key] + [values]).flatten.uniq
 
-          if key == :bedrooms
+          if key.to_s == 'bedrooms'
             case value
             when 'Shared'
               reflection[:room_shared] = true
