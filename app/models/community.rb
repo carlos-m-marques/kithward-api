@@ -300,6 +300,17 @@ class Community < ApplicationRecord
         else
           self.data.delete("listings_#{key}")
         end
+
+        if key.to_s == 'bedrooms'
+          ['room_shared', 'room_companion', 'room_studio', 'room_one_bed', 'room_two_plus'].each do |room_key|
+            if reflection[room_key].any?
+              self.data["listings_#{key}"] = true
+            else
+              self.data.delete("listings_#{key}")
+            end
+          end
+        end
+
       when 'pricerange', 'numberrange', 'price', 'number'
         if reflection[key].compact.any?
           self.data["listings_#{key}"] = reflection[key][0..1].join(":")
