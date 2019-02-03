@@ -303,10 +303,10 @@ class Community < ApplicationRecord
 
         if key.to_s == 'bedrooms'
           ['room_shared', 'room_companion', 'room_studio', 'room_one_bed', 'room_two_plus'].each do |room_key|
-            if reflection[room_key].any?
-              self.data["listings_#{key}"] = true
+            if reflection[room_key]
+              self.data["listings_#{room_key}"] = true
             else
-              self.data.delete("listings_#{key}")
+              self.data.delete("listings_#{room_key}")
             end
           end
         end
