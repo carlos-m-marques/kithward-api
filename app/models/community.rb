@@ -175,10 +175,10 @@ class Community < ApplicationRecord
   ATTRIBUTES_TO_CACHE = [
     'star_rating', 'aip', 'ccrc',
 
-    'listing_room_shared', 'listing_room_private', 'listing_room_studio', 'listing_room_one_bed', 'listing_room_two_plus', 'listing_room_detached',
+    'listings_room_shared', 'listings_room_private', 'listings_room_studio', 'listings_room_one_bed', 'listings_room_two_plus', 'listings_room_detached',
 
-    'listing_room_feat_den', 'listing_room_feat_dishwasher', 'listing_room_feat_kitchen', 'listing_room_feat_climate',
-    'listing_room_feat_pvt_outdoor', 'listing_room_feat_walkin', 'listing_room_feat_washer',
+    'listings_room_feat_den', 'listings_room_feat_dishwasher', 'listings_room_feat_kitchen', 'listings_room_feat_climate',
+    'listings_room_feat_pvt_outdoor', 'listings_room_feat_walkin', 'listings_room_feat_washer',
 
     'access_to_city', 'access_to_outdoors', 'amenitiy_any_fitness', 'services_parking', 'amenity_any_pool',
     'food_restaurant_style', 'smoking',
