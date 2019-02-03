@@ -252,19 +252,19 @@ class Community < ApplicationRecord
           if key.to_s == 'bedrooms'
             case value
             when 'Shared'
-              reflection[:room_shared] = true
+              reflection['room_shared'] = true
             when 'Suite'
-              reflection[:room_companion] = true
+              reflection['room_companion'] = true
             when 'Studio'
-              reflection[:room_studio] = true
+              reflection['room_studio'] = true
             when '1'
-              reflection[:room_one_bed] = true
+              reflection['room_one_bed'] = true
             when '2'
-              reflection[:room_two_plus] = true
+              reflection['room_two_plus'] = true
             when '3'
-              reflection[:room_two_plus] = true
+              reflection['room_two_plus'] = true
             when '4+'
-              reflection[:room_two_plus] = true
+              reflection['room_two_plus'] = true
             end
           end
 
