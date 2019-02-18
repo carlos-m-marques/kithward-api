@@ -88,6 +88,13 @@ heroku pg:copy kwapi::DATABASE_URL DATABASE_URL --app kwapi-staging
 heroku run rails runner 'Community.reindex; GeoPlace.reindex; Poi.reindex' -a  kwapi-staging
 ```
 
+Create an admin account for Upwork people
+
+```
+heroku run rails c
+Account.create(name: "Upwork First Last", password: "{some random password}", email: "upwork+fl@kithward.com", verified_email: "upwork+fl@kithward.com", is_admin: true)
+```
+
 ## ElasticSearch notes
 
 Local development server, os x with brew:
