@@ -78,8 +78,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+staging:
+  url: <%= ENV['DATABASE_URL'] %>
+
 production:
-  <<: *default
-  database: kw_production
-  username: kw
-  password: <%= ENV['KW_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
