@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_172746) do
+ActiveRecord::Schema.define(version: 2019_04_25_023603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2019_01_15_172746) do
     t.jsonb "data"
     t.string "cached_image_url", limit: 128
     t.jsonb "cached_data"
+    t.float "monthly_rent_lower_bound"
+    t.float "monthly_rent_upper_bound"
   end
 
   create_table "communities_pois", id: false, force: :cascade do |t|

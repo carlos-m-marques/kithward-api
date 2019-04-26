@@ -44,11 +44,7 @@ class CommunitiesController < ApplicationController
 
       if geo
         search_options[:where][:location] = {near: {lat: geo.lat, lon: geo.lon}}
-        if params[:distance]
-          search_options[:where][:location][:within] = params[:distance]
-        else
-          search_options[:where][:location][:within] = "20mi"
-        end
+        search_options[:where][:location][:within] = params[:distance] || "20mi"
       end
     end
 
@@ -67,6 +63,13 @@ class CommunitiesController < ApplicationController
 
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
+
+    if params[:lower_rent_bound].present? && params[:upper_rent_bound].present?
+      search_options[:where][:monthly_rent_lower_bound] = {
+        gt: params[:lower_rent_bound].to_i,
+        lt: params[:upper_rent_bound].to_i
+      }
+    end
 
     communities = Community.search(params[:q] || "*", search_options).to_a
 
