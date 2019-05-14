@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_15_172746) do
+ActiveRecord::Schema.define(version: 2019_05_14_113631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -156,6 +156,17 @@ ActiveRecord::Schema.define(version: 2019_01_15_172746) do
     t.bigint "created_by_id"
     t.index ["created_by_id"], name: "index_pois_on_created_by_id"
     t.index ["poi_category_id"], name: "index_pois_on_poi_category_id"
+  end
+
+  create_table "units", force: :cascade do |t|
+    t.string "description"
+    t.boolean "availability", default: false
+    t.date "availability_date"
+    t.decimal "rent", precision: 18, scale: 2
+    t.bigint "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_units_on_listing_id"
   end
 
   create_table "versions", force: :cascade do |t|
