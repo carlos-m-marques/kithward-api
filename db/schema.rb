@@ -160,9 +160,9 @@ ActiveRecord::Schema.define(version: 2019_05_14_113631) do
 
   create_table "units", force: :cascade do |t|
     t.string "description"
-    t.boolean "availability", default: false
-    t.date "availability_date"
-    t.decimal "rent", precision: 18, scale: 2
+    t.boolean "is_available", default: false
+    t.date "date_available"
+    t.decimal "base_rent", precision: 18, scale: 2
     t.bigint "listing_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

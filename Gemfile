@@ -35,7 +35,7 @@ gem 'sendgrid-ruby'
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-byebug'
+  gem 'pry'
 
   gem 'factory_bot_rails', '~> 4.0'
   gem 'mocha'
