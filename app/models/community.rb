@@ -100,7 +100,7 @@ class Community < ApplicationRecord
         country: country,
         location: {lat: lat, lon: lon},
         units_available: units_available,
-        monthly_rent_lower_bound: monthly_rent_lower_bound
+        monthly_rent_lower_bound: find_monthly_rent_lower_bound
       }
     end
   end
@@ -181,6 +181,10 @@ class Community < ApplicationRecord
 
   def units_available
     units.available.present?
+  end
+
+  def find_monthly_rent_lower_bound
+    units.minimum(:base_rent) || monthly_rent_lower_bound
   end
 
   ATTRIBUTES_TO_CACHE = [
