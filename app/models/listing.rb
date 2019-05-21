@@ -20,6 +20,7 @@ class Listing < ApplicationRecord
   has_paper_trail
 
   belongs_to :community
+  has_many :units
 
   default_scope { order(sort_order: :asc, id: :asc) }
   scope :active, -> { where(status: STATUS_ACTIVE) }

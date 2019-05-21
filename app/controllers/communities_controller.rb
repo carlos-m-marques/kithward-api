@@ -65,6 +65,10 @@ class CommunitiesController < ApplicationController
       end
     end
 
+    if params[:units_available]
+      search_options[:where][:units_available] = params[:units_available] == 'true'
+    end
+
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 

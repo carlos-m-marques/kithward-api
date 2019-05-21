@@ -33,7 +33,8 @@ class CommunitySerializer < Blueprinter::Base
       :street, :street_more, :city, :state, :postal, :country,
       :lat, :lon,
       :updated_at,
-      :cached_image_url, :cached_data
+      :cached_image_url, :cached_data,
+      :units_available
 
   end
 

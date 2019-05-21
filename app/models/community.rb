@@ -29,6 +29,7 @@ class Community < ApplicationRecord
 
   has_many :community_images
   has_many :listings
+  has_many :units, through: :listings
   has_and_belongs_to_many :pois
 
   before_save :update_cached_data
@@ -54,6 +55,8 @@ class Community < ApplicationRecord
   scope :has_no_data_field, ->(field) { where('NOT(data ? :field)', field: field) }
   scope :has_one_of_data_fields, ->(fields) { where('data ?| :fields', field: fields) }
   scope :has_all_of_data_fields, ->(fields) { where('data ?& :fields', field: fields) }
+
+  scope :units_available, -> { joins(:units).merge(Unit.available) }
 
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',
@@ -94,6 +97,7 @@ class Community < ApplicationRecord
         postal: postal,
         country: country,
         location: {lat: lat, lon: lon},
+        units_available: units_available
       }
     end
   end
@@ -172,6 +176,10 @@ class Community < ApplicationRecord
     self.status = STATUS_DELETED
   end
 
+  def units_available
+    units.available.present?
+  end
+
   ATTRIBUTES_TO_CACHE = [
     'star_rating', 'aip', 'ccrc',
 
@@ -184,7 +192,7 @@ class Community < ApplicationRecord
     'food_restaurant_style', 'smoking',
     'amenitiy_gym', 'amenitiy_fitness_center', 'amenitiy_athletic_club',
     'amenity_indoor_pool', 'amenity_outdoor_pool',
-    'completeness', 'needs_review',
+    'completeness', 'needs_review'
   ]
 
   def update_cached_data(force = false)
@@ -197,6 +205,8 @@ class Community < ApplicationRecord
       if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
         self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
       end
+
+      self.cached_data['units_available'] = units_available
 
       if changed_attributes.include? 'related_communities' || force
         ids = (self.data['related_communities'] || "").split(/\s*,\s*/)
@@ -214,6 +224,8 @@ class Community < ApplicationRecord
         end
       end
     end
+
+    self.cached_data['units_available'] = units_available if self.cached_data
 
     return true
   end
