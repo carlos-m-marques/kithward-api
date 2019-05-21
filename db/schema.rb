@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2019_05_14_113631) do
     t.jsonb "data"
     t.string "cached_image_url", limit: 128
     t.jsonb "cached_data"
+    t.float "monthly_rent_lower_bound"
+    t.float "monthly_rent_upper_bound"
   end
 
   create_table "communities_pois", id: false, force: :cascade do |t|

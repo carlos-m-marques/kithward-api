@@ -2,24 +2,26 @@
 #
 # Table name: communities
 #
-#  id               :bigint(8)        not null, primary key
-#  name             :string(1024)
-#  description      :text
-#  street           :string(1024)
-#  street_more      :string(1024)
-#  city             :string(256)
-#  state            :string(128)
-#  postal           :string(32)
-#  country          :string(64)
-#  lat              :float
-#  lon              :float
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  care_type        :string(1)        default("?")
-#  status           :string(1)        default("?")
-#  data             :jsonb
-#  cached_image_url :string(128)
-#  cached_data      :jsonb
+#  id                       :bigint(8)        not null, primary key
+#  name                     :string(1024)
+#  description              :text
+#  street                   :string(1024)
+#  street_more              :string(1024)
+#  city                     :string(256)
+#  state                    :string(128)
+#  postal                   :string(32)
+#  country                  :string(64)
+#  lat                      :float
+#  lon                      :float
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  care_type                :string(1)        default("?")
+#  status                   :string(1)        default("?")
+#  data                     :jsonb
+#  cached_image_url         :string(128)
+#  cached_data              :jsonb
+#  monthly_rent_lower_bound :float
+#  monthly_rent_upper_bound :float
 #
 
 require 'hashdiff'
@@ -97,7 +99,8 @@ class Community < ApplicationRecord
         postal: postal,
         country: country,
         location: {lat: lat, lon: lon},
-        units_available: units_available
+        units_available: units_available,
+        monthly_rent_lower_bound: monthly_rent_lower_bound
       }
     end
   end
@@ -192,7 +195,7 @@ class Community < ApplicationRecord
     'food_restaurant_style', 'smoking',
     'amenitiy_gym', 'amenitiy_fitness_center', 'amenitiy_athletic_club',
     'amenity_indoor_pool', 'amenity_outdoor_pool',
-    'completeness', 'needs_review'
+    'completeness', 'needs_review', 'price_range'
   ]
 
   def update_cached_data(force = false)

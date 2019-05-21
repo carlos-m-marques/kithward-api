@@ -2,24 +2,26 @@
 #
 # Table name: communities
 #
-#  id               :bigint(8)        not null, primary key
-#  name             :string(1024)
-#  description      :text
-#  street           :string(1024)
-#  street_more      :string(1024)
-#  city             :string(256)
-#  state            :string(128)
-#  postal           :string(32)
-#  country          :string(64)
-#  lat              :float
-#  lon              :float
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  care_type        :string(1)        default("?")
-#  status           :string(1)        default("?")
-#  data             :jsonb
-#  cached_image_url :string(128)
-#  cached_data      :jsonb
+#  id                       :bigint(8)        not null, primary key
+#  name                     :string(1024)
+#  description              :text
+#  street                   :string(1024)
+#  street_more              :string(1024)
+#  city                     :string(256)
+#  state                    :string(128)
+#  postal                   :string(32)
+#  country                  :string(64)
+#  lat                      :float
+#  lon                      :float
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  care_type                :string(1)        default("?")
+#  status                   :string(1)        default("?")
+#  data                     :jsonb
+#  cached_image_url         :string(128)
+#  cached_data              :jsonb
+#  monthly_rent_lower_bound :float
+#  monthly_rent_upper_bound :float
 #
 
 class CommunitySerializer < Blueprinter::Base
@@ -34,8 +36,8 @@ class CommunitySerializer < Blueprinter::Base
       :lat, :lon,
       :updated_at,
       :cached_image_url, :cached_data,
-      :units_available
-
+      :units_available,
+      :monthly_rent_lower_bound
   end
 
   view 'complete' do
