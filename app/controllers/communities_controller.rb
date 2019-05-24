@@ -69,10 +69,20 @@ class CommunitiesController < ApplicationController
     search_options[:offset] = params[:offset] || 0
 
     if params[:lower_rent_bound].present? && params[:upper_rent_bound].present?
-      search_options[:where][:monthly_rent_lower_bound] = {
-        gt: params[:lower_rent_bound].to_i,
-        lt: params[:upper_rent_bound].to_i
-      }
+      search_options[:where][:_or] = [
+        {
+          monthly_rent_lower_bound: {
+            gt: params[:lower_rent_bound].to_i,
+            lt: params[:upper_rent_bound].to_i
+          } 
+        },
+        {
+          monthly_rent_upper_bound: {
+            gt: params[:lower_rent_bound].to_i,
+            lt: params[:upper_rent_bound].to_i
+          }
+        }
+      ]
     end
 
     communities = Community.search(params[:q] || "*", search_options).to_a

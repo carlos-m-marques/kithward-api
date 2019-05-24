@@ -37,7 +37,8 @@ class CommunitySerializer < Blueprinter::Base
       :updated_at,
       :cached_image_url, :cached_data,
       :units_available,
-      :monthly_rent_lower_bound
+      :monthly_rent_lower_bound,
+      :monthly_rent_upper_bound
   end
 
   view 'complete' do
