@@ -1,17 +1,10 @@
 require 'tempfile'
 
 class CommunitiesController < ApplicationController
-  before_action :admin_account_required!, except: [:index, :show, :dictionary]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near]
 
   def index
-    search_options = {
-      fields: ['name', 'description'],
-      match: :word_start,
-      where: {
-        status: Community::STATUS_ACTIVE,
-      },
-      includes: [:community_images]
-    }
+    search_options = default_search_options
 
     if accessing_account and accessing_account.is_admin?
       search_options[:where][:status] = [ Community::STATUS_ACTIVE, Community::STATUS_DRAFT ]
@@ -229,4 +222,30 @@ class CommunitiesController < ApplicationController
 
     render json: importer.to_h
   end
+
+  def near_by_ip
+    near_by_ip_service = NearByIpService.new(params[:ip], default_search_options)
+    render json: CommunitySerializer.render(near_by_ip_service.communities, view: 'simple')
+  end
+
+  def similar_near
+    similar_near_community_service = SimilarNearCommunityService.new(Community.find(params[:id]), default_search_options)
+    render json: CommunitySerializer.render(similar_near_community_service.communities, view: 'simple')
+  end
+
+  private
+
+  def default_search_options
+    {
+      fields: ['name', 'description'],
+      match: :word_start,
+      where: {
+        status: Community::STATUS_ACTIVE,
+      },
+      includes: [:community_images]
+
+    }
+  end
+
+  
 end

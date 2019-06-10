@@ -31,6 +31,7 @@ gem 'intercom', '~> 3.7.0'
 gem 'prismic.io', '~> 1.6.0'
 gem 'newrelic_rpm'
 gem 'sendgrid-ruby'
+gem 'faraday'
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do

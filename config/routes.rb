@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :communities do
       get 'dictionary', on: :collection
       post 'import', on: :collection
+      get 'near_by_ip', on: :collection
+      get 'similar_near', on: :member
 
       resources :listings
       resources :images, controller: 'community_images'

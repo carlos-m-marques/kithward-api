@@ -101,7 +101,8 @@ class Community < ApplicationRecord
         location: {lat: lat, lon: lon},
         units_available: units_available,
         monthly_rent_lower_bound: find_monthly_rent_lower_bound,
-        monthly_rent_upper_bound: find_monthly_rent_upper_bound
+        monthly_rent_upper_bound: find_monthly_rent_upper_bound,
+        cached_data: cached_data
       }
     end
   end
