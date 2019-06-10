@@ -1,19 +1,34 @@
-class SimilarNearCommunityService < SearchCommunityByLatAndLonService
+class SimilarNearCommunityService
+  attr_reader :communities
 
-  def initialize(community, search_options = nil)
-    @community = community
+  def initialize(community_base, search_options = nil)
+    return unless community_base
     @communities = []
 
-    return unless @community
+    search_options ||= default_search_options
+    search_options[:where][:location] = {near: {lat: community_base.lat, lon: community_base.lon}}
+    search_options[:order] = {_geo_distance: {location: "#{community_base.lat},#{community_base.lon}", order: :asc, unit: :mi}}
+    search_options[:limit] = 3
+    search_options[:where][:care_type] = community_base.care_type
+    search_options[:where][:location][:within] = '100mi'
+    search_options[:where]["cached_data.star_rating"] = community_base.cached_data&.dig("star_rating")
 
-    find_communities(@community.lat, @community.lon, search_options, community, 3)
+    communities_result = Community.search("*", search_options).to_a
+    return if communities_result.empty?
+    communities_result.each{|community| @communities.push(community) if !@communities.include?(community)  && community_base != community }
   end
 
   private 
 
-  def order_params
-    [
-      {star_rating: @community.cached_data&.dig("star_rating") , distance: '100mi'},
-    ]
+  def default_search_options
+    {
+      fields: ['name', 'description'],
+      match: :word_start,
+      where: {
+        status: Community::STATUS_ACTIVE,
+      },
+      includes: [:community_images]
+
+    }
   end
 end

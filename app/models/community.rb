@@ -193,6 +193,10 @@ class Community < ApplicationRecord
     units.maximum(:base_rent) || monthly_rent_upper_bound
   end
 
+  def is_related?(community)
+    data["related_communities"].to_s.split(',').include? community.id.to_s
+  end
+
   ATTRIBUTES_TO_CACHE = [
     'star_rating', 'aip', 'ccrc',
 
