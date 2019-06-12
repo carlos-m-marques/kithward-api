@@ -13,6 +13,7 @@ class NearByIpService
     search_options[:where][:location] = {near: {lat: ipdata.latitude, lon: ipdata.longitude}}
     search_options[:order] = {_geo_distance: {location: "#{ipdata.latitude},#{ipdata.longitude}", order: :asc, unit: :mi}}
     search_options[:limit] = limit
+    search_options[:where][:care_type] = Community::TYPE_INDEPENDENT
 
     order_params.each do |order_params|
       break if @communities.size >= @communities_size_limit
