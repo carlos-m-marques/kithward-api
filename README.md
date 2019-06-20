@@ -70,7 +70,6 @@ elasticsearch
 
 
 
-
 ## Heroku Notes
 
 Seed your local database from production
