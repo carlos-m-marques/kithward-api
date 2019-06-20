@@ -1,8 +1,8 @@
 class CopyProdDbToStagingService
+  PROD_APP_NAME = 'kwapi'
   class << self
-    PROD_APP_NAME = 'kwapi'
     def run
-      if !Rails.env.production? && ENV['HEROKU_APP_NAME'] != PROD_APP_NAME
+      if !Rails.env.production? && ENV['HEROKU_APP_NAME'] && ENV['HEROKU_APP_NAME'] != PROD_APP_NAME
         return false unless db_copy
         return false unless run_rails_dbmigrate
         run_rake_tasks
