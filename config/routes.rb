@@ -38,5 +38,12 @@ Rails.application.routes.draw do
 
   end
 
+  namespace :admin do
+    if Rails.env.staging?
+      get :clone_db
+    end
+  end
+
+
   get 'sitemap.xml', :to => 'sitemap#sitemap', :defaults => {:format => 'xml'}
 end

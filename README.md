@@ -143,3 +143,13 @@ But on development machines it is ok to disable this option.
 
 Edit `/usr/local/etc/elasticsearch/elasticsearch.yml` and add
 `cluster.routing.allocation.disk.threshold_enabled: false` in the `Cluster` section
+
+## Clone Prod DB notes
+
+#### Error when doing the db-cloning
+
+If there is any error when cloning, it may be that the HEROKU_API_KEY has expired
+Maybe it will need to run the following command locally again
+```
+heroku config:set HEROKU_API_KEY=`heroku auth:token` -a _HEROKU_APP_NAME_
+```
