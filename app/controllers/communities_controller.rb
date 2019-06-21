@@ -224,7 +224,7 @@ class CommunitiesController < ApplicationController
   end
 
   def near_by_ip
-    near_by_ip_service = NearByIpService.new(params[:ip], default_search_options)
+    near_by_ip_service = NearByIpService.new(request.remote_ip, default_search_options)
     render json: CommunitySerializer.render(near_by_ip_service.communities.sample(2), view: 'simple')
   end
 
