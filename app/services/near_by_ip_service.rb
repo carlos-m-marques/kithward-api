@@ -7,7 +7,7 @@ class NearByIpService
     return unless ipdata.latitude && ipdata.longitude
 
     limit = 10
-    @communities_size_limit = 2
+    @communities_size_limit = 10
 
     search_options ||= default_search_options
     search_options[:where][:location] = {near: {lat: ipdata.latitude, lon: ipdata.longitude}}
