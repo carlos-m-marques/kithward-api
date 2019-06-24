@@ -5,17 +5,10 @@ class GeoPlacesController < ApplicationController
       fields: ['name'],
       match: :word_start,
       order: {weight: :desc},
-      where: {
-        state: ['NY', 'NJ', 'CT'],
-      },
     }
 
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
-
-    if accessing_account
-      search_options[:where][:state] << 'CA'
-    end
 
     places = GeoPlace.search(params[:q], search_options)
 
