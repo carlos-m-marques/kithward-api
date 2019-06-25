@@ -22,6 +22,18 @@
 #  cached_data              :jsonb
 #  monthly_rent_lower_bound :float
 #  monthly_rent_upper_bound :float
+#  owner_id                 :bigint(8)        not null
+#  pm_system_id             :bigint(8)        not null
+#
+# Indexes
+#
+#  index_communities_on_owner_id      (owner_id)
+#  index_communities_on_pm_system_id  (pm_system_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (owner_id => owners.id)
+#  fk_rails_...  (pm_system_id => pm_systems.id)
 #
 
 require 'hashdiff'
@@ -33,6 +45,8 @@ class Community < ApplicationRecord
   has_many :listings
   has_many :units, through: :listings
   has_and_belongs_to_many :pois
+  belongs_to :owner
+  belongs_to :pm_system
 
   before_save :update_cached_data
 

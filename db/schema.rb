@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_203751) do
+ActiveRecord::Schema.define(version: 2019_06_25_231347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -71,6 +71,10 @@ ActiveRecord::Schema.define(version: 2019_06_25_203751) do
     t.jsonb "cached_data"
     t.float "monthly_rent_lower_bound"
     t.float "monthly_rent_upper_bound"
+    t.bigint "owner_id", null: false
+    t.bigint "pm_system_id", null: false
+    t.index ["owner_id"], name: "index_communities_on_owner_id"
+    t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end
 
   create_table "communities_pois", id: false, force: :cascade do |t|
@@ -201,5 +205,7 @@ ActiveRecord::Schema.define(version: 2019_06_25_203751) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "communities", "owners"
+  add_foreign_key "communities", "pm_systems"
   add_foreign_key "owners", "pm_systems"
 end
