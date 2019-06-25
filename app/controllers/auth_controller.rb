@@ -3,7 +3,7 @@ require 'json_web_token'
 
 class AuthController < ApplicationController
   def login
-    account = Account.find_by_email(params[:email])
+    account = Account.insensitive_find_by_email(params[:email])
     if params[:password].present?
       if !account && params[:name] # no need for name.present? because it can be blank
         # sign up!
@@ -51,7 +51,7 @@ class AuthController < ApplicationController
   end
 
   def request_verification
-    account = Account.find_by_email(params[:email])
+    account = Account.insensitive_find_by_email(params[:email])
     if account
       account.generate_verification_email(params.permit(:reason))
     end

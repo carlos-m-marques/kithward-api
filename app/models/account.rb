@@ -25,7 +25,7 @@ class Account < ApplicationRecord
   has_secure_password(validations: false)
   has_paper_trail
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: {case_sensitive: false}
 
   after_save :send_verification_email_if_needed
 
@@ -102,5 +102,9 @@ class Account < ApplicationRecord
       return true
     end
     return false
+  end
+
+  def self.insensitive_find_by_email(email)
+    Account.where("lower(email) = ?", email.downcase).first
   end
 end
