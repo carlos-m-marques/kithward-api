@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_14_113631) do
+ActiveRecord::Schema.define(version: 2019_06_25_203751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -139,6 +139,25 @@ ActiveRecord::Schema.define(version: 2019_05_14_113631) do
     t.index ["community_id"], name: "index_listings_on_community_id"
   end
 
+  create_table "owners", force: :cascade do |t|
+    t.string "name"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.bigint "pm_system_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pm_system_id"], name: "index_owners_on_pm_system_id"
+  end
+
+  create_table "pm_systems", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "poi_categories", force: :cascade do |t|
     t.string "name", limit: 128
   end
@@ -182,4 +201,5 @@ ActiveRecord::Schema.define(version: 2019_05_14_113631) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "owners", "pm_systems"
 end
