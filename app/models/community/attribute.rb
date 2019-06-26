@@ -19,5 +19,6 @@ class Community::Attribute < ApplicationRecord
   include Community::Base
 
   belongs_to :community_class
+  has_many :community_attribute_values
   validates_presence_of :name, :priority
 end
