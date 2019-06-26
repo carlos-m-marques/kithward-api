@@ -3,7 +3,7 @@
 # Table name: owners
 #
 #  id           :bigint(8)        not null, primary key
-#  name         :string
+#  name         :string           not null
 #  address1     :string
 #  address2     :string
 #  city         :string
