@@ -13,5 +13,7 @@
 class Community::Class < ApplicationRecord
   include Community::Base
 
+  has_many :community_attributes
+
   validates_presence_of :name
 end
