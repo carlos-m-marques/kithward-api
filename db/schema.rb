@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_25_231347) do
+ActiveRecord::Schema.define(version: 2019_06_26_000836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -56,10 +56,10 @@ ActiveRecord::Schema.define(version: 2019_06_25_231347) do
     t.text "description"
     t.string "street", limit: 1024
     t.string "street_more", limit: 1024
-    t.string "city", limit: 256
-    t.string "state", limit: 128
-    t.string "postal", limit: 32
-    t.string "country", limit: 64
+    t.string "city", limit: 256, null: false
+    t.string "state", limit: 128, null: false
+    t.string "postal", limit: 32, null: false
+    t.string "country", limit: 64, null: false
     t.float "lat"
     t.float "lon"
     t.datetime "created_at", null: false
@@ -73,6 +73,11 @@ ActiveRecord::Schema.define(version: 2019_06_25_231347) do
     t.float "monthly_rent_upper_bound"
     t.bigint "owner_id", null: false
     t.bigint "pm_system_id", null: false
+    t.string "region", null: false
+    t.string "metro"
+    t.string "borough"
+    t.string "county", null: false
+    t.string "township"
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end

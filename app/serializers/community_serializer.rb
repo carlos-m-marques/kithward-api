@@ -7,10 +7,10 @@
 #  description              :text
 #  street                   :string(1024)
 #  street_more              :string(1024)
-#  city                     :string(256)
-#  state                    :string(128)
-#  postal                   :string(32)
-#  country                  :string(64)
+#  city                     :string(256)      not null
+#  state                    :string(128)      not null
+#  postal                   :string(32)       not null
+#  country                  :string(64)       not null
 #  lat                      :float
 #  lon                      :float
 #  created_at               :datetime         not null
@@ -24,6 +24,11 @@
 #  monthly_rent_upper_bound :float
 #  owner_id                 :bigint(8)        not null
 #  pm_system_id             :bigint(8)        not null
+#  region                   :string           not null
+#  metro                    :string
+#  borough                  :string
+#  county                   :string           not null
+#  township                 :string
 #
 # Indexes
 #
@@ -44,7 +49,7 @@ class CommunitySerializer < Blueprinter::Base
       :name,
       :slug,
       :care_type,
-      :street, :street_more, :city, :state, :postal, :country,
+      :street, :street_more, :postal, :township, :city, :county, :borough, :state, :metro, :region, :country,
       :lat, :lon,
       :updated_at,
       :cached_image_url, :cached_data,
