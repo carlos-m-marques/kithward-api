@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_26_162613) do
+ActiveRecord::Schema.define(version: 2019_06_26_184720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -87,6 +87,16 @@ ActiveRecord::Schema.define(version: 2019_06_26_162613) do
     t.bigint "poi_id", null: false
     t.index ["community_id"], name: "index_communities_pois_on_community_id"
     t.index ["poi_id"], name: "index_communities_pois_on_poi_id"
+  end
+
+  create_table "community_attributes", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "priority", null: false
+    t.bigint "community_class_id", null: false
+    t.boolean "is_required", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_class_id"], name: "index_community_attributes_on_community_class_id"
   end
 
   create_table "community_classes", force: :cascade do |t|
@@ -170,7 +180,7 @@ ActiveRecord::Schema.define(version: 2019_06_26_162613) do
   end
 
   create_table "pm_systems", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
