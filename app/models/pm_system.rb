@@ -11,5 +11,5 @@
 class PmSystem < ApplicationRecord
   has_many :owners
 
-  validates :name, presence: true
+  validates_presence_of :name
 end

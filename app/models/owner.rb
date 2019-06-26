@@ -25,5 +25,5 @@
 class Owner < ApplicationRecord
   belongs_to :pm_system
 
-  validates :name, presence: true
+  validates_presence_of :name
 end
