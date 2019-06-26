@@ -10,4 +10,6 @@
 
 class PmSystem < ApplicationRecord
   has_many :owners
+
+  validates :name, presence: true
 end
