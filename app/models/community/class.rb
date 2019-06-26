@@ -12,4 +12,6 @@
 
 class Community::Class < ApplicationRecord
   include Community::Base
+
+  validates_presence_of :name
 end
