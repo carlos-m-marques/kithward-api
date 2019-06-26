@@ -15,8 +15,7 @@
 #  index_community_attributes_on_community_class_id  (community_class_id)
 #
 
-class Community::Attribute < ApplicationRecord
-  include Community::Base
+class CommunityAttribute < ApplicationRecord
 
   belongs_to :community_class
   has_many :community_attribute_values

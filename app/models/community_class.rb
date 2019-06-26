@@ -10,10 +10,8 @@
 #  updated_at  :datetime         not null
 #
 
-require 'test_helper'
+class CommunityClass < ApplicationRecord
+  has_many :community_attributes
 
-class Community::ClassTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  validates_presence_of :name
 end

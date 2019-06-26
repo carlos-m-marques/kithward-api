@@ -11,7 +11,7 @@
 #
 
 FactoryBot.define do
-  factory :community_class, class: 'Community::Class' do
+  factory :community_class do
     
   end
 end

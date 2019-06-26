@@ -17,7 +17,7 @@
 
 require 'test_helper'
 
-class Community::AttributeTest < ActiveSupport::TestCase
+class CommunityAttributeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

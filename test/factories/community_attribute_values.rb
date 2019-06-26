@@ -15,7 +15,7 @@
 #
 
 FactoryBot.define do
-  factory :community_attribute_value, class: 'Community::AttributeValue' do
+  factory :community_attribute_value do
     
   end
 end

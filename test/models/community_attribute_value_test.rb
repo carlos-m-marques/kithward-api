@@ -14,9 +14,10 @@
 #  index_community_attribute_values_on_community_attribute_id  (community_attribute_id)
 #
 
-class Community::AttributeValue < ApplicationRecord
-  include Community::Base
+require 'test_helper'
 
-  belongs_to :community_attribute
-  validates_presence_of :name, :priority
+class CommunityAttributeValueTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
