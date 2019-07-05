@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       get 'near_by_ip', on: :collection
       get 'similar_near', on: :member
 
+      get 'by_area', on: :collection
+
       resources :listings
       resources :images, controller: 'community_images'
       resources :pois, controller: 'community_pois'

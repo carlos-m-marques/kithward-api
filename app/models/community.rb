@@ -121,22 +121,16 @@ class Community < ApplicationRecord
                 default_fields: ['name', 'description'],
                 locations: ['location']
 
+    scope :search_import, -> { includes([:listings, :units]) }
+
     def search_data
-      {
-        name: name,
-        description: description,
-        care_type: care_type,
-        status: status,
-        city: city,
-        state: state,
-        postal: postal,
-        country: country,
-        location: {lat: lat, lon: lon},
-        units_available: units_available,
-        monthly_rent_lower_bound: find_monthly_rent_lower_bound,
-        monthly_rent_upper_bound: find_monthly_rent_upper_bound,
-        cached_data: cached_data
-      }
+      attributes.merge({ 
+        "location" => {lat: lat, lon: lon}, 
+        "listings" => listings,
+        "units_available" => units_available,
+        "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
+        "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
+      })
     end
   end
 

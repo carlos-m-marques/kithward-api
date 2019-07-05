@@ -33,6 +33,15 @@ class Listing < ApplicationRecord
   STATUS_DRAFT     = '?'
   STATUS_DELETED   = 'X'
 
+  def field_mapping
+    {
+      name: name,
+      status: status,
+      sort_order: sort_order,
+      data: data,
+    }
+  end
+
   def is_active?
     status == STATUS_ACTIVE
   end

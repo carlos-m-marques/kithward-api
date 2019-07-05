@@ -1,7 +1,7 @@
 require 'tempfile'
 
 class CommunitiesController < ApplicationController
-  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area]
 
   def index
     search_options = default_search_options
@@ -156,6 +156,7 @@ class CommunitiesController < ApplicationController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
+      community.reindex
       render json: CommunitySerializer.render(community, view: 'complete')
     end
   end
@@ -194,6 +195,7 @@ class CommunitiesController < ApplicationController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
+      community.reindex
       render json: CommunitySerializer.render(community, view: 'complete')
     end
   end
@@ -231,6 +233,16 @@ class CommunitiesController < ApplicationController
   def similar_near
     similar_near_community_service = SimilarNearCommunityService.new(Community.find(params[:id]), default_search_options)
     render json: CommunitySerializer.render(similar_near_community_service.communities, view: 'simple')
+  end
+
+  def by_area
+    render json: { errors: "Missing parameter 'type' and/or 'value'"}, status: 404 and return if [params[:type], params[:value]].any?(&:blank?)
+    render json: { errors: 'Wrong type value'}, status: 404 and return if !Community::ByArea::ALLOWED_AREAS.include?(params[:type].to_s)
+    search_result = Community::ByArea.search(type: params[:type].to_s, value: params[:value]) do |search_options|
+      search_options[:limit] = params[:limit] if params[:limit]
+      search_options
+    end
+    render json: search_result.results
   end
 
   private
