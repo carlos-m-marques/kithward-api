@@ -236,13 +236,9 @@ class CommunitiesController < ApplicationController
   end
 
   def by_area
-    render json: { errors: "Missing parameter 'type' and/or 'value'"}, status: 404 and return if [params[:type], params[:value]].any?(&:blank?)
-    render json: { errors: 'Wrong type value'}, status: 404 and return if !Community::ByArea::ALLOWED_AREAS.include?(params[:type].to_s)
-    search_result = Community::ByArea.search(type: params[:type].to_s, value: params[:value]) do |search_options|
-      search_options[:limit] = params[:limit] if params[:limit]
-      search_options
-    end
-    render json: search_result.results
+    by_area_service = Community::ByAreaService.search(type: params[:type].to_s, value: params[:value], params: params)
+    render json: { errors: by_area_service.error }, status: 404 and return unless by_area_service.valid?
+    render json: by_area_service.values
   end
 
   private
