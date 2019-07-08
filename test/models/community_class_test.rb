@@ -7,11 +7,11 @@
 #  priority         :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  is_care_type_il? :boolean
-#  is_care_type_al? :boolean
-#  is_care_type_sn? :boolean
-#  is_care_type_mc? :boolean
-#  is_care_type_un? :boolean
+#  is_care_type_il? :boolean          default(FALSE), not null
+#  is_care_type_al? :boolean          default(FALSE), not null
+#  is_care_type_sn? :boolean          default(FALSE), not null
+#  is_care_type_mc? :boolean          default(FALSE), not null
+#  is_care_type_un? :boolean          default(FALSE), not null
 #
 
 require 'test_helper'

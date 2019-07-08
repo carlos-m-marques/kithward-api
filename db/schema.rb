@@ -111,11 +111,11 @@ ActiveRecord::Schema.define(version: 2019_07_08_231642) do
     t.bigint "community_class_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_care_type_il?"
-    t.boolean "is_care_type_al?"
-    t.boolean "is_care_type_sn?"
-    t.boolean "is_care_type_mc?"
-    t.boolean "is_care_type_un?"
+    t.boolean "is_care_type_il?", default: false, null: false
+    t.boolean "is_care_type_al?", default: false, null: false
+    t.boolean "is_care_type_sn?", default: false, null: false
+    t.boolean "is_care_type_mc?", default: false, null: false
+    t.boolean "is_care_type_un?", default: false, null: false
     t.index ["community_class_id"], name: "index_community_attributes_on_community_class_id"
   end
 
@@ -124,11 +124,11 @@ ActiveRecord::Schema.define(version: 2019_07_08_231642) do
     t.integer "priority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_care_type_il?"
-    t.boolean "is_care_type_al?"
-    t.boolean "is_care_type_sn?"
-    t.boolean "is_care_type_mc?"
-    t.boolean "is_care_type_un?"
+    t.boolean "is_care_type_il?", default: false, null: false
+    t.boolean "is_care_type_al?", default: false, null: false
+    t.boolean "is_care_type_sn?", default: false, null: false
+    t.boolean "is_care_type_mc?", default: false, null: false
+    t.boolean "is_care_type_un?", default: false, null: false
   end
 
   create_table "community_images", force: :cascade do |t|
