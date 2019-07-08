@@ -6,9 +6,13 @@
 #  name               :string           not null
 #  priority           :integer          not null
 #  community_class_id :bigint(8)        not null
-#  is_required        :boolean          default(FALSE), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  is_care_type_il?   :boolean
+#  is_care_type_al?   :boolean
+#  is_care_type_sn?   :boolean
+#  is_care_type_mc?   :boolean
+#  is_care_type_un?   :boolean
 #
 # Indexes
 #
