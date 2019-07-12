@@ -1,16 +1,12 @@
 class Community::ByAreaService
   RESULT = Struct.new(:valid?, :error, :values)
-  ALLOWED_AREAS = ["country", "state", "city", "region", "metro", "borough", "county", "township", "postal"]
 
   def self.search(type:, value:, params: {})
-    return error("Missing 'type' and/or 'value'.") unless type.present? && value.present?
-    return error("Wrong type value. The following are valid: #{ALLOWED_AREAS.join(' , ')}.") unless ALLOWED_AREAS.include?(type.to_s)
     search_options = {
       load: false,
       limit: 100
     }
     search_options.merge!(optional_search(params))
-    search_options[:where].merge!({ "#{type}": value })
     response = build_response Community.search('*', search_options.deep_symbolize_keys)
     RESULT.new(true, nil, response)
   end
@@ -33,7 +29,6 @@ class Community::ByAreaService
     options = {}
     return options if !params[:where]
     where_params = params[:where].to_unsafe_h
-    ALLOWED_AREAS.each {|area| where_params.delete(area); where_params.delete(area.to_sym) }
     options.merge! set_price_range(where_params.delete(:lower_rent_bound), where_params.delete(:upper_rent_bound))
     options[:care_type] = set_care_type(where_params.delete(:care_type)) if where_params[:care_type]
     options.merge! where_params
