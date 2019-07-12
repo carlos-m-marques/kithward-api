@@ -30,8 +30,9 @@ class Community::ByAreaService
   end
 
   def self.sanitized_where_params(params)
-    where_params = params[:where].to_unsafe_h
     options = {}
+    return options if !params[:where]
+    where_params = params[:where].to_unsafe_h
     ALLOWED_AREAS.each {|area| where_params.delete(area); where_params.delete(area.to_sym) }
     options.merge! set_price_range(where_params.delete(:lower_rent_bound), where_params.delete(:upper_rent_bound))
     options[:care_type] = set_care_type(where_params.delete(:care_type)) if where_params[:care_type]
