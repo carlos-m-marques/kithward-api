@@ -50,7 +50,6 @@ class Community < ApplicationRecord
   has_many :listings
   has_many :units, through: :listings
   has_and_belongs_to_many :pois
-  has_and_belongs_to_many :community_attribute_values
   belongs_to :owner
   belongs_to :pm_system
 
