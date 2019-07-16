@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_203923) do
+ActiveRecord::Schema.define(version: 2019_07_16_185231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -164,6 +164,23 @@ ActiveRecord::Schema.define(version: 2019_07_15_203923) do
     t.boolean "is_unit_type", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "kw_super_class_id"
+    t.index ["kw_super_class_id"], name: "index_kw_classes_on_kw_super_class_id"
+  end
+
+  create_table "kw_super_classes", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "is_care_type_il?", default: false, null: false
+    t.boolean "is_care_type_sn?", default: false, null: false
+    t.boolean "is_care_type_mc?", default: false, null: false
+    t.boolean "is_care_type_al?", default: false, null: false
+    t.boolean "is_owner?", default: false, null: false
+    t.boolean "is_community?", default: false, null: false
+    t.boolean "is_building?", default: false, null: false
+    t.boolean "is_unit?", default: false, null: false
+    t.boolean "is_unit_type?", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "kw_values", force: :cascade do |t|
@@ -312,6 +329,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_203923) do
   add_foreign_key "communities", "owners"
   add_foreign_key "communities", "pm_systems"
   add_foreign_key "kw_attributes", "kw_classes"
+  add_foreign_key "kw_classes", "kw_super_classes"
   add_foreign_key "kw_values", "kw_attributes"
   add_foreign_key "owners", "pm_systems"
   add_foreign_key "unit_types", "communities"
