@@ -22,7 +22,8 @@ class Community::ByAreaService
       options[:limit] = params[:limit] if params[:limit]
       options[:page] = params[:page] if params[:page]
       options[:order] = { _score: :desc }
-      options[:order].merge! params[:order] ? sort_order(params[:order]) : {_id: :desc}
+      options[:order].merge!(sort_order(params[:order])) if params[:order]
+      options[:order].merge!({_id: :desc})
       options[:where] = sanitized_where_params(params)
     end
   end
