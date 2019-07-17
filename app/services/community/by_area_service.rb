@@ -21,7 +21,19 @@ class Community::ByAreaService
     {}.tap do |options|
       options[:limit] = params[:limit] if params[:limit]
       options[:page] = params[:page] if params[:page]
+      options[:order] = { _score: :desc }
+      options[:order].merge! params[:order] ? sort_order(params[:order]) : {_id: :desc}
       options[:where] = sanitized_where_params(params)
+    end
+  end
+
+  def self.sort_order(params_order)
+    orders = params_order.to_s.split(',')
+    {}.tap do |orders_hash| 
+      orders.each do |order|
+        field, direction = order.split(':')
+        orders_hash[field.to_sym] = direction ? direction.to_sym : :desc
+      end
     end
   end
 
