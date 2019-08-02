@@ -124,8 +124,8 @@ class Community < ApplicationRecord
     scope :search_import, -> { includes([:listings, :units]) }
 
     def search_data
-      attributes.merge({ 
-        "location" => {lat: lat, lon: lon}, 
+      attributes.merge({
+        "location" => {lat: lat, lon: lon},
         "listings" => listings,
         "units_available" => units_available,
         "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
@@ -213,11 +213,11 @@ class Community < ApplicationRecord
   end
 
   def find_monthly_rent_lower_bound
-    units.minimum(:base_rent) || monthly_rent_lower_bound
+    units.minimum(:rent_market) || monthly_rent_lower_bound
   end
 
   def find_monthly_rent_upper_bound
-    units.maximum(:base_rent) || monthly_rent_upper_bound
+    units.maximum(:rent_market) || monthly_rent_upper_bound
   end
 
   def is_related?(community)

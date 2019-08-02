@@ -67,7 +67,7 @@ class CommunitiesController < ApplicationController
           monthly_rent_lower_bound: {
             gt: params[:lower_rent_bound].to_i,
             lt: params[:upper_rent_bound].to_i
-          } 
+          }
         },
         {
           monthly_rent_upper_bound: {
@@ -123,7 +123,8 @@ class CommunitiesController < ApplicationController
       :care_type, :status,
       :name, :description,
       :street, :street_more, :city, :state, :postal, :country,
-      :lat, :lon, :website, :phone, :fax, :email
+      :lat, :lon, :website, :phone, :fax, :email, :community,
+      :classes, :listings, :region, :metro, :borough, :county, :township
     )
 
     if params[:data]
@@ -255,5 +256,5 @@ class CommunitiesController < ApplicationController
     }
   end
 
-  
+
 end
