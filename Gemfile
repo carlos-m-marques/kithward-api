@@ -37,7 +37,7 @@ gem 'faraday'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
-
+  gem 'rails-erd'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'mocha'
   gem 'dotenv-rails'

@@ -16,7 +16,7 @@
 #  index_listings_on_community_id  (community_id)
 #
 
-class Listing < ApplicationRecord
+class Listing < ApplicationRecord  
   has_paper_trail
 
   belongs_to :community

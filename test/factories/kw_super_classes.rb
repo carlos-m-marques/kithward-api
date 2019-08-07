@@ -2,19 +2,17 @@
 #
 # Table name: kw_super_classes
 #
-#  id               :bigint(8)        not null, primary key
-#  name             :string           not null
-#  is_care_type_il? :boolean          default(FALSE), not null
-#  is_care_type_sn? :boolean          default(FALSE), not null
-#  is_care_type_mc? :boolean          default(FALSE), not null
-#  is_care_type_al? :boolean          default(FALSE), not null
-#  is_owner?        :boolean          default(FALSE), not null
-#  is_community?    :boolean          default(FALSE), not null
-#  is_building?     :boolean          default(FALSE), not null
-#  is_unit?         :boolean          default(FALSE), not null
-#  is_unit_type?    :boolean          default(FALSE), not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id         :bigint(8)        not null, primary key
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  type       :string
+#  care_type  :string
+#
+# Indexes
+#
+#  index_kw_super_classes_on_care_type  (care_type)
+#  index_kw_super_classes_on_type       (type)
 #
 
 FactoryBot.define do

@@ -23,10 +23,23 @@
 
 class Unit < ApplicationRecord
 	belongs_to :listing
-	
-	delegate :community, to: :listing
+	belongs_to :building
+	belongs_to :unit_type
+
+	has_and_belongs_to_many :kw_values
+  has_many :kw_attributes, through: :kw_values
+  has_many :kw_classes, through: :kw_attributes
+  has_many :unit_super_classes, through: :kw_classes, source: :kw_super_class, class_name: 'UnitSuperClass'
 
 	scope :available, -> { where(is_available: true) }
 
 	accepts_nested_attributes_for :listing
+
+	validates :name, :building, :unit, :unit_number, presence: true
+
+	delegate :community, to: :building
+
+	def super_classes
+		UnitSuperClass
+	end
 end

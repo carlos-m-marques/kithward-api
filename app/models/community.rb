@@ -53,6 +53,11 @@ class Community < ApplicationRecord
   belongs_to :owner
   belongs_to :pm_system
 
+  has_and_belongs_to_many :kw_values
+  has_many :kw_attributes, through: :kw_values
+  has_many :kw_classes, through: :kw_attributes
+  has_many :community_super_classes, through: :kw_classes, source: :kw_super_class, class_name: 'CommunitySuperClass'
+
   before_save :update_cached_data
 
   STATUS_ACTIVE    = 'A'
@@ -67,6 +72,14 @@ class Community < ApplicationRecord
   TYPE_NURSING     = 'N'
   TYPE_MEMORY      = 'M'
 
+  CARE_TYPES = [
+    TYPE_UNKNOWN,
+    TYPE_INDEPENDENT,
+    TYPE_ASSISTED,
+    TYPE_NURSING,
+    TYPE_MEMORY
+  ].freeze
+
   scope :care_type_il, -> { where(care_type: TYPE_INDEPENDENT) }
   scope :care_type_al, -> { where(care_type: TYPE_ASSISTED) }
   scope :care_type_sn, -> { where(care_type: TYPE_NURSING) }
@@ -80,6 +93,7 @@ class Community < ApplicationRecord
   scope :units_available, -> { joins(:units).merge(Unit.available) }
 
   validates_presence_of :country, :region, :state, :county, :city, :postal, :name
+  validates :care_type, inclusion: { in: Community::CARE_TYPES }
 
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',
@@ -94,6 +108,10 @@ class Community < ApplicationRecord
     TYPE_NURSING => 'Skilled Nursing',
     TYPE_MEMORY => 'Memory Care',
   }
+
+  def super_classes
+    CommunitySuperClass.with_care_type(self.care_type)
+  end
 
   def metro
     super || self.city

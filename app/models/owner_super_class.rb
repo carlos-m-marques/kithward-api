@@ -15,10 +15,5 @@
 #  index_kw_super_classes_on_type       (type)
 #
 
-require 'test_helper'
-
-class KwSuperClassTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class OwnerSuperClass < KwSuperClass
 end

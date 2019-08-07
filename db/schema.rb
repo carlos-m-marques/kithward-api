@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_16_185231) do
+ActiveRecord::Schema.define(version: 2019_08_07_202601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -64,6 +64,14 @@ ActiveRecord::Schema.define(version: 2019_07_16_185231) do
     t.bigint "kw_value_id", null: false
     t.index ["building_id", "kw_value_id"], name: "index_buildings_kw_values_on_building_id_and_kw_value_id"
     t.index ["kw_value_id", "building_id"], name: "index_buildings_kw_values_on_kw_value_id_and_building_id"
+  end
+
+  create_table "c_attributes", force: :cascade do |t|
+    t.string "value"
+    t.string "care_type"
+    t.string "c_attributable_type"
+    t.bigint "c_attributable_id"
+    t.index ["c_attributable_type", "c_attributable_id"], name: "index_c_attributes_on_c_attributable_type_and_c_attributable_id"
   end
 
   create_table "communities", force: :cascade do |t|
@@ -137,15 +145,6 @@ ActiveRecord::Schema.define(version: 2019_07_16_185231) do
   create_table "kw_attributes", force: :cascade do |t|
     t.bigint "kw_class_id"
     t.string "name", null: false
-    t.boolean "is_care_type_il", default: false, null: false
-    t.boolean "is_care_type_sn", default: false, null: false
-    t.boolean "is_care_type_mc", default: false, null: false
-    t.boolean "is_care_type_al", default: false, null: false
-    t.boolean "is_owner", default: false, null: false
-    t.boolean "is_community", default: false, null: false
-    t.boolean "is_building", default: false, null: false
-    t.boolean "is_unit", default: false, null: false
-    t.boolean "is_unit_type", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kw_class_id"], name: "index_kw_attributes_on_kw_class_id"
@@ -153,15 +152,6 @@ ActiveRecord::Schema.define(version: 2019_07_16_185231) do
 
   create_table "kw_classes", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "is_care_type_il", default: false, null: false
-    t.boolean "is_care_type_sn", default: false, null: false
-    t.boolean "is_care_type_mc", default: false, null: false
-    t.boolean "is_care_type_al", default: false, null: false
-    t.boolean "is_owner", default: false, null: false
-    t.boolean "is_community", default: false, null: false
-    t.boolean "is_building", default: false, null: false
-    t.boolean "is_unit", default: false, null: false
-    t.boolean "is_unit_type", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "kw_super_class_id"
@@ -170,31 +160,17 @@ ActiveRecord::Schema.define(version: 2019_07_16_185231) do
 
   create_table "kw_super_classes", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "is_care_type_il?", default: false, null: false
-    t.boolean "is_care_type_sn?", default: false, null: false
-    t.boolean "is_care_type_mc?", default: false, null: false
-    t.boolean "is_care_type_al?", default: false, null: false
-    t.boolean "is_owner?", default: false, null: false
-    t.boolean "is_community?", default: false, null: false
-    t.boolean "is_building?", default: false, null: false
-    t.boolean "is_unit?", default: false, null: false
-    t.boolean "is_unit_type?", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
+    t.string "care_type"
+    t.index ["care_type"], name: "index_kw_super_classes_on_care_type"
+    t.index ["type"], name: "index_kw_super_classes_on_type"
   end
 
   create_table "kw_values", force: :cascade do |t|
     t.bigint "kw_attribute_id"
     t.string "name"
-    t.boolean "is_care_type_il", default: false, null: false
-    t.boolean "is_care_type_sn", default: false, null: false
-    t.boolean "is_care_type_mc", default: false, null: false
-    t.boolean "is_care_type_al", default: false, null: false
-    t.boolean "is_owner", default: false, null: false
-    t.boolean "is_community", default: false, null: false
-    t.boolean "is_building", default: false, null: false
-    t.boolean "is_unit", default: false, null: false
-    t.boolean "is_unit_type", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kw_attribute_id"], name: "index_kw_values_on_kw_attribute_id"
@@ -264,7 +240,7 @@ ActiveRecord::Schema.define(version: 2019_07_16_185231) do
   end
 
   create_table "pm_systems", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

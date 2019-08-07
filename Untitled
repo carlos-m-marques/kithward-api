@@ -1,0 +1,6 @@
+rake erd orientation=vertical inheritance=true attributes="foreign_keys, primary_keys, inheritance, content" indirect=true only="Community, Building, BuildingSuperClass, Unit, UnitSuperClass, UnitType, UnitTypeSuperClass, Owner, OwnerSuperClass, KwValue, KwAttribute, KwSuperClass, KwClass"
+
+rake erd orientation=vertical inheritance=true indirect=true only="CommunitySuperClass, BuildingSuperClass, UnitSuperClass, UnitTypeSuperClass, OwnerSuperClass, KwValue, KwAttribute, KwClass, KwSuperClass"
+
+
+rake erd title="Attributes" orientation=vertical inheritance=true indirect=true attributes="foreign_keys, inheritance" only="CommunitySuperClass, BuildingSuperClass, UnitSuperClass, UnitTypeSuperClass, OwnerSuperClass, KwValue, KwAttribute, KwClass, Community"

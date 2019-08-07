@@ -169,7 +169,7 @@ class CommunitiesController < ApplicationController
       :care_type, :status,
       :name, :description,
       :street, :street_more, :city, :state, :postal, :country,
-      :lat, :lon, :website, :phone, :fax, :email
+      :lat, :lon, :website, :phone, :fax, :email, kw_values_ids: []
     )
 
     if params[:data]
