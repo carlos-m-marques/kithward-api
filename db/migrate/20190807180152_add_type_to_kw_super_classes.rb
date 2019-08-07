@@ -19,6 +19,7 @@ class AddTypeToKwSuperClasses < ActiveRecord::Migration[5.2]
 
 
     KwSuperClass.update_all(type: 'CommunitySuperClass')
+    KwSuperClass.update_all(care_type: 'I')
   end
 
   def down
