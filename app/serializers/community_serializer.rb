@@ -65,7 +65,7 @@ class CommunitySerializer < Blueprinter::Base
     field :description
     field :data
 
-    field :super_classes, blueprint: KwSuperClassSerializer
+    association :super_classes, blueprint: KwSuperClassSerializer
 
     association :listings, blueprint: ListingSerializer
     association :community_images, name: :images, blueprint: CommunityImageSerializer
