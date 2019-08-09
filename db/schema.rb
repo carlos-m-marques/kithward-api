@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_07_202601) do
+ActiveRecord::Schema.define(version: 2019_08_08_180152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -163,8 +163,10 @@ ActiveRecord::Schema.define(version: 2019_08_07_202601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
-    t.string "care_type"
-    t.index ["care_type"], name: "index_kw_super_classes_on_care_type"
+    t.boolean "independent_living", default: false, null: false
+    t.boolean "assisted_living", default: false, null: false
+    t.boolean "skilled_nursing", default: false, null: false
+    t.boolean "memory_care", default: false, null: false
     t.index ["type"], name: "index_kw_super_classes_on_type"
   end
 

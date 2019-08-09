@@ -14,11 +14,11 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'searchkick', '~> 3.1'
 gem 'paper_trail', '~> 9.0'
 gem 'paper_trail-hashdiff'
+gem 'kaminari', '~> 0.17.0'
 
 #== UTILITIES ==============================
-gem 'fast_jsonapi', '~> 1.5'
 gem 'oj', '~> 3.6'
-gem 'blueprinter', '~> 0.9'
+gem 'blueprinter', '0.9.0'
 gem 'jwt'
 gem 'hashdiff'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
@@ -48,6 +48,4 @@ group :development do
 
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
-  gem 'annotate', '~> 2.7.0'
 end

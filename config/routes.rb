@@ -38,6 +38,11 @@ Rails.application.routes.draw do
       match 'request_verification', to: 'auth#request_verification', via: [:post]
     end
 
+    namespace :admin do
+      resources :communities do
+        resources :listings
+      end
+    end
   end
 
   namespace :admin do
