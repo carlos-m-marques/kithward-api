@@ -36,6 +36,8 @@ module Admin
       association :super_classes, blueprint: Admin::KwSuperClassSerializer
       association :community_super_classes, blueprint: Admin::KwSuperClassSerializer
 
+      association :kw_values, blueprint: Admin::KwValueSerializer
+
       association :listings, blueprint: ListingSerializer
       association :community_images, name: :images, blueprint: CommunityImageSerializer
       association :pois, blueprint: PoiSerializer
