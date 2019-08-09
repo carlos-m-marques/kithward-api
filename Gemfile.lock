@@ -193,7 +193,7 @@ GEM
       hashie
     sendgrid-ruby (6.0.0)
       ruby_http_client (~> 3.3.0)
-    sentry-raven (2.11.0)
+    sentry-raven (2.7.4)
       faraday (>= 0.7.6, < 1.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
@@ -246,7 +246,7 @@ DEPENDENCIES
   rails-erd
   searchkick (~> 3.1)
   sendgrid-ruby
-  sentry-raven
+  sentry-raven (= 2.7.4)
   spring
   spring-watcher-listen (~> 2.0.0)
 
