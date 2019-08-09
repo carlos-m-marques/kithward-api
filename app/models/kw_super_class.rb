@@ -3,6 +3,8 @@ class KwSuperClass < ApplicationRecord
 
   has_many :kw_classes
 
+  default_scope -> { includes(kw_classes: { kw_attributes: [:kw_values] }) }
+
   scope :independent_living, ->{ where(independent_living: true) }
   scope :assisted_living, ->{ where(assisted_living: true) }
   scope :skilled_nursing, ->{ where(skilled_nursing: true) }

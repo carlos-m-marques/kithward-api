@@ -34,6 +34,7 @@ module Admin
       field :data
 
       association :super_classes, blueprint: Admin::KwSuperClassSerializer
+      association :community_super_classes, blueprint: Admin::KwSuperClassSerializer
 
       association :listings, blueprint: ListingSerializer
       association :community_images, name: :images, blueprint: CommunityImageSerializer

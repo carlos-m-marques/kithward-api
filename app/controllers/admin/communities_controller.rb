@@ -41,7 +41,7 @@ module Admin
         :name, :description,
         :street, :street_more, :city, :state, :postal, :country,
         :lat, :lon, :website, :phone, :fax, :email, :community,
-        :classes, :listings, :region, :metro, :borough, :county, :township
+        :classes, :listings, :region, :metro, :borough, :county, :township, kw_value_ids: []
       )
 
       if params[:data]
