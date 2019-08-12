@@ -39,6 +39,7 @@ class Community < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
   scope :recently_updated, -> { order(updated_at: :desc) }
+  scope :by_column, ->(column = :created_at, direction = :desc) { order(column => direction) }
 
   scope :care_type_il, -> { where(care_type: TYPE_INDEPENDENT) }
   scope :care_type_al, -> { where(care_type: TYPE_ASSISTED) }

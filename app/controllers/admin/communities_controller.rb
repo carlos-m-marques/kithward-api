@@ -8,8 +8,13 @@ module Admin
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
+    
+      communities = if params[:sort_field] && params[:sort_direction]
+        Community.by_column(params[:sort_field], params[:sort_direction]).page(page).per(per)
+      else
+         Community.recent.page(page).per(per)
+      end
 
-      communities = Community.recent.page(page).per(per)
       pagination = {
         total_pages: communities.total_pages,
         current_page: communities.current_page,
