@@ -22,6 +22,7 @@ gem 'blueprinter', '0.9.0'
 gem 'jwt'
 gem 'hashdiff'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
+gem 'acts_as_paranoid', '~> 0.6.0'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'
@@ -37,7 +38,6 @@ gem 'faraday'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
-  gem 'rails-erd'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'mocha'
   gem 'dotenv-rails'

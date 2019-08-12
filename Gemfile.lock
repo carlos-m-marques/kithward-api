@@ -42,6 +42,9 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_paranoid (0.6.0)
+      activerecord (>= 4.2, < 6.0)
+      activesupport (>= 4.2, < 6.0)
     arel (9.0.0)
     aws-eventstream (1.0.3)
     aws-partitions (1.197.0)
@@ -65,7 +68,6 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
-    choice (0.2.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -165,11 +167,6 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-erd (1.6.0)
-      activerecord (>= 4.2)
-      activesupport (>= 4.2)
-      choice (~> 0.2.0)
-      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.1.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.2.3)
@@ -184,7 +181,6 @@ GEM
       ffi (~> 1.0)
     request_store (1.4.1)
       rack (>= 1.4)
-    ruby-graphviz (1.2.4)
     ruby_dep (1.5.0)
     ruby_http_client (3.3.0)
     searchkick (3.1.3)
@@ -218,6 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_paranoid (~> 0.6.0)
   aws-sdk-s3 (~> 1.0.0)
   bcrypt (~> 3.1.7)
   blueprinter (= 0.9.0)
@@ -243,7 +240,6 @@ DEPENDENCIES
   puma (~> 3.11)
   rack-cors (~> 1.0)
   rails (~> 5.2.2)
-  rails-erd
   searchkick (~> 3.1)
   sendgrid-ruby
   sentry-raven (= 2.7.4)

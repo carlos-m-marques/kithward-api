@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'community/destroy'
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   scope 'v1', defaults: {format: 'json'} do

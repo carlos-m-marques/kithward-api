@@ -2,6 +2,7 @@ require 'hashdiff'
 
 class Community < ApplicationRecord
   has_paper_trail
+  acts_as_paranoid
 
   has_many :community_images
   has_many :listings

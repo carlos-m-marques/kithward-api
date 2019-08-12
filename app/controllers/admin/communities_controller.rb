@@ -1,5 +1,3 @@
-require 'tempfile'
-
 module Admin
   class CommunitiesController < ActionController::API
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -8,7 +6,7 @@ module Admin
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
-    
+
       communities = if params[:sort_field] && params[:sort_direction]
         Community.by_column(params[:sort_field], params[:sort_direction]).page(page).per(per)
       else
@@ -45,6 +43,16 @@ module Admin
         render json: { errors: community.errors}, status: :unprocessable_entity
       end
     end
+
+    # def destroy
+    #   community = Community.find(params[:id])
+    #
+    #   if community.destroy!
+    #     render json:  Admin::CommunitySerializer.render(community, view: 'complete')
+    #   else
+    #     render json: { errors: community.errors}, status: :unprocessable_entity
+    #   end
+    # end
 
     private
 

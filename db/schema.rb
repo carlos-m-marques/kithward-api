@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_12_171632) do
+ActiveRecord::Schema.define(version: 2019_08_12_175150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 2019_08_12_171632) do
     t.string "borough"
     t.string "county", null: false
     t.string "township"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end
