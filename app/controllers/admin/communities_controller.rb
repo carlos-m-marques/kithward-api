@@ -44,15 +44,15 @@ module Admin
       end
     end
 
-    # def destroy
-    #   community = Community.find(params[:id])
-    #
-    #   if community.destroy!
-    #     render json:  Admin::CommunitySerializer.render(community, view: 'complete')
-    #   else
-    #     render json: { errors: community.errors}, status: :unprocessable_entity
-    #   end
-    # end
+    def destroy
+      community = Community.find(params[:id])
+
+      if community.destroy!
+        head :no_content
+      else
+        render json: { errors: community.errors}, status: :unprocessable_entity
+      end
+    end
 
     private
 
