@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get 'community/destroy'
-  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   scope 'v1', defaults: {format: 'json'} do
@@ -43,6 +40,10 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :communities do
+        get 'super_classes', on: :collection
+        get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
+        get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
+
         resources :listings
       end
     end

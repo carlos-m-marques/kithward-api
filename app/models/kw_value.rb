@@ -1,5 +1,7 @@
 class KwValue < ApplicationRecord
   belongs_to :kw_attribute
+  has_one :kw_class, through: :kw_attribute
+  has_one :kw_super_class, through: :kw_class
 
   has_and_belongs_to_many :communities
   has_and_belongs_to_many :buildings

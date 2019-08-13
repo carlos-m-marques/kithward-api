@@ -82,6 +82,12 @@ class Community < ApplicationRecord
     end
   end
 
+  def attributes_options
+    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).each_with_object({}) do |value, obj|
+      obj.deep_merge!({ value.kw_super_class.name => { value.kw_class.name => { value.kw_attribute.name => value.name } } })
+    end
+  end
+
   def metro
     super || self.city
   end

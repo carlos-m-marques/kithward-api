@@ -32,6 +32,7 @@ module Admin
 
       field :description
       field :data
+      field :attributes_options
 
       association :super_classes, blueprint: Admin::KwSuperClassSerializer
       association :community_super_classes, blueprint: Admin::KwSuperClassSerializer
