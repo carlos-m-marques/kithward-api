@@ -141,7 +141,10 @@ module Admin
 
     def create
       community = Community.new(community_params)
-      community.pm_system = community.owner.pm_system if community.owner
+
+      if community.owner && community_params[:pm_system_id].blank?
+        community.pm_system = community.owner.pm_system
+      end
 
       if community.save
         render json:  Admin::CommunitySerializer.render(community, view: 'complete')
