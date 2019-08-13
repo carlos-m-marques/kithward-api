@@ -45,9 +45,15 @@ Rails.application.routes.draw do
         get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
 
         resources :listings
-        resources :unit_layouts
-        resources :buildings
-        resources :units
+        resources :unit_layouts do
+          get 'super_classes', on: :collection
+        end
+        resources :buildings do
+          get 'super_classes', on: :collection
+        end
+        resources :units do
+          get 'super_classes', on: :collection
+        end
       end
       resources :pm_systems
       resources :owners do
