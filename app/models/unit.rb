@@ -1,8 +1,6 @@
 class Unit < ApplicationRecord
-	# belongs_to :listing
-
 	belongs_to :building
-	belongs_to :unit_layout, class_name: 'UnitType'
+	belongs_to :unit_type
 
 	has_and_belongs_to_many :kw_values
   has_many :kw_attributes, through: :kw_values
@@ -11,9 +9,7 @@ class Unit < ApplicationRecord
 
 	scope :available, -> { where(is_available: true) }
 
-	# accepts_nested_attributes_for :listing
-
-	validates :name, :building, :unit, :unit_number, presence: true
+	validates :name, :building, :unit_number, presence: true
 
 	delegate :community, to: :building
 

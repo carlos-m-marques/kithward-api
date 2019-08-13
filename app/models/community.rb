@@ -6,11 +6,10 @@ class Community < ApplicationRecord
 
   has_many :unit_layouts, class_name: 'UnitType'
   has_many :buildings
-  has_many :units, through: :buildings
+  has_many :units, through: :unit_layouts
 
   has_many :community_images
   has_many :listings
-  # has_many :units, through: :listings
   has_and_belongs_to_many :pois
   belongs_to :owner
   belongs_to :pm_system
@@ -58,7 +57,7 @@ class Community < ApplicationRecord
 
   scope :units_available, -> { joins(:units).merge(Unit.available) }
 
-  validates_presence_of :country, :region, :state, :county, :city, :postal, :name
+  validates_presence_of :country, :region, :state, :county, :city, :postal, :name, :owner
   validates :care_type, inclusion: { in: Community::CARE_TYPES }
 
   SLUG_FOR_TYPE = {

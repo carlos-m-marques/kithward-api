@@ -35,8 +35,6 @@ module Admin
       field :attributes_options
 
       association :super_classes, blueprint: Admin::KwSuperClassSerializer
-      association :community_super_classes, blueprint: Admin::KwSuperClassSerializer
-
       association :kw_values, blueprint: Admin::KwValueSerializer
 
       association :listings, blueprint: ListingSerializer
