@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         resources :buildings
         resources :units
       end
-
+      resources :pm_systems
       resources :owners do
         get 'super_classes', on: :collection
         get 'super_classes/:id/classes', to: 'owners#kw_classes', on: :collection
