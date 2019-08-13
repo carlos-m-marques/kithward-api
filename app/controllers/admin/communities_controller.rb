@@ -129,6 +129,21 @@ module Admin
       end
     end
 
+    def create
+      community = Community.new(community_params)
+
+      community.owner = Owner.last
+      community.pm_system = community.owner.pm_system
+
+      if community.save
+        # shoud not be here... this should be asynchronous.
+        # community.reindex
+        render json:  Admin::CommunitySerializer.render(community, view: 'complete')
+      else
+        render json: { errors: community.errors}, status: :unprocessable_entity
+      end
+    end
+
     def destroy
       community = Community.find(params[:id])
 
@@ -137,6 +152,30 @@ module Admin
       else
         render json: { errors: community.errors}, status: :unprocessable_entity
       end
+    end
+
+    def unit_layouts
+      community = Community.find(params[:community_id])
+
+      page = params[:page] || 1
+      per = params[:limit] || 30
+
+      unit_layouts = community.unit_layouts
+      total = unit_layouts.count
+      unit_layouts = unit_layouts.page(page).per(per)
+
+      pagination = {
+        total_pages: unit_layouts.total_pages,
+        current_page: unit_layouts.current_page,
+        next_page: unit_layouts.next_page,
+        prev_page: unit_layouts.prev_page,
+        first_page: unit_layouts.first_page?,
+        last_page: unit_layouts.last_page?,
+        per_page: unit_layouts.limit_value,
+        total: total
+      }.compact
+
+      render json: { results: Admin::AttributableSerializer.render_as_hash(unit_layouts), meta: pagination }
     end
 
     private

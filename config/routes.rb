@@ -43,6 +43,7 @@ Rails.application.routes.draw do
         get 'super_classes', on: :collection
         get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
         get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
+        get 'unit_layouts'
 
         resources :listings
       end

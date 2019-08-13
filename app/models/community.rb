@@ -4,9 +4,13 @@ class Community < ApplicationRecord
   has_paper_trail
   acts_as_paranoid
 
+  has_many :unit_layouts, class_name: 'UnitType'
+  has_many :buildings
+  has_many :units, through: :buildings
+
   has_many :community_images
   has_many :listings
-  has_many :units, through: :listings
+  # has_many :units, through: :listings
   has_and_belongs_to_many :pois
   belongs_to :owner
   belongs_to :pm_system
@@ -16,7 +20,7 @@ class Community < ApplicationRecord
   has_many :kw_classes, through: :kw_attributes
   has_many :community_super_classes, through: :kw_classes, source: :kw_super_class, class_name: 'CommunitySuperClass'
 
-  before_save :update_cached_data
+  # before_save :update_cached_data
 
   STATUS_ACTIVE    = 'A'
   STATUS_DRAFT     = '?'
@@ -108,24 +112,24 @@ class Community < ApplicationRecord
     LABEL_FOR_TYPE[care_type]
   end
 
-  begin # Elasticsearch / Searchkick
-    searchkick  match: :word_start,
-                word_start:  ['name', 'description'],
-                default_fields: ['name', 'description'],
-                locations: ['location']
-
-    scope :search_import, -> { includes([:listings, :units]) }
-
-    def search_data
-      attributes.merge({
-        "location" => {lat: lat, lon: lon},
-        "listings" => listings,
-        "units_available" => units_available,
-        "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
-        "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
-      })
-    end
-  end
+  # begin # Elasticsearch / Searchkick
+  #   searchkick  match: :word_start,
+  #               word_start:  ['name', 'description'],
+  #               default_fields: ['name', 'description'],
+  #               locations: ['location']
+  #
+  #   scope :search_import, -> { includes([:listings, :units]) }
+  #
+  #   def search_data
+  #     attributes.merge({
+  #       "location" => {lat: lat, lon: lon},
+  #       "listings" => listings,
+  #       "units_available" => units_available,
+  #       "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
+  #       "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
+  #     })
+  #   end
+  # end
 
   begin # Data manipulation
     scope :with_data, ->(name, value = nil) do
