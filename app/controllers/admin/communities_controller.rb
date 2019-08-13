@@ -159,7 +159,7 @@ module Admin
         :street, :street_more, :city, :state, :postal, :country,
         :lat, :lon, :website, :phone, :fax, :email, :community,
         :classes, :listings, :region, :metro, :borough, :county, :township,
-        :data, :owner_id, kw_value_ids: []
+        :data, :owner_id, :pm_system_id, kw_value_ids: []
       )
     end
 
