@@ -24,6 +24,8 @@ gem 'hashdiff'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'ffaker'
+gem 'devise'
+gem 'activeadmin'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'

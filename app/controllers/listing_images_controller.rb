@@ -1,4 +1,4 @@
-class ListingImagesController < ApplicationController
+class ListingImagesController < ApiController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index

@@ -1,5 +1,5 @@
 
-class PoiCategoriesController < ApplicationController
+class PoiCategoriesController < ApiController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index

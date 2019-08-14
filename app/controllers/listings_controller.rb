@@ -1,6 +1,6 @@
 require 'tempfile'
 
-class ListingsController < ApplicationController
+class ListingsController < ApiController
   before_action :admin_account_required!, except: [:index, :show, :dictionary]
 
   def index

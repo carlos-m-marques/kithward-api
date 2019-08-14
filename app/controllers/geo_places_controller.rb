@@ -1,5 +1,5 @@
 
-class GeoPlacesController < ApplicationController
+class GeoPlacesController < ApiController
   def index
     search_options = {
       fields: ['name'],

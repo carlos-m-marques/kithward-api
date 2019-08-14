@@ -23,3 +23,4 @@ Poi.create(name: "Mount Sinai Brooklyn", poi_category: hospitals, street: "3201 
 
 Poi.create(name: "Long Island College Hospital", poi_category: hospitals, street: "339 Hicks St", city: "Brooklyn", state: "NY", postal: "11201", country: "USA", created_by_id: 1)
 Poi.create(name: "Brooklyn Hospital Center - Downtown", poi_category: hospitals, street: "121 Dekalb Ave", city: "Brooklyn", state: "NY", postal: "11201", country: "USA", created_by_id: 1)
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

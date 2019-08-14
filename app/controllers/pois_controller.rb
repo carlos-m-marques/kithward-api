@@ -1,5 +1,5 @@
 
-class PoisController < ApplicationController
+class PoisController < ApiController
   before_action :admin_account_required!, except: [:show]
 
   def index
