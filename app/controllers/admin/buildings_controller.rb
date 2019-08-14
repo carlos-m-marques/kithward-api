@@ -10,7 +10,7 @@ module Admin
 
       buildings = @community.buildings
       buildings = buildings.only_deleted if params[:deleted]
-      # buildings = buildings.flagged if params[:flagged]
+      buildings = buildings.flagged if params[:flagged]
 
       total = buildings.count
       buildings = buildings.page(page).per(per)
@@ -105,6 +105,15 @@ module Admin
     def show
       building = @community.buildings.find(params[:id])
       render json:  Admin::BuildingSerializer.render(building, view: 'complete')
+    end
+
+    def flag
+      building = @community.buildings.find(params[:id])
+      if building.toggle_flag!
+        render json: { flag: true }
+      else
+        render json: { flag: false }
+      end
     end
 
     def update

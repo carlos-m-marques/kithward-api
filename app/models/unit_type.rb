@@ -1,4 +1,6 @@
 class UnitType < ApplicationRecord
+  include Flaggable
+
   acts_as_paranoid
 
   belongs_to :community

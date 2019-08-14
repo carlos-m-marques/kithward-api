@@ -5,6 +5,7 @@ module Admin
     view 'list' do
       fields(
         :name,
+        :flagged_at,
         :unit_type_id,
         :building_id,
         :is_available,

@@ -3,7 +3,7 @@ module Admin
     identifier :id
 
     view 'list' do
-      fields(:name, :community_id, :created_at, :updated_at)
+      fields(:name, :flagged_at, :community_id, :created_at, :updated_at)
     end
 
     view 'complete' do

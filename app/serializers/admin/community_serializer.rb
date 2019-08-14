@@ -3,6 +3,7 @@ module Admin
     identifier :id
 
     view 'list' do
+      field :flagged_at
       fields :address,
         :care_type_label,
         :name,

@@ -14,7 +14,6 @@ module Admin
       end
 
       owners = owners.only_deleted if params[:deleted]
-      # owners = owners.flagged if params[:flagged]
 
       total = owners.count
       owners = owners.page(page).per(per)

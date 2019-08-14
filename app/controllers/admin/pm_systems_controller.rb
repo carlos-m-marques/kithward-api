@@ -9,7 +9,6 @@ module Admin
 
       pm_systems = PmSystem
       pm_systems = pm_systems.only_deleted if params[:deleted]
-      # pm_systems = pm_systems.flagged if params[:flagged]
 
       total = pm_systems.count
       pm_systems = pm_systems.page(page).per(per)

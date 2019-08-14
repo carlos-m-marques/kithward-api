@@ -14,7 +14,7 @@ module Admin
       end
 
       communities = communities.only_deleted if params[:deleted]
-      # communities = communities.flagged if params[:flagged]
+      communities = communities.flagged if params[:flagged]
 
       total = communities.count
       communities = communities.page(page).per(per)
@@ -118,6 +118,15 @@ module Admin
     def show
       community = Community.find(params[:id])
       render json:  Admin::CommunitySerializer.render(community, view: 'complete')
+    end
+
+    def flag
+      community = Community.find(params[:id])
+      if community.toggle_flag!
+        render json: { flag: true }
+      else
+        render json: { flag: false }
+      end
     end
 
     def update

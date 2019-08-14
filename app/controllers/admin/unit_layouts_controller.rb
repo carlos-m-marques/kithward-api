@@ -11,7 +11,7 @@ module Admin
       unit_layouts = @community.unit_layouts
 
       unit_layouts = unit_layouts.only_deleted if params[:deleted]
-      # unit_layouts = unit_layouts.flagged if params[:flagged]
+      unit_layouts = unit_layouts.flagged if params[:flagged]
 
       total = unit_layouts.count
       unit_layouts = unit_layouts.page(page).per(per)
@@ -106,6 +106,15 @@ module Admin
     def show
       unit_layout = @community.unit_layouts.find(params[:id])
       render json:  Admin::UnitTypeSerializer.render(unit_layout, view: 'complete')
+    end
+
+    def flag
+      unit_layout = @community.unit_layouts.find(params[:id])
+      if unit_layout.toggle_flag!
+        render json: { flag: true }
+      else
+        render json: { flag: false }
+      end
     end
 
     def update

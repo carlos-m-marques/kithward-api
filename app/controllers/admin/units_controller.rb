@@ -11,7 +11,7 @@ module Admin
       units = @community.units
 
       units = units.only_deleted if params[:deleted]
-      # units = units.flagged if params[:flagged]
+      units = units.flagged if params[:flagged]
 
       total = units.count
       units = units.page(page).per(per)
@@ -106,6 +106,15 @@ module Admin
     def show
       unit = Unit.find(params[:id])
       render json:  Admin::UnitSerializer.render(unit, view: 'complete')
+    end
+
+    def flag
+      unit = Unit.find(params[:id])
+      if unit.toggle_flag!
+        render json: { flag: true }
+      else
+        render json: { flag: false }
+      end
     end
 
     def update

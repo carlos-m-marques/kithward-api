@@ -1,6 +1,8 @@
 require 'hashdiff'
 
 class Community < ApplicationRecord
+  include Flaggable
+
   has_paper_trail
   acts_as_paranoid
 

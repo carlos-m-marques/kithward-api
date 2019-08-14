@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_183006) do
+ActiveRecord::Schema.define(version: 2019_08_14_190710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -57,8 +57,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_183006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.datetime "flagged_at"
     t.index ["community_id"], name: "index_buildings_on_community_id"
     t.index ["deleted_at"], name: "index_buildings_on_deleted_at"
+    t.index ["flagged_at"], name: "index_buildings_on_flagged_at"
   end
 
   create_table "buildings_kw_values", id: false, force: :cascade do |t|
@@ -104,7 +106,9 @@ ActiveRecord::Schema.define(version: 2019_08_14_183006) do
     t.string "county", null: false
     t.string "township"
     t.datetime "deleted_at"
+    t.datetime "flagged_at"
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
+    t.index ["flagged_at"], name: "index_communities_on_flagged_at"
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end
@@ -291,8 +295,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_183006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.datetime "flagged_at"
     t.index ["community_id"], name: "index_unit_types_on_community_id"
     t.index ["deleted_at"], name: "index_unit_types_on_deleted_at"
+    t.index ["flagged_at"], name: "index_unit_types_on_flagged_at"
   end
 
   create_table "units", force: :cascade do |t|
@@ -307,8 +313,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_183006) do
     t.bigint "building_id"
     t.bigint "unit_type_id"
     t.datetime "deleted_at"
+    t.datetime "flagged_at"
     t.index ["building_id"], name: "index_units_on_building_id"
     t.index ["deleted_at"], name: "index_units_on_deleted_at"
+    t.index ["flagged_at"], name: "index_units_on_flagged_at"
     t.index ["listing_id"], name: "index_units_on_listing_id"
     t.index ["unit_type_id"], name: "index_units_on_unit_type_id"
   end

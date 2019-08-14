@@ -40,18 +40,22 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :communities do
+        patch 'flag', on: :member
         get 'super_classes', on: :collection
         get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
         get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
 
         resources :listings
         resources :unit_layouts do
+          patch 'flag', on: :member
           get 'super_classes', on: :collection
         end
         resources :buildings do
+          patch 'flag', on: :member
           get 'super_classes', on: :collection
         end
         resources :units do
+          patch 'flag', on: :member
           get 'super_classes', on: :collection
         end
       end
