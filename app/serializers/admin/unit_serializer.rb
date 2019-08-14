@@ -10,7 +10,9 @@ module Admin
         :is_available,
         :date_available,
         :rent_market,
-        :unit_number
+        :unit_number,
+        :created_at,
+        :updated_at
       )
     end
 

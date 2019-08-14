@@ -3,7 +3,7 @@ module Admin
     identifier :id
 
     view 'list' do
-      fields(:name, :address1, :address2, :city, :state, :zip, :pm_system_id)
+      fields(:name, :address1, :address2, :city, :state, :zip, :pm_system_id, :created_at, :updated_at)
     end
 
     view 'complete' do

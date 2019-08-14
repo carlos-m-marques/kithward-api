@@ -58,8 +58,8 @@ Rails.application.routes.draw do
       resources :pm_systems
       resources :owners do
         get 'super_classes', on: :collection
-        get 'super_classes/:id/classes', to: 'owners#kw_classes', on: :collection
-        get 'classes/:id/attributes', to: 'owners#kw_attributes', on: :collection
+        # get 'super_classes/:id/classes', to: 'owners#kw_classes', on: :collection
+        # get 'classes/:id/attributes', to: 'owners#kw_attributes', on: :collection
       end
     end
   end
