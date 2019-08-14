@@ -3,6 +3,8 @@ class KwSuperClass < ApplicationRecord
 
   has_many :kw_classes, dependent: :destroy
 
+  accepts_nested_attributes_for :kw_classes
+
   default_scope -> { includes(kw_classes: { kw_attributes: [:kw_values] }) }
 
   scope :independent_living, ->{ where(independent_living: true) }

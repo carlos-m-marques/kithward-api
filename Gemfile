@@ -14,7 +14,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'searchkick', '~> 3.1'
 gem 'paper_trail', '~> 9.0'
 gem 'paper_trail-hashdiff'
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '1.1.1'
 
 #== UTILITIES ==============================
 gem 'oj', '~> 3.6'
@@ -24,6 +24,8 @@ gem 'hashdiff'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'ffaker'
+gem 'country-select'
+# gem 'formtastic'
 gem 'devise'
 gem 'activeadmin'
 
@@ -36,6 +38,10 @@ gem 'prismic.io', '~> 1.6.0'
 gem 'newrelic_rpm'
 gem 'sendgrid-ruby'
 gem 'faraday'
+
+group :assets do
+  gem 'coffee-rails'
+end
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
