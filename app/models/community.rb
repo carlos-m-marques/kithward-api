@@ -4,8 +4,8 @@ class Community < ApplicationRecord
   has_paper_trail
   acts_as_paranoid
 
-  has_many :unit_layouts, class_name: 'UnitType'
-  has_many :buildings
+  has_many :unit_layouts, class_name: 'UnitType', dependent: :destroy
+  has_many :buildings, dependent: :destroy
   has_many :units, through: :unit_layouts
 
   has_many :community_images

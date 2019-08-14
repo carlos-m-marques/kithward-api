@@ -13,6 +13,9 @@ module Admin
          Community.recent
       end
 
+      communities = communities.only_deleted if params[:deleted]
+      # communities = communities.flagged if params[:flagged]
+
       total = communities.count
       communities = communities.page(page).per(per)
 

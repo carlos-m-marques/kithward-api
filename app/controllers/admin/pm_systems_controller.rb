@@ -7,8 +7,12 @@ module Admin
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      total = PmSystem.count
-      pm_systems = PmSystem.page(page).per(per)
+      pm_systems = PmSystem
+      pm_systems = pm_systems.only_deleted if params[:deleted]
+      # pm_systems = pm_systems.flagged if params[:flagged]
+
+      total = pm_systems.count
+      pm_systems = pm_systems.page(page).per(per)
 
       pagination = {
         total_pages: pm_systems.total_pages,

@@ -1,7 +1,7 @@
 class KwSuperClass < ApplicationRecord
   HEIRS_CLASSES = %w(BuildingSuperClass CommunitySuperClass OwnerSuperClass UnitSuperClass UnitTypeSuperClass).freeze
 
-  has_many :kw_classes
+  has_many :kw_classes, dependent: :destroy
 
   default_scope -> { includes(kw_classes: { kw_attributes: [:kw_values] }) }
 

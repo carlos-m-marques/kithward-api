@@ -1,6 +1,8 @@
 class Owner < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :pm_system
-  has_many :communities
+  has_many :communities, dependent: :nullify
 
   has_and_belongs_to_many :kw_values
   has_many :kw_attributes, through: :kw_values

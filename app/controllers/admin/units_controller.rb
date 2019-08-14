@@ -8,8 +8,13 @@ module Admin
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      total = @community.units.count
-      units = @community.units.page(page).per(per)
+      units = @community.units
+
+      units = units.only_deleted if params[:deleted]
+      # units = units.flagged if params[:flagged]
+
+      total = units.count
+      units = units.page(page).per(per)
 
       pagination = {
         total_pages: units.total_pages,

@@ -1,4 +1,6 @@
 class Unit < ApplicationRecord
+	acts_as_paranoid
+
 	belongs_to :building
 	belongs_to :unit_type
 

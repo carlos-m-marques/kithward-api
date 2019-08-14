@@ -1,5 +1,8 @@
 class Building < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :community
+  has_many :units, dependent: :destroy
 
   has_and_belongs_to_many :kw_values
   has_many :kw_attributes, through: :kw_values
