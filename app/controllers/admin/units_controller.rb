@@ -128,14 +128,13 @@ module Admin
     end
 
     def destroy
-      # unit = @community.units.find(params[:id])
-      #
-      # if unit.destroy!
-      #   head :no_content
-      # else
-      #   render json: { errors: unit.errors}, status: :unprocessable_entity
-      # end
-      head :no_content
+      unit = @community.units.find(params[:id])
+
+      if unit.destroy!
+        head :no_content
+      else
+        render json: { errors: unit.errors}, status: :unprocessable_entity
+      end
     end
 
     def create

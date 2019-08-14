@@ -121,14 +121,13 @@ module Admin
     end
 
     def destroy
-      # owner = Owner.find(params[:id])
-      #
-      # if owner.destroy!
-      #   head :no_content
-      # else
-      #   render json: { errors: owner.errors}, status: :unprocessable_entity
-      # end
-      head :no_content
+      owner = Owner.find(params[:id])
+
+      if owner.destroy!
+        head :no_content
+      else
+        render json: { errors: owner.errors}, status: :unprocessable_entity
+      end
     end
 
     def create

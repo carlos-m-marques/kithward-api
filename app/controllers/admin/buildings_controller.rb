@@ -127,14 +127,13 @@ module Admin
     end
 
     def destroy
-      # building = @community.buildings.find(params[:id])
-      #
-      # if building.destroy!
-      #   head :no_content
-      # else
-      #   render json: { errors: building.errors}, status: :unprocessable_entity
-      # end
-      head :no_content
+      building = @community.buildings.find(params[:id])
+
+      if building.destroy!
+        head :no_content
+      else
+        render json: { errors: building.errors}, status: :unprocessable_entity
+      end
     end
 
     def create

@@ -43,14 +43,13 @@ module Admin
     end
 
     def destroy
-      # pm_system = PmSystem.find(params[:id])
-      #
-      # if pm_system.destroy!
-      #   head :no_content
-      # else
-      #   render json: { errors: pm_system.errors}, status: :unprocessable_entity
-      # end
-      head :no_content
+      pm_system = PmSystem.find(params[:id])
+
+      if pm_system.destroy!
+        head :no_content
+      else
+        render json: { errors: pm_system.errors}, status: :unprocessable_entity
+      end
     end
 
     def create
