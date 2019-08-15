@@ -12,5 +12,5 @@ ActiveAdmin.register KwValue do
     f.actions
   end
 
-  belongs_to :kw_attribute, optional: true
+  # belongs_to :kw_attribute, optional: true
 end
