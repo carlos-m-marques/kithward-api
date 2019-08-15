@@ -1,11 +1,11 @@
 ActiveAdmin.register KwSuperClass do
   permit_params :name, :type
 
-  sidebar "Children", only: [:show, :edit] do
-    ul do
-      li link_to "Classes", activeadmin_kw_super_class_kw_classes_path(resource)
-    end
-  end
+  # sidebar "Children", only: [:show, :edit] do
+  #   ul do
+  #     li link_to "Classes", activeadmin_kw_super_class_kw_classes_path(resource)
+  #   end
+  # end
 
   filter :name
   filter :type, as: :select, collection: -> { KwSuperClass::HEIRS_CLASSES }

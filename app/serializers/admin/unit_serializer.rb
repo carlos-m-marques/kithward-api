@@ -3,6 +3,8 @@ module Admin
     identifier :id
 
     view 'list' do
+      field :flagged_at
+      field :flagged_for
       fields(
         :name,
         :flagged_at,

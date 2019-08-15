@@ -2,14 +2,24 @@ ActiveAdmin.register KwAttribute do
   permit_params :name, :ui_type, :kw_class_id
 
   filter :name
+  filter :kw_super_class
   filter :ui_type, as: :check_boxes, collection: -> { KwAttribute::UI_TYPES }
 
-  # sidebar "Children", only: [:show, :edit] do
-  #   ul do
-  #     li link_to "Values", activeadmin_kw_attribute_kw_values_path(resource)
-  #   end
-  # end
-
+  sidebar "Children", only: [:show, :edit] do
+    ul do
+      li link_to "Values", activeadmin_kw_attribute_kw_values_path(resource)
+    end
+  end
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :created_at
+    column :updated_at
+    column :kw_class
+    column :kw_super_class
+    actions
+  end
   # config.action_items.delete_if { |item|
   #   item.name == :show ||
   #   item.name == :edit ||
@@ -48,9 +58,5 @@ ActiveAdmin.register KwAttribute do
   #     item "Delete", activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
   #   end
   # end
-  controller do
-    belongs_to :kw_class do
-      belongs_to :kw_super_class
-    end
-  end
+  belongs_to :kw_class, optional: true
 end

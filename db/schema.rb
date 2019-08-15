@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_201409) do
+ActiveRecord::Schema.define(version: 2019_08_15_164007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -84,9 +84,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_201409) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["community_id"], name: "index_buildings_on_community_id"
     t.index ["deleted_at"], name: "index_buildings_on_deleted_at"
     t.index ["flagged_at"], name: "index_buildings_on_flagged_at"
+    t.index ["flagged_for"], name: "index_buildings_on_flagged_for"
   end
 
   create_table "buildings_kw_values", id: false, force: :cascade do |t|
@@ -133,8 +135,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_201409) do
     t.string "township"
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["flagged_at"], name: "index_communities_on_flagged_at"
+    t.index ["flagged_for"], name: "index_communities_on_flagged_for"
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end
@@ -322,9 +326,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_201409) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["community_id"], name: "index_unit_types_on_community_id"
     t.index ["deleted_at"], name: "index_unit_types_on_deleted_at"
     t.index ["flagged_at"], name: "index_unit_types_on_flagged_at"
+    t.index ["flagged_for"], name: "index_unit_types_on_flagged_for"
   end
 
   create_table "units", force: :cascade do |t|
@@ -340,9 +346,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_201409) do
     t.bigint "unit_type_id"
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["building_id"], name: "index_units_on_building_id"
     t.index ["deleted_at"], name: "index_units_on_deleted_at"
     t.index ["flagged_at"], name: "index_units_on_flagged_at"
+    t.index ["flagged_for"], name: "index_units_on_flagged_for"
     t.index ["listing_id"], name: "index_units_on_listing_id"
     t.index ["unit_type_id"], name: "index_units_on_unit_type_id"
   end

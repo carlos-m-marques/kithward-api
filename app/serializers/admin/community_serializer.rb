@@ -4,6 +4,8 @@ module Admin
 
     view 'list' do
       field :flagged_at
+      field :flagged_for
+
       fields :address,
         :care_type_label,
         :name,
@@ -14,6 +16,9 @@ module Admin
     end
 
     view 'simple' do
+      field :flagged_at
+      field :flagged_for
+
       fields :status,
         :name,
         :slug,
@@ -21,10 +26,8 @@ module Admin
         :street, :street_more, :postal, :township, :city, :county, :borough, :state, :metro, :region, :country,
         :lat, :lon,
         :updated_at,
-        :cached_image_url, :cached_data,
-        :units_available,
-        :monthly_rent_lower_bound,
-        :monthly_rent_upper_bound
+        :cached_image_url,
+        :cached_data
     end
 
     view 'complete' do
@@ -32,7 +35,6 @@ module Admin
       exclude :cached_data
 
       field :description
-      field :data
       field :attributes_options
 
       association :super_classes, blueprint: Admin::KwSuperClassSerializer
