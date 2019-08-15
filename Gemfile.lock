@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/activeadmin/activeadmin.git
-  revision: 9b774893f6fd2d0060a25d0000695e91cf580ead
-  branch: master
+  revision: 74033a1aca189815d3441b7c9e57ab4d4c8ad854
+  branch: fix_renamed_resources_and_optional_belongs_to
   specs:
     activeadmin (2.2.0)
       arbre (~> 1.2, >= 1.2.1)

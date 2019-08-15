@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #     resources :kw_classes do
   #       resources :kw_attributes do
   #         get 'new', on: :collection, as: 'new'
+  #         get 'edit', on: :member
   #       end
   #     end
   #   end

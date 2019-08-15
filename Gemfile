@@ -27,7 +27,7 @@ gem 'ffaker'
 gem 'country-select'
 # gem 'formtastic'
 gem 'devise'
-gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch: 'master'
+gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch: 'fix_renamed_resources_and_optional_belongs_to'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'

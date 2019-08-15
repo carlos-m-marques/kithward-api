@@ -11,12 +11,15 @@ ActiveAdmin.register KwAttribute do
   # end
 
   # config.action_items.delete_if { |item|
-  #   item.name == :new ||
+  #   item.name == :show ||
   #   item.name == :edit ||
-  #   item.name == :show
+  #   item.name == :destroy ||
+  #   item.name == :new
   # }
-  #
-  # action_item :new, priority: 0, only: :index do
+
+
+
+  # action_item :new do
   #   link_to 'New', new_activeadmin_kw_super_class_kw_class_kw_attributes_path
   # end
 
@@ -36,11 +39,18 @@ ActiveAdmin.register KwAttribute do
   #   column :name
   #   column :created_at
   #   column :updated_at
-  #   # actions dropdown: true do |post|
-  #   #   item "Preview", admin_preview_post_path(post)
-  #   # end
+  #   # activeadmin_kw_super_class_kw_class_kw_attribute
+  #   # edit_activeadmin_kw_super_class_kw_class_kw_attribute
+  #   # activeadmin_kw_super_class_kw_class_kw_attribute
+  #   actions defaults: false, dropdown: true do |record|
+  #     item "View", activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
+  #     item "Edit", edit_activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
+  #     item "Delete", activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
+  #   end
   # end
-
-  belongs_to :kw_super_class
-  belongs_to :kw_class
+  controller do
+    belongs_to :kw_class do
+      belongs_to :kw_super_class
+    end
+  end
 end
