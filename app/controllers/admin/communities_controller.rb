@@ -122,11 +122,14 @@ module Admin
 
     def flag
       community = Community.find(params[:id])
-      if community.toggle_flag!
-        render json: { flag: true }
+
+      if community.flagged?
+        community.unflag!
       else
-        render json: { flag: false }
+        community.flag!(reason: community_params[:reason]) unless community.flagged?
       end
+
+      render json: { flag: community.flagged?, reason: community.flagged_for }.compact
     end
 
     def update
@@ -174,7 +177,7 @@ module Admin
         :street, :street_more, :city, :state, :postal, :country,
         :lat, :lon, :website, :phone, :fax, :email, :community,
         :classes, :listings, :region, :metro, :borough, :county, :township,
-        :data, :owner_id, :pm_system_id, kw_value_ids: []
+        :data, :owner_id, :pm_system_id, :reason, kw_value_ids: []
       )
     end
 

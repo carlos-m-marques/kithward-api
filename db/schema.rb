@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_190710) do
+ActiveRecord::Schema.define(version: 2019_08_15_164007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -28,6 +28,20 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.string "verification_token", limit: 64
     t.datetime "verification_expiration"
     t.index ["email"], name: "index_accounts_on_email", unique: true
+  end
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -51,6 +65,18 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
   create_table "buildings", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "community_id"
@@ -58,9 +84,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["community_id"], name: "index_buildings_on_community_id"
     t.index ["deleted_at"], name: "index_buildings_on_deleted_at"
     t.index ["flagged_at"], name: "index_buildings_on_flagged_at"
+    t.index ["flagged_for"], name: "index_buildings_on_flagged_for"
   end
 
   create_table "buildings_kw_values", id: false, force: :cascade do |t|
@@ -107,8 +135,10 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.string "township"
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["flagged_at"], name: "index_communities_on_flagged_at"
+    t.index ["flagged_for"], name: "index_communities_on_flagged_for"
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end
@@ -296,9 +326,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["community_id"], name: "index_unit_types_on_community_id"
     t.index ["deleted_at"], name: "index_unit_types_on_deleted_at"
     t.index ["flagged_at"], name: "index_unit_types_on_flagged_at"
+    t.index ["flagged_for"], name: "index_unit_types_on_flagged_for"
   end
 
   create_table "units", force: :cascade do |t|
@@ -314,9 +346,11 @@ ActiveRecord::Schema.define(version: 2019_08_14_190710) do
     t.bigint "unit_type_id"
     t.datetime "deleted_at"
     t.datetime "flagged_at"
+    t.string "flagged_for"
     t.index ["building_id"], name: "index_units_on_building_id"
     t.index ["deleted_at"], name: "index_units_on_deleted_at"
     t.index ["flagged_at"], name: "index_units_on_flagged_at"
+    t.index ["flagged_for"], name: "index_units_on_flagged_for"
     t.index ["listing_id"], name: "index_units_on_listing_id"
     t.index ["unit_type_id"], name: "index_units_on_unit_type_id"
   end

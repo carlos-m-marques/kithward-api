@@ -109,11 +109,14 @@ module Admin
 
     def flag
       building = @community.buildings.find(params[:id])
-      if building.toggle_flag!
-        render json: { flag: true }
+
+      if building.flagged?
+        building.unflag!
       else
-        render json: { flag: false }
+        building.flag!(reason: building_params[:reason]) unless building.flagged?
       end
+
+      render json: { flag: building.flagged?, reason: building.flagged_for }.compact
     end
 
     def update
@@ -149,7 +152,7 @@ module Admin
     private
 
     def building_params
-      params.permit(:name, :community_id, kw_value_ids: [])
+      params.permit(:name, :community_id, :reason, kw_value_ids: [])
     end
 
     def record_not_found(error)

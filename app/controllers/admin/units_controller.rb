@@ -110,11 +110,14 @@ module Admin
 
     def flag
       unit = Unit.find(params[:id])
-      if unit.toggle_flag!
-        render json: { flag: true }
+
+      if unit.flagged?
+        unit.unflag!
       else
-        render json: { flag: false }
+        unit.flag!(reason: unit_params[:reason]) unless unit.flagged?
       end
+
+      render json: { flag: unit.flagged?, reason: unit.flagged_for }.compact
     end
 
     def update
@@ -150,7 +153,7 @@ module Admin
     private
 
     def unit_params
-      params.permit(:name, :is_available, :date_available, :rent_market, :unit_number, :building_id, :unit_type_id, kw_value_ids: [])
+      params.permit(:name, :reason, :is_available, :date_available, :rent_market, :unit_number, :building_id, :unit_type_id, kw_value_ids: [])
     end
 
     def record_not_found(error)

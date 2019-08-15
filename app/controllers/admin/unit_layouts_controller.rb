@@ -110,11 +110,14 @@ module Admin
 
     def flag
       unit_layout = @community.unit_layouts.find(params[:id])
-      if unit_layout.toggle_flag!
-        render json: { flag: true }
+
+      if unit_layout.flagged?
+        unit_layout.unflag!
       else
-        render json: { flag: false }
+        unit_layout.flag!(reason: unit_layout_params[:reason]) unless unit_layout.flagged?
       end
+
+      render json: { flag: unit_layout.flagged?, reason: unit_layout.flagged_for }.compact
     end
 
     def update
@@ -150,7 +153,7 @@ module Admin
     private
 
     def unit_layout_params
-      params.permit(:name, :community_id, kw_value_ids: [])
+      params.permit(:name, :reason, :community_id, kw_value_ids: [])
     end
 
     def record_not_found(error)
