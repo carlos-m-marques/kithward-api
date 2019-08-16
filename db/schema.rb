@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_164007) do
+ActiveRecord::Schema.define(version: 2019_08_16_195611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -223,6 +223,13 @@ ActiveRecord::Schema.define(version: 2019_08_15_164007) do
     t.bigint "kw_value_id", null: false
     t.index ["kw_value_id", "owner_id"], name: "index_kw_values_owners_on_kw_value_id_and_owner_id"
     t.index ["owner_id", "kw_value_id"], name: "index_kw_values_owners_on_owner_id_and_kw_value_id"
+  end
+
+  create_table "kw_values_pm_systems", id: false, force: :cascade do |t|
+    t.bigint "pm_system_id", null: false
+    t.bigint "kw_value_id", null: false
+    t.index ["kw_value_id", "pm_system_id"], name: "index_kw_values_pm_systems_on_kw_value_id_and_pm_system_id"
+    t.index ["pm_system_id", "kw_value_id"], name: "index_kw_values_pm_systems_on_pm_system_id_and_kw_value_id"
   end
 
   create_table "kw_values_unit_types", id: false, force: :cascade do |t|

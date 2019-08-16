@@ -17,9 +17,6 @@ class Community < ApplicationRecord
   belongs_to :pm_system
 
   has_and_belongs_to_many :kw_values
-  has_many :kw_attributes, through: :kw_values
-  has_many :kw_classes, through: :kw_attributes
-  has_many :community_super_classes, through: :kw_classes, source: :kw_super_class, class_name: 'CommunitySuperClass'
 
   # before_save :update_cached_data
 
@@ -36,7 +33,6 @@ class Community < ApplicationRecord
   TYPE_MEMORY      = 'M'
 
   CARE_TYPES = [
-    TYPE_UNKNOWN,
     TYPE_INDEPENDENT,
     TYPE_ASSISTED,
     TYPE_NURSING,

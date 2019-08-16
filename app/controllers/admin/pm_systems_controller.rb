@@ -27,6 +27,27 @@ module Admin
       render json: { results: Admin::PmSystemSerializer.render_as_hash(pm_systems, view: 'list'), meta: pagination }
     end
 
+    def super_classes
+      page = params[:page] || 1
+      per = params[:limit] || 30
+
+      total = PmSystemSuperClass.count
+      super_classes = PmSystemSuperClass.page(page).per(per)
+
+      pagination = {
+        total_pages: super_classes.total_pages,
+        current_page: super_classes.current_page,
+        next_page: super_classes.next_page,
+        prev_page: super_classes.prev_page,
+        first_page: super_classes.first_page?,
+        last_page: super_classes.last_page?,
+        per_page: super_classes.limit_value,
+        total: total
+      }.compact
+
+      render json: { results: Admin::KwSuperClassSerializer.render_as_hash(super_classes), meta: pagination }
+    end
+
     def show
       pm_system = PmSystem.find(params[:id])
       render json:  Admin::PmSystemSerializer.render(pm_system, view: 'complete')
@@ -65,7 +86,7 @@ module Admin
     private
 
     def pm_system_params
-      params.permit(:name)
+      params.permit(:name, kw_value_ids: [])
     end
 
     def record_not_found(error)

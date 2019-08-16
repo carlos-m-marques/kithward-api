@@ -42,8 +42,8 @@ Rails.application.routes.draw do
       resources :communities do
         patch 'flag', on: :member
         get 'super_classes', on: :collection
-        get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
-        get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
+        # get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
+        # get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
 
         resources :listings
         resources :unit_layouts do
@@ -59,7 +59,9 @@ Rails.application.routes.draw do
           get 'super_classes', on: :collection
         end
       end
-      resources :pm_systems
+      resources :pm_systems do
+        get 'super_classes', on: :collection
+      end
       resources :owners do
         get 'super_classes', on: :collection
         # get 'super_classes/:id/classes', to: 'owners#kw_classes', on: :collection

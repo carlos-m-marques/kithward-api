@@ -1,0 +1,2 @@
+class PmSystemSuperClass < KwSuperClass
+end
