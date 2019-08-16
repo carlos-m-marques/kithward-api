@@ -1,5 +1,5 @@
 
-class AccountsController < ApplicationController
+class AccountsController < ApiController
   before_action :authentication_required!, except: [:create, :exception]
 
   def index

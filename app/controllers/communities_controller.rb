@@ -1,6 +1,6 @@
 require 'tempfile'
 
-class CommunitiesController < ApplicationController
+class CommunitiesController < ApiController
   before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area]
 
   def index

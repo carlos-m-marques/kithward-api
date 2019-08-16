@@ -1,5 +1,5 @@
 
-class LeadsController < ApplicationController
+class LeadsController < ApiController
   before_action :admin_account_required!, except: [:create]
 
   def create

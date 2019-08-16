@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class AdminController < ApiController
   before_action :admin_account_required!
 
   def clone_db

@@ -1,5 +1,5 @@
 
-class CommunityPoisController < ApplicationController
+class CommunityPoisController < ApiController
   before_action :admin_account_required!, except: [:index]
 
   def index

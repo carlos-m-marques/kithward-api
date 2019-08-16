@@ -2,6 +2,9 @@ class KwSuperClass < ApplicationRecord
   HEIRS_CLASSES = %w(BuildingSuperClass CommunitySuperClass OwnerSuperClass UnitSuperClass UnitTypeSuperClass PmSystemSuperClass).freeze
 
   has_many :kw_classes, dependent: :destroy
+  has_many :kw_attributes, through: :kw_classes
+
+  accepts_nested_attributes_for :kw_classes
 
   scope :independent_living, ->{ where(independent_living: true) }
   scope :assisted_living, ->{ where(assisted_living: true) }

@@ -1,5 +1,20 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  # namespace :activeadmin do
+  #   resources :kw_super_classes do
+  #     resources :kw_classes do
+  #       resources :kw_attributes do
+  #         get 'new', on: :collection, as: 'new'
+  #         get 'edit', on: :member
+  #       end
+  #     end
+  #   end
+  # end
+
+  ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
 
   scope 'v1', defaults: {format: 'json'} do
     resources :communities do

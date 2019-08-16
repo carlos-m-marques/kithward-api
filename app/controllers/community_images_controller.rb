@@ -1,4 +1,4 @@
-class CommunityImagesController < ApplicationController
+class CommunityImagesController < ApiController
   before_action :admin_account_required!, except: [:index, :show]
 
   def index

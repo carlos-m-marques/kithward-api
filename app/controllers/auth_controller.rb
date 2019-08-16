@@ -1,7 +1,7 @@
 require 'digest/sha1'
 require 'json_web_token'
 
-class AuthController < ApplicationController
+class AuthController < ApiController
   def login
     account = Account.insensitive_find_by_email(params[:email])
     if params[:password].present?

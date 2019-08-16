@@ -1,4 +1,4 @@
-class SitemapController < ApplicationController
+class SitemapController < ApiController
   newrelic_ignore_apdex
 
   class Sitemap
