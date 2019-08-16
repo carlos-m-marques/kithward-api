@@ -25,6 +25,7 @@ module Admin
         :care_type,
         :street, :street_more, :postal, :township, :city, :county, :borough, :state, :metro, :region, :country,
         :lat, :lon,
+        :created_at,
         :updated_at,
         :cached_image_url,
         :cached_data
