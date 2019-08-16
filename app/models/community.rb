@@ -113,24 +113,24 @@ class Community < ApplicationRecord
     LABEL_FOR_TYPE[care_type]
   end
 
-  # begin # Elasticsearch / Searchkick
-  #   searchkick  match: :word_start,
-  #               word_start:  ['name', 'description'],
-  #               default_fields: ['name', 'description'],
-  #               locations: ['location']
-  #
-  #   scope :search_import, -> { includes([:listings, :units]) }
-  #
-  #   def search_data
-  #     attributes.merge({
-  #       "location" => {lat: lat, lon: lon},
-  #       "listings" => listings,
-  #       "units_available" => units_available,
-  #       "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
-  #       "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
-  #     })
-  #   end
-  # end
+  begin # Elasticsearch / Searchkick
+    searchkick  match: :word_start,
+                word_start:  ['name', 'description'],
+                default_fields: ['name', 'description'],
+                locations: ['location']
+
+    scope :search_import, -> { includes([:listings, :units]) }
+
+    def search_data
+      attributes.merge({
+        "location" => {lat: lat, lon: lon},
+        "listings" => listings,
+        "units_available" => units_available,
+        "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
+        "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
+      })
+    end
+  end
 
   begin # Data manipulation
     scope :with_data, ->(name, value = nil) do
