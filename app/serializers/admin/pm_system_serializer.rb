@@ -10,6 +10,7 @@ module Admin
       include_view 'list'
 
       association :owners, blueprint: Admin::OwnerSerializer, view: 'list'
+      association :kw_values, blueprint: Admin::KwValueSerializer
     end
   end
 end
