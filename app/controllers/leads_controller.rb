@@ -5,7 +5,7 @@ class LeadsController < ApiController
   def create
     lead = Lead.create(params.permit(
       :name, :phone, :email, :community_id, :request, :message
-    ).merge(account_id: accessing_account&.id)) do |new_lead|
+    ).merge(account_id: current_account&.id)) do |new_lead|
       if params[:data]
         params[:data].permit!
         new_lead.data = params[:data]

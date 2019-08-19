@@ -6,7 +6,7 @@ class CommunitiesController < ApiController
   def index
     search_options = default_search_options
 
-    if accessing_account and accessing_account.is_admin?
+    if current_account and current_account.is_admin?
       search_options[:where][:status] = [ Community::STATUS_ACTIVE, Community::STATUS_DRAFT ]
     end
 
@@ -109,7 +109,7 @@ class CommunitiesController < ApiController
   def show
     community = Community.find(params[:id])
 
-    if community.is_active? or (accessing_account and accessing_account.is_admin?)
+    if community.is_active? or (current_account and current_account.is_admin?)
       render json: CommunitySerializer.render(community, view: 'complete')
     else
       raise ActiveRecord::RecordNotFound

@@ -5,7 +5,7 @@ class CommunityPoisController < ApiController
   def index
     community = Community.find(params[:community_id])
 
-    unless community.is_active? or (accessing_account and accessing_account.is_admin?)
+    unless community.is_active? or (current_account and current_account.is_admin?)
       raise ActiveRecord::RecordNotFound
     end
 
@@ -15,7 +15,7 @@ class CommunityPoisController < ApiController
   def create
     community = Community.find(params[:community_id])
 
-    unless community.is_active? or (accessing_account and accessing_account.is_admin?)
+    unless community.is_active? or (current_account and current_account.is_admin?)
       raise ActiveRecord::RecordNotFound
     end
 
@@ -29,7 +29,7 @@ class CommunityPoisController < ApiController
   def destroy
     community = Community.find(params[:community_id])
 
-    unless community.is_active? or (accessing_account and accessing_account.is_admin?)
+    unless community.is_active? or (current_account and current_account.is_admin?)
       raise ActiveRecord::RecordNotFound
     end
 

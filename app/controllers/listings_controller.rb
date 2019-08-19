@@ -8,7 +8,7 @@ class ListingsController < ApiController
 
     listings = community.listings
 
-    if community.is_active? or (accessing_account and accessing_account.is_admin?)
+    if community.is_active? or (current_account and current_account.is_admin?)
       render json: ListingsSerializer.render(listings.to_a)
     else
       raise ActiveRecord::RecordNotFound
@@ -18,7 +18,7 @@ class ListingsController < ApiController
   def show
     listing = Listing.find(params[:id])
 
-    if (listing.is_active? and community.is_active?) or (accessing_account and accessing_account.is_admin?)
+    if (listing.is_active? and community.is_active?) or (current_account and current_account.is_admin?)
 
       render json: ListingsSerializer.render(listing)
     else

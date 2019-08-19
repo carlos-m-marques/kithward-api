@@ -49,7 +49,7 @@ class PoisController < ApiController
 
   def create
     attrs = params.permit(:name, :street, :city, :postal, :state, :country, :poi_category_id).to_h
-    attrs[:created_by_id] = accessing_account.id
+    attrs[:created_by_id] = current_account.id
     attrs[:poi_category_id] ||= params[:poi_category] || params[:category_id] || (params[:category] && params[:category][:id])
     poi = Poi.create(attrs)
 

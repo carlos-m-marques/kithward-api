@@ -1,12 +1,16 @@
 require 'mail_tools'
 
 class Account < ApplicationRecord
-  has_secure_password(validations: false)
+  attribute :email, :email
+
+  has_secure_password
   has_paper_trail
 
-  validates :email, presence: true, uniqueness: {case_sensitive: false}
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :name, :password_confirmation, presence: true
 
-  after_save :send_verification_email_if_needed
+  # after_save :send_verification_email_if_needed
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'
@@ -81,9 +85,5 @@ class Account < ApplicationRecord
       return true
     end
     return false
-  end
-
-  def self.insensitive_find_by_email(email)
-    Account.where("lower(email) = ?", email.downcase).first
   end
 end

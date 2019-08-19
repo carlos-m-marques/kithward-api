@@ -1,7 +1,7 @@
 module Admin
-  class CommunitiesController < ActionController::API
+  class CommunitiesController < ApiController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-    # before_action :admin_account_required!
+    before_action :admin_account_required!
 
     def index
       page = params[:page] || 1

@@ -16,22 +16,16 @@ class ApiController < ActionController::API
   protected :inject_kithward_headers
 
   def access_token_payload
-    @access_token_payload ||= begin
-      access_token = nil
-      if request.headers['Authorization'].present?
-        access_token = request.headers['Authorization'].split(' ').last
-      elsif params[:access_token]
-        access_token = params[:access_token]
-      end
-
-      JsonWebToken.decode(access_token) || {}
+    return {} unless request.headers['Authorization'] || params[:access_token]
+      access_token = params[:access_token] || request.headers['Authorization'].split(' ').last
+      JsonWebToken.decode(access_token)
     rescue JWT::VerificationError, JWT::DecodeError
       {}
     end
   end
 
-  def accessing_account
-    @accessing_account ||= begin
+  def current_account
+    @current_account ||= begin
       if access_token_payload[:account_id]
         Account.find(access_token_payload[:account_id])
       end
@@ -39,13 +33,13 @@ class ApiController < ActionController::API
   end
 
   def authentication_required!
-    unless accessing_account
+    unless current_account
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end
 
   def admin_account_required!
-    unless accessing_account && accessing_account.is_admin?
+    unless current_account && current_account.is_admin?
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end
   end
@@ -53,8 +47,8 @@ class ApiController < ActionController::API
   begin # paper trail
     before_action :set_paper_trail_whodunnit
     def user_for_paper_trail
-      if accessing_account
-        "#{accessing_account.id}:#{accessing_account.email}"
+      if current_account
+        "#{current_account.id}:#{current_account.email}"
       else
         "anonymous"
       end

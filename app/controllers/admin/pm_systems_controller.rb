@@ -1,5 +1,5 @@
 module Admin
-  class PmSystemsController < ActionController::API
+  class PmSystemsController < ApiController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     # before_action :admin_account_required!
 

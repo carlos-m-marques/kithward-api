@@ -1,5 +1,5 @@
 module Admin
-  class UnitLayoutsController < ActionController::API
+  class UnitLayoutsController < ApiController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     before_action :set_community
     # before_action :admin_account_required!
