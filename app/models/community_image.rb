@@ -7,6 +7,8 @@ class CommunityImage < ApplicationRecord
 
   after_save { community&.update_cached_image_url! }
 
+  validates :image, attached: true
+
   def url
     "/v1/communities/#{self.community_id}/images/#{self.id}"
   end
