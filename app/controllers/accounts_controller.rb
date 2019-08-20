@@ -1,6 +1,8 @@
 
 class AccountsController < ApiController
-  before_action :authentication_required!, except: [:create, :exception]
+  load_and_authorize_resource
+
+  # before_action :authentication_required!, except: [:create, :exception]
 
   def index
     page = params[:page] || 1
@@ -33,17 +35,11 @@ class AccountsController < ApiController
     end
 
     account = Account.find(params[:id])
-    if account.id == current_account.id || current_account.is_admin?
-      render json: AccountSerializer.render(account)
-    else
-      render json: { errors: ['Not Authorized'] }, status: :unauthorized
-    end
+    render json: AccountSerializer.render(account)
   end
 
   def create
-    account = Account.create(params.permit(
-      :email, :name, :password, :password_confirmation
-    ))
+    account = Account.create(account_params)
 
     if account.errors.any?
       render json: { errors: account.errors}, status: :unprocessable_entity
@@ -57,11 +53,10 @@ class AccountsController < ApiController
       params[:id] = current_account.id
     end
 
-    account = Account.find(params[:id])
-    if account.id == current_account.id || current_account.is_admin?
-      account.update_attributes(params.permit(
-        :name, :password, :password_confirmation
-      ))
+
+    if params[:id] == current_account.id || current_account.is_admin?
+      account = Account.find(params[:id])
+      account.update_attributes(account_params)
 
       if account.errors.any?
         render json: { errors: account.errors}, status: :unprocessable_entity
@@ -71,5 +66,11 @@ class AccountsController < ApiController
     else
       render json: { errors: ['Not Authorized'] }, status: :unauthorized
     end
+  end
+
+  def account_params
+    params.permit(
+      :email, :name, :password, :password_confirmation, :role
+    )
   end
 end

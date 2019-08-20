@@ -1,6 +1,5 @@
 module Admin
   class PmSystemsController < ApiController
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     # before_action :admin_account_required!
 
     def index
@@ -87,10 +86,6 @@ module Admin
 
     def pm_system_params
       params.permit(:name, kw_value_ids: [])
-    end
-
-    def record_not_found(error)
-      render json: { errors: error.message }, status: :unprocessable_entity
     end
   end
 end

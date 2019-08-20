@@ -8,7 +8,7 @@ class JsonWebToken
     body = JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
     HashWithIndifferentAccess.new body
   rescue
-    nil
+    {}
   end
 
   def self.access_token_for_account(account, refresh_token = nil)

@@ -1,6 +1,5 @@
 module Admin
   class BuildingsController < ApiController
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     before_action :set_community
     # before_action :admin_account_required!
 
@@ -153,10 +152,6 @@ module Admin
 
     def building_params
       params.permit(:name, :community_id, :reason, kw_value_ids: [])
-    end
-
-    def record_not_found(error)
-      render json: { errors: error.message }, status: :unprocessable_entity
     end
 
     def set_community

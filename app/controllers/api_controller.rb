@@ -1,28 +1,27 @@
 require 'json_web_token'
 
 class ApiController < ActionController::API
-  before_action :set_raven_context
-  after_action :inject_kithward_headers
+  rescue_from CanCan::AccessDenied, with: :not_allowed
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-  def set_raven_context # Sentry
-    Raven.user_context(id: access_token_payload[:account_id])
-    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
-  end
-  private :set_raven_context
+  before_action :set_raven_context, :set_paper_trail_whodunnit
 
-  def inject_kithward_headers
-    response.headers['X-Kw'] = "#{ENV['HEROKU_APP_NAME'] || 'kwweb-development'}[#{controller_name}/#{action_name}] #{(ENV['HEROKU_SLUG_COMMIT'] || '?')[0..7]} #{ENV['HEROKU_RELEASE_CREATED_AT']}"
-  end
-  protected :inject_kithward_headers
+  # def current_ability
+  #   controller_namespace = params[:controller].split('/').first.camelize
+  #   @current_ability ||= Ability.new(current_user, controller_namespace)
+  # end
 
   def access_token_payload
     return {} unless request.headers['Authorization'] || params[:access_token]
-      access_token = params[:access_token] || request.headers['Authorization'].split(' ').last
-      JsonWebToken.decode(access_token)
-    rescue JWT::VerificationError, JWT::DecodeError
-      {}
-    end
+
+    access_token = params[:access_token] || request.headers['Authorization'].split(' ').last
+
+    JsonWebToken.decode(access_token)
+  rescue JWT::VerificationError, JWT::DecodeError
+    {}
   end
+
+  def current_user; current_account; end
 
   def current_account
     @current_account ||= begin
@@ -44,14 +43,30 @@ class ApiController < ActionController::API
     end
   end
 
-  begin # paper trail
-    before_action :set_paper_trail_whodunnit
-    def user_for_paper_trail
-      if current_account
-        "#{current_account.id}:#{current_account.email}"
-      else
-        "anonymous"
-      end
+  protected
+
+  def record_not_found(error)
+    render json: { errors: error.message }, status: :unprocessable_entity
+  end
+
+  def not_allowed
+    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+  end
+
+  def user_for_paper_trail
+    if current_account
+      "#{current_account.id}:#{current_account.email}"
+    else
+      "anonymous"
     end
+  end
+
+  def self.permission
+    return name = controller_name.classify.constantize
+  end
+
+  def set_raven_context
+    Raven.user_context(id: access_token_payload[:account_id]) if current_account
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
   end
 end

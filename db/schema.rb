@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_16_205154) do
+ActiveRecord::Schema.define(version: 2019_08_20_162338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2019_08_16_205154) do
     t.string "verified_email", limit: 128
     t.string "verification_token", limit: 64
     t.datetime "verification_expiration"
+    t.string "role", default: "user"
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
@@ -295,6 +296,16 @@ ActiveRecord::Schema.define(version: 2019_08_16_205154) do
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_owners_on_deleted_at"
     t.index ["pm_system_id"], name: "index_owners_on_pm_system_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.integer "account_id"
+    t.string "subject_class"
+    t.integer "subject_id"
+    t.string "action"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pm_systems", force: :cascade do |t|

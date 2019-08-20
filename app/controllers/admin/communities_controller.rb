@@ -1,7 +1,7 @@
 module Admin
   class CommunitiesController < ApiController
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-    before_action :admin_account_required!
+    # before_action :admin_account_required!
+    # load_and_authorize_resource
 
     def index
       page = params[:page] || 1
@@ -15,6 +15,7 @@ module Admin
 
       communities = communities.only_deleted if params[:deleted]
       communities = communities.flagged if params[:flagged]
+      communities = communities.with_images if params[:images]
 
       total = communities.count
       communities = communities.page(page).per(per)
@@ -177,12 +178,8 @@ module Admin
         :street, :street_more, :city, :state, :postal, :country,
         :lat, :lon, :website, :phone, :fax, :email, :community,
         :classes, :listings, :region, :metro, :borough, :county, :township,
-        :data, :owner_id, :pm_system_id, :reason, kw_value_ids: []
+        :data, :owner_id, :pm_system_id, :reason, kw_value_ids: [], community_image_ids: []
       )
-    end
-
-    def record_not_found(error)
-      render json: { errors: error.message }, status: :unprocessable_entity
     end
   end
 end

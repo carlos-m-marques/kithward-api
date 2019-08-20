@@ -42,6 +42,14 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_material (1.4.2)
+    activeadmin_addons (1.7.1)
+      active_material
+      railties
+      require_all (~> 1.5)
+      sass
+      select2-rails (~> 4.0)
+      xdan-datetimepicker-rails (~> 2.5.1)
     activejob (5.2.3)
       activesupport (= 5.2.3)
       globalid (>= 0.3.6)
@@ -66,6 +74,7 @@ GEM
     arbre (1.2.1)
       activesupport (>= 3.0.0)
     arel (9.0.0)
+    awesome_print (1.8.0)
     aws-eventstream (1.0.3)
     aws-partitions (1.202.0)
     aws-sdk-core (3.62.0)
@@ -92,6 +101,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (11.0.1)
+    cancancan (3.0.1)
     coderay (1.1.2)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -101,6 +111,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
+    connection_pool (2.2.2)
     country-select (1.2.1)
     crass (1.0.4)
     devise (4.6.2)
@@ -214,6 +225,8 @@ GEM
     puma (3.12.1)
     rack (2.0.7)
     rack-cors (1.0.3)
+    rack-protection (2.0.5)
+      rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.3)
@@ -249,13 +262,20 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    redis (4.1.2)
     request_store (1.4.1)
       rack (>= 1.4)
+    require_all (1.5.0)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby_dep (1.5.0)
     ruby_http_client (3.3.0)
+    sass (3.7.4)
+      sass-listen (~> 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~> 0.9, >= 0.9.4)
+      rb-inotify (~> 0.9, >= 0.9.7)
     sassc (2.0.1)
       ffi (~> 1.9)
       rake
@@ -269,10 +289,17 @@ GEM
       activemodel (>= 4.2)
       elasticsearch (>= 5)
       hashie
+    select2-rails (4.0.3)
+      thor (~> 0.14)
     sendgrid-ruby (6.0.0)
       ruby_http_client (~> 3.3.0)
     sentry-raven (2.7.4)
       faraday (>= 0.7.6, < 1.0)
+    sidekiq (5.2.7)
+      connection_pool (~> 2.2, >= 2.2.2)
+      rack (>= 1.5.0)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 5)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -298,18 +325,24 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    xdan-datetimepicker-rails (2.5.4)
+      jquery-rails
+      rails (>= 3.2.16)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activeadmin!
+  activeadmin_addons
   acts_as_paranoid (~> 0.6.0)
+  awesome_print
   aws-sdk-s3 (~> 1.0.0)
   bcrypt (~> 3.1.7)
   blueprinter (= 0.9.0)
   bootsnap (>= 1.1.0)
   byebug
+  cancancan (~> 3.0, >= 3.0.1)
   coffee-rails
   country-select
   devise
@@ -337,6 +370,7 @@ DEPENDENCIES
   searchkick (~> 3.1)
   sendgrid-ruby
   sentry-raven (= 2.7.4)
+  sidekiq (~> 5.2, >= 5.2.7)
   spring
   spring-watcher-listen (~> 2.0.0)
 

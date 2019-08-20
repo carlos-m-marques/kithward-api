@@ -1,7 +1,19 @@
 module Admin
   class CommunityImageSerializer < Blueprinter::Base
-    identifier :idstr, name: :id
+    include Rails.application.routes.url_helpers
 
-    fields :caption, :tags, :sort_order, :url, :content_type
+    identifier :id
+
+    view 'list' do
+      fields :caption, :tags, :sort_order, :content_type
+    end
+
+    view 'complete' do
+      include_view 'list'
+
+      field :file_url do |record, options|
+        options[:file_url]
+      end
+    end
   end
 end

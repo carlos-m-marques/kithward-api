@@ -1,6 +1,9 @@
-require 'mail_tools'
-
 class Account < ApplicationRecord
+  ADMIN_ROLE = 'admin'.freeze
+  USER_ROLE = 'user'.freeze
+  MANAGER_ROLE = 'manager'.freeze
+  ROLES = [ADMIN_ROLE, USER_ROLE, MANAGER_ROLE].freeze
+
   attribute :email, :email
 
   has_secure_password
@@ -8,13 +11,33 @@ class Account < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :name, :password_confirmation, presence: true
+  validates :name, :password_confirmation, presence: true, unless: -> { password.blank? }
 
-  # after_save :send_verification_email_if_needed
+  after_save :send_verification_email_if_needed
+
+  enum role: { admin: ADMIN_ROLE, user: USER_ROLE, manager: MANAGER_ROLE }
+
+  has_many :permissions
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'
   STATUS_DELETED   = 'X'
+
+  def roles
+    ROLES
+  end
+
+  def admin?
+     role == 'admin'
+  end
+
+  def user?
+     role == 'user'
+  end
+
+  def manager?
+     role == 'manager'
+  end
 
   def is_pseudo?
     status == STATUS_PSEUDO
@@ -64,14 +87,7 @@ class Account < ApplicationRecord
     self.verification_expiration = 24.hours.from_now
     self.save!
 
-    MailTools.send_template(
-      self.email,
-      "d-eb98144a7ab2430d9cc0763d70a5e0ea",
-      {
-        email_address: self.email,
-        validation_link: "#{ENV['FRONTEND_URL'] || 'https://kithward.com'}/auth/verify?#{URI.encode_www_form(email: self.email, verify: self.verification_token, reason: params[:reason])}"
-      }
-    )
+    VerificationMailerWorker.perform_async(self.email, self.verification_token, params[:reason])
   end
 
   def verify_email(token)

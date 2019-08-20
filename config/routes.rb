@@ -1,20 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
-
-  # namespace :activeadmin do
-  #   resources :kw_super_classes do
-  #     resources :kw_classes do
-  #       resources :kw_attributes do
-  #         get 'new', on: :collection, as: 'new'
-  #         get 'edit', on: :member
-  #       end
-  #     end
-  #   end
-  # end
+  mount Sidekiq::Web => '/sidekiq'
 
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
 
   scope 'v1', defaults: {format: 'json'} do
     resources :communities do
@@ -61,6 +51,9 @@ Rails.application.routes.draw do
         # get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
 
         resources :listings
+        resources :community_images do
+          get 'file', on: :member
+        end
         resources :unit_layouts do
           patch 'flag', on: :member
           get 'super_classes', on: :collection

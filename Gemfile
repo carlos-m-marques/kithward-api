@@ -25,9 +25,11 @@ gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'ffaker'
 gem 'country-select'
-# gem 'formtastic'
+gem 'cancancan', '~> 3.0', '>= 3.0.1'
 gem 'devise'
+gem 'activeadmin_addons'
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch: 'fix_renamed_resources_and_optional_belongs_to'
+gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'
@@ -45,6 +47,7 @@ end
 
 #== DEVELOPMENT & TESTING ==================
 group :development, :test do
+  gem 'awesome_print'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'factory_bot_rails', '~> 4.0'
