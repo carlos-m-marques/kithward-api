@@ -11,7 +11,7 @@ class AuthController < ApiController
 
       render json: AccountSerializer.render(account, meta: { access_token: access_token, refresh_token: refresh_token })
     else
-      render json: { errors: [error] }, status: :unauthorized
+      render json: { errors: ['Invalid Credentials!'] }, status: :unauthorized
     end
   end
 
