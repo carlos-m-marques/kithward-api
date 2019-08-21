@@ -9,6 +9,10 @@ class CommunityImage < ApplicationRecord
 
   validates :image, attached: true
 
+  def file_url
+    "/v1/admin/communities/#{community_id}/community_images/#{id}/file"
+  end
+
   def url
     "/v1/communities/#{self.community_id}/images/#{self.id}"
   end

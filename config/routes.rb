@@ -44,6 +44,11 @@ Rails.application.routes.draw do
     end
 
     namespace :admin do
+      resources :permissions do
+        get 'subjects', on: :collection
+        get 'subject_ids', on: :collection
+      end
+
       resources :communities do
         patch 'flag', on: :member
         get 'super_classes', on: :collection

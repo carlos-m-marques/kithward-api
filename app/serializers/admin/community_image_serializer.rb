@@ -5,15 +5,11 @@ module Admin
     identifier :id
 
     view 'list' do
-      fields :caption, :tags, :sort_order, :content_type
+      fields :caption, :tags, :sort_order, :content_type, :file_url
     end
 
     view 'complete' do
       include_view 'list'
-
-      field :file_url do |record, options|
-        options[:file_url]
-      end
     end
   end
 end
