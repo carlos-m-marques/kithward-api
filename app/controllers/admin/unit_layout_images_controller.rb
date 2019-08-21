@@ -1,6 +1,6 @@
 module Admin
   class UnitLayoutImagesController < ApiController
-    # before_action :set_community, :set_unit_type
+    before_action :set_community, :set_unit_type
     # load_and_authorize_resource through: :community
 
     def index
