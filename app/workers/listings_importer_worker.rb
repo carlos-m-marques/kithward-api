@@ -6,7 +6,7 @@ class ListingsImporterWorker
     listing = Listing.select(:id, :community_id, :name).find(listing_id)
     unit_layout = UnitType.create(name: listing.name, community_id: listing.community_id)
 
-    listing.listing_images.each do |listing_image|
+    listing.listing_images.joins(image_attachment: :blob).each do |listing_image|
       unit_layout_image = unit_layout.unit_type_images.new
       unit_layout_image.image.attach(listing_image.image.blob)
 
