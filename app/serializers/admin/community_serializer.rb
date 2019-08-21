@@ -11,7 +11,8 @@ module Admin
         :name,
         :city,
         :state,
-        :postal
+        :postal,
+        :owner_id
       field :postal, name: :zip
     end
 
@@ -19,16 +20,17 @@ module Admin
       field :flagged_at
       field :flagged_for
 
-      fields :status,
-        :name,
+      fields :name,
         :slug,
         :care_type,
         :street, :street_more, :postal, :township, :city, :county, :borough, :state, :metro, :region, :country,
-        :lat, :lon,
         :created_at,
         :updated_at,
-        :cached_image_url,
-        :cached_data
+        :owner_id
+        # :status,
+        # :lat, :lon,
+        # :cached_image_url,
+        # :cached_data
     end
 
     view 'complete' do
@@ -39,9 +41,9 @@ module Admin
 
       association :kw_values, blueprint: Admin::KwValueSerializer
 
-      association :listings, blueprint: ListingSerializer
-      association :community_images, name: :images, blueprint: CommunityImageSerializer
-      association :pois, blueprint: PoiSerializer
+      # association :listings, blueprint: ListingSerializer
+      association :community_images, name: :images, blueprint: Admin::CommunityImageSerializer
+      # association :pois, blueprint: PoiSerializer
 
       # field :images do |object|
       #   object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|

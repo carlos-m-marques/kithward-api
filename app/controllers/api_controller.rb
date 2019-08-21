@@ -50,7 +50,7 @@ class ApiController < ActionController::API
   end
 
   def not_allowed
-    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    render json: { errors: ['Not Allowed'] }, status: :unauthorized
   end
 
   def user_for_paper_trail

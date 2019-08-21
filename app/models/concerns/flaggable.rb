@@ -7,7 +7,7 @@ module Flaggable
     scope :flagged, -> { where.not(flagged_at: nil) }
     scope :unflagged, -> { where(flagged_at: nil) }
 
-    validates :flagged_for, presence: true, if: :flagged?
+    # validates :flagged_for, presence: true, if: :flagged?
   end
 
   def flag!(reason:)

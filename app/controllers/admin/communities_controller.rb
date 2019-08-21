@@ -1,7 +1,6 @@
 module Admin
   class CommunitiesController < ApiController
-    # before_action :admin_account_required!
-    # load_and_authorize_resource
+    load_and_authorize_resource
 
     def index
       page = params[:page] || 1
@@ -13,7 +12,7 @@ module Admin
          Community.recent
       end
 
-      # communities = communities.accessible_by(current_ability)
+      communities = communities.accessible_by(current_ability)
 
       communities = communities.only_deleted if params[:deleted]
       communities = communities.flagged if params[:flagged]

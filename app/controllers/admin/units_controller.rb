@@ -1,13 +1,13 @@
 module Admin
   class UnitsController < ApiController
     before_action :set_community
-    # before_action :admin_account_required!
+    load_and_authorize_resource through: :community
 
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      units = @community.units
+      units = @community.units.accessible_by(current_ability)
 
       units = units.only_deleted if params[:deleted]
       units = units.flagged if params[:flagged]

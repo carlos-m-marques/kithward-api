@@ -2,7 +2,10 @@ class Account < ApplicationRecord
   ADMIN_ROLE = 'admin'.freeze
   USER_ROLE = 'user'.freeze
   MANAGER_ROLE = 'manager'.freeze
-  ROLES = [ADMIN_ROLE, USER_ROLE, MANAGER_ROLE].freeze
+  BUILDINGS_MANAGER_ROLE = 'buildings_manager'.freeze
+  UNITS_MANAGER_ROLE = 'units_manager'.freeze
+
+  ROLES = [ADMIN_ROLE, USER_ROLE, MANAGER_ROLE, BUILDINGS_MANAGER_ROLE, UNITS_MANAGER_ROLE].freeze
 
   attribute :email, :email
 
@@ -15,7 +18,13 @@ class Account < ApplicationRecord
 
   after_save :send_verification_email_if_needed
 
-  enum role: { admin: ADMIN_ROLE, user: USER_ROLE, manager: MANAGER_ROLE }
+  enum role: {
+    admin: ADMIN_ROLE,
+    user: USER_ROLE,
+    manager: MANAGER_ROLE,
+    buildings_manager: BUILDINGS_MANAGER_ROLE,
+    units_manager: UNITS_MANAGER_ROLE
+  }
 
   belongs_to :owner, optional: true
 
@@ -37,6 +46,14 @@ class Account < ApplicationRecord
 
   def manager?
      role == 'manager'
+  end
+
+  def buildings_manager?
+     role == 'buildings_manager'
+  end
+
+  def units_manager?
+     role == 'units_manager'
   end
 
   def is_pseudo?

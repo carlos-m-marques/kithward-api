@@ -6,6 +6,8 @@ class Unit < ApplicationRecord
 	belongs_to :building
 	belongs_to :unit_type
 
+	has_one :community, through: :unit_type
+
 	has_and_belongs_to_many :kw_values
   has_many :kw_attributes, through: :kw_values
   has_many :kw_classes, through: :kw_attributes
