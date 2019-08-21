@@ -13,6 +13,8 @@ module Admin
          Community.recent
       end
 
+      # communities = communities.accessible_by(current_ability)
+
       communities = communities.only_deleted if params[:deleted]
       communities = communities.flagged if params[:flagged]
       communities = communities.with_images if params[:images]
@@ -123,11 +125,16 @@ module Admin
 
     def show
       community = Community.find(params[:id])
+
+      # authorize! :read, community
+
       render json:  Admin::CommunitySerializer.render(community, view: 'complete')
     end
 
     def flag
       community = Community.find(params[:id])
+
+      # authorize! :update, community
 
       if community.flagged?
         community.unflag!
@@ -141,6 +148,8 @@ module Admin
     def update
       community = Community.find(params[:id])
 
+      # authorize! :update, community
+
       if community.update_attributes(community_params)
         # shoud not be here... this should be asynchronous.
         # community.reindex
@@ -153,6 +162,8 @@ module Admin
     def destroy
       community = Community.find(params[:id])
 
+      # authorize! :update, community
+
       if community.destroy!
         head :no_content
       else
@@ -162,6 +173,8 @@ module Admin
 
     def create
       community = Community.new(community_params)
+
+      # authorize! :create, Community
 
       if community.owner && community_params[:pm_system_id].blank?
         community.pm_system = community.owner.pm_system

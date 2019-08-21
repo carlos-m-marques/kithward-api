@@ -3,6 +3,7 @@ class Owner < ApplicationRecord
 
   belongs_to :pm_system
   has_many :communities, dependent: :nullify
+  has_many :accounts
 
   has_and_belongs_to_many :kw_values
 

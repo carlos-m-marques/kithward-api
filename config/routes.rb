@@ -62,6 +62,10 @@ Rails.application.routes.draw do
         resources :unit_layouts do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
+
+          resources :unit_layout_images do
+            get 'file', on: :member
+          end
         end
         resources :buildings do
           patch 'flag', on: :member

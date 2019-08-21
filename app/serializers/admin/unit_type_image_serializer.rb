@@ -1,5 +1,5 @@
 module Admin
-  class CommunityImageSerializer < Blueprinter::Base
+  class UnitTypeImageSerializer < Blueprinter::Base
     identifier :id
 
     view 'list' do

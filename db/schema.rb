@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_162338) do
+ActiveRecord::Schema.define(version: 2019_08_21_161926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -28,7 +28,9 @@ ActiveRecord::Schema.define(version: 2019_08_20_162338) do
     t.string "verification_token", limit: 64
     t.datetime "verification_expiration"
     t.string "role", default: "user"
+    t.integer "owner_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
+    t.index ["owner_id"], name: "index_accounts_on_owner_id"
   end
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -298,16 +300,6 @@ ActiveRecord::Schema.define(version: 2019_08_20_162338) do
     t.index ["pm_system_id"], name: "index_owners_on_pm_system_id"
   end
 
-  create_table "permissions", force: :cascade do |t|
-    t.integer "account_id"
-    t.string "subject_class"
-    t.integer "subject_id"
-    t.string "action"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pm_systems", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -335,6 +327,16 @@ ActiveRecord::Schema.define(version: 2019_08_20_162338) do
     t.bigint "created_by_id"
     t.index ["created_by_id"], name: "index_pois_on_created_by_id"
     t.index ["poi_category_id"], name: "index_pois_on_poi_category_id"
+  end
+
+  create_table "unit_type_images", force: :cascade do |t|
+    t.bigint "unit_type_id"
+    t.string "caption", limit: 1024
+    t.string "tags", limit: 1024
+    t.integer "sort_order", default: 9999
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unit_type_id"], name: "index_unit_type_images_on_unit_type_id"
   end
 
   create_table "unit_types", force: :cascade do |t|

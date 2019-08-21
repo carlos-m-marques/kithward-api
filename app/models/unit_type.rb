@@ -5,6 +5,7 @@ class UnitType < ApplicationRecord
 
   belongs_to :community
   has_many :units, dependent: :destroy
+  has_many :unit_type_images
 
   has_and_belongs_to_many :kw_values
   has_many :kw_attributes, through: :kw_values

@@ -17,7 +17,7 @@ class Account < ApplicationRecord
 
   enum role: { admin: ADMIN_ROLE, user: USER_ROLE, manager: MANAGER_ROLE }
 
-  has_many :permissions
+  belongs_to :owner, optional: true
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'

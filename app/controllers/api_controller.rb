@@ -46,7 +46,7 @@ class ApiController < ActionController::API
   protected
 
   def record_not_found(error)
-    render json: { errors: error.message }, status: :unprocessable_entity
+    render json: { errors: error.message }, status: :not_found
   end
 
   def not_allowed
