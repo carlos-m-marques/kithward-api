@@ -17,7 +17,12 @@ module Admin
       communities = communities.flagged if params[:flagged]
       communities = communities.with_images if params[:images]
 
-      total = communities.count
+      total = unless params[:images]
+        communities.count
+      else
+        0
+      end
+
       communities = communities.page(page).per(per)
 
       pagination = {
