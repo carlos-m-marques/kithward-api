@@ -3,6 +3,8 @@ class CommunityImage < ApplicationRecord
 
   default_scope { order(sort_order: :asc, id: :asc) }
 
+  scope :has_image, -> { joins(image_attachment: :blob) }
+
   has_one_attached :image
 
   after_save { community&.update_cached_image_url! }

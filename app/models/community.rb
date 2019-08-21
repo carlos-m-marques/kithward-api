@@ -40,7 +40,7 @@ class Community < ApplicationRecord
     TYPE_MEMORY
   ].freeze
 
-  scope :with_images, -> { joins(:community_images).distinct }
+  scope :with_images, -> { joins(community_images: { image_attachment: :blob }).distinct }
   scope :recent, -> { order(created_at: :desc) }
   scope :recently_updated, -> { order(updated_at: :desc) }
   scope :by_column, ->(column = :created_at, direction = :desc) { order(column => direction) }

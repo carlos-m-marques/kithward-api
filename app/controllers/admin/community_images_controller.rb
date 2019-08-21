@@ -7,7 +7,7 @@ module Admin
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      community_images = @community.community_images
+      community_images = @community.community_images.has_image
 
       total = community_images.count
       community_images = community_images.page(page).per(per)
