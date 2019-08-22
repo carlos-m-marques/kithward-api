@@ -157,7 +157,6 @@ class CommunitiesController < ApiController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      community.reindex
       render json: CommunitySerializer.render(community, view: 'complete')
     end
   end
@@ -196,7 +195,6 @@ class CommunitiesController < ApiController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      community.reindex
       render json: CommunitySerializer.render(community, view: 'complete')
     end
   end

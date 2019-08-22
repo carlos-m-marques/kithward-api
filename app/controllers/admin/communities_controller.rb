@@ -145,8 +145,6 @@ module Admin
       community = Community.find(params[:id])
 
       if community.update_attributes(community_params)
-        # shoud not be here... this should be asynchronous.
-        # community.reindex
         render json:  Admin::CommunitySerializer.render(community, view: 'complete')
       else
         render json: { errors: community.errors}, status: :unprocessable_entity

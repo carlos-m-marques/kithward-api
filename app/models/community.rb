@@ -128,14 +128,16 @@ class Community < ApplicationRecord
     searchkick  match: :word_start,
                 word_start:  ['name', 'description'],
                 default_fields: ['name', 'description'],
-                locations: ['location']
+                locations: ['location'],
+                callbacks: :async
 
-    scope :search_import, -> { includes([:listings, :units]) }
+    scope :search_import, -> { includes([:listings, :units, :unit_layouts]) }
 
     def search_data
       attributes.merge({
         "location" => {lat: lat, lon: lon},
         "listings" => listings,
+        "unit_layouts" => unit_layouts,
         "units_available" => units_available,
         "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
         "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
