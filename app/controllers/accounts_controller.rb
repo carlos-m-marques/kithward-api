@@ -69,8 +69,10 @@ class AccountsController < ApiController
   end
 
   def account_params
-    params.permit(
-      :email, :name, :password, :password_confirmation, :role
-    )
+    allowed_params = [:email, :name, :password, :password_confirmation]
+
+    allowed_params.push(:role) if can? :manage, Account
+
+    params.permit allowed_params
   end
 end

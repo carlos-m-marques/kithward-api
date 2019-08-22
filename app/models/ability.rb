@@ -6,78 +6,78 @@ class Ability
     alias_action :file, to: :read
     alias_action :super_classes, to: :read
 
-    if account.present?
-      can :update, Account, id: account.id
-      can :read, Account, id: account.id
+    can :create, Account
 
-      if account.admin?
-        can :manage, :all
-      end
+    return unless account.present?
 
-      if account.manager?
-        can :update, Owner, id: account.owner_id
-        can :read, Owner, id: account.owner_id
+    can :update, Account, id: account.id
+    can :read, Account, id: account.id
 
-        can :update, Community, owner: { accounts: { id: account.id } }
-        can :read, Community, owner: { accounts: { id: account.id } }
+    if account.admin?
+      can :manage, :all
+    end
 
-        can :read, Poi
-        can :read, PoiCategory
+    if account.manager?
+      can :update, Owner, id: account.owner_id
+      can :read, Owner, id: account.owner_id
 
-        can :update, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-        can :read, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-        can :create, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-        can :destroy, CommunityImage, community: { owner: { accounts: { id: account.id } } }
+      can :update, Community, owner: { accounts: { id: account.id } }
+      can :read, Community, owner: { accounts: { id: account.id } }
 
-        can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, Poi
+      can :read, PoiCategory
 
-        can :update, Building, community: { owner: { accounts: { id: account.id } } }
-        can :read, Building, community: { owner: { accounts: { id: account.id } } }
-        can :create, Building, community: { owner: { accounts: { id: account.id } } }
-        can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
+      can :update, CommunityImage, community: { owner: { accounts: { id: account.id } } }
+      can :read, CommunityImage, community: { owner: { accounts: { id: account.id } } }
+      can :create, CommunityImage, community: { owner: { accounts: { id: account.id } } }
+      can :destroy, CommunityImage, community: { owner: { accounts: { id: account.id } } }
 
-        can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
-        can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
-        can :create, UnitType, community: { owner: { accounts: { id: account.id } } }
-        can :destroy, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
 
-        can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :create, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :destroy, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      end
+      can :update, Building, community: { owner: { accounts: { id: account.id } } }
+      can :read, Building, community: { owner: { accounts: { id: account.id } } }
+      can :create, Building, community: { owner: { accounts: { id: account.id } } }
+      can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
 
-      if account.buildings_manager?
-        can :index, Community, owner: { accounts: { id: account.id } }
+      can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :create, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :destroy, UnitType, community: { owner: { accounts: { id: account.id } } }
 
-        can :update, Building, community: { owner: { accounts: { id: account.id } } }
-        can :read, Building, community: { owner: { accounts: { id: account.id } } }
-        can :create, Building, community: { owner: { accounts: { id: account.id } } }
-        can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
+      can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :create, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :destroy, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+    end
 
-        can :update, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
-        can :read, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
-      end
+    if account.buildings_manager?
+      can :index, Community, owner: { accounts: { id: account.id } }
 
-      if account.units_manager?
-        can :index, Community, owner: { accounts: { id: account.id } }
+      can :update, Building, community: { owner: { accounts: { id: account.id } } }
+      can :read, Building, community: { owner: { accounts: { id: account.id } } }
+      can :create, Building, community: { owner: { accounts: { id: account.id } } }
+      can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
 
-        can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :update, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
+    end
 
-        can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
-        can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
+    if account.units_manager?
+      can :index, Community, owner: { accounts: { id: account.id } }
 
-        can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      end
-    else
-      can :create, Account
+      can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+
+      can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
+
+      can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+      can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
     end
   end
 end
