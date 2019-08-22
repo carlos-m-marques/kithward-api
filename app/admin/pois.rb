@@ -14,5 +14,8 @@ ActiveAdmin.register Poi do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+  filter :name
+  filter :poi_category
+  filter :city
+  filter :state
 end
