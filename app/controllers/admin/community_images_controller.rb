@@ -1,6 +1,6 @@
 module Admin
   class CommunityImagesController < ApiController
-    load_and_authorize_resource
+    load_and_authorize_resource except: :file
     before_action :set_community
 
     def index

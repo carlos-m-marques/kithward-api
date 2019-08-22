@@ -2,7 +2,7 @@ module Admin
   class UnitLayoutImagesController < ApiController
     before_action :set_community, :set_unit_type
     before_action :build_image, only: :create
-    load_and_authorize_resource class: 'UnitTypeImage'
+    load_and_authorize_resource class: 'UnitTypeImage', except: :file
 
     def index
       page = params[:page] || 1
