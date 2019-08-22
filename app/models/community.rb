@@ -44,6 +44,7 @@ class Community < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
   scope :recently_updated, -> { order(updated_at: :desc) }
   scope :by_column, ->(column = :created_at, direction = :desc) { order(column => direction) }
+  scope :with_pois, -> { joins(:pois).distinct }
 
   scope :care_type_il, -> { where(care_type: TYPE_INDEPENDENT) }
   scope :care_type_al, -> { where(care_type: TYPE_ASSISTED) }
@@ -109,6 +110,18 @@ class Community < ApplicationRecord
 
   def care_type_label
     LABEL_FOR_TYPE[care_type]
+  end
+
+  def add_poi_ids=(ids)
+    self.assign_attributes({poi_ids: (self.poi_ids + ids)})
+  end
+
+  def add_kw_value_ids=(ids)
+    self.assign_attributes({kw_value_ids: (self.kw_value_ids + ids)})
+  end
+
+  def add_community_image_id=(ids)
+    self.assign_attributes({community_image_ids: (self.community_image_id + ids)})
   end
 
   begin # Elasticsearch / Searchkick

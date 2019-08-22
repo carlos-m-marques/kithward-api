@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_161926) do
+ActiveRecord::Schema.define(version: 2019_08_22_175756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -310,6 +310,8 @@ ActiveRecord::Schema.define(version: 2019_08_21_161926) do
 
   create_table "poi_categories", force: :cascade do |t|
     t.string "name", limit: 128
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_poi_categories_on_deleted_at"
   end
 
   create_table "pois", force: :cascade do |t|
@@ -325,7 +327,9 @@ ActiveRecord::Schema.define(version: 2019_08_21_161926) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "created_by_id"
+    t.datetime "deleted_at"
     t.index ["created_by_id"], name: "index_pois_on_created_by_id"
+    t.index ["deleted_at"], name: "index_pois_on_deleted_at"
     t.index ["poi_category_id"], name: "index_pois_on_poi_category_id"
   end
 

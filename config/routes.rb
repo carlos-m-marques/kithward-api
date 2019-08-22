@@ -76,6 +76,10 @@ Rails.application.routes.draw do
           get 'super_classes', on: :collection
         end
       end
+
+      resources :pois
+      resources :poi_categories
+
       resources :pm_systems do
         get 'super_classes', on: :collection
       end

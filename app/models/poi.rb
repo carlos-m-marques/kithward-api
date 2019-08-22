@@ -1,8 +1,13 @@
 class Poi < ApplicationRecord
   has_paper_trail
+  acts_as_paranoid
 
   belongs_to :poi_category
   has_and_belongs_to_many :communities
+
+  scope :recent, -> { order(created_at: :desc) }
+  scope :recently_updated, -> { order(updated_at: :desc) }
+  scope :by_column, ->(column = :created_at, direction = :desc) { order(column => direction) }
 
   begin # Elasticsearch / Searchkick
     searchkick  match: :word_start,

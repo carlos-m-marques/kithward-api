@@ -17,6 +17,7 @@ module Admin
       communities = communities.only_deleted if params[:deleted]
       communities = communities.flagged if params[:flagged]
       communities = communities.with_images if params[:images]
+      communities = communities.with_pois if params[:pois]
 
       total = unless params[:images]
         communities.count
@@ -125,15 +126,11 @@ module Admin
     def show
       community = Community.find(params[:id])
 
-      # authorize! :read, community
-
       render json:  Admin::CommunitySerializer.render(community, view: 'complete')
     end
 
     def flag
       community = Community.find(params[:id])
-
-      # authorize! :update, community
 
       if community.flagged?
         community.unflag!
@@ -147,8 +144,6 @@ module Admin
     def update
       community = Community.find(params[:id])
 
-      # authorize! :update, community
-
       if community.update_attributes(community_params)
         # shoud not be here... this should be asynchronous.
         # community.reindex
@@ -161,8 +156,6 @@ module Admin
     def destroy
       community = Community.find(params[:id])
 
-      # authorize! :update, community
-
       if community.destroy!
         head :no_content
       else
@@ -172,8 +165,6 @@ module Admin
 
     def create
       community = Community.new(community_params)
-
-      # authorize! :create, Community
 
       if community.owner && community_params[:pm_system_id].blank?
         community.pm_system = community.owner.pm_system
@@ -195,7 +186,8 @@ module Admin
         :street, :street_more, :city, :state, :postal, :country,
         :lat, :lon, :website, :phone, :fax, :email, :community,
         :classes, :listings, :region, :metro, :borough, :county, :township,
-        :data, :owner_id, :pm_system_id, :reason, kw_value_ids: [], community_image_ids: []
+        :data, :owner_id, :pm_system_id, :reason, kw_value_ids: [], community_image_ids: [],
+        poi_ids: [], add_poi_ids: [], add_kw_value_ids: [], add_community_image_ids: []
       )
     end
   end
