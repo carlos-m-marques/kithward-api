@@ -1,13 +1,14 @@
 module Admin
   class CommunityImagesController < ApiController
+    load_and_authorize_resource
     before_action :set_community
-    # load_and_authorize_resource through: :community
 
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      community_images = @community.community_images.has_image
+      community_images = @community.community_images.accessible_by(current_ability)
+      community_images = community_images.has_image
 
       total = community_images.count
       community_images = community_images.page(page).per(per)

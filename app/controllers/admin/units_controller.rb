@@ -1,7 +1,7 @@
 module Admin
-  class UnitsController < ApiController
+  class UnitsController < ApiController    
+    load_and_authorize_resource
     before_action :set_community
-    load_and_authorize_resource through: :community
 
     def index
       page = params[:page] || 1

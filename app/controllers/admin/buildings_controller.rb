@@ -1,13 +1,13 @@
 module Admin
   class BuildingsController < ApiController
+    load_and_authorize_resource# through: :community
     before_action :set_community
-    load_and_authorize_resource through: :community
 
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      buildings = @community.buildings
+      buildings = @community.buildings.accessible_by(current_ability)
       buildings = buildings.only_deleted if params[:deleted]
       buildings = buildings.flagged if params[:flagged]
 

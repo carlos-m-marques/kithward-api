@@ -24,6 +24,11 @@ class Ability
         can :create, CommunityImage, community: { owner: { accounts: { id: account.id } } }
         can :destroy, CommunityImage, community: { owner: { accounts: { id: account.id } } }
 
+        can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+
         can :update, Building, community: { owner: { accounts: { id: account.id } } }
         can :read, Building, community: { owner: { accounts: { id: account.id } } }
         can :create, Building, community: { owner: { accounts: { id: account.id } } }
@@ -58,12 +63,12 @@ class Ability
       end
 
       if account.units_manager?
-        can :read, Community, owner: { accounts: { id: account.id } }
+        can :index, Community, owner: { accounts: { id: account.id } }
 
-        can :update, UnitTypeImage, community: { owner: { accounts: { id: account.id } } }
-        can :read, UnitTypeImage, community: { owner: { accounts: { id: account.id } } }
-        can :create, UnitTypeImage, community: { owner: { accounts: { id: account.id } } }
-        can :destroy, UnitTypeImage, community: { owner: { accounts: { id: account.id } } }
+        can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
+        can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
 
         can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
         can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
@@ -71,8 +76,6 @@ class Ability
 
         can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
         can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :create, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-        can :destroy, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
         can :super_classes, Unit
       end
     else

@@ -1,13 +1,14 @@
 module Admin
   class UnitLayoutImagesController < ApiController
     before_action :set_community, :set_unit_type
-    # load_and_authorize_resource through: :community
+    before_action :build_image, only: :create
+    load_and_authorize_resource class: 'UnitTypeImage'
 
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
 
-      unit_type_images = @unit_type.unit_type_images
+      unit_type_images = @unit_type.unit_type_images.accessible_by(current_ability)
 
       total = unit_type_images.count
       unit_type_images = unit_type_images.page(page).per(per)
@@ -58,12 +59,10 @@ module Admin
     end
 
     def create
-      unit_type_image = @unit_type.unit_type_images.new(unit_type_image_params)
-
-      if unit_type_image.save
-        render json:  Admin::UnitTypeImageSerializer.render(unit_type_image, view: 'complete', file_url: url_for(unit_type_image.image))
+      if @unit_layout_image.save
+        render json:  Admin::UnitTypeImageSerializer.render(@unit_layout_image, view: 'complete', file_url: url_for(@unit_layout_image.image))
       else
-        render json: { errors: unit_type_image.errors}, status: :unprocessable_entity
+        render json: { errors: @unit_layout_image.errors}, status: :unprocessable_entity
       end
     end
 
@@ -79,6 +78,10 @@ module Admin
 
     def set_unit_type
       @unit_type ||= @community.unit_layouts.find(params[:unit_layout_id])
+    end
+
+    def build_image
+      @unit_layout_image = @unit_type.unit_type_images.new(unit_type_image_params)
     end
   end
 end
