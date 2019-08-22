@@ -1,6 +1,6 @@
 module Admin
   class PmSystemsController < ApiController
-    # before_action :admin_account_required!
+    load_and_authorize_resource
 
     def index
       page = params[:page] || 1

@@ -1,6 +1,6 @@
 module Admin
   class OwnersController < ApiController
-    # before_action :admin_account_required!
+    load_and_authorize_resource
 
     def index
       page = params[:page] || 1
@@ -11,6 +11,8 @@ module Admin
       else
          Owner.recent
       end
+
+      owners = owners.accessible_by(current_ability)
 
       owners = owners.only_deleted if params[:deleted]
 

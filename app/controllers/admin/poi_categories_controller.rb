@@ -1,5 +1,7 @@
 module Admin
   class PoiCategoriesController < ApiController
+    load_and_authorize_resource
+
     def index
       page = params[:page] || 1
       per = params[:limit] || 30
