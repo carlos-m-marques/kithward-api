@@ -30,7 +30,10 @@ class Ability
       can :read, Community, owner: { accounts: { id: account.id } }
 
       can :read, Poi
+      can :create, Poi
+
       can :read, PoiCategory
+      can :create, PoiCategory
 
       can :update, CommunityImage, community: { owner: { accounts: { id: account.id } } }
       can :read, CommunityImage, community: { owner: { accounts: { id: account.id } } }
