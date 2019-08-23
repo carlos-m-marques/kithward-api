@@ -1,7 +1,7 @@
 class AccountSerializer < Blueprinter::Base
   identifier :idstr, name: :id
 
-  fields :name, :email, :is_admin, :status, :role
+  fields :name, :email, :is_admin, :status, :role, :owner_id
 
   field :meta do |obj, options|
     options[:meta]
