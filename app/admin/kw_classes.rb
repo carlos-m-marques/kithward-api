@@ -1,4 +1,6 @@
-ActiveAdmin.register KwClass do
+ActiveAdmin.register KwClass, as: 'Classes' do
+  menu parent: 'Super Classes'
+
   permit_params :name, :kw_super_class_id
   #
   # filter :name

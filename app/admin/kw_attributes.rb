@@ -1,4 +1,6 @@
-ActiveAdmin.register KwAttribute do
+ActiveAdmin.register KwAttribute, as: 'Attributes' do
+  menu parent: 'Super Classes'
+
   permit_params :name, :ui_type, :kw_class_id
 
   filter :name

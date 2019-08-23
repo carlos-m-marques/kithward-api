@@ -1,4 +1,6 @@
-ActiveAdmin.register KwValue do
+ActiveAdmin.register KwValue, as: 'Values' do
+  menu parent: 'Super Classes'
+
   permit_params :name, :kw_attribute_id
 
   filter :name

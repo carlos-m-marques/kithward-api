@@ -1,4 +1,4 @@
-ActiveAdmin.register KwSuperClass do
+ActiveAdmin.register KwSuperClass, as: 'Super Classes' do
   permit_params :name, :type
 
   # sidebar "Children", only: [:show, :edit] do
