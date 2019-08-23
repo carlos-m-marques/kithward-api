@@ -1,5 +1,5 @@
 class Ability
-  PERMISSIONS = %i(index show update create destroy flag)
+  PERMISSIONS = %i(index show update create destroy flag super_classes)
 
   include CanCan::Ability
 
