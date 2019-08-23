@@ -1,7 +1,25 @@
 module Admin
-  class UnitsController < ApiController    
+  class UnitsController < ApiController
     load_and_authorize_resource
     before_action :set_community
+
+    def permissions
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, Unit)]
+      end.to_h
+
+      render json: allowed
+    end
+
+    def resource_permissions
+      resource = Unit.find(params[:id])
+
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, resource)]
+      end.to_h
+
+      render json: allowed
+    end
 
     def index
       page = params[:page] || 1

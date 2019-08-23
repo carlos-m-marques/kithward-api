@@ -1,4 +1,6 @@
 class Ability
+  PERMISSIONS = %i(index show update create destroy flag)
+
   include CanCan::Ability
 
   def initialize(account)
@@ -7,6 +9,9 @@ class Ability
     alias_action :super_classes, to: :read
 
     can :create, Account
+
+    can :permissions, :all
+    can :resource_permissions, :all
 
     return unless account.present?
 

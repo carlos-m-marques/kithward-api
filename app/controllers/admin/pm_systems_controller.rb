@@ -2,6 +2,24 @@ module Admin
   class PmSystemsController < ApiController
     load_and_authorize_resource
 
+    def permissions
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, UnitType)]
+      end.to_h
+
+      render json: allowed
+    end
+
+    def resource_permissions
+      unit_layout = UnitType.find(params[:id])
+
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, unit_layout)]
+      end.to_h
+
+      render json: allowed
+    end
+
     def index
       page = params[:page] || 1
       per = params[:limit] || 30

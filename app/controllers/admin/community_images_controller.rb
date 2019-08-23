@@ -3,6 +3,24 @@ module Admin
     load_and_authorize_resource except: :file
     before_action :set_community
 
+    def permissions
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, CommunityImage)]
+      end.to_h
+
+      render json: allowed
+    end
+
+    def resource_permissions
+      resource = CommunityImage.find(params[:id])
+
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, resource)]
+      end.to_h
+
+      render json: allowed
+    end
+
     def index
       page = params[:page] || 1
       per = params[:limit] || 30

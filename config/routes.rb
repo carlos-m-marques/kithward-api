@@ -44,49 +44,69 @@ Rails.application.routes.draw do
     end
 
     namespace :admin do
-      resources :permissions do
-        get 'subjects', on: :collection
-        get 'subject_ids', on: :collection
-      end
-
       resources :communities do
         patch 'flag', on: :member
         get 'super_classes', on: :collection
-        # get 'super_classes/:id/classes', to: 'communities#kw_classes', on: :collection
-        # get 'classes/:id/attributes', to: 'communities#kw_attributes', on: :collection
 
-        resources :listings
+        get 'permissions', on: :collection
+        get 'permissions', on: :member, action: 'resource_permissions'
+
         resources :community_images do
           get 'file', on: :member
+
+          get 'permissions', on: :collection
+          get 'permissions', on: :member, action: 'resource_permissions'
         end
         resources :unit_layouts do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
 
+          get 'permissions', on: :collection
+          get 'permissions', on: :member, action: 'resource_permissions'
+
           resources :unit_layout_images do
             get 'file', on: :member
+
+            get 'permissions', on: :collection
+            get 'permissions', on: :member, action: 'resource_permissions'
           end
         end
         resources :buildings do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
+
+          get 'permissions', on: :collection
+          get 'permissions', on: :member, action: 'resource_permissions'
         end
         resources :units do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
+
+          get 'permissions', on: :collection
+          get 'permissions', on: :member, action: 'resource_permissions'
         end
       end
 
-      resources :pois
-      resources :poi_categories
+      resources :pois do
+        get 'permissions', on: :collection
+        get 'permissions', on: :member, action: 'resource_permissions'
+      end
+      resources :poi_categories do
+        get 'permissions', on: :collection
+        get 'permissions', on: :member, action: 'resource_permissions'
+      end
 
       resources :pm_systems do
         get 'super_classes', on: :collection
+
+        get 'permissions', on: :collection
+        get 'permissions', on: :member, action: 'resource_permissions'
       end
       resources :owners do
         get 'super_classes', on: :collection
-        # get 'super_classes/:id/classes', to: 'owners#kw_classes', on: :collection
-        # get 'classes/:id/attributes', to: 'owners#kw_attributes', on: :collection
+
+        get 'permissions', on: :collection
+        get 'permissions', on: :member, action: 'resource_permissions'
       end
     end
   end

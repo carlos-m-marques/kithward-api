@@ -1,7 +1,25 @@
 module Admin
   class UnitLayoutsController < ApiController
     before_action :set_community
-    load_and_authorize_resource class: 'UnitType', through: :community
+    load_and_authorize_resource class: 'UnitType'#, through: :community
+
+    def permissions
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, UnitType)]
+      end.to_h
+
+      render json: allowed
+    end
+
+    def resource_permissions
+      unit_layout = UnitType.find(params[:id])
+
+      allowed = Ability::PERMISSIONS.map do |action|
+        [action, can?(action, unit_layout)]
+      end.to_h
+
+      render json: allowed
+    end
 
     def index
       page = params[:page] || 1
