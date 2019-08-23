@@ -62,6 +62,8 @@ class Ability
     end
 
     if account.buildings_manager?
+      can :read, Owner, id: account.owner_id
+
       can :index, Community, owner: { accounts: { id: account.id } }
 
       can :update, Building, community: { owner: { accounts: { id: account.id } } }
@@ -74,6 +76,8 @@ class Ability
     end
 
     if account.units_manager?
+      can :read, Owner, id: account.owner_id
+
       can :index, Community, owner: { accounts: { id: account.id } }
 
       can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
