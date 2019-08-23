@@ -21,6 +21,7 @@ ActiveAdmin.register Account do
       f.input :role, as: :select, include_blank: false, collection: Account::ROLES
       f.input :password
       f.input :password_confirmation
+      f.input :owner
     end
     f.actions
   end
