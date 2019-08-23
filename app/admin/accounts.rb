@@ -6,6 +6,7 @@ ActiveAdmin.register Account do
     id_column
     column :name
     column :email
+    column :owner
     tag_column :role, interactive: true
     column :created_at
     actions
@@ -25,8 +26,4 @@ ActiveAdmin.register Account do
     end
     f.actions
   end
-
 end
-#
-# - f.has_many :permissions, do |t|
-#       - t.input :tag
