@@ -65,6 +65,7 @@ class Ability
       can :read, Owner, id: account.owner_id
 
       can :index, Community, owner: { accounts: { id: account.id } }
+      can :super_classes, Community
 
       can :update, Building, community: { owner: { accounts: { id: account.id } } }
       can :read, Building, community: { owner: { accounts: { id: account.id } } }
@@ -79,6 +80,7 @@ class Ability
       can :read, Owner, id: account.owner_id
 
       can :index, Community, owner: { accounts: { id: account.id } }
+      can :super_classes, Community
 
       can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
       can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
