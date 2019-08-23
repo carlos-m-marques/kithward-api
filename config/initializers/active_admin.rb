@@ -112,7 +112,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  config.root_to = 'kw_super_classes#index'
+  config.root_to = 'super_classes#index'
 
   # == Admin Comments
   #
