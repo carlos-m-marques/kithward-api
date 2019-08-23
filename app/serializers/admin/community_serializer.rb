@@ -37,6 +37,7 @@ module Admin
       include_view 'simple'
 
       field :description
+      field :poi_ids
 
       association :kw_values, blueprint: Admin::KwValueSerializer
       association :community_images, name: :images, blueprint: Admin::CommunityImageSerializer
