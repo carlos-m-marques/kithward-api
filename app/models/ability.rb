@@ -75,6 +75,8 @@ class Ability
 
       can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
       can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :create, UnitType, community: { owner: { accounts: { id: account.id } } }
+      can :destroy, UnitType, community: { owner: { accounts: { id: account.id } } }
 
       can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
       can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
