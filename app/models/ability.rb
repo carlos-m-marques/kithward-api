@@ -25,6 +25,7 @@ class Ability
     if account.manager?
       can :update, Owner, id: account.owner_id
       can :read, Owner, id: account.owner_id
+      can :read, PmSystem, owners: { id: account.owner_id }
 
       can :update, Community, owner: { accounts: { id: account.id } }
       can :read, Community, owner: { accounts: { id: account.id } }
@@ -63,6 +64,7 @@ class Ability
 
     if account.buildings_manager?
       can :read, Owner, id: account.owner_id
+      can :read, PmSystem, owners: { id: account.owner_id }
 
       can :read, Community, owner: { accounts: { id: account.id } }
       can :super_classes, Community
@@ -78,6 +80,7 @@ class Ability
 
     if account.units_manager?
       can :read, Owner, id: account.owner_id
+      can :read, PmSystem, owners: { id: account.owner_id }
 
       can :read, Community, owner: { accounts: { id: account.id } }
       can :super_classes, Community
