@@ -14,7 +14,17 @@ module Admin
 
       pois = pois.only_deleted if params[:deleted]
 
-      total = pois.count
+      if poi_params[:near]
+        community = Community.find(poi_params[:near])
+
+        if poi_params[:within]
+          pois = pois.near(community, poi_params[:within].to_i)
+        else
+          pois = pois.near(community, 50)
+        end
+      end
+
+      total = pois.count(:id)
       pois = pois.page(page).per(per)
 
       pagination = {
@@ -69,7 +79,7 @@ module Admin
     private
 
     def poi_params
-      params.permit(:name, :street, :city, :postal, :state, :country, :poi_category_id)
+      params.permit(:name, :street, :city, :postal, :state, :country, :poi_category_id, :near, :within)
     end
   end
 end
