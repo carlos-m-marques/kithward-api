@@ -4,14 +4,14 @@ module Admin
 
     def permissions
       allowed = Ability::PERMISSIONS.map do |action|
-        [action, can?(action, UnitType)]
+        [action, can?(action, PmSystem)]
       end.to_h
 
       render json: allowed
     end
 
     def resource_permissions
-      unit_layout = UnitType.find(params[:id])
+      unit_layout = PmSystem.find(params[:id])
 
       allowed = Ability::PERMISSIONS.map do |action|
         [action, can?(action, unit_layout)]
