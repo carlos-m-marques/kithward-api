@@ -126,7 +126,7 @@ class Account < ApplicationRecord
     Ability::ENTITIES.map do |entity|
       [
         entity.name.to_s,
-        Ability::PERMISSIONS.map { |action| [action, ability.can?(action, @entity)] }.to_h
+        Ability::PERMISSIONS.map { |action| [action, ability.can?(action, entity)] }.to_h
       ]
     end.to_h
   end
