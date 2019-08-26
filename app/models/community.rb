@@ -14,8 +14,8 @@ class Community < ApplicationRecord
 
   has_many :listings
   has_and_belongs_to_many :pois
-  belongs_to :owner
-  belongs_to :pm_system
+  belongs_to :owner, optional: true
+  belongs_to :pm_system, optional: true
 
   has_and_belongs_to_many :kw_values
 
