@@ -3,6 +3,7 @@ require 'json_web_token'
 class ApiController < ActionController::API
   rescue_from CanCan::AccessDenied, with: :not_allowed
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActionController::ParameterMissing, with: :required_params
 
   before_action :set_raven_context, :set_paper_trail_whodunnit
 
@@ -51,6 +52,10 @@ class ApiController < ActionController::API
 
   def not_allowed
     render json: { errors: ['Not Allowed'] }, status: :unauthorized
+  end
+
+  def required_params(error)
+    render json: { errors: [%&Parameter '#{error.param}' is required for this request.&] }, status: :bad_request
   end
 
   def user_for_paper_trail

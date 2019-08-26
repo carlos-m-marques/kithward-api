@@ -119,4 +119,15 @@ class Account < ApplicationRecord
     end
     return false
   end
+
+  def entity_privileges
+    ability = Ability.new(self)
+
+    Ability::ENTITIES.map do |entity|
+      [
+        entity.name.to_s,
+        Ability::PERMISSIONS.map { |action| [action, ability.can?(action, @entity)] }.to_h
+      ]
+    end.to_h
+  end
 end

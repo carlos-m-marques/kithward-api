@@ -2,24 +2,6 @@ module Admin
   class CommunitiesController < ApiController
     load_and_authorize_resource
 
-    def permissions
-      allowed = Ability::PERMISSIONS.map do |action|
-        [action, can?(action, Community)]
-      end.to_h
-
-      render json: allowed
-    end
-
-    def resource_permissions
-      community = Community.find(params[:id])
-
-      allowed = Ability::PERMISSIONS.map do |action|
-        [action, can?(action, community)]
-      end.to_h
-
-      render json: allowed
-    end
-
     def index
       page = params[:page] || 1
       per = params[:limit] || 30

@@ -1,9 +1,24 @@
 class Ability
-  PERMISSIONS = %i(index show update create destroy flag super_classes)
+  PERMISSIONS = %i(index show update create destroy flag super_classes).freeze
+  ENTITIES = [
+    Account,
+    Owner,
+    PmSystem,
+    Community,
+    Poi,
+    PoiCategory,
+    CommunityImage,
+    UnitTypeImage,
+    Building,
+    UnitType,
+    Unit
+  ].freeze
 
   include CanCan::Ability
 
   def initialize(account)
+    @account ||= account
+
     alias_action :flag, to: :update
     alias_action :file, to: :read
     alias_action :super_classes, to: :read

@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
   scope 'v1', defaults: {format: 'json'} do
+    get 'permissions/:entity', to: 'permissions#permissions'
+    get 'permissions/:entity/:entity_id', to: 'permissions#resource_permissions'
+
     resources :communities do
       get 'dictionary', on: :collection
       post 'import', on: :collection
@@ -48,65 +51,39 @@ Rails.application.routes.draw do
         patch 'flag', on: :member
         get 'super_classes', on: :collection
 
-        get 'permissions', on: :collection
-        get 'permissions', on: :member, action: 'resource_permissions'
-
         resources :community_images do
           get 'file', on: :member
-
-          get 'permissions', on: :collection
-          get 'permissions', on: :member, action: 'resource_permissions'
         end
+
         resources :unit_layouts do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
 
-          get 'permissions', on: :collection
-          get 'permissions', on: :member, action: 'resource_permissions'
-
           resources :unit_layout_images do
             get 'file', on: :member
-
-            get 'permissions', on: :collection
-            get 'permissions', on: :member, action: 'resource_permissions'
           end
         end
+
         resources :buildings do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
-
-          get 'permissions', on: :collection
-          get 'permissions', on: :member, action: 'resource_permissions'
         end
+
         resources :units do
           patch 'flag', on: :member
           get 'super_classes', on: :collection
-
-          get 'permissions', on: :collection
-          get 'permissions', on: :member, action: 'resource_permissions'
         end
       end
 
-      resources :pois do
-        get 'permissions', on: :collection
-        get 'permissions', on: :member, action: 'resource_permissions'
-      end
-      resources :poi_categories do
-        get 'permissions', on: :collection
-        get 'permissions', on: :member, action: 'resource_permissions'
-      end
+      resources :pois
+      resources :poi_categories
 
       resources :pm_systems do
         get 'super_classes', on: :collection
-
-        get 'permissions', on: :collection
-        get 'permissions', on: :member, action: 'resource_permissions'
       end
+
       resources :owners do
         get 'super_classes', on: :collection
-
-        get 'permissions', on: :collection
-        get 'permissions', on: :member, action: 'resource_permissions'
       end
     end
   end
@@ -116,7 +93,6 @@ Rails.application.routes.draw do
       get :clone_db
     end
   end
-
 
   get 'sitemap.xml', :to => 'sitemap#sitemap', :defaults => {:format => 'xml'}
 end
