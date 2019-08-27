@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  PERMISSIONS = %i(index show update create destroy).freeze
+
   ADMIN_ROLE = 'admin'.freeze
   USER_ROLE = 'user'.freeze
   MANAGER_ROLE = 'manager'.freeze
@@ -121,13 +123,6 @@ class Account < ApplicationRecord
   end
 
   def entity_privileges
-    ability = Ability.new(self)
-
-    Ability::ENTITIES.map do |entity|
-      [
-        entity.name.to_s,
-        Ability::PERMISSIONS.map { |action| [action, ability.can?(action, entity)] }.to_h
-      ]
-    end.to_h
+    Ability.new(self).entity_privileges
   end
 end

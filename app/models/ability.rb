@@ -1,18 +1,17 @@
 class Ability
-  PERMISSIONS = %i(index show update create destroy flag super_classes).freeze
-  ENTITIES = [
-    Account,
-    Owner,
-    PmSystem,
-    Community,
-    Poi,
-    PoiCategory,
-    CommunityImage,
-    UnitTypeImage,
-    Building,
-    UnitType,
-    Unit
-  ].freeze
+  ENTITIES = {
+    Account => %i(index show update create destroy),
+    Owner => %i(index show update create destroy flag super_classes),
+    PmSystem => %i(index show update create destroy flag super_classes),
+    Community => %i(index show update create destroy flag super_classes),
+    Poi => %i(index show update create destroy flag super_classes),
+    PoiCategory => %i(index show update create destroy flag super_classes),
+    CommunityImage => %i(index show update create destroy flag super_classes),
+    UnitTypeImage => %i(index show update create destroy flag super_classes),
+    Building => %i(index show update create destroy flag super_classes),
+    UnitType => %i(index show update create destroy flag super_classes),
+    Unit => %i(index show update create destroy flag super_classes)
+  }.freeze
 
   include CanCan::Ability
 
@@ -23,7 +22,7 @@ class Ability
     alias_action :file, to: :read
     alias_action :super_classes, to: :read
 
-    can :create, Account
+    can :create, Account unless account.present?
 
     can :permissions, :all
     can :resource_permissions, :all
@@ -114,5 +113,14 @@ class Ability
       can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
       can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
     end
+  end
+
+  def entity_privileges
+    ENTITIES.map do |entity, actions|
+      [
+        entity,
+        actions.map{ |action| [action, self.can?(action, entity)] }.to_h
+      ]
+    end.to_h
   end
 end
