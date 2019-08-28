@@ -13,14 +13,14 @@ gem 'rack-cors', '~> 1.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'searchkick', '~> 3.1'
 gem 'paper_trail', '~> 9.0'
-gem 'paper_trail-hashdiff'
+gem 'paper_trail-hashdiff', git: 'https://github.com/dudufangor/paper_trail-hashdiff.git'
 gem 'kaminari', '1.1.1'
 
 #== UTILITIES ==============================
 gem 'oj', '~> 3.6'
 gem 'blueprinter', '0.9.0'
 gem 'jwt'
-gem 'hashdiff'
+gem 'hashdiff', '~> 1.0'
 gem 'bcrypt', '~> 3.1.7'   # provides has_secure_password
 gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'ffaker'

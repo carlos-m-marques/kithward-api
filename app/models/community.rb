@@ -254,7 +254,7 @@ class Community < ApplicationRecord
     # WARNING: This subset of keys should reflect what's on web/src/tools/KWConsts.js#CRITERIA_SPEC
 
     if data_changed? || force
-      diff = HashDiff.diff(self.data_was || {}, self.data || {})
+      diff = Hashdiff.diff(self.data_was || {}, self.data || {})
       changed_attributes = diff.collect {|change, name, value| name}
 
       if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
