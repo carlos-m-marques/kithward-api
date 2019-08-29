@@ -4,6 +4,7 @@ class CommunityImage < ApplicationRecord
   default_scope { order(sort_order: :asc, id: :asc) }
 
   scope :has_image, -> { joins(image_attachment: :blob) }
+  scope :published, -> { where(published: true) }
 
   has_one_attached :image
 

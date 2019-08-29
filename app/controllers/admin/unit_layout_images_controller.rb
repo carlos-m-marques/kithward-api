@@ -27,6 +27,7 @@ module Admin
       per = params[:limit] || 30
 
       unit_type_images = @unit_type.unit_type_images.accessible_by(current_ability)
+      unit_type_images = unit_type_images.published if params[:published]
 
       total = unit_type_images.count
       unit_type_images = unit_type_images.page(page).per(per)
@@ -87,7 +88,7 @@ module Admin
     private
 
     def unit_type_image_params
-      params.permit(:unit_type_id, :caption, :tags, :sort_order, :image)
+      params.permit(:unit_type_id, :caption, :tags, :sort_order, :image, :published)
     end
 
     def set_community

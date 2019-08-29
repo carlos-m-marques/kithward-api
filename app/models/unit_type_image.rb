@@ -2,6 +2,7 @@ class UnitTypeImage < ApplicationRecord
   belongs_to :unit_type
 
   default_scope { joins(image_attachment: :blob) }
+  scope :published, -> { where(published: true) }
 
   has_one_attached :image
 

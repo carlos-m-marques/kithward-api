@@ -27,6 +27,7 @@ module Admin
 
       community_images = @community.community_images.accessible_by(current_ability)
       community_images = community_images.has_image
+      community_images = community_images.published if params[:published]
 
       total = community_images.count
       community_images = community_images.page(page).per(per)
@@ -89,7 +90,7 @@ module Admin
     private
 
     def community_image_params
-      params.permit(:community_id, :caption, :tags, :sort_order, :image)
+      params.permit(:community_id, :caption, :tags, :sort_order, :image, :published)
     end
 
     def set_community
