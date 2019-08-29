@@ -19,6 +19,10 @@ class Unit < ApplicationRecord
 
 	delegate :community, to: :building
 
+  # Account tie-in
+  has_one :owner, through: :community
+  has_many :accounts, through: :owner
+
 	def super_classes
 		UnitSuperClass
 	end

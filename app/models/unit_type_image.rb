@@ -9,6 +9,10 @@ class UnitTypeImage < ApplicationRecord
 
   validates :image, attached: true
 
+  # Account tie-in
+  has_one :owner, through: :unit_type
+  has_many :accounts, through: :owner
+
   def file_url
     "/v1/admin/communities/#{community_id}/unit_layouts/#{unit_type_id}/unit_layout_images/#{id}/file"
   end

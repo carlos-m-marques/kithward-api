@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_27_215817) do
+ActiveRecord::Schema.define(version: 2019_08_29_184523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 2019_08_27_215817) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sort_order", default: 9999
+    t.boolean "published", default: true
     t.index ["community_id"], name: "index_community_images_on_community_id"
   end
 
@@ -341,6 +342,7 @@ ActiveRecord::Schema.define(version: 2019_08_27_215817) do
     t.integer "sort_order", default: 9999
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "published", default: true
     t.index ["unit_type_id"], name: "index_unit_type_images_on_unit_type_id"
   end
 

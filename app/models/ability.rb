@@ -1,13 +1,13 @@
 class Ability
   ENTITIES = {
     Account => %i(index show update create destroy),
-    Owner => %i(index show update create destroy flag super_classes),
-    PmSystem => %i(index show update create destroy flag super_classes),
+    Owner => %i(index show update create destroy super_classes),
+    PmSystem => %i(index show update create destroy super_classes),
     Community => %i(index show update create destroy flag super_classes),
-    Poi => %i(index show update create destroy flag super_classes),
-    PoiCategory => %i(index show update create destroy flag super_classes),
-    CommunityImage => %i(index show update create destroy flag super_classes),
-    UnitTypeImage => %i(index show update create destroy flag super_classes),
+    Poi => %i(index show update create destroy),
+    PoiCategory => %i(index show update create destroy),
+    CommunityImage => %i(index show update create destroy),
+    UnitTypeImage => %i(index show update create destroy),
     Building => %i(index show update create destroy flag super_classes),
     UnitType => %i(index show update create destroy flag super_classes),
     Unit => %i(index show update create destroy flag super_classes)
@@ -15,104 +15,23 @@ class Ability
 
   include CanCan::Ability
 
+  # ENTITIES.keys.each do |entity|
+  #   can :permissions, entity
+  #   can :resource_permissions, entity
+  # end
+  attr_accessor :account
+
   def initialize(account)
-    @account ||= account
+    self.account = account
 
-    alias_action :flag, to: :update
-    alias_action :file, to: :read
-    alias_action :super_classes, to: :read
+    set_aliases
 
-    can :create, Account unless account.present?
-
-    can :permissions, :all
-    can :resource_permissions, :all
-
-    return unless account.present?
-
-    can :update, Account, id: account.id
-    can :read, Account, id: account.id
-
-    if account.admin?
-      can :manage, :all
-    end
-
-    if account.manager?
-      can :update, Owner, id: account.owner_id
-      can :index, Owner, id: account.owner_id
-      can :show, Owner, id: account.owner_id
-      can :show, PmSystem, owners: { id: account.owner_id }
-
-      can :update, Community, owner: { accounts: { id: account.id } }
-      can :read, Community, owner: { accounts: { id: account.id } }
-
-      can :read, Poi
-      can :create, Poi
-
-      can :read, PoiCategory
-      can :create, PoiCategory
-
-      can :update, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-      can :read, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-      can :create, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-      can :destroy, CommunityImage, community: { owner: { accounts: { id: account.id } } }
-
-      can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-
-      can :update, Building, community: { owner: { accounts: { id: account.id } } }
-      can :read, Building, community: { owner: { accounts: { id: account.id } } }
-      can :create, Building, community: { owner: { accounts: { id: account.id } } }
-      can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
-
-      can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :create, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :destroy, UnitType, community: { owner: { accounts: { id: account.id } } }
-
-      can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :create, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :destroy, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-    end
-
-    if account.buildings_manager?
-      can :show, Owner, id: account.owner_id
-      can :show, PmSystem, owners: { id: account.owner_id }
-
-      can :read, Community, owner: { accounts: { id: account.id } }
-      can :super_classes, Community
-
-      can :update, Building, community: { owner: { accounts: { id: account.id } } }
-      can :read, Building, community: { owner: { accounts: { id: account.id } } }
-      can :create, Building, community: { owner: { accounts: { id: account.id } } }
-      can :destroy, Building, community: { owner: { accounts: { id: account.id } } }
-
-      can :update, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
-      can :read, Unit, building: { community: { owner: { accounts: { id: account.id } } } }
-    end
-
-    if account.units_manager?
-      can :show, Owner, id: account.owner_id
-      can :show, PmSystem, owners: { id: account.owner_id }
-
-      can :read, Community, owner: { accounts: { id: account.id } }
-      can :super_classes, Community
-
-      can :update, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :read, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :create, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :destroy, UnitTypeImage, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-
-      can :update, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :read, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :create, UnitType, community: { owner: { accounts: { id: account.id } } }
-      can :destroy, UnitType, community: { owner: { accounts: { id: account.id } } }
-
-      can :update, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-      can :read, Unit, unit_type: { community: { owner: { accounts: { id: account.id } } } }
-    end
+    anonymous_privileges
+    user_privileges
+    manager_privileges
+    buildings_manager_privileges
+    units_manager_privileges
+    admin_privileges
   end
 
   def entity_privileges
@@ -122,5 +41,85 @@ class Ability
         actions.map{ |action| [action, self.can?(action, entity)] }.to_h
       ]
     end.to_h
+  end
+
+  private
+
+  def set_aliases
+    alias_action :flag, to: :update
+    alias_action [:file, :super_classes], to: :read
+  end
+
+  def manager_privileges
+    return unless account.try(:manager?)
+
+    operator_read_privileges
+    unit_layouts_privileges
+    buildings_privileges
+
+    can [:update, :index], Owner, resource_conditions
+    can [:update], Community, resource_conditions
+    can [:update, :show, :index, :create, :destroy], Poi
+    can [:update, :show, :index, :create, :destroy], PoiCategory
+    can [:update, :show, :index, :create, :destroy], CommunityImage, resource_conditions
+    can [:update, :show, :index, :create, :destroy, :super_classes], Unit, resource_conditions
+  end
+
+  def admin_privileges
+    return unless account.try(:admin?)
+
+    can :manage, :all
+  end
+
+  def operator_read_privileges
+    can :show, PmSystem, resource_conditions
+    can :show, Owner, resource_conditions
+    can [:show, :index], Community, resource_conditions
+    can :super_classes, Community
+  end
+
+  def unit_layouts_privileges
+    can [:update, :show, :index, :create, :destroy, :super_classes], UnitType, resource_conditions
+    can [:update, :show, :index, :create, :destroy], UnitTypeImage, resource_conditions
+  end
+
+  def units_read_privileges
+    can [:update, :show, :index, :super_classes], Unit, resource_conditions
+  end
+
+  def buildings_privileges
+    can [:update, :show, :index, :create, :destroy, :super_classes], Building, resource_conditions
+  end
+
+  def buildings_manager_privileges
+    return unless account.try(:buildings_manager?)
+
+    operator_read_privileges
+    buildings_privileges
+    units_read_privileges
+  end
+
+  def units_manager_privileges
+    return unless account.try(:units_manager?)
+
+    operator_read_privileges
+    unit_layouts_privileges
+    units_read_privileges
+  end
+
+  def user_privileges
+    return unless (account && !account.admin?)
+
+    can [:update, :show, :index], account
+  end
+
+  def anonymous_privileges
+    return if account
+
+    can :create, Account
+  end
+
+  def resource_conditions
+    { accounts: { id: account.id } }
   end
 end

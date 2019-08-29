@@ -2,7 +2,7 @@ module Admin
   class CommunityImageSerializer < Blueprinter::Base
     identifier :id
 
-    fields :caption, :tags, :sort_order, :content_type, :file_url, :content_type
+    fields :caption, :tags, :sort_order, :content_type, :file_url, :content_type, :published
 
     view 'list' do
     end

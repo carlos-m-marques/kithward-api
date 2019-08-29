@@ -11,6 +11,10 @@ class CommunityImage < ApplicationRecord
 
   validates :image, attached: true
 
+  # Account tie-in
+  has_one :owner, through: :community
+  has_many :accounts, through: :owner
+
   def file_url
     "/v1/admin/communities/#{community_id}/community_images/#{id}/file"
   end
