@@ -30,35 +30,5 @@ ActiveAdmin.register KwAttribute, as: 'Attributes' do
 
     f.actions
   end
-  # config.action_items.delete_if { |item|
-  #   item.name == :show ||
-  #   item.name == :edit ||
-  #   item.name == :destroy ||
-  #   item.name == :new
-  # }
-
-
-
-  # action_item :new do
-  #   link_to 'New', new_activeadmin_kw_super_class_kw_class_kw_attributes_path
-  # end
-
-
-
-  # index do
-  #   selectable_column
-  #   id_column
-  #   column :name
-  #   column :created_at
-  #   column :updated_at
-  #   # activeadmin_kw_super_class_kw_class_kw_attribute
-  #   # edit_activeadmin_kw_super_class_kw_class_kw_attribute
-  #   # activeadmin_kw_super_class_kw_class_kw_attribute
-  #   actions defaults: false, dropdown: true do |record|
-  #     item "View", activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
-  #     item "Edit", edit_activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
-  #     item "Delete", activeadmin_kw_super_class_kw_class_kw_attribute_path(id: record.id)
-  #   end
-  # end
   belongs_to :kw_class, optional: true
 end
