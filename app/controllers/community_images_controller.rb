@@ -3,14 +3,14 @@ class CommunityImagesController < ApiController
 
   def index
     community = Community.find(params[:community_id])
-    images = community.community_images
+    images = community.community_images.published
 
     render json: CommunityImageSerializer.render(images)
   end
 
   def show
     community = Community.find(params[:community_id])
-    image = community.community_images.find_by_id(params[:id])
+    image = community.community_images.published.find_by_id(params[:id])
 
     if image && image.image
       redirect_to url_for(image.image)

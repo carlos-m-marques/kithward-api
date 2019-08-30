@@ -25,7 +25,10 @@ class CommunitySerializer < Blueprinter::Base
     # association :super_classes, blueprint: KwSuperClassSerializer
 
     association :listings, blueprint: ListingSerializer
-    association :community_images, name: :images, blueprint: CommunityImageSerializer
+    association :community_images, name: :images, blueprint: CommunityImageSerializer do |community, options|
+      community.community_images.published
+    end
+
     association :pois, blueprint: PoiSerializer
 
     # field :images do |object|
