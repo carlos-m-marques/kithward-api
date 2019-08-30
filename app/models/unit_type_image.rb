@@ -3,6 +3,8 @@ class UnitTypeImage < ApplicationRecord
 
   default_scope { joins(image_attachment: :blob) }
   scope :published, -> { where(published: true) }
+  scope :with_tags, -> { where.not(tags: [nil, '']) }
+  scope :all_tags, -> { unscoped.with_tags.distinct(:tags).pluck(:tags).join(',').split(',').map(&:strip).uniq }
 
   has_one_attached :image
 

@@ -5,6 +5,8 @@ class CommunityImage < ApplicationRecord
 
   scope :has_image, -> { joins(image_attachment: :blob) }
   scope :published, -> { where(published: true) }
+  scope :with_tags, -> { where.not(tags: [nil, '']) }
+  scope :all_tags, -> { unscoped.with_tags.distinct(:tags).pluck(:tags).join(',').split(',').map(&:strip).uniq }
 
   has_one_attached :image
 
@@ -15,6 +17,10 @@ class CommunityImage < ApplicationRecord
   # Account tie-in
   has_one :owner, through: :community
   has_many :accounts, through: :owner
+
+  # def all_tags
+  #   CommunityImage.unscoped.distinct(:tags).pluck(:tags).map{ |tags| tags.split(',') if tags }.flatten.compact.uniq
+  # end
 
   def file_url
     "/v1/admin/communities/#{community_id}/community_images/#{id}/file"
