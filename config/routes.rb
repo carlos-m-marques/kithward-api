@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       get 'near_by_ip', on: :collection
       get 'similar_near', on: :member
 
+      post 'favorite', on: :member
+      delete 'favorite', to: 'communities#unfavorite', on: :member
+
       get 'by_area', on: :collection
 
       resources :listings
@@ -29,6 +32,8 @@ Rails.application.routes.draw do
 
     resources :accounts do
       get 'exception', on: :collection
+      get 'favorites', to: 'accounts#favorites', on: :collection
+      get 'favorites', to: 'accounts#account_favorites', on: :member
     end
 
     resources :leads

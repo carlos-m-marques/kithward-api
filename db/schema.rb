@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_141830) do
+ActiveRecord::Schema.define(version: 2019_09_02_180547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 2019_08_30_141830) do
     t.integer "owner_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
+  end
+
+  create_table "accounts_communities", id: false, force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "community_id", null: false
+    t.index ["account_id", "community_id"], name: "index_accounts_communities_on_account_id_and_community_id"
+    t.index ["community_id", "account_id"], name: "index_accounts_communities_on_community_id_and_account_id"
   end
 
   create_table "active_admin_comments", force: :cascade do |t|

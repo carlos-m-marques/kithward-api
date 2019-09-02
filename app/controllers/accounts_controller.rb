@@ -2,6 +2,54 @@
 class AccountsController < ApiController
   load_and_authorize_resource
 
+  def favorites
+    communities = current_account.favorites
+    total = communities.count
+
+    page = params[:page] || 1
+    per = params[:limit] || 30
+
+    communities = communities.page(page).per(per)
+
+    pagination = {
+      total_pages: communities.total_pages,
+      current_page: communities.current_page,
+      next_page: communities.next_page,
+      prev_page: communities.prev_page,
+      first_page: communities.first_page?,
+      last_page: communities.last_page?,
+      per_page: communities.limit_value,
+      total: total
+    }.compact
+
+    render json: { results: CommunitySerializer.render_as_hash(communities, view: 'simple'), meta: pagination }
+  end
+
+  def account_favorites
+    @account = Account.find(params[:id])
+
+    communities = @account.favorites
+    total = communities.count
+
+    page = params[:page] || 1
+    per = params[:limit] || 30
+
+    communities = communities.page(page).per(per)
+
+    pagination = {
+      total_pages: communities.total_pages,
+      current_page: communities.current_page,
+      next_page: communities.next_page,
+      prev_page: communities.prev_page,
+      first_page: communities.first_page?,
+      last_page: communities.last_page?,
+      per_page: communities.limit_value,
+      total: total
+    }.compact
+
+    render json: { results: CommunitySerializer.render_as_hash(communities, view: 'simple'), meta: pagination }
+  end
+
   def index
     page = params[:page] || 1
     per = params[:limit] || 30

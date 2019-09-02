@@ -110,6 +110,7 @@ class Ability
   def user_privileges
     return unless (account && !account.admin?)
 
+    can :favorites, Account
     can [:update, :show, :index], account
   end
 

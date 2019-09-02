@@ -1,6 +1,4 @@
 class Account < ApplicationRecord
-  PERMISSIONS = %i(index show update create destroy).freeze
-
   ADMIN_ROLE = 'admin'.freeze
   USER_ROLE = 'user'.freeze
   MANAGER_ROLE = 'manager'.freeze
@@ -13,6 +11,8 @@ class Account < ApplicationRecord
 
   has_secure_password
   has_paper_trail
+
+
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -29,6 +29,10 @@ class Account < ApplicationRecord
   }
 
   belongs_to :owner, optional: true
+
+  has_and_belongs_to_many :communities
+
+  alias_method :favorites, :communities
 
   STATUS_PSEUDO    = '?'
   STATUS_REAL      = 'R'

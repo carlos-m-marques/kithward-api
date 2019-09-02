@@ -1,7 +1,25 @@
 require 'tempfile'
 
 class CommunitiesController < ApiController
-  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area, :favorite]
+
+  def favorite
+    @community = Community.find(community_params[:id])
+
+    if @community.favorited_by.find_by(id: current_account.id)
+      render json: { errors: { favorited: "#{current_account.id} already favorited this community!" }}, status: :unprocessable_entity
+    else
+      @community.favorited_by << current_account
+      render json: CommunitySerializer.render(@community, view: 'complete')
+    end
+  end
+
+  def unfavorite
+    @community = Community.find(community_params[:id])
+    @community.favorited_by.delete(current_account)
+
+    head :no_content
+  end
 
   def index
     search_options = default_search_options
@@ -241,6 +259,10 @@ class CommunitiesController < ApiController
   end
 
   private
+
+  def community_params
+    params.permit(:id)
+  end
 
   def default_search_options
     {

@@ -20,6 +20,9 @@ class Community < ApplicationRecord
 
   has_and_belongs_to_many :kw_values
 
+  has_and_belongs_to_many :accounts, autosave: false
+  alias_method :favorited_by, :accounts
+
   # before_save :update_cached_data
 
   STATUS_ACTIVE    = 'A'
