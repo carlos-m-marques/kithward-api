@@ -13,6 +13,14 @@ class CommunitySerializer < Blueprinter::Base
       :units_available,
       :monthly_rent_lower_bound,
       :monthly_rent_upper_bound
+
+    field :favorited do |community, options|
+      if options[:current_account_id] && community.favorited_by.any?
+        community.favorited_by.find_by(id: options[:current_account_id]).present?
+      else
+        false
+      end
+    end
   end
 
   view 'complete' do

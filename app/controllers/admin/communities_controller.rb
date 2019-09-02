@@ -38,6 +38,7 @@ module Admin
         total: total
       }.compact
 
+
       render json: { results: Admin::CommunitySerializer.render_as_hash(communities, view: 'list'), meta: pagination }
     end
 

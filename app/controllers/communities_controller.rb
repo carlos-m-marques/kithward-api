@@ -10,7 +10,7 @@ class CommunitiesController < ApiController
       render json: { errors: { favorited: "#{current_account.id} already favorited this community!" }}, status: :unprocessable_entity
     else
       @community.favorited_by << current_account
-      render json: CommunitySerializer.render(@community, view: 'complete')
+      render json: CommunitySerializer.render(@community, favorited_options(view: 'complete'))
     end
   end
 
@@ -100,7 +100,7 @@ class CommunitiesController < ApiController
 
     if params[:meta]
       result = {
-        results: CommunitySerializer.render_as_json(communities, view: (params[:view] || 'simple')),
+        results: CommunitySerializer.render_as_json(communities, favorited_options(view: (params[:view] || 'simple'))),
         meta: {
           params: {
             query: (params[:q] || "*"),
@@ -118,7 +118,7 @@ class CommunitiesController < ApiController
         result[:meta][:params][:distance] = params[:distance] || "20mi"
       end
     else
-      result = CommunitySerializer.render(communities, view: (params[:view] || 'simple'))
+      result = CommunitySerializer.render(communities, favorited_options(view: (params[:view] || 'simple')))
     end
 
     render json: result
@@ -128,7 +128,7 @@ class CommunitiesController < ApiController
     community = Community.find(params[:id])
 
     if community.is_active? or (current_account and current_account.is_admin?)
-      render json: CommunitySerializer.render(community, view: 'complete')
+      render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -175,7 +175,7 @@ class CommunitiesController < ApiController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(community, view: 'complete')
+      render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
     end
   end
 
@@ -213,7 +213,7 @@ class CommunitiesController < ApiController
     if community.errors.any?
       render json: { errors: community.errors}, status: :unprocessable_entity
     else
-      render json: CommunitySerializer.render(community, view: 'complete')
+      render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
     end
   end
 
@@ -244,12 +244,12 @@ class CommunitiesController < ApiController
 
   def near_by_ip
     near_by_ip_service = NearByIpService.new(request.remote_ip, default_search_options)
-    render json: CommunitySerializer.render(near_by_ip_service.communities.sample(2), view: 'simple')
+    render json: CommunitySerializer.render(near_by_ip_service.communities.sample(2), favorited_options(view: 'simple'))
   end
 
   def similar_near
     similar_near_community_service = SimilarNearCommunityService.new(Community.find(params[:id]), default_search_options)
-    render json: CommunitySerializer.render(similar_near_community_service.communities, view: 'simple')
+    render json: CommunitySerializer.render(similar_near_community_service.communities, favorited_options(view: 'simple'))
   end
 
   def by_area
@@ -259,6 +259,14 @@ class CommunitiesController < ApiController
   end
 
   private
+
+  def favorited_options(options)
+    if current_account
+      options.merge({ current_account_id: current_account.id })
+    else
+      options
+    end
+  end
 
   def community_params
     params.permit(:id)
@@ -275,6 +283,4 @@ class CommunitiesController < ApiController
 
     }
   end
-
-
 end
