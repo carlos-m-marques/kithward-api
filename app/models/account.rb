@@ -12,8 +12,6 @@ class Account < ApplicationRecord
   has_secure_password
   has_paper_trail
 
-
-
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, :password_confirmation, presence: true, unless: -> { password.blank? }
@@ -27,6 +25,8 @@ class Account < ApplicationRecord
     buildings_manager: BUILDINGS_MANAGER_ROLE,
     units_manager: UNITS_MANAGER_ROLE
   }
+
+  has_one :account_access_request
 
   belongs_to :owner, optional: true
 

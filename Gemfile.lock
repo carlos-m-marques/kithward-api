@@ -26,6 +26,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.0.5)
+      concurrent-ruby (~> 1.0)
     actioncable (5.2.3)
       actionpack (= 5.2.3)
       nio4r (~> 2.0)
@@ -338,6 +340,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm (~> 5.0, >= 5.0.5)
   activeadmin!
   activeadmin_addons
   acts_as_paranoid (~> 0.6.0)
@@ -372,6 +375,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rack-cors (~> 1.0)
   rails (~> 5.2.2)
+  ransack (= 2.1.1)
   searchkick (~> 3.1)
   sendgrid-ruby
   sentry-raven (= 2.7.4)

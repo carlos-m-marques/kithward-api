@@ -30,6 +30,8 @@ gem 'devise'
 gem 'activeadmin_addons'
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch: 'fix_renamed_resources_and_optional_belongs_to'
 gem 'sidekiq', '~> 5.2', '>= 5.2.7'
+gem 'aasm', '~> 5.0', '>= 5.0.5'
+gem 'ransack', '2.1.1'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'

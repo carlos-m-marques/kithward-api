@@ -23,6 +23,8 @@ class Community < ApplicationRecord
   has_and_belongs_to_many :accounts, autosave: false
   alias_method :favorited_by, :accounts
 
+  has_many :account_access_request_communities
+  has_many :account_access_requests, through: :account_access_request_communities
   # before_save :update_cached_data
 
   STATUS_ACTIVE    = 'A'

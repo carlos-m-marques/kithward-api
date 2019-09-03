@@ -42,6 +42,34 @@ module Admin
       render json: { results: Admin::CommunitySerializer.render_as_hash(communities, view: 'list'), meta: pagination }
     end
 
+    def account_requests
+      page = params[:page] || 1
+      per = params[:limit] || 30
+
+      @community = Community.find(params[:id])
+
+      @account_access_requests = @community.account_access_requests
+      @account_access_requests = @community.account_access_requests.approved if params[:approved]
+      @account_access_requests = @community.account_access_requests.rejected if params[:rejected]
+      @account_access_requests = @community.account_access_requests.pending if params[:pending]
+
+      total = @account_access_requests.count
+      @account_access_requests = @account_access_requests.page(page).per(per)
+
+      pagination = {
+        total_pages: @account_access_requests.total_pages,
+        current_page: @account_access_requests.current_page,
+        next_page: @account_access_requests.next_page,
+        prev_page: @account_access_requests.prev_page,
+        first_page: @account_access_requests.first_page?,
+        last_page: @account_access_requests.last_page?,
+        per_page: @account_access_requests.limit_value,
+        total: total
+      }.compact
+
+      render json: { results:  AccountAccessRequestSerializer.render_as_hash(@account_access_requests), meta: pagination }
+    end
+
     def super_classes
       page = params[:page] || 1
       per = params[:limit] || 30

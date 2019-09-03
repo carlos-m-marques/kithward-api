@@ -12,6 +12,10 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+.status_tag {
+  &.rejected { background: #ff0000; }
+  &.approved { background: #00d800; }
+}
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //

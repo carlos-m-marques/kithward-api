@@ -1,7 +1,7 @@
 require 'tempfile'
 
 class CommunitiesController < ApiController
-  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area, :favorite]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area, :favorite, :available]
 
   def favorite
     @community = Community.find(community_params[:id])
@@ -19,6 +19,35 @@ class CommunitiesController < ApiController
     @community.favorited_by.delete(current_account)
 
     head :no_content
+  end
+
+  def available
+    page = params[:page] || 1
+    per = params[:limit] || 30
+
+    if params[:q]
+      @communities = Community.ransack(params[:q]).result
+    else
+      @communities= @communities.select(:id, :name)
+    end
+
+    total = @communities.count(:id)
+
+    @communities = @communities.page(page).per(per)
+
+    pagination = {
+      total_pages: @communities.total_pages,
+      current_page: @communities.current_page,
+      next_page: @communities.next_page,
+      prev_page: @communities.prev_page,
+      first_page: @communities.first_page?,
+      last_page: @communities.last_page?,
+      per_page: @communities.limit_value,
+      total: total
+    }.compact
+
+
+    render json: { results: @communities, meta: pagination }
   end
 
   def index

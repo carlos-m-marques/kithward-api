@@ -15,10 +15,6 @@ class Ability
 
   include CanCan::Ability
 
-  # ENTITIES.keys.each do |entity|
-  #   can :permissions, entity
-  #   can :resource_permissions, entity
-  # end
   attr_accessor :account
 
   def initialize(account)
@@ -69,6 +65,13 @@ class Ability
     return unless account.try(:admin?)
 
     can :manage, :all
+
+    can :index, AccountAccessRequest
+    can :show, AccountAccessRequest
+    can :destroy, AccountAccessRequest
+    can :approve, AccountAccessRequest
+    can :reject, AccountAccessRequest
+    can :update, AccountAccessRequest
   end
 
   def operator_read_privileges
@@ -117,6 +120,7 @@ class Ability
   def anonymous_privileges
     return if account
 
+    can :create, AccountAccessRequest
     can :create, Account
   end
 

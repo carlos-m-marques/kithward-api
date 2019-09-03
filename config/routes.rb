@@ -10,11 +10,17 @@ Rails.application.routes.draw do
     get 'permissions/:entity', to: 'permissions#permissions'
     get 'permissions/:entity/:entity_id', to: 'permissions#resource_permissions'
 
+    resources :account_access_requests do
+      post :approve, on: :member
+      patch :reject, on: :member
+    end
+
     resources :communities do
       get 'dictionary', on: :collection
       post 'import', on: :collection
       get 'near_by_ip', on: :collection
       get 'similar_near', on: :member
+      get 'available', on: :collection
 
       post 'favorite', on: :member
       delete 'favorite', to: 'communities#unfavorite', on: :member
@@ -55,6 +61,7 @@ Rails.application.routes.draw do
       resources :communities do
         patch 'flag', on: :member
         get 'super_classes', on: :collection
+        get 'account_requests', on: :member
 
         resources :community_images do
           get 'file', on: :member

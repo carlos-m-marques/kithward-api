@@ -10,11 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_180547) do
+ActiveRecord::Schema.define(version: 2019_09_02_224446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
+
+  create_table "account_access_request_communities", force: :cascade do |t|
+    t.bigint "account_access_request_id"
+    t.bigint "community_id"
+    t.index ["account_access_request_id"], name: "index_aar_communities_on_account_access_request_id"
+    t.index ["community_id"], name: "index_aar_communities_on_community_id"
+  end
+
+  create_table "account_access_requests", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "title"
+    t.string "phone_number"
+    t.string "company_name"
+    t.text "company_type"
+    t.text "reason"
+    t.string "work_email"
+    t.integer "account_id"
+    t.string "state"
+    t.index ["account_id"], name: "index_account_access_requests_on_account_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", limit: 128
@@ -400,6 +421,8 @@ ActiveRecord::Schema.define(version: 2019_09_02_180547) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "account_access_request_communities", "account_access_requests"
+  add_foreign_key "account_access_request_communities", "communities"
   add_foreign_key "buildings", "communities"
   add_foreign_key "communities", "owners"
   add_foreign_key "communities", "pm_systems"
