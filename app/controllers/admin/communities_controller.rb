@@ -97,59 +97,9 @@ module Admin
         total: total
       }.compact
 
-      render json: { results: Admin::KwSuperClassSerializer.render_as_hash(super_classes), meta: pagination }
-    end
+      super_classes = Admin::KwSuperClassSerializer.render_as_hash(super_classes, visible: params[:visible], hidden: params[:hidden])
 
-    def kw_classes
-      super_class = CommunitySuperClass.find(params[:id])
-
-      page = params[:page] || 1
-      per = params[:limit] || 30
-
-
-      kw_classes = super_class.kw_classes
-      total = kw_classes.count
-
-      kw_classes = kw_classes.page(page).per(per)
-
-      pagination = {
-        total_pages: kw_classes.total_pages,
-        current_page: kw_classes.current_page,
-        next_page: kw_classes.next_page,
-        prev_page: kw_classes.prev_page,
-        first_page: kw_classes.first_page?,
-        last_page: kw_classes.last_page?,
-        per_page: kw_classes.limit_value,
-        total: total
-      }.compact
-
-      render json: { results: Admin::KwClassSerializer.render_as_hash(kw_classes), meta: pagination }
-    end
-
-    def kw_attributes
-      kw_class = KwClass.find(params[:id])
-
-      page = params[:page] || 1
-      per = params[:limit] || 30
-
-
-      kw_attributes = kw_class.kw_attributes
-      total = kw_attributes.count
-
-      kw_attributes = kw_attributes.page(page).per(per)
-
-      pagination = {
-        total_pages: kw_attributes.total_pages,
-        current_page: kw_attributes.current_page,
-        next_page: kw_attributes.next_page,
-        prev_page: kw_attributes.prev_page,
-        first_page: kw_attributes.first_page?,
-        last_page: kw_attributes.last_page?,
-        per_page: kw_attributes.limit_value,
-        total: total
-      }.compact
-
-      render json: { results: Admin::KwAttributeSerializer.render_as_hash(kw_attributes), meta: pagination }
+      render json: { results: super_classes, meta: pagination }
     end
 
     def show

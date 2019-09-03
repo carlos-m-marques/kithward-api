@@ -6,7 +6,7 @@ ActiveAdmin.register Account do
     id_column
     column :name
     column :email
-    column :owner
+    # column :owner
     tag_column :role, interactive: true
     column :created_at
     actions
@@ -19,10 +19,10 @@ ActiveAdmin.register Account do
     f.inputs do
       f.input :name
       f.input :email
-      f.input :role, as: :select, include_blank: false, collection: Account::ROLES
+      # f.input :role, as: :select, include_blank: false, collection: Account::ROLES
       f.input :password
       f.input :password_confirmation
-      f.input :owner
+      # f.input :owner
     end
     f.actions
   end

@@ -64,7 +64,9 @@ module Admin
         total: total
       }.compact
 
-      render json: { results: Admin::KwSuperClassSerializer.render_as_hash(super_classes), meta: pagination }
+      super_classes = Admin::KwSuperClassSerializer.render_as_hash(super_classes, visible: params[:visible], hidden: params[:hidden])
+
+      render json: { results: super_classes, meta: pagination }
     end
 
     def show

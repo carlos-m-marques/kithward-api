@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_224446) do
+ActiveRecord::Schema.define(version: 2019_09_03_150435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 2019_09_02_224446) do
     t.datetime "updated_at", null: false
     t.string "ui_type", default: "select"
     t.boolean "required", default: false
+    t.boolean "hidden", default: false
     t.index ["kw_class_id"], name: "index_kw_attributes_on_kw_class_id"
     t.index ["ui_type"], name: "index_kw_attributes_on_ui_type"
   end

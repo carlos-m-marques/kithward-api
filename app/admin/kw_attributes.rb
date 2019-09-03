@@ -1,7 +1,7 @@
 ActiveAdmin.register KwAttribute, as: 'Attributes' do
   menu parent: 'Super Classes'
 
-  permit_params :name, :ui_type, :kw_class_id, :required
+  permit_params :name, :ui_type, :kw_class_id, :required, :hidden
 
   filter :name
   filter :kw_super_class
@@ -13,6 +13,7 @@ ActiveAdmin.register KwAttribute, as: 'Attributes' do
     id_column
     column :name
     toggle_bool_column :required
+    toggle_bool_column :hidden
     column :created_at
     column :updated_at
     column :kw_class
@@ -26,6 +27,7 @@ ActiveAdmin.register KwAttribute, as: 'Attributes' do
       f.input :ui_type, as: :select, include_blank: false, collection: KwAttribute::UI_TYPES
       f.input :kw_class
       f.input :required
+      f.input :hidden
     end
 
     f.actions
