@@ -167,7 +167,7 @@ class CommunitiesController < ApiController
   end
 
   def show
-    community = Community.find(params[:id])
+    community = Community.find(community_share_params[:id])
 
     if community_share_params[:tracking]
       community.shared!(tracking: community_share_params[:tracking])
