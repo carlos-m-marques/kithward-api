@@ -7,7 +7,9 @@ class CommunitiesController < ApiController
     @community = Community.find(community_share_params[:id])
 
     if community_share_params[:to]
-      ShareMailerWorker.perform_async(community_share_params.merge(community_name: @community.name).to_json)
+      ShareMailerWorker.perform_async(community_share_params.merge(
+        community_name: @community.name, community_slug: @community.slug
+      ).to_json)
 
       render json: { results: "Shared with #{community_share_params[:to]}" }
     else
@@ -325,7 +327,7 @@ class CommunitiesController < ApiController
   end
 
   def community_share_params
-    params.permit(:id, :to, :from, :origin, :message, :tracking)
+    params.permit(:id, :to, :from, :origin, :message, :tracking, tracking: [], tracking: {})
   end
 
   def default_search_options
