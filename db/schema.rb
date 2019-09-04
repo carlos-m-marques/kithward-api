@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_150435) do
+ActiveRecord::Schema.define(version: 2019_09_03_234039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "account_access_request_communities", force: :cascade do |t|
@@ -170,6 +171,7 @@ ActiveRecord::Schema.define(version: 2019_09_03_150435) do
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["flagged_at"], name: "index_communities_on_flagged_at"
     t.index ["flagged_for"], name: "index_communities_on_flagged_for"
+    t.index ["name"], name: "index_communities_on_name", opclass: :gist_trgm_ops, using: :gist
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
   end

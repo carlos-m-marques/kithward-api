@@ -15,7 +15,7 @@ ActiveAdmin.register AccountAccessRequest do
 
   form do |f|
     f.inputs do
-      f.input :community_ids, label: 'Communities', as: :selected_list, url: available_communities_url, response_root: :results, fields: [:name]
+      f.input :community_ids, minimum_input_length: 0, label: 'Communities', as: :selected_list, url: available_communities_url, response_root: :results, fields: [:name]
     end
     f.inputs do
       f.has_many :account do |b|

@@ -35,6 +35,16 @@ class AccountAccessRequestsController < ApiController
   end
 
   def create
+    # rec = AccountAccessRequest.new(account_access_request_params)
+    #
+    # if rec.valid?
+    #   File.write("#{Rails.root}/samples/#{params.to_unsafe_h[:controller].titleize.gsub(' ', '_')}-#{params.to_unsafe_h[:action]}.json", account_access_request_params.to_json)
+    #
+    #   render json: { params: account_access_request_params, data: AccountAccessRequestSerializer.render_as_hash(rec, view: 'complete') }
+    # else
+    #   render json: { errors: rec.errors}, status: :unprocessable_entity
+    # end
+
     @account_access_request = AccountAccessRequest.create(account_access_request_params)
 
     if @account_access_request.errors.any?
