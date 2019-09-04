@@ -24,15 +24,19 @@ class CommunitiesController < ApiController
   def available
     page = params[:page] || 1
     per = params[:limit] || 30
+    total = 0
 
     if params[:query]
       search_params = { groupings: { '0' => { m: 'or',  name_contains: community_available_params[:query] } } }
-      @communities = Community.ransack(search_params).result.select(:id, :name).page(page).per(per)
+      @communities = Community.ransack(search_params).result(distinct: true)
+      total = @communities.count(:id)
+      @communities = @communities.select(:id, :name).page(page).per(per)
     else
-      @communities= Community.select(:id, :name).page(page).per(per)
+      total = @communities.count(:id)
+      @communities= Community.select(:id, :name).recent.page(page).per(per)
     end
 
-    total = @communities.count(:id)
+
 
     pagination = {
       total_pages: @communities.total_pages,
