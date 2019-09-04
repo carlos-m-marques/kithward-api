@@ -1,0 +1,2 @@
+class CommunityShareHit < ApplicationRecord
+end

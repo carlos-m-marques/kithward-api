@@ -1,0 +1,2582 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Kithward API",
+    "description": "API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://kithward-web-staging.herokuapp.com",
+      "description": "Staging"
+    },
+    {
+      "url": "http://localhost:{port}",
+      "variables": {
+        "port": {
+          "default": "3000"
+        }
+      },
+      "description": "Development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Accounts"
+    },
+    {
+      "name": "Communities"
+    },
+    {
+      "name": "Units Layouts"
+    },
+    {
+      "name": "Buildings"
+    },
+    {
+      "name": "Community Images"
+    },
+    {
+      "name": "Unit Layout Images"
+    },
+    {
+      "name": "Units"
+    },
+    {
+      "name": "Owners"
+    },
+    {
+      "name": "Pois"
+    },
+    {
+      "name": "Poi Category"
+    },
+    {
+      "name": "Pm Systems"
+    },
+    {
+      "name": "Permissions"
+    },
+    {
+      "name": "Account Access Request"
+    }
+  ],
+  "paths": {
+    "/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "description": "Login",
+        "operationId": "V1AuthLoginPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_admin": {
+                      "type": "boolean"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    },
+                    "owner_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "password_digest": {
+                      "type": "string"
+                    },
+                    "verified_email": {
+                      "type": "string"
+                    },
+                    "verification_expiration": {
+                      "type": "string"
+                    },
+                    "verification_token": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "description": "Account"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Token",
+        "description": "Token",
+        "operationId": "V1AuthTokenPost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_admin": {
+                      "type": "boolean"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    },
+                    "owner_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "password_digest": {
+                      "type": "string"
+                    },
+                    "verified_email": {
+                      "type": "string"
+                    },
+                    "verification_expiration": {
+                      "type": "string"
+                    },
+                    "verification_token": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "description": "Account"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/auth/request_verification": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Request Verification",
+        "description": "Request Verification",
+        "operationId": "V1AuthRequestVerificationPost",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/accounts": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AccountsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "SignUp",
+        "description": "SignUp",
+        "operationId": "V1AccountsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/accounts/66": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1Accounts66Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/accounts/favorites": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Favorited",
+        "description": "Favorited",
+        "operationId": "V1AccountsFavoritesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/accounts/66/favorites": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Account Favorites",
+        "description": "Account Favorites",
+        "operationId": "V1Accounts66FavoritesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/super_classes": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminCommunitiesSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/permissions": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1AdminCommunitiesPermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7505/permissions": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Resource Permissions",
+        "description": "Resource Permissions",
+        "operationId": "V1AdminCommunities7505PermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunitiesGet",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunitiesPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/communities": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Public Communities",
+        "description": "Public Communities",
+        "operationId": "V1CommunitiesGet",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/communities/available": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Available",
+        "description": "Available",
+        "operationId": "V1CommunitiesAvailableGet",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7505": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities7505Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7505/account_requests": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Account Requests",
+        "description": "Account Requests",
+        "operationId": "V1AdminCommunities7505AccountRequestsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/communities/7505/favorite": {
+      "post": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Favorite",
+        "description": "Favorite",
+        "operationId": "V1Communities7505FavoritePost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Remove Favorite",
+        "description": "Remove Favorite",
+        "operationId": "V1Communities7505FavoriteDelete",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {token}"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497": {
+      "delete": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities7497Delete",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "Bearer {token}"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/flag": {
+      "patch": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities7497FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7484": {
+      "put": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities7484Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts": {
+      "get": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3876UnitLayoutsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities3876UnitLayoutsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7492/unit_layouts/super_classes": {
+      "get": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminCommunities7492UnitLayoutsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/unit_layouts/2": {
+      "get": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities7497UnitLayouts2Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities7497UnitLayouts2Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/unit_layouts/permissions": {
+      "get": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1AdminCommunities7497UnitLayoutsPermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/unit_layouts/2/permissions": {
+      "get": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Resource Permissions",
+        "description": "Resource Permissions",
+        "operationId": "V1AdminCommunities7497UnitLayouts2PermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12/flag": {
+      "patch": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities3876UnitLayouts12FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12": {
+      "put": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3876UnitLayouts12Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/buildings": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3828BuildingsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7492/buildings/super_classes": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminCommunities7492BuildingsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/buildings/6": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities3828Buildings6Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/buildings/permissions": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1AdminCommunities3828BuildingsPermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/buildings/6/permissions": {
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Resource Permissions",
+        "description": "Resource Permissions",
+        "operationId": "V1AdminCommunities3828Buildings6PermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/buildings/1": {
+      "delete": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities7497Buildings1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/buildings/6/flag": {
+      "patch": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities3828Buildings6FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/buildings/3": {
+      "put": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3876Buildings3Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/buildings": {
+      "post": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities3876BuildingsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3852/community_images": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3852CommunityImagesGet",
+        "parameters": [
+          {
+            "name": "published",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/community_images/36244": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities3828CommunityImages36244Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3828/community_images/permissions": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1AdminCommunities3828CommunityImagesPermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3852/community_images/27354/permissions": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Resource Permissions",
+        "description": "Resource Permissions",
+        "operationId": "V1AdminCommunities3852CommunityImages27354PermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7493/community_images/36244/file": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Image",
+        "description": "Image",
+        "operationId": "V1AdminCommunities7493CommunityImages36244FileGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7493/community_images/1": {
+      "delete": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities7493CommunityImages1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3852/community_images/27354": {
+      "put": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3852CommunityImages27354Put",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "image"
+                ],
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7493/community_images": {
+      "post": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities7493CommunityImagesPost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12/unit_layout_images": {
+      "get": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImagesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImagesPost",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "image"
+                ],
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12/unit_layout_images/3": {
+      "get": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3Put",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "image"
+                ],
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12/unit_layout_images/permissions": {
+      "get": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImagesPermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/unit_layouts/12/unit_layout_images/3/file": {
+      "get": {
+        "tags": [
+          "Unit Layout Images"
+        ],
+        "summary": "Image",
+        "description": "Image",
+        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3FileGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/units": {
+      "get": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3876UnitsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities3876UnitsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest3"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/units/super_classes": {
+      "get": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminCommunities7497UnitsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/3876/units/1": {
+      "get": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminCommunities3876Units1Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/units/1": {
+      "put": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities7497Units1Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminCommunities7497Units1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/communities/7497/units/1/flag": {
+      "patch": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities7497Units1FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/owners": {
+      "get": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminOwnersGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminOwnersPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/owners/super_classes": {
+      "get": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminOwnersSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/owners/1": {
+      "get": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminOwners1Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminOwners1Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminOwners1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pois": {
+      "get": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPoisGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPoisPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest5"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pois/21": {
+      "get": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminPois21Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pois/1": {
+      "delete": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminPois1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pois/22": {
+      "put": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminPois22Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/poi_categories": {
+      "get": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPoiCategoriesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPoiCategoriesPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/poi_categories/11": {
+      "get": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminPoiCategories11Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminPoiCategories11Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminPoiCategories11Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pm_systems": {
+      "get": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPmSystemsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPmSystemsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pm_systems/super_classes": {
+      "get": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminPmSystemsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pm_systems/1": {
+      "get": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AdminPmSystems1Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminPmSystems1Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AdminPmSystems1Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/permissions": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions",
+        "description": "Permissions",
+        "operationId": "V1PermissionsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/account_access_requests": {
+      "get": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AccountAccessRequestsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AccountAccessRequestsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest8"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/account_access_requests/10": {
+      "get": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1AccountAccessRequests10Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AccountAccessRequests10Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest8"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Delete",
+        "description": "Delete",
+        "operationId": "V1AccountAccessRequests10Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/account_access_requests/10/approve": {
+      "post": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Approve",
+        "description": "Approve",
+        "operationId": "V1AccountAccessRequests10ApprovePost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/account_access_requests/10/reject": {
+      "patch": {
+        "tags": [
+          "Account Access Request"
+        ],
+        "summary": "Reject",
+        "description": "Reject",
+        "operationId": "V1AccountAccessRequests10RejectPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdateRequest8": {
+        "title": "UpdateRequest8",
+        "required": [
+          "work_email"
+        ],
+        "type": "object",
+        "properties": {
+          "work_email": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "work_email": "{{$randomEmail}}"
+        }
+      },
+      "AccountAttributes": {
+        "title": "AccountAttributes",
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "{{$randomEmail}}",
+          "password": "password"
+        }
+      },
+      "UpdateRequest": {
+        "title": "UpdateRequest",
+        "required": [
+          "poi_ids"
+        ],
+        "type": "object",
+        "properties": {
+          "poi_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "example": {
+          "poi_ids": [
+            15,
+            17,
+            18
+          ]
+        }
+      },
+      "RemoveFavoriteRequest": {
+        "title": "RemoveFavoriteRequest",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Name"
+        }
+      },
+      "CreateRequest": {
+        "title": "CreateRequest",
+        "required": [
+          "add_kw_value_ids",
+          "add_poi_ids",
+          "care_type",
+          "city",
+          "country",
+          "county",
+          "name",
+          "owner_id",
+          "pm_system_id",
+          "postal",
+          "region",
+          "state",
+          "street",
+          "street_more"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "owner_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pm_system_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "country": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "county": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postal": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "street_more": {
+            "type": "string"
+          },
+          "care_type": {
+            "type": "string"
+          },
+          "add_poi_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "add_kw_value_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        },
+        "example": {
+          "name": "New Name",
+          "owner_id": 1,
+          "pm_system_id": 1,
+          "country": "US",
+          "region": "North",
+          "state": "Maine",
+          "county": "Dunno",
+          "city": "Cold",
+          "postal": "004",
+          "street": "A Street",
+          "street_more": "More street",
+          "care_type": "I",
+          "add_poi_ids": [
+            22
+          ],
+          "add_kw_value_ids": [
+            1
+          ]
+        }
+      },
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "fa@novalid.com",
+          "password": "password"
+        }
+      },
+      "CreateRequest1": {
+        "title": "CreateRequest1",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Record Name"
+        }
+      },
+      "CreateRequest5": {
+        "title": "CreateRequest5",
+        "required": [
+          "city",
+          "country",
+          "name",
+          "poi_category_id",
+          "postal",
+          "state",
+          "street"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postal": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "poi_category_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "name": "{{$randomFullName}}",
+          "street": "{{$randomStreetName}}",
+          "city": "{{$randomCity}}",
+          "postal": "555",
+          "state": "{{$randomCity}}",
+          "country": "{{$randomCountry}}",
+          "poi_category_id": 1
+        }
+      },
+      "CreateRequest4": {
+        "title": "CreateRequest4",
+        "required": [
+          "address1",
+          "address2",
+          "city",
+          "name",
+          "pm_system_id",
+          "state",
+          "zip"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "pm_system_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "name": "New Owner",
+          "address1": "Some St.",
+          "address2": "Dunno Borough",
+          "city": "New York",
+          "state": "NY",
+          "zip": "111",
+          "pm_system_id": 1
+        }
+      },
+      "CreateRequest3": {
+        "title": "CreateRequest3",
+        "required": [
+          "building_id",
+          "name",
+          "unit_number",
+          "unit_type_id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "unit_number": {
+            "type": "string"
+          },
+          "building_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unit_type_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "example": {
+          "name": "New Record Name",
+          "unit_number": "Some",
+          "building_id": 6,
+          "unit_type_id": 13
+        }
+      },
+      "CreateRequest8": {
+        "title": "CreateRequest8",
+        "required": [
+          "account_attributes",
+          "community_ids",
+          "company_name",
+          "company_type",
+          "first_name",
+          "last_name",
+          "phone_number",
+          "reason",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "company_type": {
+            "type": "string"
+          },
+          "community_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "account_attributes": {
+            "$ref": "#/components/schemas/AccountAttributes"
+          }
+        },
+        "example": {
+          "first_name": "{{$randomFirstName}}",
+          "last_name": "{{$randomLastName}}",
+          "title": "{{$randomJobTitle}}",
+          "phone_number": "{{$randomPhoneNumber}}",
+          "company_name": "{{$randomCompanyName}}",
+          "reason": "{{$randomLoremSentence}}",
+          "company_type": "Community Owner",
+          "community_ids": [
+            7505
+          ],
+          "account_attributes": {
+            "email": "{{$randomEmail}}",
+            "password": "password"
+          }
+        }
+      },
+      "FavoriteRequest": {
+        "title": "FavoriteRequest",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Name"
+        }
+      },
+      "UpdateRequest1": {
+        "title": "UpdateRequest1",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Name"
+        }
+      },
+      "SignUpRequest": {
+        "title": "SignUpRequest",
+        "required": [
+          "email",
+          "name",
+          "password",
+          "password_confirmation",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "password_confirmation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "fa2@novalid.com",
+          "password": "password",
+          "password_confirmation": "password",
+          "name": "Carlos Marques 2",
+          "role": "admin"
+        }
+      },
+      "DeleteRequest": {
+        "title": "DeleteRequest",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Name"
+        }
+      },
+      "UpdateRequest4": {
+        "title": "UpdateRequest4",
+        "required": [
+          "address1",
+          "address2",
+          "city",
+          "name",
+          "state",
+          "zip"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "New Name",
+          "address1": "Some St.",
+          "address2": "Dunno Borough",
+          "city": "New York",
+          "state": "NY",
+          "zip": "111"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "security": [
+    { "bearerAuth": [] }
+  ]
+}

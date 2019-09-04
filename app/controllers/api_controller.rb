@@ -7,11 +7,6 @@ class ApiController < ActionController::API
 
   before_action :set_raven_context, :set_paper_trail_whodunnit
 
-  # def current_ability
-  #   controller_namespace = params[:controller].split('/').first.camelize
-  #   @current_ability ||= Ability.new(current_user, controller_namespace)
-  # end
-
   def access_token_payload
     return {} unless request.headers['Authorization'] || params[:access_token]
 

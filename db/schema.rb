@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_234039) do
+ActiveRecord::Schema.define(version: 2019_09_04_214350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -199,6 +199,15 @@ ActiveRecord::Schema.define(version: 2019_09_03_234039) do
     t.integer "sort_order", default: 9999
     t.boolean "published", default: true
     t.index ["community_id"], name: "index_community_images_on_community_id"
+  end
+
+  create_table "community_share_hits", force: :cascade do |t|
+    t.bigint "community_id"
+    t.string "from"
+    t.string "tracking"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_community_share_hits_on_community_id"
   end
 
   create_table "geo_places", force: :cascade do |t|
@@ -429,6 +438,7 @@ ActiveRecord::Schema.define(version: 2019_09_03_234039) do
   add_foreign_key "buildings", "communities"
   add_foreign_key "communities", "owners"
   add_foreign_key "communities", "pm_systems"
+  add_foreign_key "community_share_hits", "communities"
   add_foreign_key "kw_attributes", "kw_classes"
   add_foreign_key "kw_classes", "kw_super_classes"
   add_foreign_key "kw_values", "kw_attributes"

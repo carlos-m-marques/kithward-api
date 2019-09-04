@@ -18,6 +18,8 @@ class Community < ApplicationRecord
   belongs_to :pm_system, optional: true
   has_many :accounts, through: :owner
 
+  has_many :community_share_hits
+
   has_and_belongs_to_many :kw_values
 
   has_and_belongs_to_many :accounts, autosave: false
@@ -239,6 +241,10 @@ class Community < ApplicationRecord
 
   def is_related?(community)
     data["related_communities"].to_s.split(',').include? community.id.to_s
+  end
+
+  def shared!(tracking:)
+    CommunityShareHit.create(tracking: tracking)
   end
 
   ATTRIBUTES_TO_CACHE = [

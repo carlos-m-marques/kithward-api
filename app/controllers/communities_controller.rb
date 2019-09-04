@@ -1,7 +1,17 @@
 require 'tempfile'
 
 class CommunitiesController < ApiController
-  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area, :favorite, :available]
+  before_action :admin_account_required!, except: [:index, :show, :dictionary, :near_by_ip, :similar_near, :by_area, :favorite, :available, :share]
+
+  def share
+    @community = Community.find(community_share_params[:id])
+
+    if community_share_params[:to]
+      ShareMailerWorker.perform_async(community_share_params[:to], @community.name, community_share_params[:tracking])
+    else
+      render json: { errors: "paramter :to required!" }
+    end
+  end
 
   def favorite
     @community = Community.find(community_params[:id])
@@ -159,6 +169,10 @@ class CommunitiesController < ApiController
   def show
     community = Community.find(params[:id])
 
+    if community_share_params[:tracking]
+      community.shared!(tracking: community_share_params[:tracking])
+    end
+
     if community.is_active? or (current_account and current_account.is_admin?)
       render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
     else
@@ -306,6 +320,10 @@ class CommunitiesController < ApiController
 
   def community_available_params
     params.permit(:limit, :page, :query)
+  end
+
+  def community_share_params
+    params.permit(:id, :to, :from, tracking: [])
   end
 
   def default_search_options

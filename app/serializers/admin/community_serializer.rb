@@ -39,6 +39,7 @@ module Admin
       field :description
       field :poi_ids
 
+      association :community_share_hits, blueprint: Admin::ShareHit
       association :kw_values, blueprint: Admin::KwValueSerializer
       association :community_images, name: :images, blueprint: Admin::CommunityImageSerializer
       association :pois, blueprint: Admin::PoiSerializer

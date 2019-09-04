@@ -32,6 +32,7 @@ gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch
 gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 gem 'aasm', '~> 5.0', '>= 5.0.5'
 gem 'ransack', '2.1.1'
+gem 'json-schema-generator', '~> 0.0.9'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'

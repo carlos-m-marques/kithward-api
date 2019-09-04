@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
 
     resources :communities do
+      post 'share', on: :member
       get 'dictionary', on: :collection
       post 'import', on: :collection
       get 'near_by_ip', on: :collection
