@@ -32,8 +32,8 @@ class CommunitiesController < ApiController
       total = @communities.count(:id)
       @communities = @communities.select(:id, :name).page(page).per(per)
     else
-      total = @communities.count(:id)
-      @communities= Community.select(:id, :name).recent.page(page).per(per)
+      @communities = Community.select(:id, :name).recent.page(page).per(per)
+      total = Community.count(:id)
     end
 
 
