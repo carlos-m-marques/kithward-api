@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Kithward API",
-    "description": "# Kithward API\n\n### Authentication\n\n#### POST\n`\n  {\n       \"email\": \"your_username\",\n       \"password\": \"your_password\"\n  }\n`\na\n",
+    "description":"# Kithward API\n\n### Authentication\n\nBefore making any authenticated requests you should signup first and get a valid Token.\n\n\n##### _POST_\n\n> **/v1/auth/login**\n\n\n**body**\n\n```json\n{\n      \"email\": \"your_username\",\n      \"password\": \"your_password\"\n}\n```\n\n**response**\n\n```json\n{\n    \"id\": \"66\",\n    \"email\": \"fa@novalid.com\",\n    \"meta\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiYWNjb3VudF9uYW1lIjoiU29tZSBQZXJzb24iLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNTY3Nzc4MTk4fQ.cKNOxwOKw-IxHzvD-FnwnTocTNa8dgkq-dReC0G6tZE\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiZGlnZXN0IjoiZDY0NGZiZjk4OWY1NWI0MDQ3NDMyYWY0YWM3OTNiY2U3NWRjZWJlZSIsImV4cCI6MTYzMDg1MDE5OH0._5q-jhVw_7A6LMgoDo9sWaVROaCo7OySE4ukp8TxwQA\"\n    },\n    \"name\": \"Some Person\",\n    \"role\": \"admin\"\n}\n```\n---\n\nThe desired Token is in the response object `meta > access_token`\n\nAfter obtaining it, add it to Swagger authentication.\n\n![Sample](/auth.png)\n\n---\n",
     "version": "1.0"
   },
   "servers": [
