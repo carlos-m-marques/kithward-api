@@ -522,6 +522,34 @@
         "deprecated": false
       }
     },
+    "/v1/communities/{community_id}": {
+      "get": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Details",
+        "description": "Details",
+        "operationId": "V1CommunitiesDetailsGet",
+        "parameters": [
+          {
+            "name": "community_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/v1/communities/{community_id}/share": {
       "post": {
         "tags": [
