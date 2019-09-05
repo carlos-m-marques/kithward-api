@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://kithward-web-staging.herokuapp.com",
+      "url": "https://kithward-api-staging.herokuapp.com",
       "description": "Staging"
     },
     {
@@ -513,6 +513,44 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/communities/{community_id}/share": {
+      "post": {
+        "tags": [
+          "Communities"
+        ],
+        "summary": "Share",
+        "description": "Share",
+        "operationId": "V1CommunitiesSharePost",
+        "parameters": [
+          {
+            "name": "community_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShareRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "",
@@ -2426,6 +2464,36 @@
             "email": "{{$randomEmail}}",
             "password": "password"
           }
+        }
+      },
+      "ShareRequest": {
+        "title": "ShareRequest",
+        "required": [
+          "to",
+          "tracking",
+          "origin",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "tracking": {
+            "type": "string"
+          },
+          "origin": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "to": "mailme@gmail.com",
+          "tracking": "foo=bar,bar=ok ",
+          "origin": "John Doe",
+          "message": "nice huh?"
         }
       },
       "FavoriteRequest": {
