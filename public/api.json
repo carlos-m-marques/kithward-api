@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Kithward API",
-    "description": "API",
+    "description": "# Kithward API\n\n### Authentication\n\n#### POST\n`\n  {\n       \"email\": \"your_username\",\n       \"password\": \"your_password\"\n  }\n`\na\n",
     "version": "1.0"
   },
   "servers": [
@@ -77,7 +77,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/Login"
               }
             }
           },
@@ -2225,26 +2225,6 @@
           ]
         }
       },
-      "LoginRequest": {
-        "title": "LoginRequest",
-        "required": [
-          "email",
-          "password"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "email": "fa@novalid.com",
-          "password": "password"
-        }
-      },
       "CreateRequest1": {
         "title": "CreateRequest1",
         "required": [
@@ -2478,6 +2458,22 @@
           "name": "New Name"
         }
       },
+      "Login": {
+        "title": "Login",
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
       "SignUpRequest": {
         "title": "SignUpRequest",
         "required": [
@@ -2577,6 +2573,8 @@
     }
   },
   "security": [
-    { "bearerAuth": [] }
+    {
+      "bearerAuth": []
+    }
   ]
 }
