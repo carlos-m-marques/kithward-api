@@ -59,6 +59,13 @@ class Ability
     can [:update, :show, :index, :create, :destroy], PoiCategory
     can [:update, :show, :index, :create, :destroy], CommunityImage, resource_conditions
     can [:update, :show, :index, :create, :destroy, :super_classes], Unit, resource_conditions
+
+    can :index, AccountAccessRequest, { owners: { id: account.owner_id } }
+    can :show, AccountAccessRequest, { owners: { id: account.owner_id } }
+    can :destroy, AccountAccessRequest, { owners: { id: account.owner_id } }
+    can :approve, AccountAccessRequest, { owners: { id: account.owner_id } }
+    can :reject, AccountAccessRequest, { owners: { id: account.owner_id } }
+    can :update, AccountAccessRequest, { owners: { id: account.owner_id } }
   end
 
   def admin_privileges

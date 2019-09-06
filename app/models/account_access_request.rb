@@ -22,6 +22,8 @@ class AccountAccessRequest < ActiveRecord::Base
   has_many :account_access_request_communities
   has_many :communities, through: :account_access_request_communities
 
+  has_many :owners, through: :communities
+
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
