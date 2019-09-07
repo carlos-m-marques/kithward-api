@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Kithward API",
-    "description":"# Kithward API\n\n### Authentication\n\nBefore making any authenticated requests you should signup first and get a valid Token.\n\n\n##### _POST_\n\n> **/v1/auth/login**\n\n\n**body**\n\n```json\n{\n      \"email\": \"your_username\",\n      \"password\": \"your_password\"\n}\n```\n\n**response**\n\n```json\n{\n    \"id\": \"66\",\n    \"email\": \"fa@novalid.com\",\n    \"meta\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiYWNjb3VudF9uYW1lIjoiU29tZSBQZXJzb24iLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNTY3Nzc4MTk4fQ.cKNOxwOKw-IxHzvD-FnwnTocTNa8dgkq-dReC0G6tZE\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiZGlnZXN0IjoiZDY0NGZiZjk4OWY1NWI0MDQ3NDMyYWY0YWM3OTNiY2U3NWRjZWJlZSIsImV4cCI6MTYzMDg1MDE5OH0._5q-jhVw_7A6LMgoDo9sWaVROaCo7OySE4ukp8TxwQA\"\n    },\n    \"name\": \"Some Person\",\n    \"role\": \"admin\"\n}\n```\n---\n\nThe desired Token is in the response object `meta > access_token`\n\nAfter obtaining it, add it to Swagger authentication.\n\n![Sample](/auth.png)\n\n---\n",
+    "description": "# Kithward API\n\n### Authentication\n\nBefore making any authenticated requests you should signup first and get a valid Token.\n\n\n##### _POST_\n\n> **/v1/auth/login**\n\n\n**body**\n\n```json\n{\n      \"email\": \"your_username\",\n      \"password\": \"your_password\"\n}\n```\n\n**response**\n\n```json\n{\n    \"id\": \"66\",\n    \"email\": \"fa@novalid.com\",\n    \"meta\": {\n        \"access_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiYWNjb3VudF9uYW1lIjoiU29tZSBQZXJzb24iLCJpc19hZG1pbiI6dHJ1ZSwiZXhwIjoxNTY3Nzc4MTk4fQ.cKNOxwOKw-IxHzvD-FnwnTocTNa8dgkq-dReC0G6tZE\",\n        \"refresh_token\": \"eyJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo2NiwiZGlnZXN0IjoiZDY0NGZiZjk4OWY1NWI0MDQ3NDMyYWY0YWM3OTNiY2U3NWRjZWJlZSIsImV4cCI6MTYzMDg1MDE5OH0._5q-jhVw_7A6LMgoDo9sWaVROaCo7OySE4ukp8TxwQA\"\n    },\n    \"name\": \"Some Person\",\n    \"role\": \"admin\"\n}\n```\n---\n\nThe desired Token is in the response object `meta > access_token`\n\nAfter obtaining it, add it to Swagger authentication.\n\n![Sample](/auth.png)\n\n---\n",
     "version": "1.0"
   },
   "servers": [
@@ -228,7 +228,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -245,10 +246,29 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
-        "deprecated": false
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -270,24 +290,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/accounts/66": {
-      "get": {
-        "tags": [
-          "Accounts"
-        ],
-        "summary": "Show",
-        "description": "Show",
-        "operationId": "V1Accounts66Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -304,24 +308,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/accounts/66/favorites": {
-      "get": {
-        "tags": [
-          "Accounts"
-        ],
-        "summary": "Account Favorites",
-        "description": "Account Favorites",
-        "operationId": "V1Accounts66FavoritesGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -338,52 +326,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/permissions": {
-      "get": {
-        "tags": [
-          "Communities"
-        ],
-        "summary": "Permissions",
-        "description": "Permissions",
-        "operationId": "V1AdminCommunitiesPermissionsGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/permissions": {
-      "get": {
-        "tags": [
-          "Communities"
-        ],
-        "summary": "Resource Permissions",
-        "description": "Resource Permissions",
-        "operationId": "V1AdminCommunities7505PermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+            "content": {
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
           }
         },
         "deprecated": false
@@ -401,7 +345,6 @@
           {
             "name": "page",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -410,7 +353,6 @@
           {
             "name": "limit",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -420,7 +362,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -445,7 +388,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -463,7 +407,6 @@
           {
             "name": "page",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -472,7 +415,6 @@
           {
             "name": "limit",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -482,7 +424,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -500,7 +443,6 @@
           {
             "name": "limit",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -509,7 +451,6 @@
           {
             "name": "page",
             "in": "query",
-            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -527,7 +468,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -555,7 +497,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -569,17 +512,6 @@
         "summary": "Share",
         "description": "Share",
         "operationId": "V1CommunitiesSharePost",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -593,11 +525,23 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}": {
       "get": {
@@ -607,21 +551,11 @@
         "summary": "Show",
         "description": "Show",
         "operationId": "V1AdminCommunities7505Get",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -633,21 +567,11 @@
         "summary": "Delete",
         "description": "Delete",
         "operationId": "V1AdminCommunities7497Delete",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "default": "Bearer {token}"
-            },
-            "required": true
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -672,11 +596,23 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/account_requests": {
       "get": {
@@ -686,25 +622,26 @@
         "summary": "Account Requests",
         "description": "Account Requests",
         "operationId": "V1AdminCommunities7505AccountRequestsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/communities/{community_id}/favorite": {
       "post": {
@@ -714,17 +651,6 @@
         "summary": "Favorite",
         "description": "Favorite",
         "operationId": "V1Communities7505FavoritePost",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -738,7 +664,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -750,25 +677,26 @@
         "summary": "Remove Favorite",
         "description": "Remove Favorite",
         "operationId": "V1Communities7505FavoriteDelete",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string",
-              "default": "Bearer {token}"
-            },
-            "required": true
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/flag": {
       "patch": {
@@ -778,25 +706,26 @@
         "summary": "Flag",
         "description": "Flag",
         "operationId": "V1AdminCommunities7497FlagPatch",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/unit_layouts": {
       "get": {
@@ -806,24 +735,32 @@
         "summary": "Index",
         "description": "Index",
         "operationId": "V1AdminCommunities3876UnitLayoutsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
         "parameters": [
           {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
+        ]
       },
       "post": {
         "tags": [
@@ -845,11 +782,23 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/unit_layouts/super_classes": {
       "get": {
@@ -859,190 +808,26 @@
         "summary": "Super Classes Available",
         "description": "Super Classes Available",
         "operationId": "V1AdminCommunities7492UnitLayoutsSuperClassesGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/2": {
-      "get": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Show",
-        "description": "Show",
-        "operationId": "V1AdminCommunities7497UnitLayouts2Get",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+            "content": {
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
           }
         },
         "deprecated": false
       },
-      "delete": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Delete",
-        "description": "Delete",
-        "operationId": "V1AdminCommunities7497UnitLayouts2Delete",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/permissions": {
-      "get": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Permissions",
-        "description": "Permissions",
-        "operationId": "V1AdminCommunities7497UnitLayoutsPermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/2/permissions": {
-      "get": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Resource Permissions",
-        "description": "Resource Permissions",
-        "operationId": "V1AdminCommunities7497UnitLayouts2PermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/12/flag": {
-      "patch": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Flag",
-        "description": "Flag",
-        "operationId": "V1AdminCommunities3876UnitLayouts12FlagPatch",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/12": {
-      "put": {
-        "tags": [
-          "Units Layouts"
-        ],
-        "summary": "Update",
-        "description": "Update",
-        "operationId": "V1AdminCommunities3876UnitLayouts12Put",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequest1"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/buildings/super_classes": {
       "get": {
@@ -1052,203 +837,26 @@
         "summary": "Super Classes Available",
         "description": "Super Classes Available",
         "operationId": "V1AdminCommunities7492BuildingsSuperClassesGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/6": {
-      "get": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Show",
-        "description": "Show",
-        "operationId": "V1AdminCommunities3828Buildings6Get",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/permissions": {
-      "get": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Permissions",
-        "description": "Permissions",
-        "operationId": "V1AdminCommunities3828BuildingsPermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/6/permissions": {
-      "get": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Resource Permissions",
-        "description": "Resource Permissions",
-        "operationId": "V1AdminCommunities3828Buildings6PermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/1": {
-      "delete": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Delete",
-        "description": "Delete",
-        "operationId": "V1AdminCommunities7497Buildings1Delete",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/6/flag": {
-      "patch": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Flag",
-        "description": "Flag",
-        "operationId": "V1AdminCommunities3828Buildings6FlagPatch",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/buildings/3": {
-      "put": {
-        "tags": [
-          "Buildings"
-        ],
-        "summary": "Update",
-        "description": "Update",
-        "operationId": "V1AdminCommunities3876Buildings3Put",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRequest1"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/buildings": {
       "post": {
@@ -1258,17 +866,6 @@
         "summary": "Create",
         "description": "Create",
         "operationId": "V1AdminCommunities3876BuildingsPost",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1282,7 +879,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1297,11 +895,41 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
-        "deprecated": false
-      }
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
     "/v1/admin/communities/{community_id}/community_images": {
       "get": {
@@ -1321,9 +949,16 @@
             }
           },
           {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1333,7 +968,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1348,153 +984,721 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/community_images/36244": {
+    "/v1/admin/communities/{community_id}/units": {
       "get": {
         "tags": [
-          "Community Images"
+          "Units"
         ],
-        "summary": "Show",
-        "description": "Show",
-        "operationId": "V1AdminCommunities3828CommunityImages36244Get",
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminCommunities3876UnitsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
         "parameters": [
           {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Units"
         ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminCommunities3876UnitsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest3"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/units/super_classes": {
+      "get": {
+        "tags": [
+          "Units"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminCommunities7497UnitsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/owners": {
+      "get": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminOwnersGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminOwnersPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
           }
         },
         "deprecated": false
       }
     },
-    "/v1/admin/communities/{community_id}/community_images/permissions": {
+    "/v1/admin/owners/super_classes": {
       "get": {
         "tags": [
-          "Community Images"
+          "Owners"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminOwnersSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pois": {
+      "get": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPoisGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Pois"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPoisPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest5"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/poi_categories": {
+      "get": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPoiCategoriesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Poi Category"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPoiCategoriesPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pm_systems": {
+      "get": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AdminPmSystemsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AdminPmSystemsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/admin/pm_systems/super_classes": {
+      "get": {
+        "tags": [
+          "Pm Systems"
+        ],
+        "summary": "Super Classes Available",
+        "description": "Super Classes Available",
+        "operationId": "V1AdminPmSystemsSuperClassesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/v1/permissions": {
+      "get": {
+        "tags": [
+          "Permissions"
         ],
         "summary": "Permissions",
         "description": "Permissions",
-        "operationId": "V1AdminCommunities3828CommunityImagesPermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "operationId": "V1PermissionsGet",
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       }
     },
-    "/v1/admin/communities/{community_id}/community_images/27354/permissions": {
+    "/v1/account_access_requests": {
       "get": {
         "tags": [
-          "Community Images"
+          "Account Access Request"
         ],
-        "summary": "Resource Permissions",
-        "description": "Resource Permissions",
-        "operationId": "V1AdminCommunities3852CommunityImages27354PermissionsGet",
+        "summary": "Index",
+        "description": "Index",
+        "operationId": "V1AccountAccessRequestsGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
         "parameters": [
           {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Account Access Request"
         ],
+        "summary": "Create",
+        "description": "Create",
+        "operationId": "V1AccountAccessRequestsPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequest8"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       }
     },
-    "/v1/admin/communities/{community_id}/community_images/36244/file": {
+    "/v1/accounts/{account_id}": {
       "get": {
         "tags": [
-          "Community Images"
+          "Accounts"
         ],
-        "summary": "Image",
-        "description": "Image",
-        "operationId": "V1AdminCommunities7493CommunityImages36244FileGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "Show",
+        "description": "Show",
+        "operationId": "V1Accounts66Get",
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "account_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/community_images/1": {
-      "delete": {
+    "/v1/accounts/{account_id}/favorites": {
+      "get": {
         "tags": [
-          "Community Images"
+          "Accounts"
         ],
-        "summary": "Delete",
-        "description": "Delete",
-        "operationId": "V1AdminCommunities7493CommunityImages1Delete",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "summary": "Account Favorites",
+        "description": "Account Favorites",
+        "operationId": "V1Accounts66FavoritesGet",
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "account_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/community_images/27354": {
+    "/v1/admin/communities/{community_id}/unit_layouts/{unit_layout_id}": {
+      "put": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3876UnitLayouts12Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "unit_layout_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/unit_layouts/{unit_layout_id}/flag": {
+      "patch": {
+        "tags": [
+          "Units Layouts"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities3876UnitLayouts12FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "unit_layout_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/buildings/{building_id}": {
+      "put": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Update",
+        "description": "Update",
+        "operationId": "V1AdminCommunities3876Buildings3Put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRequest1"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "building_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/buildings/{building_id}/flag": {
+      "patch": {
+        "tags": [
+          "Buildings"
+        ],
+        "summary": "Flag",
+        "description": "Flag",
+        "operationId": "V1AdminCommunities3828Buildings6FlagPatch",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "building_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/community_images/{community_image_id}": {
       "put": {
         "tags": [
           "Community Images"
@@ -1502,17 +1706,6 @@
         "summary": "Update",
         "description": "Update",
         "operationId": "V1AdminCommunities3852CommunityImages27354Put",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/x-www-form-urlencoded": {
@@ -1534,13 +1727,72 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "community_image_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images": {
+    "/v1/admin/communities/{community_id}/community_images/{community_image_id}/file": {
+      "get": {
+        "tags": [
+          "Community Images"
+        ],
+        "summary": "Image",
+        "description": "Image",
+        "operationId": "V1AdminCommunities7493CommunityImages36244FileGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "community_image_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
+    },
+    "/v1/admin/communities/{community_id}/unit_layouts/{unit_layout_id}/unit_layout_images": {
       "get": {
         "tags": [
           "Unit Layout Images"
@@ -1548,24 +1800,32 @@
         "summary": "Index",
         "description": "Index",
         "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImagesGet",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+            }
+          }
+        },
+        "deprecated": false,
         "parameters": [
           {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
+        ]
       },
       "post": {
         "tags": [
@@ -1595,13 +1855,34 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "unit_layout_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images/3": {
+    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images/{unit_layout_image_id}": {
       "get": {
         "tags": [
           "Unit Layout Images"
@@ -1609,21 +1890,11 @@
         "summary": "Show",
         "description": "Show",
         "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3Get",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1656,7 +1927,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1671,41 +1943,34 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images/permissions": {
-      "get": {
-        "tags": [
-          "Unit Layout Images"
-        ],
-        "summary": "Permissions",
-        "description": "Permissions",
-        "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImagesPermissionsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+            "content": {
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "unit_layout_image_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images/3/file": {
+    "/v1/admin/communities/{community_id}/unit_layouts/12/unit_layout_images/{unit_layout_image_id}/file": {
       "get": {
         "tags": [
           "Unit Layout Images"
@@ -1713,108 +1978,37 @@
         "summary": "Image",
         "description": "Image",
         "operationId": "V1AdminCommunities3876UnitLayouts12UnitLayoutImages3FileGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/units": {
-      "get": {
-        "tags": [
-          "Units"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AdminCommunities3876UnitsGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+            "content": {
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Units"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AdminCommunities3876UnitsPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest3"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
         },
-        "deprecated": false
-      }
+        {
+          "name": "unit_layout_image_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/units/super_classes": {
-      "get": {
-        "tags": [
-          "Units"
-        ],
-        "summary": "Super Classes Available",
-        "description": "Super Classes Available",
-        "operationId": "V1AdminCommunities7497UnitsSuperClassesGet",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/communities/{community_id}/units/1": {
+    "/v1/admin/communities/{community_id}/units/{unit_id}": {
       "get": {
         "tags": [
           "Units"
@@ -1822,21 +2016,11 @@
         "summary": "Show",
         "description": "Show",
         "operationId": "V1AdminCommunities3876Units1Get",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1861,7 +2045,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -1876,13 +2061,34 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "unit_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/admin/communities/{community_id}/units/1/flag": {
+    "/v1/admin/communities/{community_id}/units/{unit_id}/flag": {
       "patch": {
         "tags": [
           "Units"
@@ -1890,86 +2096,37 @@
         "summary": "Flag",
         "description": "Flag",
         "operationId": "V1AdminCommunities7497Units1FlagPatch",
-        "parameters": [
-          {
-            "name": "community_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/owners": {
-      "get": {
-        "tags": [
-          "Owners"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AdminOwnersGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Owners"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AdminOwnersPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest4"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "community_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
         },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/owners/super_classes": {
-      "get": {
-        "tags": [
-          "Owners"
-        ],
-        "summary": "Super Classes Available",
-        "description": "Super Classes Available",
-        "operationId": "V1AdminOwnersSuperClassesGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+        {
+          "name": "unit_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
-    "/v1/admin/owners/1": {
+    "/v1/admin/owners/{owner_id}": {
       "get": {
         "tags": [
           "Owners"
@@ -1980,7 +2137,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2005,7 +2163,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2020,89 +2179,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/pois": {
-      "get": {
-        "tags": [
-          "Pois"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AdminPoisGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Pois"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AdminPoisPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest5"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "owner_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
-    "/v1/admin/pois/21": {
-      "get": {
-        "tags": [
-          "Pois"
-        ],
-        "summary": "Show",
-        "description": "Show",
-        "operationId": "V1AdminPois21Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/pois/1": {
-      "delete": {
-        "tags": [
-          "Pois"
-        ],
-        "summary": "Delete",
-        "description": "Delete",
-        "operationId": "V1AdminPois1Delete",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/pois/22": {
+    "/v1/admin/pois/{poi_id}": {
       "put": {
         "tags": [
           "Pois"
@@ -2123,55 +2218,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/poi_categories": {
-      "get": {
-        "tags": [
-          "Poi Category"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AdminPoiCategoriesGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Poi Category"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AdminPoiCategoriesPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest1"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "poi_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
-    "/v1/admin/poi_categories/11": {
+    "/v1/admin/poi_categories/{poi_category_id}": {
       "get": {
         "tags": [
           "Poi Category"
@@ -2182,7 +2247,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2207,7 +2273,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2222,72 +2289,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/pm_systems": {
-      "get": {
-        "tags": [
-          "Pm Systems"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AdminPmSystemsGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Pm Systems"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AdminPmSystemsPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest1"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "poi_category_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
-    "/v1/admin/pm_systems/super_classes": {
-      "get": {
-        "tags": [
-          "Pm Systems"
-        ],
-        "summary": "Super Classes Available",
-        "description": "Super Classes Available",
-        "operationId": "V1AdminPmSystemsSuperClassesGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/admin/pm_systems/1": {
+    "/v1/admin/pm_systems/{pm_system_id}": {
       "get": {
         "tags": [
           "Pm Systems"
@@ -2298,7 +2318,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2323,7 +2344,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2338,72 +2360,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/permissions": {
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "summary": "Permissions",
-        "description": "Permissions",
-        "operationId": "V1PermissionsGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/account_access_requests": {
-      "get": {
-        "tags": [
-          "Account Access Request"
-        ],
-        "summary": "Index",
-        "description": "Index",
-        "operationId": "V1AccountAccessRequestsGet",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
       },
-      "post": {
-        "tags": [
-          "Account Access Request"
-        ],
-        "summary": "Create",
-        "description": "Create",
-        "operationId": "V1AccountAccessRequestsPost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateRequest8"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {}
+      "parameters": [
+        {
+          "name": "pm_system_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
           }
-        },
-        "deprecated": false
-      }
+        }
+      ]
     },
-    "/v1/account_access_requests/10": {
+    "/v1/account_access_requests/{account_access_request_id}": {
       "get": {
         "tags": [
           "Account Access Request"
@@ -2414,7 +2389,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2439,7 +2415,8 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
@@ -2454,13 +2431,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "account_access_request_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/account_access_requests/10/approve": {
+    "/v1/account_access_requests/{account_access_request_id}/approve": {
       "post": {
         "tags": [
           "Account Access Request"
@@ -2471,13 +2460,25 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "account_access_request_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     },
-    "/v1/account_access_requests/10/reject": {
+    "/v1/account_access_requests/{account_access_request_id}/reject": {
       "patch": {
         "tags": [
           "Account Access Request"
@@ -2488,11 +2489,23 @@
         "responses": {
           "200": {
             "description": "",
-            "content": {}
+            "content": {
+            }
           }
         },
         "deprecated": false
-      }
+      },
+      "parameters": [
+        {
+          "name": "account_access_request_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      ]
     }
   },
   "components": {
@@ -3043,7 +3056,9 @@
   },
   "security": [
     {
-      "bearerAuth": []
+      "bearerAuth": [
+
+      ]
     }
   ]
 }

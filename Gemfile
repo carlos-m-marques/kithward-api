@@ -5,7 +5,7 @@ ruby '2.5.1'
 
 #== CORE RAILS =============================
 gem 'rails', '~> 5.2.2'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.4'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors', '~> 1.0'
 
@@ -28,11 +28,12 @@ gem 'country-select'
 gem 'cancancan', '~> 3.0', '>= 3.0.1'
 gem 'devise'
 gem 'activeadmin_addons'
-gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin.git', branch: 'fix_renamed_resources_and_optional_belongs_to'
+gem 'activeadmin', '~> 2.2'
 gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 gem 'aasm', '~> 5.0', '>= 5.0.5'
 gem 'ransack', '2.1.1'
 gem 'json-schema-generator', '~> 0.0.9'
+gem 'foreman', '~> 0.85.0'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'
@@ -58,9 +59,8 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
-group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
-
+group :test do
   gem 'spring'
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
