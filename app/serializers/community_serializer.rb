@@ -27,7 +27,8 @@ class CommunitySerializer < Blueprinter::Base
       :cached_image_url
 
     field :favorited do |community, options|
-      !!(options[:current_account_id] && community.favorited_by.select(:id).find_by(id: options[:current_account_id]).limit(1).present?)
+      true
+      # !!(options[:current_account_id] && community.favorited_by.select(:id).find_by(id: options[:current_account_id]).limit(1).present?)
     end
   end
 
