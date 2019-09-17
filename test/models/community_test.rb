@@ -27,7 +27,7 @@ class CommunityTest < ActiveSupport::TestCase
   end
 
   test "When a community gets some related communities, it caches their data" do
-    community_1 = Community.create(name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT, status: Community::STATUS_ACTIVE)
+    community_1 = Community.create(name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT, status: Community::STATE_ACTIVE)
     community_2 = Community.create(name: "Broadway Care AL", care_type: Community::TYPE_ASSISTED, status: Community::STATUS_DELETED)
     community_3 = Community.create(name: "Broadway Care Too", care_type: Community::TYPE_INDEPENDENT, status: Community::STATUS_DRAFT)
 
@@ -42,7 +42,7 @@ class CommunityTest < ActiveSupport::TestCase
   end
 
   test "When data is changed, some of it gets cached in a separate field" do
-    community = Community.create(status: Community::STATUS_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
+    community = Community.create(status: Community::STATE_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
     community.data['star_rating'] = 4
     community.data['ccrc'] = true
     community.data['provider'] = 'Acme Inc'
@@ -57,9 +57,9 @@ class CommunityTest < ActiveSupport::TestCase
   end
 
   test "When listings are updated, their attributes are reflected in the containing community" do
-    community = Community.create(status: Community::STATUS_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
-    listing_1 = community.listings.create(status: Listing::STATUS_ACTIVE, name: "1 Bedroom", data: {unit_type: 'room', bedrooms: '1', base_rent: '1000', room_feat_parking: true })
-    listing_2 = community.listings.create(status: Listing::STATUS_ACTIVE, name: "2 Bedrooms", data: {unit_type: 'room', bedrooms: '2', base_rent: '1500:1800', room_feat_dishwasher: true })
+    community = Community.create(status: Community::STATE_ACTIVE, name: "Broadway Care IL", care_type: Community::TYPE_INDEPENDENT)
+    listing_1 = community.listings.create(status: Listing::STATE_ACTIVE, name: "1 Bedroom", data: {unit_type: 'room', bedrooms: '1', base_rent: '1000', room_feat_parking: true })
+    listing_2 = community.listings.create(status: Listing::STATE_ACTIVE, name: "2 Bedrooms", data: {unit_type: 'room', bedrooms: '2', base_rent: '1500:1800', room_feat_dishwasher: true })
 
     community.update_reflected_attributes_from_listings
     community.reload

@@ -6,6 +6,6 @@ FactoryBot.define do
   factory :community do
     name { generate :community_name }
     description { "Lorem ipsum dolorem est" }
-    status { Community::STATUS_ACTIVE }
+    status { Community::STATE_ACTIVE }
   end
 end

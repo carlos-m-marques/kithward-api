@@ -5,12 +5,12 @@ class Listing < ApplicationRecord
   has_many :units
 
   default_scope { order(sort_order: :asc, id: :asc) }
-  scope :active, -> { where(status: STATUS_ACTIVE) }
-  scope :active_or_hidden, -> { where(status: [STATUS_ACTIVE, STATUS_HIDDEN]) }
+  scope :active, -> { where(status: STATE_ACTIVE) }
+  scope :active_or_hidden, -> { where(status: [STATE_ACTIVE, STATUS_HIDDEN]) }
 
   has_many :listing_images
 
-  STATUS_ACTIVE    = 'A'
+  STATE_ACTIVE    = 'A'
   STATUS_HIDDEN    = 'H'
   STATUS_DRAFT     = '?'
   STATUS_DELETED   = 'X'
@@ -25,7 +25,7 @@ class Listing < ApplicationRecord
   end
 
   def is_active?
-    status == STATUS_ACTIVE
+    status == STATE_ACTIVE
   end
 
   def is_hidden?
@@ -41,11 +41,11 @@ class Listing < ApplicationRecord
   end
 
   def not_active?
-    status != STATUS_ACTIVE
+    status != STATE_ACTIVE
   end
 
   def is_active!
-    self.status = STATUS_ACTIVE
+    self.status = STATE_ACTIVE
   end
 
   def is_hidden!

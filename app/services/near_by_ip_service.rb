@@ -31,7 +31,7 @@ class NearByIpService
     end
   end
 
-  private 
+  private
 
   def can_be_pushed(community)
     return false if @communities.include?(community) || @communities.size >= @communities_size_limit
@@ -55,7 +55,7 @@ class NearByIpService
       fields: ['name', 'description'],
       match: :word_start,
       where: {
-        status: Community::STATUS_ACTIVE,
+        status: Community::STATE_ACTIVE,
       },
       includes: [:community_images]
 

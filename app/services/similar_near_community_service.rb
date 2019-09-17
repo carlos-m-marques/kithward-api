@@ -25,7 +25,7 @@ class SimilarNearCommunityService
       fields: ['name', 'description'],
       match: :word_start,
       where: {
-        status: Community::STATUS_ACTIVE,
+        status: Community::STATE_ACTIVE,
       },
       includes: [:community_images]
 

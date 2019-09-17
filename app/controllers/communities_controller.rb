@@ -84,9 +84,9 @@ class CommunitiesController < ApiController
   def index
     search_options = default_search_options
 
-    if current_account and current_account.admin?
-      search_options[:where][:status] = [ Community::STATUS_ACTIVE, Community::STATUS_DRAFT ]
-    end
+    # if current_account and current_account.admin?
+    #   search_options[:where][:status] = [ Community::STATE_ACTIVE, Community::STATE_DRAFT ]
+    # end
 
     if params[:geo]
      geo = GeoPlace.select(:lat, :lon).find(params[:geo])
@@ -116,8 +116,6 @@ class CommunitiesController < ApiController
 
       search_options[:where][:_or] << { upper_rent_bound: { lt: params[:lower_rent_bound].to_i }}
     end
-
-
 
     communities = Community.search_import.search(params[:q] || "*", search_options).to_a
 
