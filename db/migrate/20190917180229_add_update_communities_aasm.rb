@@ -1,11 +1,11 @@
 class AddUpdateCommunitiesAasm < ActiveRecord::Migration[5.2]
   def change
-    STATUS_ACTIVE    = 'A'
-    STATUS_DRAFT     = '?'
-    STATUS_DELETED   = 'X'
+    status_active    = 'A'
+    status_draft     = '?'
+    status_deleted   = 'X'
 
-    Community.where(status: STATUS_ACTIVE).update_all(status: Community::STATE_ACTIVE)
-    Community.where(status: STATUS_DRAFT).update_all(status: Community::STATE_DRAFT)
-    Community.where(status: STATUS_DELETED).each(&:destroy)
+    Community.where(status: status_active).update_all(status: Community::STATE_ACTIVE)
+    Community.where(status: status_draft).update_all(status: Community::STATE_DRAFT)
+    Community.where(status: status_deleted).each(&:destroy)
   end
 end
