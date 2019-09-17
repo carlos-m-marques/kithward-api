@@ -71,6 +71,7 @@ class Community < ApplicationRecord
         "slug" => slug,
         "location" => { lat: lat, lon: lon },
         "buildings" => buildings,
+        "cached_image_url" => image_url,
         "unit_layouts" => unit_layouts,
         "pois" => pois,
         "images" => community_images.published,
@@ -335,6 +336,10 @@ class Community < ApplicationRecord
   #
   #   return true
   # end
+
+  def image_url
+    self.community_images.reload.select {|i| i.tags !~ /(floorplan|map|calendar)/ }.sort_by {|i| [i.sort_order, i.id]}.first.try(:url)
+  end
 
   def update_cached_image_url!
     image = self.community_images.reload.select {|i| i.tags !~ /(floorplan|map|calendar)/ }.sort_by {|i| [i.sort_order, i.id]}.first
