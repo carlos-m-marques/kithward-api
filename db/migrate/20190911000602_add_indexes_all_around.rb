@@ -1,7 +1,6 @@
 class AddIndexesAllAround < ActiveRecord::Migration[5.2]
   def up
     add_index :communities, ["deleted_at", "id"]
-    add_index :communities, :slug
     add_index :communities, ["deleted_at", "slug"]
     add_index :accounts, :password_digest
     add_index :accounts, :role
@@ -19,7 +18,6 @@ class AddIndexesAllAround < ActiveRecord::Migration[5.2]
     remove_index :kw_super_classes, ['type', "memory_care"]
     remove_index :kw_super_classes, ['id', "type"]
     remove_index :communities, ["deleted_at", "id"]
-    remove_index :communities, :slug
     remove_index :communities, ["deleted_at", "slug"]
     remove_index :accounts, :password_digest
     remove_index :accounts, :role
