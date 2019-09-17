@@ -1,56 +1,45 @@
 class CommunitySerializer < Blueprinter::Base
-  identifier :idstr, name: :id
+  identifier :id
 
   view 'simple' do
     fields :status,
+      :id,
       :name,
       :slug,
       :care_type,
-      :street, :street_more, :postal, :township, :city, :county, :borough, :state, :metro, :region, :country,
-      :lat, :lon,
+      :street,
+      :street_more,
+      :postal,
+      :township,
+      :city, :county,
+      :borough,
+      :state,
+      :metro,
+      :region,
+      :country,
+      :lat,
+      :lon,
       :updated_at,
-      :cached_image_url, :cached_data,
       :units_available,
       :monthly_rent_lower_bound,
-      :monthly_rent_upper_bound
+      :monthly_rent_upper_bound,
+      :community_attributes
 
     field :favorited do |community, options|
-      if options[:current_account_id] && community.favorited_by.any?
-        community.favorited_by.find_by(id: options[:current_account_id]).present?
-      else
-        false
-      end
+      !!(options[:current_account_id] && community.favorited_by.select(:id).find_by(id: options[:current_account_id]).limit(1).present?)
     end
   end
 
   view 'complete' do
     include_view 'simple'
-    exclude :cached_data
 
     field :description
-    field :data
-
-    # association :super_classes, blueprint: KwSuperClassSerializer
-
-    association :listings, blueprint: ListingSerializer
-    association :community_images, name: :images, blueprint: CommunityImageSerializer do |community, options|
-      community.community_images.published
-    end
-
+    field :community_attributes
+    association :community_images, name: :images, blueprint: CommunityImageSerializer
     association :pois, blueprint: PoiSerializer
-
-    # field :images do |object|
-    #   object.community_images.sort_by {|i| [i.sort_order, i.id]}.collect do |image|
-    #     {
-    #       id: image.id,
-    #       url: image.url,
-    #       caption: image.caption,
-    #       tags: image.tags,
-    #       sort_order: image.sort_order,
-    #       content_type: image.image.content_type,
-    #     }
-    #   end
-    # end
+    association :buildings, blueprint: Admin::BuildingSerializer
+    association :units, blueprint: Admin::UnitTypeSerializer
+    association :units_layouts, blueprint: Admin::UnitTypeSerializer
   end
 
 end

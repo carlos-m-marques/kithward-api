@@ -12,6 +12,10 @@ class KwAttribute < ApplicationRecord
   scope :hidden, -> { where(hidden: true) }
   scope :visible, -> { where(hidden: false) }
 
+  def visible?
+    !self.hidden
+  end
+
   def hide!
     self.update_attributes(hidden: true)
   end

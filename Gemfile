@@ -11,13 +11,13 @@ gem 'rack-cors', '~> 1.0'
 
 #== DATA ACCESS ============================
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'searchkick', '~> 3.1'
+gem 'searchkick', '~> 4.1'
 gem 'paper_trail', '~> 9.0'
 gem 'paper_trail-hashdiff', git: 'https://github.com/dudufangor/paper_trail-hashdiff.git'
 gem 'kaminari', '1.1.1'
 
 #== UTILITIES ==============================
-gem 'oj', '~> 3.6'
+gem 'oj', '~> 3.9', '>= 3.9.1'
 gem 'blueprinter', '0.9.0'
 gem 'jwt'
 gem 'hashdiff', '~> 1.0'
@@ -34,6 +34,7 @@ gem 'aasm', '~> 5.0', '>= 5.0.5'
 gem 'ransack', '2.1.1'
 gem 'json-schema-generator', '~> 0.0.9'
 gem 'foreman', '~> 0.85.0'
+gem 'sidekiq-failures', '~> 1.0'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'
@@ -50,13 +51,19 @@ group :assets do
 end
 
 #== DEVELOPMENT & TESTING ==================
-group :development, :test do
+group :development, :test, :staging do
   gem 'awesome_print'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'mocha'
   gem 'dotenv-rails'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+  gem 'rouge'
+  gem 'axlsx', '2.1.0.pre'
+  gem 'axlsx_rails'
+  gem 'business_time'
 end
 
 group :test do

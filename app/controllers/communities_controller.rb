@@ -67,82 +67,63 @@ class CommunitiesController < ApiController
     render json: { results: @communities, meta: pagination }
   end
 
+  def default_search_options
+    {
+      fields: ['name', 'description'],
+      match: :word_start,
+      load: false,
+      where: {
+        status: Community::STATE_ACTIVE
+      },
+      load: false,
+      includes: [:community_images]
+
+    }
+  end
+
   def index
     search_options = default_search_options
 
-    if current_account and current_account.is_admin?
+    if current_account and current_account.admin?
       search_options[:where][:status] = [ Community::STATUS_ACTIVE, Community::STATUS_DRAFT ]
     end
 
     if params[:geo]
-      geo = GeoPlace.find_by_id(params[:geo])
+     geo = GeoPlace.select(:lat, :lon).find(params[:geo])
 
-      if !geo && (params[:geoLabel] || params[:geo_label])
-        parts = (params[:geoLabel] || params[:geo_label]).split(/[ -]+/).reject {|p| p.blank?}
+     distance = params[:distance] || '20mi'
 
-        geo_search_options = {
-          fields: ['name'],
-          match: :word_start,
-          where: {state: parts[-1].upcase},
-          limit: 1
-        }
-
-        geo = GeoPlace.search(parts[0..-2].join(" "), geo_search_options).first
-        if geo
-          new_params = params.permit(:care_type, :distance, :geo, :geoLabel, :geo_label, :limit, :offset, :view, :meta)
-          new_params[:geo] = geo.id
-
-          redirect_to communities_url(new_params), :status => :moved_permanently
-        else
-          render nothing: true, status: 404 and return
-        end
-        return
-      end
-
-      if geo
-        search_options[:where][:location] = {near: {lat: geo.lat, lon: geo.lon}}
-        search_options[:where][:location][:within] = params[:distance] || "20mi"
-      end
+     search_options[:where][:location] = { near: { lat: geo.lat, lon: geo.lon }, within: "20mi" }
     end
 
     if params[:care_type]
-      case params[:care_type].downcase
-      when 'i', 'independent'
-        search_options[:where][:care_type] = Community::TYPE_INDEPENDENT
-      when 'a', 'assisted'
-        search_options[:where][:care_type] = Community::TYPE_ASSISTED
-      when 'n', 'nursing'
-        search_options[:where][:care_type] = Community::TYPE_NURSING
-      when 'm', 'memory'
-        search_options[:where][:care_type] = Community::TYPE_MEMORY
-      end
+      search_options[:where][:care_type] = Community::PARAM_FOR_TYPE[params[:care_type].downcase] || params[:care_type]
     end
 
-    if params[:units_available]
-      search_options[:where][:units_available] = params[:units_available] == 'true'
-    end
+    search_options[:where][:units_available] = !params[:units_available] if params[:units_available]
 
     search_options[:limit] = params[:limit] || 20
     search_options[:offset] = params[:offset] || 0
 
-    if params[:lower_rent_bound].present? && params[:upper_rent_bound].present?
-      search_options[:where][:_or] = [
-        {
-          monthly_rent_lower_bound: {
-            gt: params[:lower_rent_bound].to_i,
-            lt: params[:upper_rent_bound].to_i
-          }
-        },
-        {
-          monthly_rent_upper_bound: {
-            gt: params[:lower_rent_bound].to_i,
-            lt: params[:upper_rent_bound].to_i
-          }
-        }
-      ]
+    if params[:lower_rent_bound].present?
+      search_options[:where][:_or] = [] unless search_options[:where][:_or]
+
+      search_options[:where][:_or] << { monthly_rent_lower_bound: { gt: params[:lower_rent_bound].to_i }}
     end
 
-    communities = Community.search(params[:q] || "*", search_options).to_a
+    if  params[:upper_rent_bound].present?
+      search_options[:where][:_or] = [] unless search_options[:where][:_or]
+
+      search_options[:where][:_or] << { upper_rent_bound: { lt: params[:lower_rent_bound].to_i }}
+    end
+
+
+
+    communities = Community.search_import.search(params[:q] || "*", search_options).to_a
+
+    puts (5.times.map{ ("#{("="*50)}").green }.join("\n"))
+    ap search_options
+    puts (5.times.map{ ("#{("="*50)}").green }.join("\n"))
 
     if params[:meta]
       result = {
@@ -157,8 +138,6 @@ class CommunitiesController < ApiController
       }
 
       if geo
-        result[:meta][:params][:geo] = geo.idstr
-        result[:meta][:params][:geo_name] = geo.full_name
         result[:meta][:params][:lat] = geo.lat
         result[:meta][:params][:lon] = geo.lon
         result[:meta][:params][:distance] = params[:distance] || "20mi"
@@ -171,17 +150,12 @@ class CommunitiesController < ApiController
   end
 
   def show
-    community = Community.find(community_share_params[:id])
+    search_options = default_search_options
+    search_options[:where].merge!({ _or: [{ id: community_share_params[:id] }, { slug: community_share_params[:id] }] })
 
-    if community_share_params[:tracking]
-      community.shared!(tracking: community_share_params[:tracking])
-    end
-
-    if community.is_active? or (current_account and current_account.is_admin?)
-      render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
-    else
-      raise ActiveRecord::RecordNotFound
-    end
+    community = Community.search(search_options).to_a.first
+    # D.uber_debug(community)
+    render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
   end
 
   def update
@@ -328,17 +302,5 @@ class CommunitiesController < ApiController
 
   def community_share_params
     params.permit(:id, :to, :from, :origin, :message, :tracking, tracking: [], tracking: {})
-  end
-
-  def default_search_options
-    {
-      fields: ['name', 'description'],
-      match: :word_start,
-      where: {
-        status: Community::STATUS_ACTIVE,
-      },
-      includes: [:community_images]
-
-    }
   end
 end

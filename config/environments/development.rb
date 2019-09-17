@@ -1,4 +1,7 @@
 Rails.application.configure do
+  config.active_job.queue_adapter = :sidekiq
+
+  Dotenv::Railtie.load
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -49,8 +52,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # ActiveStorage needs some kind of ActiveJob support, so we fake it for now
-  config.active_job.queue_adapter = :inline
-
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker

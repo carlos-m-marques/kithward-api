@@ -6,7 +6,8 @@ class GeoPlace < ApplicationRecord
     searchkick  match: :word_start,
                 word_start:  ['name'],
                 default_fields: ['name'],
-                locations: ['location']
+                locations: ['location'],
+                callbacks: :async
 
     def search_data
       {

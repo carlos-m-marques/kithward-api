@@ -17,6 +17,18 @@ class Building < ApplicationRecord
   has_one :owner, through: :community
   has_many :accounts, through: :owner
 
+  searchkick  match: :word_start,
+          word_start:  ['name'],
+          default_fields: ['name'],
+          callbacks: :async
+
+  def search_data
+    attributes.merge({
+      "id" => id,
+      "name" => name
+    })
+  end
+
   def super_classes
     BuildingSuperClass
   end

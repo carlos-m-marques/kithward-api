@@ -2,15 +2,38 @@ require 'hashdiff'
 
 class Community < ApplicationRecord
   include Flaggable
+  include AASM
 
   has_paper_trail
   acts_as_paranoid
+
+  after_commit :reindex_associations
+
+  def reindex_associations
+    unit_layouts.reindex
+    buildings.reindex
+    units.reindex
+    community_images.reindex
+    pois.reindex
+  end
+
+  # default_scope -> {}
+
+  after_save :set_slug!
+
+  scope :search_import, -> do
+    unless ENV['SSI']
+      includes(:unit_layouts, :buildings, :units, :pois, :community_images, :kw_values)
+    else
+      where.not(data: nil)
+    end
+  end
 
   has_many :unit_layouts, class_name: 'UnitType', dependent: :destroy
   has_many :buildings, dependent: :destroy
   has_many :units, through: :unit_layouts
 
-  has_many :community_images
+  has_many :community_images, dependent: :destroy
 
   has_many :listings
   has_and_belongs_to_many :pois
@@ -27,13 +50,74 @@ class Community < ApplicationRecord
 
   has_many :account_access_request_communities
   has_many :account_access_requests, through: :account_access_request_communities
-  # before_save :update_cached_data
 
-  STATUS_ACTIVE    = 'A'
-  STATUS_DRAFT     = '?'
-  STATUS_DELETED   = 'X'
+  begin
+    unless ENV['SSI']
+      searchkick  locations: [:location],
+              inheritance: true,
+              match: :word_start,
+              word_start:  ['name', 'description'],
+              default_fields: ['name', 'description'],
+              callbacks: :async
+    else
+      searchkick match: :word,
+             default_fields: ['id'],
+             index_prefix: "simple",
+             callbacks: :async
+    end
+  end
 
-  scope :active, -> { where(status: STATUS_ACTIVE) }
+  def search_data
+    unless ENV['SSI']
+      attributes.except('data', 'cached_image_url', 'cached_data').merge({
+        "id" => id,
+        "slug" => slug,
+        "location" => { lat: lat, lon: lon },
+        "buildings" => buildings,
+        "unit_layouts" => unit_layouts,
+        "pois" => pois,
+        "images" => community_images.published,
+        "units" => units,
+        "community_attributes" => community_attributes,
+        "units_available" => units.available,
+        "monthly_rent_lower_bound" => monthly_rent_lower_bound,
+        "monthly_rent_upper_bound" => monthly_rent_upper_bound
+      })
+    else
+      {
+        'id' => id,
+        'data' => data
+      }
+    end
+  end
+
+  def search_stuff
+    {
+      "data" => data,
+      "id" => id
+    }
+  end
+
+  def community_attributes
+    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).each_with_object({}) do |value, obj|
+      attribute = value.kw_attribute.visible? ? { value.kw_attribute.name => value.name } : {}
+
+      obj.deep_merge!({
+        value.kw_super_class.name => {
+          value.kw_class.name => attribute
+        }
+      })
+    end
+  end
+
+  aasm column: :status do
+    state :draft, initial: true
+    state :active
+
+    event :active do
+      transitions from: :pending, to: :active
+    end
+  end
 
   TYPE_UNKNOWN     = '?'
   TYPE_INDEPENDENT = 'I'
@@ -81,6 +165,13 @@ class Community < ApplicationRecord
     TYPE_ASSISTED => 'Assisted Living',
     TYPE_NURSING => 'Skilled Nursing',
     TYPE_MEMORY => 'Memory Care',
+  }
+
+  PARAM_FOR_TYPE = {
+    'independent' => 'I',
+    'assisted' => 'A',
+    'nursing' => 'N',
+    'memory' => 'M'
   }
 
   def super_classes
@@ -132,27 +223,6 @@ class Community < ApplicationRecord
     self.assign_attributes({community_image_ids: (self.community_image_id + ids)})
   end
 
-  begin # Elasticsearch / Searchkick
-    searchkick  match: :word_start,
-                word_start:  ['name', 'description'],
-                default_fields: ['name', 'description'],
-                locations: ['location'],
-                callbacks: :async
-
-    scope :search_import, -> { includes([:listings, :units, :unit_layouts]) }
-
-    def search_data
-      attributes.merge({
-        "location" => {lat: lat, lon: lon},
-        "listings" => listings,
-        "unit_layouts" => unit_layouts,
-        "units_available" => units_available,
-        "monthly_rent_lower_bound" => find_monthly_rent_lower_bound,
-        "monthly_rent_upper_bound" => find_monthly_rent_upper_bound,
-      })
-    end
-  end
-
   begin # Data manipulation
     scope :with_data, ->(name, value = nil) do
       if value
@@ -195,36 +265,8 @@ class Community < ApplicationRecord
     end
   end
 
-  def slug
-    "#{name&.parameterize}#{SLUG_FOR_TYPE[care_type]}-#{id}"
-  end
-
-  def is_active?
-    status == STATUS_ACTIVE
-  end
-
-  def is_draft?
-    status == STATUS_DRAFT
-  end
-
-  def is_deleted?
-    status == STATUS_DELETED
-  end
-
-  def not_active?
-    status != STATUS_ACTIVE
-  end
-
-  def is_active!
-    self.status = STATUS_ACTIVE
-  end
-
-  def is_draft!
-    self.status = STATUS_DRAFT
-  end
-
-  def is_deleted!
-    self.status = STATUS_DELETED
+  def set_slug!
+    self.update_column(:slug, "#{name&.parameterize}#{SLUG_FOR_TYPE[care_type]}-#{id}")
   end
 
   def units_available
@@ -262,40 +304,40 @@ class Community < ApplicationRecord
     'completeness', 'needs_review', 'price_range'
   ]
 
-  def update_cached_data(force = false)
-    # WARNING: This subset of keys should reflect what's on web/src/tools/KWConsts.js#CRITERIA_SPEC
+  # def update_cached_data(force = false)
+  #   # WARNING: This subset of keys should reflect what's on web/src/tools/KWConsts.js#CRITERIA_SPEC
+  #
+  #   if data_changed? || force
+  #     diff = Hashdiff.diff(self.data_was || {}, self.data || {})
+  #     changed_attributes = diff.collect {|change, name, value| name}
+  #
+  #     if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
+  #       self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
+  #     end
+  #
+  #     self.cached_data['units_available'] = units_available
+  #
+  #     if changed_attributes.include? 'related_communities' || force
+  #       ids = (self.data['related_communities'] || "").split(/\s*,\s*/)
+  #       self.data['related_community_data'] = ids.collect do |id|
+  #         id = id.to_i
+  #         if c = Community.find(id.abs)
+  #           row = {id: c.id, name: c.name, care_type: c.care_type, status: c.status, slug: c.slug}
+  #           if id < 0
+  #             row['similar'] = true
+  #           else
+  #             row['related'] = true
+  #           end
+  #         end
+  #         row
+  #       end
+  #     end
+  #   end
 
-    if data_changed? || force
-      diff = Hashdiff.diff(self.data_was || {}, self.data || {})
-      changed_attributes = diff.collect {|change, name, value| name}
-
-      if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
-        self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
-      end
-
-      self.cached_data['units_available'] = units_available
-
-      if changed_attributes.include? 'related_communities' || force
-        ids = (self.data['related_communities'] || "").split(/\s*,\s*/)
-        self.data['related_community_data'] = ids.collect do |id|
-          id = id.to_i
-          if c = Community.find(id.abs)
-            row = {id: c.id, name: c.name, care_type: c.care_type, status: c.status, slug: c.slug}
-            if id < 0
-              row['similar'] = true
-            else
-              row['related'] = true
-            end
-          end
-          row
-        end
-      end
-    end
-
-    self.cached_data['units_available'] = units_available if self.cached_data
-
-    return true
-  end
+  #   self.cached_data['units_available'] = units_available if self.cached_data
+  #
+  #   return true
+  # end
 
   def update_cached_image_url!
     image = self.community_images.reload.select {|i| i.tags !~ /(floorplan|map|calendar)/ }.sort_by {|i| [i.sort_order, i.id]}.first

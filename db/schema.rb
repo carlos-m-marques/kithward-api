@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_214350) do
+ActiveRecord::Schema.define(version: 2019_09_11_000602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -130,14 +130,6 @@ ActiveRecord::Schema.define(version: 2019_09_04_214350) do
     t.index ["kw_value_id", "building_id"], name: "index_buildings_kw_values_on_kw_value_id_and_building_id"
   end
 
-  create_table "c_attributes", force: :cascade do |t|
-    t.string "value"
-    t.string "care_type"
-    t.string "c_attributable_type"
-    t.bigint "c_attributable_id"
-    t.index ["c_attributable_type", "c_attributable_id"], name: "index_c_attributes_on_c_attributable_type_and_c_attributable_id"
-  end
-
   create_table "communities", force: :cascade do |t|
     t.string "name", limit: 1024
     t.text "description"
@@ -152,7 +144,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_214350) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "care_type", limit: 1, default: "?"
-    t.string "status", limit: 1, default: "?"
+    t.string "status", default: "?"
     t.jsonb "data"
     t.string "cached_image_url", limit: 128
     t.jsonb "cached_data"
@@ -168,12 +160,15 @@ ActiveRecord::Schema.define(version: 2019_09_04_214350) do
     t.datetime "deleted_at"
     t.datetime "flagged_at"
     t.string "flagged_for"
+    t.string "slug"
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["flagged_at"], name: "index_communities_on_flagged_at"
     t.index ["flagged_for"], name: "index_communities_on_flagged_for"
+    t.index ["id"], name: "index_communities_on_id"
     t.index ["name"], name: "index_communities_on_name", opclass: :gist_trgm_ops, using: :gist
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
+    t.index ["slug"], name: "index_communities_on_slug", unique: true
   end
 
   create_table "communities_kw_values", id: false, force: :cascade do |t|

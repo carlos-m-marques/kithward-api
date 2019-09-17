@@ -419,6 +419,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -479,11 +486,11 @@
       "parameters": [
         {
           "name": "community_id",
+          "description": "Could either be the community id or slug",
           "in": "path",
           "required": true,
           "schema": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           }
         }
       ],

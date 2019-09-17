@@ -9,24 +9,23 @@ class Poi < ApplicationRecord
   scope :recently_updated, -> { order(updated_at: :desc) }
   scope :by_column, ->(column = :created_at, direction = :desc) { order(column => direction) }
 
-  begin # Elasticsearch / Searchkick
-    searchkick  match: :word_start,
-                word_start:  ['name', 'street'],
-                default_fields: ['name', 'street'],
-                locations: ['location']
+  searchkick  match: :word_start,
+              word_start:  ['name', 'street'],
+              default_fields: ['name', 'street'],
+              locations: ['location'],
+              callbacks: :async
 
-    def search_data
-      {
-        name: name,
-        category: poi_category.name,
-        street: street,
-        city: city,
-        state: state,
-        postal: postal,
-        country: country,
-        location: {lat: lat, lon: lon},
-      }
-    end
+  def search_data
+    {
+      name: name,
+      category: poi_category.name,
+      street: street,
+      city: city,
+      state: state,
+      postal: postal,
+      country: country,
+      location: { lat: lat, lon: lon }
+    }
   end
 
   begin # Geocoding
