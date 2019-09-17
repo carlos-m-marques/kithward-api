@@ -23,7 +23,8 @@ class CommunitySerializer < Blueprinter::Base
       :units_available,
       :monthly_rent_lower_bound,
       :monthly_rent_upper_bound,
-      :community_attributes
+      :community_attributes,
+      :cached_image_url
 
     field :favorited do |community, options|
       !!(options[:current_account_id] && community.favorited_by.select(:id).find_by(id: options[:current_account_id]).limit(1).present?)
