@@ -18,19 +18,19 @@ class CommunityImage < ApplicationRecord
   # def all_tags
   #   CommunityImage.unscoped.distinct(:tags).pluck(:tags).map{ |tags| tags.split(',') if tags }.flatten.compact.uniq
   # end
-
-  searchkick  match: :word_start,
-          word_start:  ['caption'],
-          default_fields: ['caption'],
-          callbacks: :async
-
-  def search_data
-    attributes.merge({
-      "id" => id,
-      "url" => url,
-      "content_type" => content_type
-    })
-  end
+  #
+  # searchkick  match: :word_start,
+  #         word_start:  ['caption'],
+  #         default_fields: ['caption'],
+  #         callbacks: :async
+  #
+  # def search_data
+  #   attributes.merge({
+  #     "id" => id,
+  #     "url" => url,
+  #     "content_type" => content_type
+  #   })
+  # end
 
   def file_url
     "/v1/admin/communities/#{community_id}/community_images/#{id}/file"

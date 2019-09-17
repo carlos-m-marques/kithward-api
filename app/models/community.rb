@@ -13,11 +13,8 @@ class Community < ApplicationRecord
     unit_layouts.reindex
     buildings.reindex
     units.reindex
-    community_images.reindex
     pois.reindex
   end
-
-  # default_scope -> {}
 
   after_save :set_slug!
 
