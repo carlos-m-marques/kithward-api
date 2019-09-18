@@ -1,5 +1,5 @@
 class CommunitySerializer < Blueprinter::Base
-  # identifier :id
+  identifier :id
 
   view 'simple' do
     fields :status,

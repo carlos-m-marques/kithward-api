@@ -1,5 +1,5 @@
 class PoiSerializer < Blueprinter::Base
-  identifier :idstr, name: :id
+  identifier :id
 
   fields :name,
     :street, :city, :state, :postal, :country,
