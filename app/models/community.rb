@@ -97,16 +97,15 @@ class Community < ApplicationRecord
   end
 
   def community_attributes
-    attribute_hash = Hash.new { |hash, key| hash[key] = [] }
-    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).each_with_object({}) do |value, obj|
-      attribute_hash[value.kw_attribute.name] << value.name if value.kw_attribute.visible?
+    attrs = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } } }
 
-      obj.deep_merge!({
-        value.kw_super_class.name => {
-          value.kw_class.name => attribute_hash
-        }
-      })
+    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).distinct.each do |value|
+      next unless value.kw_attribute.visible?
+
+      attrs[value.kw_super_class.name][value.kw_class.name][value.kw_attribute.name] << value.name
     end
+
+    attrs
   end
 
   aasm column: :status do
