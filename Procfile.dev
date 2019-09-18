@@ -1,4 +1,4 @@
 web: RAILS_ENV=staging RAILS_SERVE_STATIC_FILES=true RAILS_MAX_THREADS=40 bundle exec puma -p 3000 -C config/puma.rb
 worker: RAILS_ENV=staging bundle exec sidekiq -C config/sidekiq.yml
-webf: cd /Users/user/Documents/Work/Kithward/web && PORT=3002 NODE_ENV=development npm start
+#webf: cd /Users/user/Documents/Work/Kithward/web && PORT=3002 NODE_ENV=development npm start
 tail: tail -n 1 -f log/staging.log

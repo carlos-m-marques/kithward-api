@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
+  config.log_level = :debug
 
   Dotenv::Railtie.load
   # Settings specified here will take precedence over those in config/application.rb.

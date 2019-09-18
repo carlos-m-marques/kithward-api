@@ -71,22 +71,23 @@ class CommunitiesController < ApiController
     {
       fields: ['name', 'description'],
       match: :word_start,
-      load: false,
       where: {
         status: Community::STATE_ACTIVE
       },
       load: false,
       includes: [:community_images]
-
     }
   end
 
   def index
+    page = params[:page] || 1
+    per = params[:limit] || 30
+
     search_options = default_search_options
 
-    # if current_account and current_account.admin?
-    #   search_options[:where][:status] = [ Community::STATE_ACTIVE, Community::STATE_DRAFT ]
-    # end
+    if current_account and current_account.admin?
+      search_options[:where][:status] = [ Community::STATE_ACTIVE, Community::STATE_DRAFT ]
+    end
 
     if params[:geo]
      geo = GeoPlace.select(:lat, :lon).find(params[:geo])
@@ -102,9 +103,6 @@ class CommunitiesController < ApiController
 
     search_options[:where][:units_available] = !params[:units_available] if params[:units_available]
 
-    search_options[:limit] = params[:limit] || 20
-    search_options[:offset] = params[:offset] || 0
-
     if params[:lower_rent_bound].present?
       search_options[:where][:_or] = [] unless search_options[:where][:_or]
 
@@ -117,7 +115,10 @@ class CommunitiesController < ApiController
       search_options[:where][:_or] << { upper_rent_bound: { lt: params[:lower_rent_bound].to_i }}
     end
 
-    communities = Community.search_import.search(params[:q] || "*", search_options).to_a
+    search_options[:per_page] = per
+    search_options[:page] = page
+
+    communities = Community.search(params[:q] || "*", search_options).to_a
 
     puts (5.times.map{ ("#{("="*50)}").green }.join("\n"))
     ap search_options
@@ -129,8 +130,8 @@ class CommunitiesController < ApiController
         meta: {
           params: {
             query: (params[:q] || "*"),
-            limit: (params[:limit] || 20),
-            offset: params[:offset] || 0,
+            page: page,
+            per_page: per
           }
         }
       }

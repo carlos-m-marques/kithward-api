@@ -1,5 +1,5 @@
 class CommunitySerializer < Blueprinter::Base
-  identifier :id
+  # identifier :id
 
   view 'simple' do
     fields :status,
@@ -25,11 +25,6 @@ class CommunitySerializer < Blueprinter::Base
       :monthly_rent_upper_bound,
       :community_attributes,
       :cached_image_url
-
-    field :favorited do |community, options|
-      true
-      # !!(options[:current_account_id] && community.favorited_by.select(:id).find_by(id: options[:current_account_id]).limit(1).present?)
-    end
   end
 
   view 'complete' do
