@@ -34,9 +34,9 @@ class CommunitySerializer < Blueprinter::Base
     field :community_attributes
     association :community_images, name: :images, blueprint: CommunityImageSerializer
     association :pois, blueprint: PoiSerializer
-    association :buildings, blueprint: Admin::BuildingSerializer
-    association :units, blueprint: Admin::UnitTypeSerializer
-    association :units_layouts, blueprint: Admin::UnitTypeSerializer
+    association :buildings, blueprint: BuildingSerializer
+    association :units, blueprint: UnitSerializer
+    association :units_layouts, blueprint: UnitTypeSerializer
   end
 
 end
