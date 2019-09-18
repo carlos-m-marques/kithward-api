@@ -36,7 +36,7 @@ class CommunitySerializer < Blueprinter::Base
     association :pois, blueprint: PoiSerializer
     association :buildings, blueprint: BuildingSerializer
     association :units, blueprint: UnitSerializer
-    association :units_layouts, blueprint: UnitTypeSerializer
+    association :unit_layouts, blueprint: UnitTypeSerializer
   end
 
 end
