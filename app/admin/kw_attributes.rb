@@ -21,16 +21,16 @@ ActiveAdmin.register KwAttribute, as: 'Attributes' do
     actions
   end
 
-  form do |f|
-    f.inputs do
-      f.input :name
-      f.input :ui_type, as: :select, include_blank: false, collection: KwAttribute::UI_TYPES
-      f.input :kw_class
-      f.input :required
-      f.input :hidden
-    end
-
-    f.actions
-  end
-  belongs_to :kw_class, optional: true
+  # form do |f|
+  #   f.inputs do
+  #     f.input :name
+  #     f.input :ui_type, as: :select, include_blank: false, collection: KwAttribute::UI_TYPES
+  #     f.input :kw_class
+  #     f.input :required
+  #     f.input :hidden
+  #   end
+  #
+  #   f.actions
+  # end
+  # belongs_to :kw_class, optional: true
 end
