@@ -142,7 +142,7 @@ class Converter
 
   end
 
-  def set_attributes_on_db_report6
+  def set_attributes_on_db_report
     @db_report.each do |attribute, data|
       next if data.keys.count < 6
       data.merge!(attributes: KwAttribute.where(name: data[:label]).map{ |attr| [Community::TYPE_FOR_LABEL[attr.care_type], attr] }.to_h)
