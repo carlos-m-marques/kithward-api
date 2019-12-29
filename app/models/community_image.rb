@@ -1,5 +1,5 @@
 class CommunityImage < ApplicationRecord
-  acts_as_paranoid
+  #acts_as_paranoid
 
   scope :has_image, -> { joins(image_attachment: :blob) }
   scope :published, -> { where(published: true) }

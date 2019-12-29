@@ -26,6 +26,21 @@ class Processing
     @compiled_data_from_db = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } }
   end
 
+  def data_types
+    types = Hash.new("no rules that i could find anything goes?")
+    types.merge({
+      flag: "boolean, but shown as a tag or flag, shown as things the community *is*",
+      amenity: "boolean, but shown as a list of things the community *has*",
+      rating: "0, 1-5",
+      select: "list of possible values",
+      list_of_ids: "list of ids duh!",
+      number:  "any integer",
+      count:  "positive integer",
+      currency: "two decimals",
+      ratio:  "(1:3)"
+    })
+  end
+
   def crunch
     dictionary.each do |section|
       begin
@@ -66,10 +81,10 @@ class Processing
           {}
         end
 
-        all_attributes = { section_label: section.decent_fetch(:label), section_name: section.decent_fetch(:section), data_type: attr[attr_db_name][:data] }
+        all_attributes = { section_label: section.decent_fetch(:label), section_name: section.decent_fetch(:section), data_type: attr[attr_db_name][:data], label: attr[attr_db_name][:label] }
 
         gg = group_names[attr[attr_db_name][:group].to_sym][:label] || attr[attr_db_name][:group] if attr[attr_db_name][:group]
-
+        all_attributes.merge!(hidden: (attr[attr_db_name][:hidden] || attr[attr_db_name][:admin_only] || false))
         all_attributes.merge!(group_name: gg) if gg
         all_attributes.merge!(values: attr[attr_db_name][:values]) if attr[attr_db_name][:values]
 
@@ -118,13 +133,13 @@ class Processing
     end
   end
 
-
-
   def db_report
     puts @db_report
+    ap @compiled_data_from_db
   end
 
   def report
     puts @report
+    ap @compiled_data
   end
 end

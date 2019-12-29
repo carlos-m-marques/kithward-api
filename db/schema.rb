@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_11_000602) do
+ActiveRecord::Schema.define(version: 2019_12_28_231726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.integer "owner_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
+    t.index ["password_digest"], name: "index_accounts_on_password_digest"
+    t.index ["role"], name: "index_accounts_on_role"
   end
 
   create_table "accounts_communities", id: false, force: :cascade do |t|
@@ -123,13 +125,6 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.index ["flagged_for"], name: "index_buildings_on_flagged_for"
   end
 
-  create_table "buildings_kw_values", id: false, force: :cascade do |t|
-    t.bigint "building_id", null: false
-    t.bigint "kw_value_id", null: false
-    t.index ["building_id", "kw_value_id"], name: "index_buildings_kw_values_on_building_id_and_kw_value_id"
-    t.index ["kw_value_id", "building_id"], name: "index_buildings_kw_values_on_kw_value_id_and_building_id"
-  end
-
   create_table "communities", force: :cascade do |t|
     t.string "name", limit: 1024
     t.text "description"
@@ -161,21 +156,15 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.datetime "flagged_at"
     t.string "flagged_for"
     t.string "slug"
+    t.index ["deleted_at", "id"], name: "index_communities_on_deleted_at_and_id"
+    t.index ["deleted_at", "slug"], name: "index_communities_on_deleted_at_and_slug"
     t.index ["deleted_at"], name: "index_communities_on_deleted_at"
     t.index ["flagged_at"], name: "index_communities_on_flagged_at"
     t.index ["flagged_for"], name: "index_communities_on_flagged_for"
-    t.index ["id"], name: "index_communities_on_id"
     t.index ["name"], name: "index_communities_on_name", opclass: :gist_trgm_ops, using: :gist
     t.index ["owner_id"], name: "index_communities_on_owner_id"
     t.index ["pm_system_id"], name: "index_communities_on_pm_system_id"
-    t.index ["slug"], name: "index_communities_on_slug", unique: true
-  end
-
-  create_table "communities_kw_values", id: false, force: :cascade do |t|
-    t.bigint "community_id", null: false
-    t.bigint "kw_value_id", null: false
-    t.index ["community_id", "kw_value_id"], name: "index_communities_kw_values_on_community_id_and_kw_value_id"
-    t.index ["kw_value_id", "community_id"], name: "index_communities_kw_values_on_kw_value_id_and_community_id"
+    t.index ["slug"], name: "index_communities_on_slug"
   end
 
   create_table "communities_pois", id: false, force: :cascade do |t|
@@ -193,7 +182,9 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.datetime "updated_at", null: false
     t.integer "sort_order", default: 9999
     t.boolean "published", default: true
+    t.datetime "deleted_at"
     t.index ["community_id"], name: "index_community_images_on_community_id"
+    t.index ["deleted_at", "id"], name: "index_community_images_on_deleted_at_and_id"
   end
 
   create_table "community_share_hits", force: :cascade do |t|
@@ -226,6 +217,8 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.string "ui_type", default: "select"
     t.boolean "required", default: false
     t.boolean "hidden", default: false
+    t.string "values", array: true
+    t.datetime "deleted_at"
     t.index ["kw_class_id"], name: "index_kw_attributes_on_kw_class_id"
     t.index ["ui_type"], name: "index_kw_attributes_on_ui_type"
   end
@@ -235,6 +228,7 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "kw_super_class_id"
+    t.datetime "deleted_at"
     t.index ["kw_super_class_id"], name: "index_kw_classes_on_kw_super_class_id"
   end
 
@@ -247,6 +241,12 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.boolean "assisted_living", default: false, null: false
     t.boolean "skilled_nursing", default: false, null: false
     t.boolean "memory_care", default: false, null: false
+    t.datetime "deleted_at"
+    t.index ["id", "type"], name: "index_kw_super_classes_on_id_and_type"
+    t.index ["type", "assisted_living"], name: "index_kw_super_classes_on_type_and_assisted_living"
+    t.index ["type", "independent_living"], name: "index_kw_super_classes_on_type_and_independent_living"
+    t.index ["type", "memory_care"], name: "index_kw_super_classes_on_type_and_memory_care"
+    t.index ["type", "skilled_nursing"], name: "index_kw_super_classes_on_type_and_skilled_nursing"
     t.index ["type"], name: "index_kw_super_classes_on_type"
   end
 
@@ -255,35 +255,9 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "community_id"
+    t.datetime "deleted_at"
     t.index ["kw_attribute_id"], name: "index_kw_values_on_kw_attribute_id"
-  end
-
-  create_table "kw_values_owners", id: false, force: :cascade do |t|
-    t.bigint "owner_id", null: false
-    t.bigint "kw_value_id", null: false
-    t.index ["kw_value_id", "owner_id"], name: "index_kw_values_owners_on_kw_value_id_and_owner_id"
-    t.index ["owner_id", "kw_value_id"], name: "index_kw_values_owners_on_owner_id_and_kw_value_id"
-  end
-
-  create_table "kw_values_pm_systems", id: false, force: :cascade do |t|
-    t.bigint "pm_system_id", null: false
-    t.bigint "kw_value_id", null: false
-    t.index ["kw_value_id", "pm_system_id"], name: "index_kw_values_pm_systems_on_kw_value_id_and_pm_system_id"
-    t.index ["pm_system_id", "kw_value_id"], name: "index_kw_values_pm_systems_on_pm_system_id_and_kw_value_id"
-  end
-
-  create_table "kw_values_unit_types", id: false, force: :cascade do |t|
-    t.bigint "kw_value_id", null: false
-    t.bigint "unit_type_id", null: false
-    t.index ["kw_value_id", "unit_type_id"], name: "index_kw_values_unit_types_on_kw_value_id_and_unit_type_id"
-    t.index ["unit_type_id", "kw_value_id"], name: "index_kw_values_unit_types_on_unit_type_id_and_kw_value_id"
-  end
-
-  create_table "kw_values_units", id: false, force: :cascade do |t|
-    t.bigint "kw_value_id", null: false
-    t.bigint "unit_id", null: false
-    t.index ["kw_value_id", "unit_id"], name: "index_kw_values_units_on_kw_value_id_and_unit_id"
-    t.index ["unit_id", "kw_value_id"], name: "index_kw_values_units_on_unit_id_and_kw_value_id"
   end
 
   create_table "leads", force: :cascade do |t|
@@ -368,6 +342,11 @@ ActiveRecord::Schema.define(version: 2019_09_11_000602) do
     t.index ["created_by_id"], name: "index_pois_on_created_by_id"
     t.index ["deleted_at"], name: "index_pois_on_deleted_at"
     t.index ["poi_category_id"], name: "index_pois_on_poi_category_id"
+  end
+
+  create_table "related_communities", force: :cascade do |t|
+    t.integer "community_id"
+    t.integer "related_community_id"
   end
 
   create_table "unit_type_images", force: :cascade do |t|

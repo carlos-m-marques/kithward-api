@@ -5,7 +5,7 @@ class Community < ApplicationRecord
   include AASM
 
   has_paper_trail
-  acts_as_paranoid
+  #acts_as_paranoid
 
   after_commit :reindex_associations
 
@@ -26,6 +26,9 @@ class Community < ApplicationRecord
     end
   end
 
+  has_many :communities, foreign_key: :community_id, class_name: 'RelatedCommunity'
+  has_many :related_communities, through: :communities, source: :related_community
+
   has_many :unit_layouts, class_name: 'UnitType', dependent: :destroy
   has_many :buildings, dependent: :destroy
   has_many :units, through: :unit_layouts
@@ -40,7 +43,10 @@ class Community < ApplicationRecord
 
   has_many :community_share_hits
 
-  has_and_belongs_to_many :kw_values
+  has_many :kw_values
+  has_many :kw_attributes, through: :kw_values
+  has_many :kw_classes, through: :kw_attributes
+  has_many :community_super_classes, through: :kw_classes
 
   has_and_belongs_to_many :accounts, autosave: false
   alias_method :favorited_by, :accounts
@@ -76,7 +82,7 @@ class Community < ApplicationRecord
         "pois" => pois,
         "images" => community_images.published,
         "units" => units,
-        "community_attributes" => community_attributes,
+        # "community_attributes" => community_attributes,
         "units_available" => units.available,
         "monthly_rent_lower_bound" => monthly_rent_lower_bound,
         "monthly_rent_upper_bound" => monthly_rent_upper_bound
@@ -96,17 +102,17 @@ class Community < ApplicationRecord
     }
   end
 
-  def community_attributes
-    attrs = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } } }
-
-    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).distinct.each do |value|
-      next unless value.kw_attribute.visible?
-
-      attrs[value.kw_super_class.name][value.kw_class.name][value.kw_attribute.name] << value.name
-    end
-
-    attrs
-  end
+  # def community_attributes
+  #   attrs = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } } }
+  #
+  #   kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).distinct.each do |value|
+  #     next unless value.kw_attribute.visible?
+  #
+  #     attrs[value.kw_super_class.name][value.kw_class.name][value.kw_attribute.name] << value.name
+  #   end
+  #
+  #   attrs
+  # end
 
   aasm column: :status do
     state :draft, initial: true
@@ -151,6 +157,13 @@ class Community < ApplicationRecord
   validates_presence_of :country, :region, :state, :county, :city, :postal, :name, :owner
   validates :care_type, inclusion: { in: Community::CARE_TYPES }
 
+  TYPE_FOR_LABEL = {
+    'Independent Living' => TYPE_INDEPENDENT,
+    'Assisted Living' => TYPE_ASSISTED,
+    'Skilled Nursing' => TYPE_NURSING,
+    'Memory Care' => TYPE_MEMORY
+  }
+
   SLUG_FOR_TYPE = {
     TYPE_INDEPENDENT => '-independent-living',
     TYPE_ASSISTED => '-assisted-living',
@@ -183,12 +196,6 @@ class Community < ApplicationRecord
     end
   end
 
-  def attributes_options
-    kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).each_with_object({}) do |value, obj|
-      obj.deep_merge!({ value.kw_super_class.name => { value.kw_class.name => { value.kw_attribute.name => value.name } } })
-    end
-  end
-
   def metro
     super || self.city
   end
@@ -211,10 +218,6 @@ class Community < ApplicationRecord
 
   def add_poi_ids=(ids)
     self.assign_attributes({poi_ids: (self.poi_ids + ids)})
-  end
-
-  def add_kw_value_ids=(ids)
-    self.assign_attributes({kw_value_ids: (self.kw_value_ids + ids)})
   end
 
   def add_community_image_id=(ids)

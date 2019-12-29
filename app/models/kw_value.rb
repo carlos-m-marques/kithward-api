@@ -1,27 +1,11 @@
 class KwValue < ApplicationRecord
+  #acts_as_paranoid
+  
   belongs_to :kw_attribute
+  belongs_to :community
+
   has_one :kw_class, through: :kw_attribute
   has_one :kw_super_class, through: :kw_class
 
-  has_and_belongs_to_many :communities
-  has_and_belongs_to_many :buildings
-  has_and_belongs_to_many :units
-  has_and_belongs_to_many :unit_types
-  has_and_belongs_to_many :owners
-  has_and_belongs_to_many :pm_systems
-
-  validates :name, :kw_attribute, presence: true
-
-  delegate :name, to: :kw_attribute, prefix: :attribute
-  delegate :id, to: :kw_attribute, prefix: :attribute
-
-  delegate :kw_class_id, to: :kw_attribute
-
-  def super_class_id
-    kw_attribute.kw_class.kw_super_class.id
-  end
-
-  def kw_class_name
-    kw_attribute.kw_class.name
-  end
+  validates :name, :kw_attribute, :community, presence: true
 end

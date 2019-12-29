@@ -71,9 +71,9 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts_as_paranoid (0.6.0)
-      activerecord (>= 4.2, < 6.0)
-      activesupport (>= 4.2, < 6.0)
+    acts_as_paranoid (0.6.1)
+      activerecord (>= 4.2, < 7.0)
+      activesupport (>= 4.2, < 7.0)
     arbre (1.2.1)
       activesupport (>= 3.0.0)
     arel (9.0.0)
@@ -136,6 +136,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    docopt (0.6.1)
     dotenv (2.7.5)
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
@@ -299,6 +300,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rouge (3.10.0)
+    ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     ruby_http_client (3.3.0)
     rubyzip (1.1.7)
@@ -315,6 +317,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scriptster (0.2.3)
+      docopt (~> 0.5)
+      tco (~> 0.1)
     searchkick (4.1.0)
       activemodel (>= 5)
       elasticsearch (>= 6)
@@ -347,6 +352,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    tco (0.1.8)
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.9)
@@ -410,6 +416,8 @@ DEPENDENCIES
   rails (~> 5.2.2)
   ransack (= 2.1.1)
   rouge
+  ruby-progressbar
+  scriptster
   searchkick (~> 4.1)
   sendgrid-ruby
   sentry-raven (= 2.7.4)

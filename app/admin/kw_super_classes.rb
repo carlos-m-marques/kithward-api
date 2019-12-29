@@ -14,9 +14,7 @@ ActiveAdmin.register KwSuperClass, as: 'Super Classes' do
     selectable_column
     id_column
     column :name
-    column :created_at
-    column :updated_at
-    column :type
+    tag_column :care_type
     actions
   end
 

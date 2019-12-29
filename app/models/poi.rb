@@ -1,6 +1,6 @@
 class Poi < ApplicationRecord
   has_paper_trail
-  acts_as_paranoid
+  #acts_as_paranoid
 
   belongs_to :poi_category
   has_and_belongs_to_many :communities

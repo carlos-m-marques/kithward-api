@@ -3,6 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'scriptster'
+gem 'ruby-progressbar'
+
 #== CORE RAILS =============================
 gem 'rails', '~> 5.2.2'
 gem 'puma', '~> 3.4'

@@ -1,7 +1,9 @@
 class KwSuperClass < ApplicationRecord
+  #acts_as_paranoid
+
   HEIRS_CLASSES = %w(BuildingSuperClass CommunitySuperClass OwnerSuperClass UnitSuperClass UnitTypeSuperClass PmSystemSuperClass).freeze
 
-  has_many :kw_classes, dependent: :destroy
+  has_many :kw_classes
   has_many :kw_attributes, through: :kw_classes
 
   accepts_nested_attributes_for :kw_classes
@@ -14,12 +16,10 @@ class KwSuperClass < ApplicationRecord
   validates :name, :type, presence: true
   validates :type, inclusion: { in: HEIRS_CLASSES }
 
-  def self.care_type_attribute(care_type)
-    case care_type
-    when Community::TYPE_INDEPENDENT then :independent_living
-    when Community::TYPE_ASSISTED then :assisted_living
-    when Community::TYPE_NURSING then :skilled_nursing
-    when Community::TYPE_MEMORY then :memory_care
-    end
+  def care_type
+    return 'Independent Living' if independent_living
+    return 'Assisted Living' if assisted_living
+    return 'Skilled Nursing' if skilled_nursing
+    return 'Memory Care' if memory_care
   end
 end

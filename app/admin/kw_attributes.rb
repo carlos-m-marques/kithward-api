@@ -14,8 +14,7 @@ ActiveAdmin.register KwAttribute, as: 'Attributes' do
     column :name
     toggle_bool_column :required
     toggle_bool_column :hidden
-    column :created_at
-    column :updated_at
+    tag_column :care_type
     column :kw_class
     column :kw_super_class
     actions

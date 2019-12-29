@@ -93,8 +93,8 @@ COMMUNITY = [
           "level of assistance you require, if any. Contact us to find out more.",
     admin_tab: "Pricing",
     groups: [
-      { feesummary: {label: ""}},
-      { notes: {label: ""}},
+      { feesummary: {label: "Fees Summary"}},
+      { notes: {label: "Notes"}},
       { onetimefees: { label: "One-Time Fees", }},
       { otherfees: { label: "Other Fees", }},
       { carelevels: { label: "Levels Of Care", }},
@@ -103,7 +103,6 @@ COMMUNITY = [
     collapsed_groups: [:onetimefees, :otherfees, :carelevels, :itemizedcare],
     collapsed_prompt: "Show more pricing information",
     attrs: [
-      { listings_base_rent:     { label: "Base Fee", data: 'pricerange', readonly: true, suffix: "per month", group: 'feesummary' }},
       { base_rent:              { label: "Base Fee", data: 'pricerange', readonly: true, hide: true, group: 'feesummary' }},
       # { rent_starting_price:    { label: "Base Fee Minimum", data: 'price', group: 'feesummary' }},
       # { rent_maximum_price:     { label: "Base Fee Maximum", data: 'price', group: 'feesummary' }},
@@ -137,7 +136,7 @@ COMMUNITY = [
                                     {'M' => "Community accepts Medicaid"},
                                     {'F' => "Community foundation supports resident"},
                                     {'L' => "Resident must leave community"},
-                                 ]}},
+                                 ], group: 'feesummary'}},
 
       { waiting_list_fee:       { label: "Waiting List Fee", data: 'fee', group: 'onetimefees' }},
       { reservation_fee:        { label: "Reservation Fee", data: 'fee', group: 'onetimefees' }},
@@ -713,34 +712,6 @@ COMMUNITY = [
 
     ],
   },
-
-  { section: 'makeup',
-    label: "Community Makeup",
-    admin_tab: "Community",
-    admin_only: true,
-    attrs: [
-      { resident_profile_professions:    { label: "Former Professions", data: 'string' }},
-      { resident_profile_interests:      { label: "Interests & Hobbies", data: 'string' }},
-      { resident_profile_cultures:       { label: "Cultural Backgrounds", data: 'string' }},
-      { resident_profile_religions:      { label: "Religions Represented", data: 'string' }},
-      { resident_profile_politics:       { label: "Political Leanings", data: 'select',
-                                           values: [
-                                             {'-' => 'None specified'},
-                                             {'C' => "Conservative"},
-                                             {'M' => "Moderate"},
-                                             {'P' => "Progressive"},
-                                  ]}},
-      { resident_profile_education:      { label: "Education Level", data: 'select',
-                                           values: [
-                                             {'-' => 'None specified'},
-                                             {'C' => "Most have graduate degrees"},
-                                             {'M' => "Most have college degrees"},
-                                             {'P' => "Most are high school graduates"},
-                                   ]}},
-
-    ],
-  },
-
   { section: 'contracts',
     label: "Contract Options",
     admin_tab: "Pricing",
@@ -781,20 +752,23 @@ COMMUNITY = [
     label: "Entrance Requirements",
     admin_tab: "Pricing",
     admin_only: true,
+    groups: [
+      { requirements: { label: "Requirements", }}
+    ],
     attrs: [
-      { requires_age_qual:          { label: "Requires age qualification", data: 'flag' }},
-      { age_qual_requirements:      { label: "Age qualification requirements", data: 'string' }},
-      { requires_medical_qual:      { label: "Requires medical qualification", data: 'flag' }},
-      { medical_qual_requirements:  { label: "Medical qualification requirements", data: 'string' }},
-      { requires_insurance:         { label: "Requires insurance", data: 'flag' }},
-      { accepts_medicare:           { label: "Accepts Medicare", data: 'flag' }},
-      { accepts_medicare_supl:      { label: "Accepts Medicare supplement", data: 'flag' }},
-      { accepts_medicaid:           { label: "Accepts Medicaid", data: 'flag' }},
-      { accepts_private_ins:        { label: "Accepts private plan insurance", data: 'flag' }},
-      { accepts_long_term_ins:      { label: "Accepts long-term care insurance", data: 'flag' }},
-      { insurance_requirements:     { label: "Insurance requirements", data: 'string' }},
-      { requires_income_qual:       { label: "Requires financial qualification", data: 'flag' }},
-      { income_qual_requirements:   { label: "Financial qualification requirements", data: 'string' }},
+      { requires_age_qual:          { label: "Requires age qualification", data: 'flag', group: 'requirements' }},
+      { age_qual_requirements:      { label: "Age qualification requirements", data: 'string', group: 'requirements' }},
+      { requires_medical_qual:      { label: "Requires medical qualification", data: 'flag', group: 'requirements' }},
+      { medical_qual_requirements:  { label: "Medical qualification requirements", data: 'string', group: 'requirements' }},
+      { requires_insurance:         { label: "Requires insurance", data: 'flag', group: 'requirements' }},
+      { accepts_medicare:           { label: "Accepts Medicare", data: 'flag', group: 'requirements' }},
+      { accepts_medicare_supl:      { label: "Accepts Medicare supplement", data: 'flag', group: 'requirements' }},
+      { accepts_medicaid:           { label: "Accepts Medicaid", data: 'flag', group: 'requirements' }},
+      { accepts_private_ins:        { label: "Accepts private plan insurance", data: 'flag', group: 'requirements' }},
+      { accepts_long_term_ins:      { label: "Accepts long-term care insurance", data: 'flag', group: 'requirements' }},
+      { insurance_requirements:     { label: "Insurance requirements", data: 'string', group: 'requirements' }},
+      { requires_income_qual:       { label: "Requires financial qualification", data: 'flag', group: 'requirements' }},
+      { income_qual_requirements:   { label: "Financial qualification requirements", data: 'string', group: 'requirements' }},
     ]
   },
 ]
