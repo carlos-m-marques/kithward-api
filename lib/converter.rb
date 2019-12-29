@@ -108,6 +108,13 @@ class Converter
   end
 
   def convert
+    logger = Rails.logger
+    base_logger = ActiveRecord::Base.logger
+    dev_null = Logger.new("/dev/null")
+
+    Rails.logger = dev_null
+    ActiveRecord::Base.logger = dev_null
+
     KwValue.delete_all
     KwAttribute.delete_all
     KwClass.delete_all
@@ -129,9 +136,13 @@ class Converter
     set_attributes_on_db_report
 
     do_it!
+
+    Rails.logger = logger
+    ActiveRecord::Base.logger = base_logger
+
   end
 
-  def set_attributes_on_db_report
+  def set_attributes_on_db_report6
     @db_report.each do |attribute, data|
       next if data.keys.count < 6
       data.merge!(attributes: KwAttribute.where(name: data[:label]).map{ |attr| [Community::TYPE_FOR_LABEL[attr.care_type], attr] }.to_h)
