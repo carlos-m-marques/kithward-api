@@ -99,7 +99,7 @@ class Community < ApplicationRecord
         "pois" => pois,
         "images" => community_images.published,
         "units" => units,
-        # "community_attributes" => community_attributes,
+        "community_attributes" => community_kw_values,
         "units_available" => units.available,
         "monthly_rent_lower_bound" => monthly_rent_lower_bound,
         "monthly_rent_upper_bound" => monthly_rent_upper_bound
