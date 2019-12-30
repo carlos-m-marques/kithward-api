@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_30_013935) do
+ActiveRecord::Schema.define(version: 2019_12_30_223612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_013935) do
     t.string "values", array: true
     t.datetime "deleted_at"
     t.index ["kw_class_id"], name: "index_kw_attributes_on_kw_class_id"
+    t.index ["name"], name: "index_kw_attributes_on_name"
     t.index ["ui_type"], name: "index_kw_attributes_on_ui_type"
   end
 
@@ -250,6 +251,7 @@ ActiveRecord::Schema.define(version: 2019_12_30_013935) do
     t.datetime "updated_at", null: false
     t.integer "community_id"
     t.datetime "deleted_at"
+    t.index ["kw_attribute_id", "community_id"], name: "index_kw_values_on_kw_attribute_id_and_community_id"
     t.index ["kw_attribute_id"], name: "index_kw_values_on_kw_attribute_id"
   end
 

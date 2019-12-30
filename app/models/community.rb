@@ -10,21 +10,14 @@ class Community < ApplicationRecord
   after_commit :reindex_associations
 
   def reindex_associations
-    unit_layouts.reindex
-    buildings.reindex
-    units.reindex
-    pois.reindex
+    # unit_layouts.reindex
+    # buildings.reindex
+    # units.reindex
+    # pois.reindex
+    listings.reindex
   end
 
   after_save :set_slug!
-
-  scope :search_import, -> do
-    unless ENV['SSI']
-      includes(:unit_layouts, :buildings, :units, :pois, :community_images, :kw_values)
-    else
-      where.not(data: nil)
-    end
-  end
 
   has_many :communities, foreign_key: :community_id, class_name: 'RelatedCommunity'
   has_many :related_communities, through: :communities, source: :related_community
@@ -55,15 +48,21 @@ class Community < ApplicationRecord
   has_many :account_access_requests, through: :account_access_request_communities
 
   def community_kw_values
-    all_hash = {}
-    kw_values.includes(:kw_attribute, :kw_class, :kw_super_class).each do |k_p|
-      all_hash.merge!(k_p.kw_super_class.name => {})
-      all_hash[k_p.kw_super_class.name].merge!(k_p.kw_class.name => [])
+    all_hash = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } }
 
-      if k_p.kw_attribute.ui_type == 'boolean'
-        all_hash[k_p.kw_super_class.name][k_p.kw_class.name] << "#{k_p.name}"
+    kw_values.includes({ kw_attribute: { kw_class: :kw_super_class } }).each do |kw_value|
+      if all_hash[kw_value.kw_attribute.kw_class.kw_super_class.name][kw_value.kw_attribute.kw_class.name]
+        if kw_value.kw_attribute.ui_type == 'boolean'
+          all_hash[kw_value.kw_attribute.kw_class.kw_super_class.name][kw_value.kw_attribute.kw_class.name] << { kw_value.kw_attribute.name => 'Yes' }
+        else
+          all_hash[kw_value.kw_attribute.kw_class.kw_super_class.name][kw_value.kw_attribute.kw_class.name] << { kw_value.kw_attribute.name => kw_value.name }
+        end
       else
-        all_hash[k_p.kw_super_class.name][k_p.kw_class.name] << "#{k_p.kw_attribute.name}: #{k_p.name}"
+        if kw_value.kw_attribute.ui_type == 'boolean'
+          all_hash[kw_value.kw_attribute.kw_class.kw_super_class.name][kw_value.kw_attribute.kw_class.name] = [{ kw_value.kw_attribute.name => 'Yes' }]
+        else
+          all_hash[kw_value.kw_attribute.kw_class.kw_super_class.name][kw_value.kw_attribute.kw_class.name] = [{ kw_value.kw_attribute.name => kw_value.name }]
+        end
       end
     end
 
@@ -93,12 +92,13 @@ class Community < ApplicationRecord
         "id" => id,
         "slug" => slug,
         "location" => { lat: lat, lon: lon },
-        "buildings" => buildings,
+        # "buildings" => buildings,
         "cached_image_url" => image_url,
-        "unit_layouts" => unit_layouts,
-        "pois" => pois,
+        # "unit_layouts" => unit_layouts,
+        # "pois" => pois,
         "images" => community_images.published,
-        "units" => units,
+        # "units" => units,
+        "listings" => listings,
         "community_attributes" => community_kw_values,
         "units_available" => units.available,
         "monthly_rent_lower_bound" => monthly_rent_lower_bound,
@@ -202,17 +202,6 @@ class Community < ApplicationRecord
     'memory' => 'M'
   }
 
-  def super_classes
-    @super_classes ||= case care_type
-    when TYPE_INDEPENDENT then CommunitySuperClass.independent_living
-    when TYPE_ASSISTED then CommunitySuperClass.assisted_living
-    when TYPE_NURSING then CommunitySuperClass.skilled_nursing
-    when TYPE_MEMORY then CommunitySuperClass.memory_care
-    else
-      []
-    end
-  end
-
   def metro
     super || self.city
   end
@@ -239,31 +228,6 @@ class Community < ApplicationRecord
 
   def add_community_image_id=(ids)
     self.assign_attributes({community_image_ids: (self.community_image_id + ids)})
-  end
-
-  begin # Data manipulation
-    scope :with_data, ->(name, value = nil) do
-      if value
-        where("communities.data @> :json", :json => {name.to_sym => value}.to_json)
-      else
-        where("communities.data ? :attr_name", {attr_name: name})
-      end
-    end
-
-    scope :with_any_of_data, ->(*names) do
-      where("communities.data ?| array[:names]", :names => names.flatten)
-    end
-
-    scope :with_all_of_data, ->(*names) do
-      where("communities.data ?& array[:names]", :names => names.flatten)
-    end
-
-    def rename_data(from, to)
-      if self.data[from.to_s]
-        self.data[to.to_s] = self.data[from.to_s]
-        self.data.delete(from.to_s)
-      end
-    end
   end
 
   begin # Geocoding
@@ -299,10 +263,6 @@ class Community < ApplicationRecord
     units.maximum(:rent_market) || monthly_rent_upper_bound
   end
 
-  def is_related?(community)
-    data["related_communities"].to_s.split(',').include? community.id.to_s
-  end
-
   def shared!(tracking:)
     CommunityShareHit.create(tracking: tracking)
   end
@@ -321,41 +281,6 @@ class Community < ApplicationRecord
     'amenity_indoor_pool', 'amenity_outdoor_pool',
     'completeness', 'needs_review', 'price_range'
   ]
-
-  # def update_cached_data(force = false)
-  #   # WARNING: This subset of keys should reflect what's on web/src/tools/KWConsts.js#CRITERIA_SPEC
-  #
-  #   if data_changed? || force
-  #     diff = Hashdiff.diff(self.data_was || {}, self.data || {})
-  #     changed_attributes = diff.collect {|change, name, value| name}
-  #
-  #     if (changed_attributes & ATTRIBUTES_TO_CACHE).any? || force
-  #       self.cached_data = (self.data || {}).slice(*ATTRIBUTES_TO_CACHE)
-  #     end
-  #
-  #     self.cached_data['units_available'] = units_available
-  #
-  #     if changed_attributes.include? 'related_communities' || force
-  #       ids = (self.data['related_communities'] || "").split(/\s*,\s*/)
-  #       self.data['related_community_data'] = ids.collect do |id|
-  #         id = id.to_i
-  #         if c = Community.find(id.abs)
-  #           row = {id: c.id, name: c.name, care_type: c.care_type, status: c.status, slug: c.slug}
-  #           if id < 0
-  #             row['similar'] = true
-  #           else
-  #             row['related'] = true
-  #           end
-  #         end
-  #         row
-  #       end
-  #     end
-  #   end
-
-  #   self.cached_data['units_available'] = units_available if self.cached_data
-  #
-  #   return true
-  # end
 
   def image_url
     self.community_images.reload.select {|i| i.tags !~ /(floorplan|map|calendar)/ }.sort_by {|i| [i.sort_order, i.id]}.first.try(:url)
@@ -472,10 +397,7 @@ class Community < ApplicationRecord
     self.save
   end
 
-
   def self.rename_data_attributes(map)
-    # Use this method to clean up data
-    # Example: Community.rename_data_attributes('parent_company' => 'provider', 'bed_count' => 'unit_count')
     Community.where('data ?| array[:keys]', keys: map.keys).find_each do |community|
       map.each do |key, new_key|
         community.data[new_key] = community.data[key]
