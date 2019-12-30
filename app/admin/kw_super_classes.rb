@@ -8,7 +8,7 @@ ActiveAdmin.register KwSuperClass, as: 'Super Classes' do
   # end
 
   filter :name
-  filter :type, as: :select, collection: -> { KwSuperClass::HEIRS_CLASSES }
+  filter :care_type, as: :select, collection: -> { KwSuperClass::CARE_TYPES }
 
   index do
     selectable_column

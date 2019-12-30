@@ -16,34 +16,26 @@ ActiveAdmin.register Community do
       row :name
       row :description
       bool_row :flagged?
-      row :flagged_for
+      # row :flagged_for
       row :street
-      row :street_more
+      # row :street_more
       row :city
       row :state
       row :postal
-      row :country
-      row :lat
-      row :lon
+      # row :country
+      # row :lat
+      # row :lon
       row :care_type_label
-      # row :data
       row :monthly_rent_lower_bound
       row :monthly_rent_upper_bound
-      # row :owner_id
-      # row :pm_system_id
-      row :region
-      row :metro
-      row :borough
-      row :county
-      row :township
-
-      row :pois
-      row :buildings
-      row :unit_layouts
-      row :units
-      # row :deleted_at
-      # row :flagged_at
-      # row :flagged_for
+      # row :region
+      # row :metro
+      # row :borough
+      # row :county
+      # row :township
+      attributes_table do
+        list_row :community_kw_values
+      end
       row :images do |community|
         community.community_images.map do |ci|
           if ci.content_type
@@ -60,7 +52,6 @@ ActiveAdmin.register Community do
     column :name
     bool_column :flagged?
     column :created_at
-    column :updated_at
     tag_column :care_type_label
     actions
   end

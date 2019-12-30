@@ -31,3 +31,8 @@
 
 en:
   hello: "Hello world"
+  addons_list:
+    community:
+      kw_values:
+        key1: value1
+        key2: value2

@@ -3,7 +3,7 @@ ActiveAdmin.register KwClass, as: 'Classes' do
 
   permit_params :name, :kw_super_class_id
   #
-  # filter :name
+  filter :name
   #
   sidebar "Children", only: [:show, :edit] do
     ul do
@@ -27,5 +27,4 @@ ActiveAdmin.register KwClass, as: 'Classes' do
   #
   #   f.actions
   # end
-  # belongs_to :kw_super_class, optional: true
 end

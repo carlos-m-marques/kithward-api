@@ -54,6 +54,23 @@ class Community < ApplicationRecord
   has_many :account_access_request_communities
   has_many :account_access_requests, through: :account_access_request_communities
 
+  def community_kw_values
+    all_hash = {}
+    kw_values.includes(:kw_attribute, :kw_class, :kw_super_class).each do |k_p|
+      all_hash.merge!(k_p.kw_super_class.name => {})
+      all_hash[k_p.kw_super_class.name].merge!(k_p.kw_class.name => [])
+
+      if k_p.kw_attribute.ui_type == 'boolean'
+        all_hash[k_p.kw_super_class.name][k_p.kw_class.name] << "#{k_p.name}"
+      else
+        all_hash[k_p.kw_super_class.name][k_p.kw_class.name] << "#{k_p.kw_attribute.name}: #{k_p.name}"
+      end
+    end
+
+    all_hash
+  end
+
+
   begin
     unless ENV['SSI']
       searchkick  locations: [:location],
