@@ -32,7 +32,7 @@ class CommunitySerializer < Blueprinter::Base
 
     field :description
     field :community_kw_values
-    association :listings
+    association :listings, blueprint: ListingSerializer
     association :community_images, name: :images, blueprint: CommunityImageSerializer
     association :pois, blueprint: PoiSerializer
   end
