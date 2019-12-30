@@ -31,12 +31,10 @@ class CommunitySerializer < Blueprinter::Base
     include_view 'simple'
 
     field :description
-    field :community_attributes
+    field :community_kw_values
+    association :listings
     association :community_images, name: :images, blueprint: CommunityImageSerializer
     association :pois, blueprint: PoiSerializer
-    association :buildings, blueprint: BuildingSerializer
-    association :units, blueprint: UnitSerializer
-    association :unit_layouts, blueprint: UnitTypeSerializer
   end
 
 end

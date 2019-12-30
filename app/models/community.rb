@@ -119,18 +119,6 @@ class Community < ApplicationRecord
     }
   end
 
-  # def community_attributes
-  #   attrs = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = [] } } }
-  #
-  #   kw_values.includes(:kw_class, :kw_super_class, :kw_attribute).distinct.each do |value|
-  #     next unless value.kw_attribute.visible?
-  #
-  #     attrs[value.kw_super_class.name][value.kw_class.name][value.kw_attribute.name] << value.name
-  #   end
-  #
-  #   attrs
-  # end
-
   aasm column: :status do
     state :draft, initial: true
     state :active
