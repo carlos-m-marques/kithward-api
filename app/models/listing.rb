@@ -23,9 +23,7 @@ class Listing < ApplicationRecord
   def search_data
     attributes.merge({
       "id" => id,
-      "name" => name,
-      "availbale" => is_available,
-      "unit_number" => unit_number
+      "name" => name
     })
   end
 

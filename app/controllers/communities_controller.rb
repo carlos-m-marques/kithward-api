@@ -120,13 +120,9 @@ class CommunitiesController < ApiController
 
     communities = Community.search(params[:q] || "*", search_options).to_a
 
-    puts (5.times.map{ ("#{("="*50)}").green }.join("\n"))
-    ap search_options
-    puts (5.times.map{ ("#{("="*50)}").green }.join("\n"))
-
     if params[:meta]
       result = {
-        results: CommunitySerializer.render_as_json(communities, favorited_options(view: (params[:view] || 'simple'))),
+        results: CommunitySerializer.render_as_json(communities, favorited_options(view: 'complete')),
         meta: {
           params: {
             query: (params[:q] || "*"),
@@ -149,11 +145,7 @@ class CommunitiesController < ApiController
   end
 
   def show
-    search_options = default_search_options
-    search_options[:where].merge!({ _or: [{ id: community_share_params[:id] }, { slug: community_share_params[:id] }] })
-
-    community = Community.search(search_options).to_a.first
-    # D.uber_debug(community)
+    community = Community.find(params[:id])
     render json: CommunitySerializer.render(community, favorited_options(view: 'complete'))
   end
 

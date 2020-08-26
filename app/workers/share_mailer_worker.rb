@@ -50,8 +50,7 @@ class ShareMailerWorker
       message: message,
       share_link: url
     }
-    ap mailer_params
-    puts url.green
+
     MailTools.send_template(to, 'd-426db5efcc5144feafee64d8a0f5c417', mailer_params)
   end
 end

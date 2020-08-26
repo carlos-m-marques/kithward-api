@@ -38,6 +38,7 @@ gem 'ransack', '2.1.1'
 gem 'json-schema-generator', '~> 0.0.9'
 gem 'foreman', '~> 0.85.0'
 gem 'sidekiq-failures', '~> 1.0'
+gem 'moesif_rack'
 
 #== APIS ===================================
 gem 'geocoder', '~> 1.5.0'

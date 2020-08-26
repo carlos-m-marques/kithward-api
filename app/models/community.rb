@@ -5,19 +5,18 @@ class Community < ApplicationRecord
   include AASM
 
   has_paper_trail
-  #acts_as_paranoid
+  acts_as_paranoid
 
   after_commit :reindex_associations
 
   def reindex_associations
-    # unit_layouts.reindex
-    # buildings.reindex
-    # units.reindex
-    # pois.reindex
-    listings.reindex
+    GeoPlace.reindex
+    unit_layouts.reindex
+    buildings.reindex
+    units.reindex
+    pois.reindex
+    set_slug!
   end
-
-  after_save :set_slug!
 
   has_many :communities, foreign_key: :community_id, class_name: 'RelatedCommunity'
   has_many :related_communities, through: :communities, source: :related_community
@@ -98,7 +97,8 @@ class Community < ApplicationRecord
         "community_kw_values" => community_kw_values,
         "units_available" => units.available,
         "monthly_rent_lower_bound" => monthly_rent_lower_bound,
-        "monthly_rent_upper_bound" => monthly_rent_upper_bound
+        "monthly_rent_upper_bound" => monthly_rent_upper_bound,
+        "star_rating" => (data["star_rating"] || 5)
       })
     else
       {
@@ -185,6 +185,10 @@ class Community < ApplicationRecord
     'nursing' => 'N',
     'memory' => 'M'
   }
+
+  def pois_listed
+    self.pois.to_a || []
+  end
 
   def metro
     super || self.city

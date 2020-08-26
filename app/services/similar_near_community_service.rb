@@ -11,7 +11,7 @@ class SimilarNearCommunityService
     search_options[:limit] = 3
     search_options[:where][:care_type] = community_base.care_type
     search_options[:where][:location][:within] = '100mi'
-    search_options[:where]["cached_data.star_rating"] = community_base.cached_data&.dig("star_rating")
+    search_options[:where]["star_rating"] = (community_base.cached_data&.dig("star_rating") || 5)
 
     communities_result = Community.search("*", search_options).to_a
     return if communities_result.empty?

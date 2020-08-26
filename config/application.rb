@@ -35,6 +35,13 @@ module Kw
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    moesif_options = {
+      'application_id' => 'eyJhcHAiOiIyMjM6MTc2IiwidmVyIjoiMi4wIiwib3JnIjoiODg6NzIyIiwiaWF0IjoxNjAxNTEwNDAwfQ.oEI9VWwuKS-Mi9dq6-NzC41Nz74Dj6E2Rkck2yiasbY',
+      'log_body' => true
+    }
+
+    config.middleware.use MoesifRack::MoesifMiddleware, moesif_options
+
     # Middleware for ActiveAdmin
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Flash

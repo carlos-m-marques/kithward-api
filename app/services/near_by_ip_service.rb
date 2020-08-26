@@ -18,7 +18,7 @@ class NearByIpService
     order_params.each do |order_params|
       break if @communities.size >= @communities_size_limit
       search_options[:where][:location][:within] = order_params[:distance]
-      search_options[:where]["cached_data.star_rating"] = order_params[:star_rating]
+      search_options[:where]["star_rating"] = order_params[:star_rating]
       search_options[:offset] = 0
       while true
         communities_result = Community.search("*", search_options).to_a
